@@ -1,0 +1,93 @@
+html.dark body {background-color: #222222 !important; color: #FFFFFF;}
+html.dark .text-color {color: #FFFFFF !important;}
+html.dark .bg-color {background-color: #121212 !important;}
+
+html.dark form.search-bar input[type="text"] {background-color: #272727; width: 80%; height: 40px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
+html.dark form.search-bar input[type="submit"] {background-color: #272727; border: none; width: 10%; height: 40px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-image: url(../images/icons/search.png); background-size: 30px; background-position: center; background-repeat: no-repeat;}
+
+html.dark .breadcrumb {background-color: transparent !important; height: 20px; margin: 0px;}
+html.dark .breadcrumb a {color: #FFFFFF !important; font-size: 13px;}
+html.dark .breadcrumb span {margin: 0px 5px; display: inline-block;}
+
+html.dark .navbar {height: 56px; background-color: #202020;}
+html.dark .navbar i.sidebar-toggle {color: #FFFFFF; cursor: pointer; width: 35px !important; height: 35px !important; font-size: 35px !important; text-align: center;}
+
+html.dark a.nav-link {color: #FFF; margin: 5px;}
+html.dark li.separate {width: 1px; margin: 0px 15px; display: block; background-color: #777777;}
+html.dark li.nav-item {margin: 0px 5px;}
+html.dark li.nav-item i {font-size: 20px !important;}
+html.dark li.nav-item a {font-weight: bold;}
+html.dark .fancybox-content {background-color: #222222;color:white;}
+ html.dark .col-md-11 p {
+    color:white !important;
+}
+html.dark div.sidebar-content {width: 70px;}
+html.dark div.sidebar-menu {min-height: 100vh; background-color: #272727; position: fixed; z-index: 900;}
+html.dark div.sidebar-menu div.sidebar-category {height: 360px; margin-top: -20px !important; margin-bottom: 20px; padding-bottom: 30px !important;}
+html.dark div.sidebar-menu div.category-item {width: 100%; display: inline-block;}
+html.dark div.sidebar-menu div.category-item div {color: #FFFFFF !important; font-size: 21px; font-weight: 500;}
+html.dark div.sidebar-menu div.category-item div:nth-child(1) {float: left; margin: 5px 3px 5px 18px;}
+html.dark div.sidebar-menu div.category-item div:nth-child(2) {float: left; margin: 5px 3px;}
+html.dark div.sidebar-menu div.category-item i {background-position: center; background-repeat: no-repeat; width: 32px; height: 32px; display: block;}
+html.dark div.sidebar-menu div.category-item:nth-child(1) i {background-image: url(../images/icons/left-menu/onair-white.png); background-size: 29px}
+html.dark div.sidebar-menu div.category-item:nth-child(2) i {background-image: url(../images/icons/left-menu/muzik-white.png); background-size: 25px}
+html.dark div.sidebar-menu div.category-item:nth-child(3) i {background-image: url(../images/icons/left-menu/etkinlik-white.png); background-size: 26px}
+html.dark div.sidebar-menu div.category-item:nth-child(4) i {background-image: url(../images/icons/left-menu/ilanlar-white.png); background-size: 28px}
+html.dark div.sidebar-menu div.category-item:nth-child(5) i {background-image: url(../images/icons/left-menu/radyo-white.png); background-size: 27px}
+html.dark div.sidebar-menu div.category-item:nth-child(6) i {background-image: url(../images/icons/left-menu/videolar-white.png); background-size: 34px}
+html.dark div.sidebar-menu div.category-item:nth-child(7) i {background-image: url(../images/icons/left-menu/test-white.png); background-size: 26px}
+html.dark div.sidebar-menu div.category-item:nth-child(8) i {background-image: url(../images/icons/left-menu/keyif-white.png); background-size: 26px}
+html.dark div.sidebar-menu li a {display: block;}
+html.dark div.sidebar-menu div.name {display: none;}
+
+html.dark div.sidebar-menu div.sidebar-list ul {margin-top: 40px;}
+html.dark div.sidebar-menu div.sidebar-list ul li {display: inline-block;}
+html.dark div.sidebar-menu div.sidebar-list ul li a {font-size: 12px; font-weight: bold; margin: 0px 5px; color: #FFFFFF;}
+
+html.dark div.sidebar-menu div.sidebar-app ul {margin-top: 10px;}
+html.dark div.sidebar-menu div.sidebar-app ul li {width: 45%; display: inline-block;}
+
+html.dark div.sidebar-menu div.sidebar-social {margin-top: 10px;}
+html.dark div.sidebar-menu div.sidebar-social i {font-size: 17px; color: #FFFFFF;}
+
+html.dark div.sidebar-menu div.sidebar-copyright {margin-top: 10px; font-size: 12px; color: #FFFFFF;}
+
+html.dark a.top-artist {width: 23px; height: 23px; background-image: url(../images/icons/artists.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-place {width: 23px; height: 23px; background-image: url(../images/icons/place.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-list {width: 23px; height: 23px; background-image: url(../images/icons/music.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-rocket {width: 23px; height: 23px; background-image: url(../images/emojies/roket.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-smile {width: 23px; height: 23px; background-image: url(../images/emojies/cok-iyi.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-love {width: 23px; height: 23px; background-image: url(../images/emojies/yerim.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-family {width: 23px; height: 23px; background-image: url(../images/icons/family.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.dark a.top-theme {width: 23px; height: 23px; background-image: url(../images/icons/theme.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+
+/* HOMEPAGE */
+html.dark div.slider ul.pagination {margin: 10px 10px 10px 0px;}
+html.dark div.slider ul.pagination li {margin: 5px 10px 5px 0px; padding: 2px 12px; background-color: #333333; border-radius: 2px; cursor: pointer; font-size: 12px; color: #FFFFFF;}
+html.dark div.slider ul.pagination li.active {background-color: #ec494c; color: #FFFFFF;}
+
+html.dark div.page-padding-top {margin-top: 55px;}
+html.dark div.page-name {height: 130px;}
+html.dark div.page-name h1 {line-height: 130px; font-size: 50px; font-family: Source Sans Pro;}
+
+html.dark .title {background-image: url(../images/text-border-light.png); background-position: bottom left; background-repeat: no-repeat; padding-bottom: 15px;}
+
+html.dark div.video-list {background-color: #d36d83;}
+html.dark div.video-list a.popup-video {position: absolute; top: 38%; left: 34%; width: 40px; height: 40px; background-color: #FFFFFF; display: none; background-image: url(../images/icons/video-detay-dark.png); background-size: 40px; background-repeat: no-repeat; background-position: center;}
+html.dark div.video-list a.link-video {position: absolute; top: 38%; left: 53%; width: 40px; height: 40px; background-color: #FFFFFF; display: none; background-image: url(../images/icons/video-link-dark.png); background-size: 31px; background-repeat: no-repeat; background-position: center;}
+html.dark div.video-list span {position: absolute; top: 38%; left: 42%; width: 40px; height: 40px; background-image: url(../images/video-play.png); background-size: 40px; background-repeat: no-repeat; background-position: center;}
+html.dark div.video-list:hover img {opacity: 0.2;}
+html.dark div.video-list:hover a {display: block;}
+html.dark div.video-list:hover span {display: none;}
+html.dark .dark{
+
+    background-color: #333333;
+    color: white;
+}
+html.dark .dark a{
+
+    background-color: #333333;
+    color: white;
+}
+/* VIDEO */
+div.video-detail-video ul li {float: left;}

@@ -1,0 +1,92 @@
+html.light body {background-color: #FFFFFF !important; color: #121212;}
+html.light .text-color {color: #555555 !important;}
+html.light .bg-color {background-color: #EEEEEE !important;}
+
+html.light form.search-bar input[type="text"] {background-color: #DADADA; width: 80%; height: 40px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
+html.light form.search-bar input[type="submit"] {background-color: #DADADA; border: none; width: 10%; height: 40px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-image: url(../images/icons/search.png); background-size: 30px; background-position: center; background-repeat: no-repeat;}
+
+html.light .breadcrumb {background-color: transparent !important; height: 20px; margin: 0px;}
+html.light .breadcrumb a {color: #888888 !important; font-size: 13px;}
+html.light .breadcrumb span {margin: 0px 5px; display: inline-block;}
+
+html.light .navbar {height: 56px; background-color: #FFFFFF;}
+html.light .navbar i.sidebar-toggle {color: #212121; cursor: pointer; width: 35px !important; height: 35px !important; font-size: 35px !important; text-align: center;}
+
+html.light a.nav-link {color: #FFF; margin: 5px;}
+html.light li.separate {width: 1px; margin: 0px 15px; display: block; background-color: #777777;}
+html.light li.nav-item {margin: 0px 5px;}
+html.light li.nav-item i {font-size: 20px !important;}
+html.light li.nav-item a {font-weight: bold;}
+
+html.light div.sidebar-content {width: 70px;}
+html.light div.sidebar-menu {min-height: 100vh; background-color: #DADADA; position: fixed; z-index: 900;}
+html.light div.sidebar-menu div.sidebar-category {height: 360px; margin-top: -20px !important; margin-bottom: 20px; padding-bottom: 30px !important;}
+html.light div.sidebar-menu div.category-item {width: 100%; display: inline-block;}
+html.light div.sidebar-menu div.category-item div {color: #333333 !important; font-size: 21px; font-weight: 500;}
+html.light div.sidebar-menu div.category-item div:nth-child(1) {float: left; margin: 5px 3px 5px 18px;}
+html.light div.sidebar-menu div.category-item div:nth-child(2) {float: left; margin: 5px 3px;}
+html.light div.sidebar-menu div.category-item i {background-position: center; background-repeat: no-repeat; width: 32px; height: 32px; display: block;}
+html.light div.sidebar-menu div.category-item:nth-child(1) i {background-image: url(../images/icons/left-menu/onair-black.png); background-size: 29px;}
+html.light div.sidebar-menu div.category-item:nth-child(2) i {background-image: url(../images/icons/left-menu/muzik-black.png); background-size: 25px;}
+html.light div.sidebar-menu div.category-item:nth-child(3) i {background-image: url(../images/icons/left-menu/etkinlik-black.png); background-size: 26px;}
+html.light div.sidebar-menu div.category-item:nth-child(4) i {background-image: url(../images/icons/left-menu/ilanlar-black.png); background-size: 28px;}
+html.light div.sidebar-menu div.category-item:nth-child(5) i {background-image: url(../images/icons/left-menu/radyo-black.png); background-size: 27px;}
+html.light div.sidebar-menu div.category-item:nth-child(6) i {background-image: url(../images/icons/left-menu/videolar-black.png); background-size: 34px;}
+html.light div.sidebar-menu div.category-item:nth-child(7) i {background-image: url(../images/icons/left-menu/test-black.png); background-size: 26px;}
+html.light div.sidebar-menu div.category-item:nth-child(8) i {background-image: url(../images/icons/left-menu/keyif-black.png); background-size: 26px;}
+html.light div.sidebar-menu li a {display: block;}
+html.light div.sidebar-menu div.name {display: none;}
+
+html.light div.sidebar-menu div.sidebar-list ul {margin-top: 40px;}
+html.light div.sidebar-menu div.sidebar-list ul li {display: inline-block;}
+html.light div.sidebar-menu div.sidebar-list ul li a {font-size: 12px; font-weight: bold; margin: 0px 5px;}
+
+html.light div.sidebar-menu div.sidebar-app ul {margin-top: 10px;}
+html.light div.sidebar-menu div.sidebar-app ul li {width: 45%; display: inline-block;}
+
+html.light div.sidebar-menu div.sidebar-social {margin-top: 10px;}
+html.light div.sidebar-menu div.sidebar-social i {font-size: 17px; color: #222222;}
+
+html.light div.sidebar-menu div.sidebar-copyright {margin-top: 10px; font-size: 12px;}
+
+html.light a.top-artist {width: 23px; height: 23px; background-image: url(../images/icons/artists-dark.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-place {width: 23px; height: 23px; background-image: url(../images/icons/place-dark.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-list {width: 23px; height: 23px; background-image: url(../images/icons/music-dark.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-rocket {width: 23px; height: 23px; background-image: url(../images/emojies/roket.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-smile {width: 23px; height: 23px; background-image: url(../images/emojies/cok-iyi.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-love {width: 23px; height: 23px; background-image: url(../images/emojies/yerim.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-family {width: 23px; height: 23px; background-image: url(../images/icons/family-dark.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+html.light a.top-theme {width: 23px; height: 23px; background-image: url(../images/icons/moon.png); background-position: center; background-size: 23px; background-repeat: no-repeat;}
+
+/* HOMEPAGE */
+html.light div.slider ul.pagination {margin: 10px 10px 10px 0px;}
+html.light div.slider ul.pagination li {margin: 5px 10px 5px 0px; padding: 2px 12px; background-color: #333333; border-radius: 2px; cursor: pointer; font-size: 12px; color: #FFFFFF;}
+html.light div.slider ul.pagination li.active {background-color: #ec494c; color: #FFFFFF;}
+
+html.light div.page-padding-top {margin-top: 55px;}
+html.light div.page-name {height: 95px;}
+html.light div.page-name h1 {line-height: 95px; font-size: 40px; font-family: Source Sans Pro;}
+
+html.light .title {background-image: url(../images/text-border-dark.png); background-position: bottom left; background-repeat: no-repeat; padding-bottom: 15px;}
+
+/*html.light div.video-list {background-color: #d36d83;}
+html.light div.video-list a.popup-video {position: absolute; top: 38%; left: 34%; width: 40px; height: 40px; background-color: #FFFFFF; display: none; background-image: url(../images/icons/video-detay-dark.png); background-size: 40px; background-repeat: no-repeat; background-position: center;}
+html.light div.video-list a.link-video {position: absolute; top: 38%; left: 53%; width: 40px; height: 40px; background-color: #FFFFFF; display: none; background-image: url(../images/icons/video-link-dark.png); background-size: 31px; background-repeat: no-repeat; background-position: center;}
+html.light div.video-list span {position: absolute; top: 35%; left: 43%; width: 46px; height: 46px; background-image: url(../images/video-play.png); background-size: 46px; background-repeat: no-repeat; background-position: center;}
+html.light div.video-list:hover img {opacity: 0.2;}
+html.light div.video-list:hover a {display: block;}
+html.light div.video-list:hover span {display: none;}*/
+
+
+/**/
+
+ul.post-detail-social {text-align: left;}
+ul.post-detail-social li {display: inline-block; margin: 0px 5px;}
+
+/* VIDEO */
+div.video-detail-video ul li {float: left;}
+.video-category-button {height: 190px; background-color: #eee;}
+.video-category-button h5 {margin-top: 70px;}
+.video-category-button:hover {background-color: #686409;}
+.video-category-button-active {background-color: #686409;}
+
