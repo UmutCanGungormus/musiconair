@@ -92,9 +92,9 @@ class Palette implements \Countable, \IteratorAggregate
                 if ($areColorsIndexed) {
                     $colorComponents = imagecolorsforindex($image, $color);
                     $color = ($colorComponents['alpha'] * 16777216) +
-                             ($colorComponents['red'] * 65536) +
-                             ($colorComponents['green'] * 256) +
-                             ($colorComponents['blue']);
+                        ($colorComponents['red'] * 65536) +
+                        ($colorComponents['green'] * 256) +
+                        ($colorComponents['blue']);
                 }
 
                 if ($alpha = $color >> 24) {
@@ -104,8 +104,8 @@ class Palette implements \Countable, \IteratorAggregate
 
                     $alpha /= 127;
                     $color = (int) (($color >> 16 & 0xFF) * (1 - $alpha) + $backgroundColorRed * $alpha) * 65536 +
-                             (int) (($color >> 8 & 0xFF) * (1 - $alpha) + $backgroundColorGreen * $alpha) * 256 +
-                             (int) (($color & 0xFF) * (1 - $alpha) + $backgroundColorBlue * $alpha);
+                        (int) (($color >> 8 & 0xFF) * (1 - $alpha) + $backgroundColorGreen * $alpha) * 256 +
+                        (int) (($color & 0xFF) * (1 - $alpha) + $backgroundColorBlue * $alpha);
                 }
 
                 isset($palette->colors[$color]) ?

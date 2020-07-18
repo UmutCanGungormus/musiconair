@@ -27,14 +27,7 @@
                 </td>
                 <td><?php echo $item->url; ?></td>
                 <td class="w100 text-center">
-                    <input
-                        data-url="<?php echo base_url("galleries/fileIsActiveSetter/$item->id/$gallery_type"); ?>"
-                        class="isActive"
-                        type="checkbox"
-                        data-switchery
-                        data-color="#10c469"
-                        <?php echo ($item->isActive) ? "checked" : ""; ?>
-                    />
+                <div class="custom-control custom-switch"><input data-id="<?=$item->id?>" data-url="<?= base_url("galleries/fileIsActiveSetter/{$item->id}/$gallery_type"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?=$item->id?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input">  <label class="custom-control-label" for="customSwitch<?=$item->id?>"></label></div>
                 </td>
                 <td class="w100 text-center">
                     <a
@@ -57,47 +50,3 @@
         </tbody>
     </table>
 <?php } ?>
-<!--<?php if (empty($items)) { ?>
-                <div class="alert alert-info text-center">
-                    <h5 class="alert-title">Kayıt Bulunamadı</h5>
-                    <p>Burada herhangi bir resim bulunmamaktadır!</p>
-                </div>
-            <?php }else { ?>                       
-                <table class="table table-bordered table-striped table-hover pictures_list">
-                    <thead>
-                        <th class="order"><i class="fa fa-reorder"></i></th>
-                        <th class="w50 text-center">#id</th>
-                        <th class="text-center">Görsel</th>
-                        <th class="text-center">Dosya Yolu ve Adı</th>
-                        <th class="text-center">Durum</th>
-                        <th class="text-center">İşlem</th>
-                    </thead>
-                    <tbody class="sortable" data-url="<?php echo base_url("galleries/fileRankSetter/$gallery_type"); ?>">
-                        <?php foreach ($items as $item) { ?>
-                        <tr id="ord-<?php echo $item->id; ?>">
-                            <td class="order"><i class="fa fa-reorder"></i></td>
-                            <td class="w50 text-center">#<?php echo $item->id; ?></td>
-                            <td class="w100">
-                                <?php if($gallery_type == "image") { ?>
-                                    <img width="30" src="<?php echo base_url("$item->url"); ?>" alt="<?php echo $item->url; ?>" class="img img-responsive">
-                                <?php }elseif ($gallery_type == "file") { ?>
-                                    <i class="fa fa-folder fa-2x"></i>
-                                <?php } ?>
-                            </td>
-                            <td><?php echo $item->url; ?></td>
-                            <td class="w100 text-center">
-                                <input
-                                    data-url="<?php echo base_url("galleries/imageIsActiveSetter/$item->id"); ?>" 
-                                    class="isActive" 
-                                    type="checkbox" 
-                                    data-switchery 
-                                    data-color="#10c469" 
-                                    <?php echo ($item->isActive) ? "checked" : ""; ?> 
-                                />
-                            </td>
-                            <td class="w100 text-center"><button data-url="<?php echo base_url("galleries/imageDelete/$item->id/$item->gallery_id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn btn-block"><i class="fa fa-trash"></i> Sil</button></td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } ?>-->

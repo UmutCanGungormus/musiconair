@@ -3,14 +3,18 @@ html.dark .text-color {color: #FFFFFF !important;}
 html.dark .bg-color {background-color: #121212 !important;}
 
 html.dark form.search-bar input[type="text"] {background-color: #272727; width: 80%; height: 40px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
-html.dark form.search-bar input[type="submit"] {background-color: #272727; border: none; width: 10%; height: 40px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-image: url(../images/icons/search.png); background-size: 30px; background-position: center; background-repeat: no-repeat;}
-
+html.dark form.search-bar input[type="submit"] {background-color: #272727; border: none; width: 10%; height: 40px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-size: 30px; background-position: center; background-repeat: no-repeat;}
+html.dark form.search-bar button[type="submit"] {background-color: #272727; border: none; width: 20%; height: 40px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-size: 30px; background-position: center; background-repeat: no-repeat;}
+html.dark form.search-bar button.search-button::before{ font-family: "Font Awesome 5 Free";content: "\f002";display: inline-block;padding-right: 3px;vertical-align: middle;font-weight: 900;color:#fff}
+html.light form.search-bar input:focus{border-left:1px #DADADA!important;border-top:1px #DADADA!important;border-bottom: 1px #DADADA!important;border-right: none!important;}
+html.light form.search-bar button:focus{border-right:1px #DADADA!important;border-top:1px #DADADA!important;border-bottom: 1px #DADADA!important;border-left: none!important;}
 html.dark .breadcrumb {background-color: transparent !important; height: 20px; margin: 0px;}
 html.dark .breadcrumb a {color: #FFFFFF !important; font-size: 13px;}
 html.dark .breadcrumb span {margin: 0px 5px; display: inline-block;}
 
-html.dark .navbar {height: 56px; background-color: #202020;}
-html.dark .navbar i.sidebar-toggle {color: #FFFFFF; cursor: pointer; width: 35px !important; height: 35px !important; font-size: 35px !important; text-align: center;}
+html.dark .navbar {background-color: #202020;}
+html.dark .navbar i.sidebar-toggle {color: #FFFFFF; cursor: pointer; text-align: center;}
+html.dark .navbar .navbar-toggler-icon i {color: #FFFFFF; cursor: pointer; text-align: center;}
 
 html.dark a.nav-link {color: #FFF; margin: 5px;}
 html.dark li.separate {width: 1px; margin: 0px 15px; display: block; background-color: #777777;}

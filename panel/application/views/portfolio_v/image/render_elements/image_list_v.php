@@ -1,56 +1,40 @@
-<?php if(empty($item_images)) { ?>
+<?php if (empty($item_images)) : ?>
     <div class="alert alert-info text-center">
         <p>Burada herhangi bir resim bulunmamaktadır.</a></p>
     </div>
-<?php } else { ?>
+<?php else : ?>
     <table class="table table-bordered table-striped table-hover pictures_list">
         <thead>
-        <th class="order"><i class="fa fa-reorder"></i></th>
-        <th>#id</th>
-        <th>Görsel</th>
-        <th>Resim Adı</th>
-        <th>Durumu</th>
-        <th>Kapak</th>
-        <th>İşlem</th>
+            <th class="order"><i class="fa fa-reorder"></i></th>
+            <th>#id</th>
+            <th>Görsel</th>
+            <th>Resim Adı</th>
+            <th>Durumu</th>
+            <th>Kapak</th>
+            <th>İşlem</th>
         </thead>
-        <tbody class="sortable" data-url="<?php echo base_url("portfolio/imageRankSetter"); ?>">
-        <?php foreach($item_images as $image){ ?>
-            <tr id="ord-<?php echo $image->id; ?>">
-                <td class="order"><i class="fa fa-reorder"></i></td>
-                <td class="w50 text-center">#<?php echo $image->id; ?></td>
-                <td class="w100 text-center">
-                    <img width="30" src="<?php echo get_picture($viewFolder, $image->img_url, "255x157"); ?>" alt="<?php echo $image->img_url; ?>" class="img-responsive">
-                </td>
-                <td><?php echo $image->img_url; ?></td>
-                <td class="w100 text-center">
-                    <input
-                        data-url="<?php echo base_url("portfolio/imageIsActiveSetter/$image->id"); ?>"
-                        class="isActive"
-                        type="checkbox"
-                        data-switchery
-                        data-color="#10c469"
-                        <?php echo ($image->isActive) ? "checked" : ""; ?>
-                    />
-                </td>
-                <td class="w100 text-center">
-                    <input
-                        data-url="<?php echo base_url("portfolio/isCoverSetter/$image->id/$image->portfolio_id"); ?>"
-                        class="isCover"
-                        type="checkbox"
-                        data-switchery
-                        data-color="#ff5b5b"
-                        <?php echo ($image->isCover) ? "checked" : ""; ?>
-                    />
-                </td>
-                <td class="w100 text-center">
-                    <button
-                        data-url="<?php echo base_url("portfolio/imageDelete/$image->id/$image->portfolio_id"); ?>"
-                        class="btn btn-sm btn-danger btn-outline remove-btn btn-block">
-                        <i class="fa fa-trash"></i> Sil
-                    </button>
-                </td>
-            </tr>
-        <?php } ?>
+        <tbody class="sortable" data-url="<?= base_url("portfolio/imageRankSetter"); ?>">
+            <?php foreach ($item_images as $image) : ?>
+                <tr id="ord-<?= $image->id; ?>">
+                    <td class="order"><i class="fa fa-reorder"></i></td>
+                    <td class="w50 text-center">#<?= $image->id; ?></td>
+                    <td class="w100 text-center">
+                        <img width="30" src="<?= get_picture($viewFolder, $image->img_url, "255x157"); ?>" alt="<?= $image->img_url; ?>" class="img-responsive">
+                    </td>
+                    <td><?= $image->img_url; ?></td>
+                    <td class="w100 text-center">
+                        <div class="custom-control custom-switch"><input data-id="<?= $image->id ?>" data-url="<?= base_url("portfolio/imageIsActiveSetter/{$image->id}"); ?>" data-status="<?= ($image->isActive) ? "checked" : ""; ?>" id="customSwitch<?= $image->id ?>i" type="checkbox" <?= ($image->isActive) ? "checked" : ""; ?> class="my-check custom-control-input"> <label class="custom-control-label" for="customSwitch<?= $image->id ?>i"></label></div>
+                    </td>
+                    <td class="w100 text-center">
+                        <div class="custom-control custom-switch"><input data-id="<?= $image->id ?>" data-url="<?= base_url("portfolio/isCoverSetter/{$image->id}/{$image->portfolio_id}"); ?>" data-status="<?= ($image->isActive) ? "checked" : ""; ?>" id="customSwitch<?= $image->id ?>" type="checkbox" <?= ($image->isActive) ? "checked" : ""; ?> class="my-check custom-control-input"> <label class="custom-control-label" for="customSwitch<?= $image->id ?>"></label></div>
+                    </td>
+                    <td class="w100 text-center">
+                        <button data-url="<?= base_url("portfolio/imageDelete/$image->id/$image->portfolio_id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn btn-block">
+                            <i class="fa fa-trash"></i> Sil
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach ?>
         </tbody>
     </table>
-<?php } ?>
+<?php endif ?>

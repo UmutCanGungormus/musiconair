@@ -6,15 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitc42b5a352f0656a4133e0b7e86f475bb
 {
-    public static $fallbackDirsPsr4 = array (
+    public static $fallbackDirsPsr4 = array(
         0 => __DIR__ . '/..' . '/league/color-extractor/src',
     );
 
-    public static $prefixesPsr0 = array (
-        'c' => 
-        array (
-            'claviska' => 
-            array (
+    public static $prefixesPsr0 = array(
+        'c' =>
+        array(
+            'claviska' =>
+            array(
                 0 => __DIR__ . '/..' . '/claviska/simpleimage/src',
             ),
         ),
@@ -25,7 +25,6 @@ class ComposerStaticInitc42b5a352f0656a4133e0b7e86f475bb
         return \Closure::bind(function () use ($loader) {
             $loader->fallbackDirsPsr4 = ComposerStaticInitc42b5a352f0656a4133e0b7e86f475bb::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitc42b5a352f0656a4133e0b7e86f475bb::$prefixesPsr0;
-
         }, null, ClassLoader::class);
     }
 }

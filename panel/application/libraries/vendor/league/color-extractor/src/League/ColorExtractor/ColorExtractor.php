@@ -51,8 +51,8 @@ class ColorExtractor
             $queue->insert(
                 $color,
                 (sqrt($labColor['a'] * $labColor['a'] + $labColor['b'] * $labColor['b']) ?: 1) *
-                (1 - $labColor['L'] / 200) *
-                sqrt($count)
+                    (1 - $labColor['L'] / 200) *
+                    sqrt($count)
             );
             ++$i;
         }
@@ -175,9 +175,9 @@ class ColorExtractor
 
         return sqrt(
             pow($LpDelta / $Sl, 2) +
-            pow($CpDelta / $Sc, 2) +
-            pow($HpDelta / $Sh, 2) +
-            $Rt * ($CpDelta / $Sc) * ($HpDelta / $Sh)
+                pow($CpDelta / $Sc, 2) +
+                pow($HpDelta / $Sh, 2) +
+                $Rt * ($CpDelta / $Sc) * ($HpDelta / $Sh)
         );
     }
 

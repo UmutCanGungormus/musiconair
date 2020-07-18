@@ -3,14 +3,18 @@ html.light .text-color {color: #555555 !important;}
 html.light .bg-color {background-color: #EEEEEE !important;}
 
 html.light form.search-bar input[type="text"] {background-color: #DADADA; width: 80%; height: 40px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
-html.light form.search-bar input[type="submit"] {background-color: #DADADA; border: none; width: 10%; height: 40px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-image: url(../images/icons/search.png); background-size: 30px; background-position: center; background-repeat: no-repeat;}
-
+html.light form.search-bar input[type="submit"] {background-color: #DADADA; border: none; width: 10%; height: 40px; border-top-left-radius: 0; border-bottom-left-radius: 0; background-image: url(../images/icons/search.png); background-size: 30px; background-position: center; background-repeat: no-repeat;}
+html.light form.search-bar button[type="submit"] {background-color: #DADADA; border: none; width: 20%; height: 40px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-size: 30px; background-position: center; background-repeat: no-repeat;}
+html.light form.search-bar button.search-button::before{ font-family: "Font Awesome 5 Free";content: "\f002";display: inline-block;padding-right: 3px;vertical-align: middle;font-weight: 900;color:#222}
+html.light form.search-bar input:focus{border-left:1px #222!important;border-top:1px #222!important;border-bottom: 1px #222!important;border-right: none!important;}
+html.light form.search-bar button:focus{border-right:1px #222!important;border-top:1px #222!important;border-bottom: 1px #222!important;border-left: none!important;}
 html.light .breadcrumb {background-color: transparent !important; height: 20px; margin: 0px;}
 html.light .breadcrumb a {color: #888888 !important; font-size: 13px;}
 html.light .breadcrumb span {margin: 0px 5px; display: inline-block;}
 
-html.light .navbar {height: 56px; background-color: #FFFFFF;}
-html.light .navbar i.sidebar-toggle {color: #212121; cursor: pointer; width: 35px !important; height: 35px !important; font-size: 35px !important; text-align: center;}
+html.light .navbar {background-color: #FFFFFF;}
+html.light .navbar i.sidebar-toggle {color: #212121; cursor: pointer; text-align: center;}
+html.light .navbar .navbar-toggler-icon i {color: #212121; cursor: pointer; text-align: center;}
 
 html.light a.nav-link {color: #FFF; margin: 5px;}
 html.light li.separate {width: 1px; margin: 0px 15px; display: block; background-color: #777777;}

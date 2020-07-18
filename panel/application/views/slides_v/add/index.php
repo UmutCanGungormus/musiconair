@@ -1,21 +1,42 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <?php $this->load->view("includes/head"); ?>
 </head>
-<body class="menubar-left menubar-unfold menubar-light theme-primary">
-    <?php $this->load->view("includes/navbar"); ?>
-    <?php $this->load->view("includes/aside"); ?>
-    <?php $this->load->view("includes/navbar-search"); ?>
-    <main id="app-main" class="app-main">
-        <div class="wrap">
-            <section class="app-content">
-                <?php $this->load->view("{$viewFolder}/{$subViewFolder}/content"); ?>
-            </section>
+
+<body>
+    <!--============= start main area -->
+
+    <!-- Preloader -->
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <!-- /Preloader -->
+
+    <!-- HK Wrapper -->
+    <div class="hk-wrapper hk-vertical-nav">
+        <!-- APP NAVBAR ==========-->
+        <?php $this->load->view("includes/navbar"); ?>
+        <!--========== END app navbar -->
+
+        <!-- APP ASIDE ==========-->
+        <?php $this->load->view("includes/aside"); ?>
+        <!--========== END app aside -->
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper">
+            <?php $this->load->view("{$viewFolder}/{$subViewFolder}/content"); ?>
+
+            <!-- APP FOOTER -->
+            <?php $this->load->view("includes/footer"); ?>
         </div>
-        <?php $this->load->view("includes/footer"); ?>
-    </main>
+        <!-- /Main Content -->
+    </div>
+    <!-- /HK Wrapper -->
+    <!--========== END app main -->
+
     <?php $this->load->view("includes/include_script"); ?>
-    <?php $this->load->view("{$viewFolder}/{$subViewFolder}/page_script"); ?>
+
 </body>
+
 </html>

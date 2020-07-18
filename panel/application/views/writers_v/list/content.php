@@ -1,74 +1,72 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-b-lg">
-            Yazarlar / Editörler
-            <a href="<?php echo base_url("writers/new_form"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
-        </h4>
-    </div><!-- END column -->
-    <div class="col-md-12">
-        <div class="widget p-lg">
+<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="mb-3">
+                Yazarlar / Editörler
+                <a href="<?= base_url("writers/new_form"); ?>" class="btn btn-outline btn-primary btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+            </h4>
+        </div><!-- END column -->
+        <div class="col-md-12">
+            <div class="widget p-lg">
 
-            <?php if(empty($items)) { ?>
+                <?php if (empty($items)) : ?>
 
-                <div class="alert alert-info text-center">
-                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("writers/new_form"); ?>">tıklayınız</a></p>
-                </div>
+                    <div class="alert alert-info text-center">
+                        <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?= base_url("writers/new_form"); ?>">tıklayınız</a></p>
+                    </div>
 
-            <?php } else { ?>
+                <?php else : ?>
 
-                <table class="table table-hover table-striped table-bordered content-container">
-                    <thead>
-                        <th class="order"><i class="fa fa-reorder"></i></th>
-                        <th class="w50">#id</th>
-                        <th>Ad Soyad</th>
-                        <th>Görev</th>
-                        <th>Görsel</th>
-                        <th>Durumu</th>
-                        <th>İşlem</th>
-                    </thead>
-                    <tbody class="sortable" data-url="<?php echo base_url("writers/rankSetter"); ?>">
+                    <form id="filter_form" onsubmit="return false">
+                        <div class="d-flex flex-wrap">
+                            <label for="search" class="flex-fill mx-1">
+                                <input class="form-control" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'writersTable')" name="search">
+                            </label>
+                            <label for="clear_button" class="mx-1">
+                                <button class="btn btn-danger btn-md" onclick="clearFilter('filter_form','writersTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+                            </label>
+                            <label for="search_button" class="mx-1">
+                                <button class="btn btn-success btn-md" onclick="reloadTable('writersTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
+                        </div>
+            </div>
 
-                        <?php foreach($items as $item) { ?>
+            </form>
 
-                            <tr id="ord-<?php echo $item->id; ?>">
-                                <td class="order"><i class="fa fa-reorder"></i></td>
-                                <td class="w50 text-center">#<?php echo $item->id; ?></td>
-                               
-                                <td><?php echo $item->name; ?></td>
-                                <td><?php echo $item->type; ?></td>
-                                <td class="text-center w100">
-                                    <img width="75"
-                                         src="<?php echo get_picture($viewFolder, $item->img_url, "90x90"); ?>"
-                                         alt="" class="img-rounded">
-                                </td>
-                                <td class="text-center w100">
-                                    <input
-                                        data-url="<?php echo base_url("writers/isActiveSetter/$item->id"); ?>"
-                                        class="isActive"
-                                        type="checkbox"
-                                        data-switchery
-                                        data-color="#10c469"
-                                        <?php echo ($item->isActive) ? "checked" : ""; ?>
-                                    />
-                                </td>
-                                <td class="text-center w200">
-                                    <button
-                                        data-url="<?php echo base_url("writers/delete/$item->id"); ?>"
-                                        class="btn btn-sm btn-danger btn-outline remove-btn">
-                                        <i class="fa fa-trash"></i> Sil
-                                    </button>
-                                    <a href="<?php echo base_url("writers/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
-                                </td>
-                            </tr>
+            <table width="100%" class="table table-hover table-striped table-bordered content-container writersTable">
+                <thead>
+                    <th class="order"><i class="fa fa-reorder"></i></th>
+                    <th class="order nosort"><i class="fa fa-reorder"></i></th>
+                    <th class="w50">#id</th>
+                    <th>Ad Soyad</th>
+                    <th>Görev</th>
+                    <th>Görsel</th>
+                    <th>Durumu</th>
+                    <th>İşlem</th>
+                </thead>
+                <tbody class="sortable" data-url="<?= base_url("writers/rankSetter"); ?>">
 
-                        <?php } ?>
+                   
 
-                    </tbody>
+                </tbody>
 
-                </table>
+            </table>
 
-            <?php } ?>
+        <?php endif ?>
 
         </div><!-- .widget -->
     </div><!-- END column -->
 </div>
+</div>
+<script>
+    function obj(d) {
+        let appendeddata = {};
+        $.each($("#filter_form").serializeArray(), function() {
+            d[this.name] = this.value;
+        });
+        return d;
+    }
+    $(document).ready(function() {
+        TableInitializerV2("writersTable", obj, {}, "<?= base_url("writers/datatable") ?>", "<?= base_url("product/rankSetter") ?>", true);
+
+    });
+</script>

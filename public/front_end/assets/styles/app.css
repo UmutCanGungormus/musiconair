@@ -67,10 +67,39 @@ ul.post-emoji-icons li.yok-artik {background-image: url(../images/emojies/yok-ar
 ul.post-emoji-icons li.helal-olsun {background-image: url(../images/emojies/helal-olsun.png);;}
 ul.post-emoji-icons li.hos-degil {background-image: url(../images/emojies/hos-degil.png);;}
 ul.post-emoji-icons li.roket {background-image: url(../images/emojies/roket.png);;}
+header.header{
+    height:71px;
+}
+.carousel-caption{
+    bottom:0;
+    left:0;
+    width:100%;
+    background-color: #2222227a;
+}
+.owl-carousel .owl-wrapper {
+    display: flex !important;
+}
+.owl-carousel .owl-item img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+    max-width: initial;
+    min-height: auto;
+}
 
+.owl-dots{
+    position:absolute;
+    bottom: 5px;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+.owl-dots button:focus{
+    outline: none;
+}
+.owl-theme .owl-nav {margin-top: 0;}
+div.owl-carousel i.left {top:43%}
+div.owl-carousel i.right {top:43%}
 
-
-
-
-
-
+.banner160{
+    height: 160px;
+}

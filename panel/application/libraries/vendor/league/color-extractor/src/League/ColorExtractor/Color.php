@@ -12,7 +12,7 @@ class Color
      */
     public static function fromIntToHex($color, $prependHash = true)
     {
-        return ($prependHash ? '#' : '').sprintf('%06X', $color);
+        return ($prependHash ? '#' : '') . sprintf('%06X', $color);
     }
 
     /**

@@ -1,20 +1,21 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-b-lg">
-            <?php echo "<b>$gallery->title</b> galerisine ait videolar" ; ?>
-            <a href="<?php echo base_url("galleries/new_gallery_video_form/$gallery->id"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
-        </h4>
-    </div>
-    <div class="col-md-12">
-        <div class="widget p-lg">
+<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h4 class="mb-3">
+                <b><?= $gallery->title ?></b> galerisine ait videolar
+                <a href="<?= base_url("galleries/new_gallery_video_form/$gallery->id"); ?>" class="btn btn-outline btn-primary btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+            </h4>
+            <hr>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
-            <?php if(empty($items)) { ?>
+            <?php if (empty($items)) : ?>
 
                 <div class="alert alert-info text-center">
-                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("galleries/new_gallery_video_form/$gallery->id"); ?>">tıklayınız</a></p>
+                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?= base_url("galleries/new_gallery_video_form/$gallery->id"); ?>">tıklayınız</a></p>
                 </div>
 
-            <?php } else { ?>
+            <?php else : ?>
 
                 <table class="table table-hover table-striped table-bordered content-container">
                     <thead>
@@ -25,52 +26,37 @@
                         <th>Durumu</th>
                         <th>İşlem</th>
                     </thead>
-                    <tbody class="sortable" data-url="<?php echo base_url("galleries/rankGalleryVideoSetter"); ?>">
+                    <tbody class="sortable" data-url="<?= base_url("galleries/rankGalleryVideoSetter"); ?>">
 
-                        <?php foreach($items as $item) { ?>
+                        <?php foreach ($items as $item) : ?>
 
-                            <tr id="ord-<?php echo $item->id; ?>">
+                            <tr id="ord-<?= $item->id; ?>">
                                 <td class="order"><i class="fa fa-reorder"></i></td>
-                                <td class="w50 text-center">#<?php echo $item->id; ?></td>
-                                <td class="text-center"><?php echo $item->url; ?></td>
+                                <td class="w50 text-center">#<?= $item->id; ?></td>
+                                <td class="text-center"><?= $item->url; ?></td>
                                 <td class="text-center w100">
-                                    <iframe
-                                        width="100"
-                                        src="//www.youtube.com/embed/<?php echo $item->url; ?>"
-                                        frameborder="0"
-                                        gesture="media"
-                                        allow="encrypted-media"
-                                        allowfullscreen>
+                                    <iframe width="100" src="//www.youtube.com/embed/<?= $item->url; ?>" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen>
 
                                     </iframe>
                                 </td>
                                 <td class="text-center w100">
-                                    <input
-                                        data-url="<?php echo base_url("galleries/galleryVideoIsActiveSetter/$item->id"); ?>"
-                                        class="isActive"
-                                        type="checkbox"
-                                        data-switchery
-                                        data-color="#10c469"
-                                        <?php echo ($item->isActive) ? "checked" : ""; ?>
-                                    />
+                                <div class="custom-control custom-switch"><input data-id="<?=$item->id?>" data-url="<?= base_url("galleries/galleryVideoIsActiveSetter/{$item->id}"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?=$item->id?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input">  <label class="custom-control-label" for="customSwitch<?=$item->id?>"></label></div>
                                 </td>
                                 <td class="text-center w200">
-                                    <button
-                                        data-url="<?php echo base_url("galleries/galleryVideoDelete/$item->id/$item->gallery_id"); ?>"
-                                        class="btn btn-sm btn-danger btn-outline remove-btn">
+                                    <button data-url="<?= base_url("galleries/galleryVideoDelete/$item->id/$item->gallery_id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn">
                                         <i class="fa fa-trash"></i> Sil
                                     </button>
-                                    <a href="<?php echo base_url("galleries/update_gallery_video_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
+                                    <a href="<?= base_url("galleries/update_gallery_video_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
                                 </td>
                             </tr>
 
-                        <?php } ?>
+                        <?php endforeach ?>
 
                     </tbody>
 
                 </table>
 
-            <?php } ?>
+            <?php endif ?>
 
         </div>
     </div>

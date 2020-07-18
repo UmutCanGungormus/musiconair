@@ -1,34 +1,92 @@
 <?php
-class Home_banner extends MY_Controller{
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Home_banner extends MY_Controller
+{
     public $viewFolder = "";
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->viewFolder = "home_banner_v";
         $this->load->model("home_banner_model");
+        $this->load->model("product_category_model");
         $this->load->helper("text");
-        if(!get_active_user()){
+        if (!get_active_user()) {
             redirect(base_url("login"));
         }
     }
-    public function index(){
+    public function index()
+    {
         $viewData = new stdClass();
         $items = $this->home_banner_model->get_all(
-            array(), "rank ASC"
+            array(),
+            "rank ASC"
         );
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
         $viewData->items = $items;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
-    public function new_form(){
+    public function datatable()
+    {
+        $items = $this->home_banner_model->getRows(
+            [],
+            $_POST
+        );
+        $data = $row = array();
+        $i = (!empty($_POST['start']) ? $_POST['start'] : 0);
+
+        foreach ($items as $item) {
+            $i++;
+            
+            $proccessing = '
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    İşlemler
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="' . base_url("home_banner/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item" href="' . base_url("home_banner/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    </div>
+            </div>';
+
+
+
+            //array_push($renkler,$renk->negotiation_stage_color);
+            
+            $item->img_url="<img src='".get_picture($this->viewFolder,$item->img_url,"857x505")."' width='60px' height='60px' >";
+            $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("home_banner/isActiveSetter/{$item->id}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
+            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->url, $item->img_url, $checkbox, $proccessing);
+        }
+        
+
+
+        $output = array(
+            "draw" => (!empty($_POST['draw']) ? $_POST['draw'] : 0),
+            "recordsTotal" => $this->home_banner_model->rowCount(),
+            "recordsFiltered" => $this->home_banner_model->countFiltered([], (!empty($_POST) ? $_POST : [])),
+            "data" => $data,
+        );
+
+        // Output to JSON format
+        echo json_encode($output);
+    }
+    public function new_form()
+    {
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
+        $viewData->categories = $this->product_category_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
         $viewData->subViewFolder = "add";
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
-    public function save(){
+    public function save()
+    {
         $this->load->library("form_validation");
-        if($_FILES["img_url"]["name"] == ""){
+        if ($_FILES["img_url"]["name"] == "") {
             $alert = array(
                 "title" => "İşlem Başarısız",
                 "text" => "Lütfen bir görsel seçiniz",
@@ -41,28 +99,28 @@ class Home_banner extends MY_Controller{
             die();
         }
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
-      
+
         $this->form_validation->set_message(
             array(
                 "required"  => "<b>{field}</b> alanı doldurulmalıdır"
             )
         );
         $validate = $this->form_validation->run();
-        if($validate){
-            $file_name = convertToSEO(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",857,505, $file_name);
-            if($image_857x505){
+        if ($validate) {
+            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+            $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
+            if ($image_857x505) {
                 $insert = $this->home_banner_model->add(
                     array(
                         "title"         => $this->input->post("title"),
                         "url"         => $this->input->post("url"),
                         "img_url"       => $file_name,
-                      
+                        "category_id" =>$this->input->post("category_id"),
                         "rank"          => 0,
                         "isActive"      => 1
                     )
                 );
-                if($insert){
+                if ($insert) {
                     $alert = array(
                         "title" => "İşlem Başarılı",
                         "text" => "Kayıt başarılı bir şekilde eklendi",
@@ -95,11 +153,17 @@ class Home_banner extends MY_Controller{
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
     }
-    public function update_form($id){
+    public function update_form($id)
+    {
         $viewData = new stdClass();
         $item = $this->home_banner_model->get(
             array(
                 "id"    => $id,
+            )
+        );
+        $viewData->categories = $this->product_category_model->get_all(
+            array(
+                "isActive" => 1
             )
         );
         $viewData->viewFolder = $this->viewFolder;
@@ -107,26 +171,28 @@ class Home_banner extends MY_Controller{
         $viewData->item = $item;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
-    public function update($id){
+    public function update($id)
+    {
         $this->load->library("form_validation");
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
-      
+
         $this->form_validation->set_message(
             array(
                 "required"  => "<b>{field}</b> alanı doldurulmalıdır"
             )
         );
         $validate = $this->form_validation->run();
-        if($validate){
-            if($_FILES["img_url"]["name"] !== "") {
-                $file_name = convertToSEO(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",857,505, $file_name);
-                if($image_857x505){
+        if ($validate) {
+            if ($_FILES["img_url"]["name"] !== "") {
+                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
+                if ($image_857x505) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "url"         => $this->input->post("url"),
-                        "img_url"       => $file_name
-                     
+                        "img_url"       => $file_name,
+                        "category_id" =>$this->input->post("category_id")
+
                     );
                 } else {
                     $alert = array(
@@ -141,13 +207,14 @@ class Home_banner extends MY_Controller{
             } else {
                 $data = array(
                     "title"         => $this->input->post("title"),
-                    "url"         => $this->input->post("url")
-                  
-                   
+                    "url"         => $this->input->post("url"),
+                    "category_id" =>$this->input->post("category_id")
+
+
                 );
             }
             $update = $this->home_banner_model->update(array("id" => $id), $data);
-            if($update){
+            if ($update) {
                 $alert = array(
                     "title" => "İşlem Başarılı",
                     "text" => "Kayıt başarılı bir şekilde güncellendi",
@@ -176,13 +243,14 @@ class Home_banner extends MY_Controller{
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
     }
-    public function delete($id){
+    public function delete($id)
+    {
         $delete = $this->home_banner_model->delete(
             array(
                 "id"    => $id
             )
         );
-        if($delete){
+        if ($delete) {
             $alert = array(
                 "title" => "İşlem Başarılı",
                 "text" => "Kayıt başarılı bir şekilde silindi",
@@ -199,33 +267,29 @@ class Home_banner extends MY_Controller{
         $this->session->set_flashdata("alert", $alert);
         redirect(base_url("home_banner"));
     }
-    public function isActiveSetter($id){
-        if($id){
-            $isActive = ($this->input->post("data") === "true") ? 1 : 0;
-            $this->home_banner_model->update(
+    public function rankSetter()
+    {
+        $rows = $this->input->post("rows");
+
+        foreach ($rows as $row) {
+            $this->news_model->update(
                 array(
-                    "id"    => $id
+                    "id" => $row["id"]
                 ),
-                array(
-                    "isActive"  => $isActive
-                )
+                array("rank" => $row["position"])
             );
         }
     }
-    public function rankSetter(){
-        $data = $this->input->post("data");
-        parse_str($data, $order);
-        $items = $order["ord"];
-        foreach ($items as $rank => $id){
-            $this->home_banner_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank"      => $rank
-                )
-            );
+
+    public function isActiveSetter($id)
+    {
+        if ($id) {
+            $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
+            if ($this->home_banner_model->update(["id" => $id], ["isActive" => $isActive])) {
+                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
+            } else {
+                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
+            }
         }
     }
 }

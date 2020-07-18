@@ -1,7 +1,11 @@
-<div class="wrap p-t-0">
-    <footer class="app-footer">
-        <div class="clearfix">
-            <div class="copyright pull-left">Tüm hakları saklıdır | Mutfak Yapım <?php echo date("Y"); ?> &copy;</div>
+<!-- Footer -->
+<div class="hk-footer-wrap container">
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <p>Tüm Hakları Saklıdır. <a href="https://mutfakyapim.com/" class="text-dark" target="_blank">Mutfak Yapım</a> © <?=date("Y")?></p>
+            </div>
         </div>
     </footer>
 </div>
+<!-- /Footer -->

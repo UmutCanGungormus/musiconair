@@ -1,56 +1,64 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-b-lg">
-        	Kullanıcı Listesi
-        	<a href="<?php echo base_url("users/new_form"); ?>" class="pull-right btn btn-outline btn-primary btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
-        </h4>
-    </div><!-- END column -->
-    <div class="col-md-12">
-        <div class="widget p-lg">
-        	<?php if (empty($items)) { ?>
-        		<div class="alert alert-info text-center">
-					<h5 class="alert-title">Kayıt Bulunamadı</h5>
-					<p>Burada herhangi bir veri bulunmamaktadır. Ekleme için lütfen <a href="<?php echo base_url("users/new_form"); ?>">tıklayınız...</a></p>
-				</div>
-        	<?php }else { ?>
-            <table class="table table-hover table-striped table-bordered content-container">
+<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+	<div class="row">
+		<div class="col-md-12">
+			<h4 class="mb-3">
+				Kullanıcı Listesi
+				<a href="<?= base_url("users/new_form"); ?>" class="float-right btn btn-outline btn-primary btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
+			</h4>
+		</div><!-- END column -->
+		<div class="col-md-12">
+			<div class="widget p-lg">
+				<?php if (empty($items)) : ?>
+					<div class="alert alert-info text-center">
+						<h5 class="alert-title">Kayıt Bulunamadı</h5>
+						<p>Burada herhangi bir veri bulunmamaktadır. Ekleme için lütfen <a href="<?= base_url("users/new_form"); ?>">tıklayınız...</a></p>
+					</div>
+				<?php else : ?>
+					<form id="filter_form" onsubmit="return false">
+						<div class="d-flex flex-wrap">
+							<label for="search" class="flex-fill mx-1">
+								<input class="form-control" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'userTable')" name="search">
+							</label>
+							<label for="clear_button" class="mx-1">
+								<button class="btn btn-danger btn-md" onclick="clearFilter('filter_form','userTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+							</label>
+							<label for="search_button" class="mx-1">
+								<button class="btn btn-success btn-md" onclick="reloadTable('userTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
+						</div>
+			</div>
 
-                <thead>
-                    <th class="w50">#id</th>
-                    <th>Kallanıcı Adı</th>
-                    <th>Ad Soyad</th>
-                    <th>E-Posta</th>
-					<th>Durum</th>
-					<th>İşlem</th>
-                </thead>
-                <tbody>
-                	<?php foreach ($items as $item) { ?>
-                		<tr>
-                        	<td class="w50 text-center">#<?php echo $item->id; ?></td>
-                        	<td><?php echo $item->user_name; ?></td>
-                            <td><?php echo $item->full_name; ?></td>
-                            <td><?php echo $item->email; ?></td>
-                        	<td class="text-center w100">
-                        		<input
-                                    data-url="<?php echo base_url("users/isActiveSetter/$item->id"); ?>" 
-                        			class="isActive" 
-                        			type="checkbox" 
-                        			data-switchery 
-                        			data-color="#10c469" 
-                        			<?php echo ($item->isActive) ? "checked" : ""; ?> 
-                        		/>
-                        	</td>
-                        	<td class="text-center w300">
-                            	<button data-url="<?php echo base_url("users/delete/$item->id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn"><i class="fa fa-trash"></i> Sil</button>
-                            	<a href="<?php echo base_url("users/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
-								<a href="<?php echo base_url("users/update_password_form/$item->id"); ?>" class="btn btn-sm btn-purple btn-outline"><i class="fa fa-key"></i> Şifre Değiştir </a>
-                        	</td>
-                    	</tr>
-                	<?php } ?>                    
-                </tbody>
+			</form>
+					<table class="table table-hover table-striped table-bordered content-container userTable">
 
-            </table>
-        <?php } ?>
-        </div><!-- .widget -->
-    </div><!-- END column -->
+						<thead>
+						<th class="order"><i class="fa fa-reorder"></i></th>
+							<th class="order"><i class="fa fa-reorder"></i></th>
+							<th class="w50">#id</th>
+							<th>Ad Soyad</th>
+							<th>E-Posta</th>
+							<th>Durum</th>
+							<th>İşlem</th>
+						</thead>
+						<tbody>
+						
+						</tbody>
+
+					</table>
+				<?php endif; ?>
+			</div><!-- .widget -->
+		</div><!-- END column -->
+	</div>
 </div>
+<script>
+	function obj(d) {
+		let appendeddata = {};
+		$.each($("#filter_form").serializeArray(), function() {
+			d[this.name] = this.value;
+		});
+		return d;
+	}
+	$(document).ready(function() {
+		TableInitializerV2("userTable", obj, {}, "<?= base_url("users/datatable") ?>", "<?= base_url("users/rankSetter") ?>", true);
+
+	});
+</script>

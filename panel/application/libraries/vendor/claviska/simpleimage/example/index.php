@@ -19,7 +19,7 @@ try {
     ->overlay('flag.png', 'bottom right') // add a watermark image
     ->toScreen();                         // output to the screen
 
-} catch(Exception $err) {
+} catch (Exception $err) {
   // Handle errors
   echo $err->getMessage();
 }

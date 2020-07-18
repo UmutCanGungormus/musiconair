@@ -1,51 +1,27 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller
 {
     public $viewFolder="";
+    
     public function __construct()
-    {
-        
+    {   
         parent::__construct();
-        $this->viewFolder="homepage";
-        $this->load->model("product_category_model");
-        $this->load->helper("menu");
-        $this->load->model("product_model");
-        $this->load->model("brand_model");
-        $this->load->library('session');    
-        $ip_adresi = GetIP();
+        $this->viewFolder="homepage";   
+        $ip_adresi = getUserIP();
          
-        if(!$this->session->userdata("users")){
-            $this->session->set_userdata("users",$ip_adresi);
-
-        }
-
-        
-       
- 
+        if(!$this->session->userdata("users"))
+            $this->session->set_userdata("users",$ip_adresi);   
     }
+    
     public function index()
 	{
-        $this->load->model("news_model");
         $viewData=new stdClass();
-        $viewData->news=$this->news_model->get_all(
-            [
-                'isActive' => 1,
-
-            ]
-        );
-     
-        $c=$this->product_model->get_count();
-        $c=$c-8;
-        $c=($c<0)? 0 : $c;
-        $rand=rand(0,$c);
-     
-     
-        $viewData->product=$this->product_model->get_records(8,$rand);
-        $this->load->model("slide_model");
-        $viewData->slider=$this->slide_model->get_all([
-            "isActive"=>1
-        ],"rank ASC");
-    
+        $viewData->news=$this->general_model->get_all("news",null,"id DESC",['isActive' => 1]);
+        $viewData->products=$this->general_model->get_all("products",null,"id DESC",["isActive" => 1]);
+        $viewData->slides=$this->general_model->get_all("slides",null,"rank ASC",["isActive"=>1]);
+        $viewData->banners = $this->general_model->get_all("homepage_banner",null,"rank ASC",["isActive" => 1]);
+        $viewData->writers = $this->general_model->get_all("writers",null,"rank ASC",["isActive" => 1]);
 		$this->load->view('home_v/index',$viewData);
     }
     public function about_us()
@@ -56,7 +32,6 @@ class Home extends CI_Controller
 	{
         $viewData=new stdClass();
         $seo_url=$this->uri->segment(2);
-        $this->load->model("service_model");
         $viewData->service=$this->service_model->get(['url'=>$seo_url]);
         if(empty($viewData->service)){
             $this->load->view('404_v/index');  

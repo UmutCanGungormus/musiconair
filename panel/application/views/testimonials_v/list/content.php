@@ -1,75 +1,72 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-b-lg">
-            Ziyaretçi Notları
-            <a href="<?php echo base_url("testimonials/new_form"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
-        </h4>
-    </div><!-- END column -->
-    <div class="col-md-12">
-        <div class="widget p-lg">
+<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="mb-3">
+                Ziyaretçi Notları
+                <a href="<?= base_url("testimonials/new_form"); ?>" class="btn btn-outline btn-primary btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+            </h4>
+        </div><!-- END column -->
+        <div class="col-md-12">
+            <div class="widget p-lg">
 
-            <?php if(empty($items)) { ?>
+                <?php if (empty($items)) : ?>
 
-                <div class="alert alert-info text-center">
-                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("testimonials/new_form"); ?>">tıklayınız</a></p>
-                </div>
+                    <div class="alert alert-info text-center">
+                        <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?= base_url("testimonials/new_form"); ?>">tıklayınız</a></p>
+                    </div>
 
-            <?php } else { ?>
+                <?php else : ?>
+                    <form id="filter_form" onsubmit="return false">
+						<div class="d-flex flex-wrap">
+							<label for="search" class="flex-fill mx-1">
+								<input class="form-control" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'testimonialTable')" name="search">
+							</label>
+							<label for="clear_button" class="mx-1">
+								<button class="btn btn-danger btn-md" onclick="clearFilter('filter_form','testimonialTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+							</label>
+							<label for="search_button" class="mx-1">
+								<button class="btn btn-success btn-md" onclick="reloadTable('testimonialTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
+						</div>
+			</div>
 
-                <table class="table table-hover table-striped table-bordered content-container">
-                    <thead>
-                        <th class="order"><i class="fa fa-reorder"></i></th>
-                        <th class="w50">#id</th>
-                        <th>Başlık</th>
-                        <th>Mesaj</th>
-                        <th>Ad Soyad</th>
-                        <th>Görsel</th>
-                        <th>Durumu</th>
-                        <th>İşlem</th>
-                    </thead>
-                    <tbody class="sortable" data-url="<?php echo base_url("testimonials/rankSetter"); ?>">
+			</form>
 
-                        <?php foreach($items as $item) { ?>
+                    <table class="table table-hover table-striped table-bordered content-container testimonialTable">
+                        <thead>
+                            <th class="order"><i class="fa fa-reorder"></i></th>
+                            <th class="order"><i class="fa fa-reorder"></i></th>
+                            <th class="w50">#id</th>
+                            <th>Başlık</th>
+                            <th>Ad Soyad</th>
+                            <th>Mesaj</th>    
+                            <th>Görsel</th>
+                            <th>Durumu</th>
+                            <th>İşlem</th>
+                        </thead>
+                        <tbody class="sortable" data-url="<?= base_url("testimonials/rankSetter"); ?>">
 
-                            <tr id="ord-<?php echo $item->id; ?>">
-                                <td class="order"><i class="fa fa-reorder"></i></td>
-                                <td class="w50 text-center">#<?php echo $item->id; ?></td>
-                                <td><?php echo $item->title; ?></td>
-                                <td><?php echo character_limiter(strip_tags($item->description), 200); ?></td>
-                                <td><?php echo $item->full_name; ?></td>
-                                <td class="text-center w100">
-                                    <img width="75"
-                                         src="<?php echo get_picture($viewFolder, $item->img_url, "90x90"); ?>"
-                                         alt="" class="img-rounded">
-                                </td>
-                                <td class="text-center w100">
-                                    <input
-                                        data-url="<?php echo base_url("testimonials/isActiveSetter/$item->id"); ?>"
-                                        class="isActive"
-                                        type="checkbox"
-                                        data-switchery
-                                        data-color="#10c469"
-                                        <?php echo ($item->isActive) ? "checked" : ""; ?>
-                                    />
-                                </td>
-                                <td class="text-center w200">
-                                    <button
-                                        data-url="<?php echo base_url("testimonials/delete/$item->id"); ?>"
-                                        class="btn btn-sm btn-danger btn-outline remove-btn">
-                                        <i class="fa fa-trash"></i> Sil
-                                    </button>
-                                    <a href="<?php echo base_url("testimonials/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
-                                </td>
-                            </tr>
+                          
 
-                        <?php } ?>
+                        </tbody>
 
-                    </tbody>
+                    </table>
 
-                </table>
+                <?php endif ?>
 
-            <?php } ?>
-
-        </div><!-- .widget -->
-    </div><!-- END column -->
+            </div><!-- .widget -->
+        </div><!-- END column -->
+    </div>
 </div>
+<script>
+	function obj(d) {
+		let appendeddata = {};
+		$.each($("#filter_form").serializeArray(), function() {
+			d[this.name] = this.value;
+		});
+		return d;
+	}
+	$(document).ready(function() {
+		TableInitializerV2("testimonialTable", obj, {}, "<?= base_url("testimonials/datatable") ?>", "<?= base_url("testimonials/rankSetter") ?>", true);
+
+	});
+</script>

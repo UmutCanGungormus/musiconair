@@ -1,17 +1,18 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-b-lg">
-            Etkinlik Kategori Listesi
-            <a href="<?php echo base_url("activity_category/new_form"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
-        </h4>
-    </div>
-    <div class="col-md-12">
-        <div class="widget p-lg">
-            <?php if(empty($items)) { ?>
+<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h4 class="mb-3">
+                Etkinlik Kategori Listesi
+                <a href="<?= base_url("activity_category/new_form"); ?>" class="btn btn-outline btn-primary btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+            </h4>
+            <hr>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <?php if (empty($items)) : ?>
                 <div class="alert alert-info text-center">
-                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("portfolio_categories/new_form"); ?>">tıklayınız</a></p>
+                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?= base_url("portfolio_categories/new_form"); ?>">tıklayınız</a></p>
                 </div>
-            <?php } else { ?>
+            <?php else : ?>
                 <table class="table table-hover table-striped table-bordered content-container">
                     <thead>
                         <th class="w50">#id</th>
@@ -20,22 +21,22 @@
                         <th>İşlem</th>
                     </thead>
                     <tbody>
-                        <?php foreach($items as $item) { ?>
-                            <tr id="ord-<?php echo $item->id; ?>">
-                                <td class="w50 text-center">#<?php echo $item->id; ?></td>
-                                <td><?php echo $item->title; ?></td>
+                        <?php foreach ($items as $item) : ?>
+                            <tr id="ord-<?= $item->id; ?>">
+                                <td class="w50 text-center">#<?= $item->id; ?></td>
+                                <td><?= $item->title; ?></td>
                                 <td class="text-center w100">
-                                    <input data-url="<?php echo base_url("activity_category/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked" : ""; ?>/>
+                                    <div class="custom-control custom-switch"><input data-id="<?=$item->id?>" data-url="<?= base_url("activity_category/isActiveSetter/{$item->id}"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?=$item->id?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input">  <label class="custom-control-label" for="customSwitch<?=$item->id?>"></label></div>
                                 </td>
                                 <td class="text-center w200">
-                                    <button data-url="<?php echo base_url("activity_category/delete/$item->id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn"><i class="fa fa-trash"></i> Sil</button>
-                                    <a href="<?php echo base_url("activity_category/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
+                                    <button data-url="<?= base_url("activity_category/delete/$item->id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                                    <a href="<?= base_url("activity_category/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
-            <?php } ?>
+            <?php endif ?>
         </div>
     </div>
 </div>

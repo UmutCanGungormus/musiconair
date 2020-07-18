@@ -1,45 +1,55 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 class="m-b-lg">
-            <?php echo "<b>$item->company_name</b> kaydını düzenliyorsunuz"; ?>
-        </h4>
-    </div>
-    <div class="col-md-12">
-        <form action="<?php echo base_url("settings/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
-            <div class="widget">
-                <div class="m-b-lg nav-tabs-horizontal">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#tab-1" aria-controls="tab-3" role="tab" data-toggle="tab">Site Bilgileri</a></li>
-                        <li role="presentation"><a href="#tab-6" aria-controls="tab-6" role="tab" data-toggle="tab">Adres Bilgisi</a></li>
-                        <li role="presentation"><a href="#tab-2" aria-controls="tab-1" role="tab" data-toggle="tab">Hakkımızda</a></li>
-                        <li role="presentation"><a href="#tab-3" aria-controls="tab-2" role="tab" data-toggle="tab">Misyon</a></li>
-                        <li role="presentation"><a href="#tab-4" aria-controls="tab-3" role="tab" data-toggle="tab">Vizyon</a></li>
-                        <li role="presentation"><a href="#tab-5" aria-controls="tab-4" role="tab" data-toggle="tab">Sosyal Medya</a></li>
-                        <li role="presentation"><a href="#tab-7" aria-controls="tab-7" role="tab" data-toggle="tab">Logo</a></li>
-                        <li role="presentation"><a href="#tab-8" aria-controls="tab-8" role="tab" data-toggle="tab">Meta Tag</a></li>
-                        <li role="presentation"><a href="#tab-9" aria-controls="tab-9" role="tab" data-toggle="tab">Site Analysis</a></li>
-                        <li role="presentation"><a href="#tab-10" aria-controls="tab-10" role="tab" data-toggle="tab">Live Support</a></li>
-                    </ul>
-                    <div class="tab-content p-md">
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_info"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/address"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/about_us"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/mission"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/vision"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/social_media"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/logo"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_meta"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_analysis"); ?>
-                        <?php $this->load->view("$viewFolder/$subViewFolder/tabs/live_support"); ?>
+<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="mb-3">
+                <b><?= $item->company_name ?></b> kaydını düzenliyorsunuz
+            </h4>
+        </div>
+        <div class="col-md-12">
+            <form action="<?= base_url("settings/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
+                <div class="widget">
+                    <div class="mb-3 nav-tabs-horizontal">
+                    <nav>
+                        
+                   
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+  
+                            <a class="nav-item nav-link active" id="profile-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="profile" aria-selected="false">Site Bilgileri</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-6" role="tab" aria-controls="profile" aria-selected="false">Adres Bilgisi</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="profile" aria-selected="false">Hakkımızda</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="profile" aria-selected="false">Misyon</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-4" role="tab" aria-controls="profile" aria-selected="false">Vizyon</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-5" role="tab" aria-controls="profile" aria-selected="false">Sosyal Medya</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-7" role="tab" aria-controls="profile" aria-selected="false">Logo</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-8" role="tab" aria-controls="profile" aria-selected="false">Meta Tag</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-9" role="tab" aria-controls="profile" aria-selected="false">Site Analysis</a>
+                            <a class="nav-item nav-link" id="profile-tab" data-toggle="tab" href="#tab-10" role="tab" aria-controls="profile" aria-selected="false">Live Support</a>
+
+
+                            </div>
+
+                            </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_info"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/address"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/about_us"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/mission"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/vision"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/social_media"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/logo"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_meta"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/site_analysis"); ?>
+                            <?php $this->load->view("$viewFolder/$subViewFolder/tabs/live_support"); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="widget">
-                <div class="widget-body">
-                    <button type="submit" class="btn btn-primary btn-md">Güncelle</button>
-                    <a href="<?php echo base_url("settings"); ?>" class="btn btn-md btn-danger">İptal</a>
+                <div class="widget">
+                    <div class="widget-body">
+                        <button type="submit" class="btn btn-primary btn-md">Güncelle</button>
+                        <a href="<?= base_url("settings"); ?>" class="btn btn-md btn-danger">İptal</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
