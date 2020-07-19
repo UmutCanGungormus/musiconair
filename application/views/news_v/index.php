@@ -1,9 +1,4 @@
-<?php
-//$yazar = $this->db->query("select * from site_writers where id=$haber->yazar_id")->row();
-//$this->db->query("update site_news set goruntulenme=(goruntulenme+1) where id=$haber->id");
-//$comments = $this->db->query("select * from site_comments where iliski_tip='haber' and iliski_id=$haber->id ORDER BY tarih")->result();
-//en fazla alt alta 3 yorum listelenecektir habere yapılan yorum ve var ise yoruma verilen cevap yorumu
-?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php $this->load->view("includes/head");?>
 <?php $this->load->view("includes/header");?>
 <?php $this->load->view("includes/sidebar");?>

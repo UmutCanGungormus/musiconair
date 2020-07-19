@@ -1,4 +1,5 @@
 
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php $this->load->view("includes/head");?>
 <?php $this->load->view("includes/header");?>
 <?php $this->load->view("includes/sidebar");?>

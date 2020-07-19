@@ -879,3 +879,25 @@ function get_sub_menu()
 
     return $menu;
 }
+
+function userRole()
+{
+    $t = &get_instance();
+    $c = $t->general_model->get_all("user_role",null,null,['isActive' => 1]);
+    $roles = [];
+    foreach ($c as $v) {
+        $roles[$v->id] = $v->permissions;
+    }
+    $t->session->set_userdata('user_roles', $roles);
+}
+
+function get_active_user()
+{
+    $t = &get_instance();
+    $user = $t->session->userdata("user");
+    if ($user) {
+        return $user;
+    } else {
+        return false;
+    }
+}

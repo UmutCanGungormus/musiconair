@@ -1,9 +1,10 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <header class="header">
 	<?php
-	if (!empty(get_cookie("logo", true)) && get_cookie("logo", true) == "light") :
-		$logo = base_url("public/front_end/assets/images/logo-light-theme.png");
+	if (!empty(get_cookie("theme",true)) && get_cookie("theme",true) == "dark") :
+		$logo = base_url("panel/assets/img/logo-black-theme.png");
 	else :
-		$logo = base_url("public/front_end/assets/images/logo-black-theme.png");
+		$logo = base_url("panel/assets/img/logo-light-theme.png");
 	endif;
 	?>
 	<nav class="navbar navbar-expand-lg fixed-top px-2">
@@ -63,7 +64,7 @@
 
 				<?php if (!isset($_SESSION['user'])) : ?>
 					<li class="nav-item my-auto py-auto">
-						<a class="nav-link p-0 btn btn-danger btn-block d-inline-block px-3 py-2" href="javascript:void(0)" data-fancybox="giris-yap" data-src="#giris-yap">
+						<a class="nav-link p-0 btn btn-danger btn-block d-inline-block px-3 py-2" class="trigger-custom" data-izimodal-open="#modal-custom" href="javascript:void(0)">
 							<i class="fa fa-user"></i>
 							<b>Giriş</b>
 						</a>

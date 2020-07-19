@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php $this->load->view("includes/head"); ?>
 <?php $this->load->view("includes/header"); ?>
 <?php $this->load->view("includes/sidebar"); ?>
@@ -114,8 +115,7 @@
             <div class="owl-carousel owl-trends owl-theme mt-3">
 
 
-                <?php foreach ($haberler as $haber) {
-                    $yazar = $this->db->query("select * from site_writers where id=$haber->yazar_id")->row();
+                <?php foreach ($news as $haber) {
                 ?>
                     <a target="_blank" href="<?php echo base_url("haber_detay/" . $haber->id); ?>">
                         <div class="card item mb-3 dark">
@@ -125,17 +125,21 @@
                                     <i class="emoji-love"></i>
                                 </div>
 
-                                <div style="font-size: 11px;">
+                                <div>
                                     <div class="d-inline-block mr-1 py-2 px-2">
-                                        <i class="fa fa-user"></i> <?php echo $yazar->ad; ?>
+                                        <i class="fa fa-user"></i>
+                                        <?php foreach ($writers as $writer_key => $writer_value) : ?>
+                                            <?php if ($haber->writer_id == $writer_value->id) : ?>
+                                                <?= $writer_value->name ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
                                     </div>
                                     <div class="d-inline-block">
-                                        <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?php setlocale(LC_ALL, 'tr_TR.UTF-8');
-                                                                                                    echo strftime("%d %B %Y", strtotime($haber->news_create_time)); ?>
+                                        <i class="fa fa-clock-o mr-1"></i><?= $haber->date; ?>
                                     </div>
                                 </div>
 
-                                <h6 class="px-1 py-3" style="font-size: 17px;"><b><?php echo $haber->news_title; ?></b></h6>
+                                <h6 class="px-1 py-3"><b><?php echo $haber->title; ?></b></h6>
                             </div>
                         </div>
                     </a>
@@ -151,9 +155,7 @@
             <h4 class="title"><b>Müzik Onair</b> TV</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php
-                foreach ($tvler as $tv) {
-                    $tvHaber = $this->db->query("select * from site_news WHERE id=$tv->haber_id")->row();
-                    $yazar = $this->db->query("select * from site_writers where id=$tvHaber->yazar_id")->row(); ?>
+                foreach ($tvler as $tv) { ?>
                     <div class="card item mb-3 dark">
                         <div class="card-body p-0 m-0">
                             <div style="position: relative;" class="video-list">
@@ -211,9 +213,7 @@
         <div class="container p-0 ">
             <h4 class="title"><b>Onair</b> Vitrin</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
-                <?php foreach ($haberler as $haber) {
-                    $yazar = $this->db->query("select * from site_writers where id=" . $haber->yazar_id)->row();
-                ?>
+                <?php foreach ($news as $haber) { ?>
                     <a target="_blank" href="<?php echo base_url("haber_detay/" . $haber->id); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
@@ -224,15 +224,19 @@
 
                                 <div style="font-size: 11px;">
                                     <div class="d-inline-block mr-1 py-2 px-2">
-                                        <i class="fa fa-user"></i> <?php echo $yazar->ad; ?>
+                                        <i class="fa fa-user"></i>
+                                        <?php foreach ($writers as $writer_key => $writer_value) : ?>
+                                            <?php if ($haber->writer_id == $writer_value->id) : ?>
+                                                <?= $writer_value->name ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
                                     </div>
                                     <div class="d-inline-block">
-                                        <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?php setlocale(LC_ALL, 'tr_TR.UTF-8');
-                                                                                                    echo strftime("%d %B %Y", strtotime($haber->news_create_time)); ?>
+                                        <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?= $haber->date; ?>
                                     </div>
                                 </div>
 
-                                <h6 class="px-1 py-3"><b><?php echo $haber->news_title; ?></b></h6>
+                                <h6 class="px-1 py-3"><b><?php echo $haber->title; ?></b></h6>
                             </div>
                         </div>
                     </a>
@@ -254,8 +258,7 @@
                         <a href="<?php echo base_url("video_detay/" . $keyif->id); ?>">
                             <div class="container mx-2 p-1">
                                 <div style="position: relative;">
-                                    <img src="<?php echo base_url("public/uploads/news/" . $keyif->id . ".jpg"); ?>""
-                                             class=" img-fluid">
+                                    <img src="<?php echo base_url("public/uploads/news/" . $keyif->id . ".jpg"); ?>" class="img-fluid">
                                     <i class="emoji-love"></i>
                                 </div>
 
@@ -281,11 +284,8 @@
         </div>
         <div class="col-md-12 text-center mt-2">
             DAHA FAZLASINI GÖSTER
-            <?php echo substr(md5(sha1(base64_encode(crc32("umutumut")))), 0, 13); ?>
         </div>
     </div>
-</div>
-</div>
 </div>
 </section>
 

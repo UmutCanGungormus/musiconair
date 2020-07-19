@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <section class="d-flex wrapper">
 
 	<div class="sidebar-menu  d-none d-sm-block">
@@ -5,14 +6,14 @@
 
 			<div class="sidebar-category">
 				<div class="category-item">
-					<a href="<?php echo base_url('kurumsal/markalar'); ?>">
+					<a href="<?= base_url('kurumsal/markalar'); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>ONAIR</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?php echo base_url("muzik"); ?>">
+					<a href="<?= base_url("muzik"); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>MÜZİK</span></div>
 					</a>
@@ -33,14 +34,14 @@
 				</div>
 
 				<div class="category-item">
-					<a href="<?php echo base_url("radyo"); ?>">
+					<a href="<?= base_url("radyo"); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>RADYO</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?php echo base_url("videolar"); ?>">
+					<a href="<?= base_url("videolar"); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>VİDEO</span></div>
 					</a>
@@ -49,14 +50,14 @@
 				</div>
 
 				<div class="category-item">
-					<a href="<?php echo base_url("test"); ?>">
+					<a href="<?= base_url("test"); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>TEST</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?php echo base_url("keyif"); ?>">
+					<a href="<?= base_url("keyif"); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>KEYİF</span></div>
 					</a>
@@ -67,16 +68,16 @@
 				<div class="sidebar-list text-center">
 					<ul>
 						<li>
-							<a href="<?php echo base_url('kurumsal/hakkimizda'); ?>">Kurumsal</a>
+							<a href="<?= base_url('kurumsal/hakkimizda'); ?>">Kurumsal</a>
 						</li>
 						<li>
-							<a href="<?php echo base_url('kurumsal/uygulamalar'); ?>">Uygulamalar</a>
+							<a href="<?= base_url('kurumsal/uygulamalar'); ?>">Uygulamalar</a>
 						</li>
 						<li>
-							<a href="<?php echo base_url('kurumsal/reklam'); ?>">Reklam</a>
+							<a href="<?= base_url('kurumsal/reklam'); ?>">Reklam</a>
 						</li>
 						<li>
-							<a href="<?php echo base_url('kurumsal/is-birligi'); ?>">İş Birliği</a>
+							<a href="<?= base_url('kurumsal/is-birligi'); ?>">İş Birliği</a>
 						</li>
 					</ul>
 				</div>
@@ -85,12 +86,12 @@
 					<ul>
 						<li>
 							<a href="">
-								<img src="<?php echo base_url("public/front_end/assets/images/google-play-white.png"); ?>" class="img-fluid">
+								<img src="<?= base_url("panel/assets/img/google-play-white.png"); ?>" class="img-fluid">
 							</a>
 						</li>
 						<li>
 							<a href="">
-								<img src="<?php echo base_url("public/front_end/assets/images/app-store-white.png"); ?>" class="img-fluid">
+								<img src="<?= base_url("panel/assets/img/app-store-white.png"); ?>" class="img-fluid">
 							</a>
 						</li>
 					</ul>
