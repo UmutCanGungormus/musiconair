@@ -284,7 +284,7 @@ class Video extends MY_Controller
     {
         if ($id) {
             $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
-            if ($this->vide_model->update(["id" => $id], ["isActive" => $isActive])) {
+            if ($this->video_model->update(["id" => $id], ["isActive" => $isActive])) {
                 echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
             } else {
                 echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);

@@ -1,10 +1,7 @@
 
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php $this->load->view("includes/head");?>
-<?php $this->load->view("includes/header");?>
-<?php $this->load->view("includes/sidebar");?>
-	<div class="container-fluid px-0 pr-0">
-		<div class="container-fluid page-padding-top page-name p-0 mx-0 mb-2" style="background-image: url(<?php echo base_url("public/front_end/assets/images/keyif-bg.jpg");?>); background-repeat: repeat-x; background-position: center;">
+	<div class="container-fluid px-0">
+		<div class="page-name" style="background-image: url(<?=base_url("panel/assets/img/keyif-bg.jpg");?>); background-repeat: repeat-x; background-position: center;">
 			<h1 class="text-white pl-5 ml-md-5"><b class="shadow px-2">#Testler</b></h1>
 		</div>
 		
@@ -20,70 +17,24 @@
 
             <div class="row mt-1">
 
-                <?php 
-                foreach ($test as $item) {
-                  
-                ?>
+                <?php foreach ($test as $item) : ?>
                     <div class="col-md-4 my-3">
-                        <a href="<?php echo base_url("test/".$item->seo_url) ?>">
+                        <a href="<?=base_url("test/".$item->seo_url) ?>">
                             <div class="container mx-2 p-1 bg-white shadow">
-                                <div style="position: relative;">
-                             <!--   <span style="position: absolute; padding: 3px 7px; bottom: 0; left: 0; background-color: #FFFFFF; color: #555555; font-size: 11px; font-weight: 500; border-top-right-radius: 3px;">
-                                    <div class="d-inline-block mr-2">
-                                        <i class="fa fa-eye"></i> 356
-                                    </div>
-                                    <div class="d-inline-block mr-2">
-                                        <i class="fa fa-comment"></i>5
-                                    </div>
-                                    <div class="d-inline-block">
-                                        <i class="fa fa-clock-o"></i> 03.21
-                                    </div>
-                                </span> -->
-                                    <img width="100%" src="<?php echo base_url("panel/uploads/tests_v/800x625/".$item->img_url);?>" class="img-fluid">
+                                <div class="position-relative">
+                                    <img src="<?=base_url("panel/uploads/tests_v/800x625/{$item->img_url}");?>" class="img-fluid w-100">
                                 </div>
                                 <i class="fa fa-question-circle" style="width: 42px; height: 42px; text-align: center; position: absolute; bottom: 40px; right: 32px; padding: 10px; font-size: 22px; border-radius: 35px; background-color: #94191c; color: #FFFFFF;"></i>
                                 <div class="px-1 pt-4 pb-2 position-relative">
-                                  <!--  <span style="position: absolute; top: 6px; left: 3px; font-size: 11px; font-weight: 400; color: #666666;">5 dakika önce</span>
-                -->
-                                    <b style="font-weight: 500;"><a href="<?php echo base_url("test/".$item->seo_url) ?>"><?php echo $item->title ?></a></b>
+                                    <b><a href="<?=base_url("test/{$item->seo_url}") ?>"><?=$item->title ?></a></b>
                                 </div>
                             </div>
                         </a>
                     </div>
-                <?php }?>
-<!--                --><?php //for ($i = 1; $i <= 8; $i++): ?>
-<!--                <div class="col-md-6 my-3">-->
-<!--                    <a href="galeri-detay.php">-->
-<!--                        <div class="container mx-2 p-1 bg-white shadow">-->
-<!--                            <div style="position: relative;">-->
-<!--                                <span style="position: absolute; padding: 3px 7px; bottom: 0; left: 0; background-color: #FFFFFF; color: #555555; font-size: 11px; font-weight: 500; border-top-right-radius: 3px;">-->
-<!--                                    <div class="d-inline-block mr-2">-->
-<!--                                        <i class="fa fa-eye"></i> 356-->
-<!--                                    </div>-->
-<!--                                    <div class="d-inline-block mr-2">-->
-<!--                                        <i class="fa fa-comment"></i>5-->
-<!--                                    </div>-->
-<!--                                    <div class="d-inline-block">-->
-<!--                                        <i class="fa fa-clock-o"></i> 03.21-->
-<!--                                    </div>-->
-<!--                                </span>-->
-<!--                                <img src="--><?php //echo base_url("public/uploads/aleyna.jpg");?><!--" class="img-fluid">-->
-<!--                            </div>-->
-<!--                            <i class="fa fa-picture-o" style="width: 42px; height: 42px; text-align: center; position: absolute; bottom: 40px; right: 32px; padding: 10px; font-size: 22px; border-radius: 35px; background-color: #94191c; color: #FFFFFF;"></i>-->
-<!--                            <div class="px-1 pt-4 pb-2 position-relative">-->
-<!--                                <span style="position: absolute; top: 6px; left: 3px; font-size: 11px; font-weight: 400; color: #666666;">5 dakika önce</span>-->
-<!--                                   -->
-<!--                                <b style="font-weight: 500;">Başlık</b>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                --><?php //endfor; ?>
+                <?php endforeach?>
             </div>
 
 
 		</div>
 	</div>
 </section>
-
-<?php $this->load->view("includes/footer");?>

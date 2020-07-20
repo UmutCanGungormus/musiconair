@@ -4,129 +4,144 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Home extends CI_Controller
 {
     public $viewFolder = "";
+    public $viewData = "";
 
     public function __construct()
     {
         parent::__construct();
-        $this->viewFolder = "homepage";
+        $this->viewFolder = "home_v";
+        $this->viewData = new stdClass();
         $ip_adresi = getUserIP();
 
         if (!$this->session->userdata("users"))
             $this->session->set_userdata("users", $ip_adresi);
     }
 
+    public function render()
+    {
+        $this->load->view("includes/head", (array)$this->viewData);
+        $this->load->view("includes/header");
+        $this->load->view("includes/sidebar");
+        $this->load->view($this->viewFolder);
+        $this->load->view("includes/footer");
+    }
+
     public function index()
     {
-        $viewData = new stdClass();
-        $viewData->news = $this->general_model->get_all("news", null, "id DESC", ['isActive' => 1]);
-        $viewData->products = $this->general_model->get_all("products", null, "id DESC", ["isActive" => 1]);
-        $viewData->slides = $this->general_model->get_all("slides", null, "rank ASC", ["isActive" => 1]);
-        $viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
-        $viewData->writers = $this->general_model->get_all("writers", null, "rank ASC", ["isActive" => 1]);
-        $viewData->keyifler = [];
-        $viewData->tvler = [];
-        $this->load->view('home_v/index', $viewData);
+        $this->viewData->news = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1]);
+        $this->viewData->products = $this->general_model->get_all("products", null, "id DESC", ["isActive" => 1]);
+        $this->viewData->slides = $this->general_model->get_all("slides", null, "rank ASC", ["isActive" => 1]);
+        $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
+        $this->viewData->writers = $this->general_model->get_all("writers", null, "rank ASC", ["isActive" => 1]);
+        $this->viewData->keyifler = [];
+        $this->viewData->muzik_haberleri = [];
+        $this->viewFolder = "home_v/index";
+        $this->viewData->tvler = [];
+        $this->render();
     }
+
     public function about_us()
     {
-        $this->load->view('about_v/index');
+        $this->viewFolder= "about_v/index";
+        $this->render();
     }
+
     public function service()
     {
-        $viewData = new stdClass();
         $seo_url = $this->uri->segment(2);
-        $viewData->service = $this->service_model->get(['url' => $seo_url]);
-        if (empty($viewData->service)) {
-            $this->load->view('404_v/index');
-        } else {
-            $this->load->view("service_v/index", $viewData);
-        }
+        $this->viewData->service = $this->general_model->get("services",null,['url' => $seo_url]);
+        if (empty($this->viewData->service)) :
+            $this->viewFolder= "404_v/index";
+        else:
+            $this->viewFolder = "service_v/index";
+        endif;
+        $this->render();
     }
+
     public function test()
     {
-        $viewData = new stdClass();
-        $this->load->model("test_model");
-        $viewData->test = $this->test_model->get_all();
-        if (empty($viewData->test)) {
-            $this->load->view('404_v/index');
-        } else {
-            $this->load->view("test_v/index", $viewData);
-        }
+        $this->viewData->test = $this->general_model->get_all("tests");
+        if (empty($this->viewData->test)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "test_v/index";
+        endif;
+        $this->render();
     }
 
     public function test_detail()
     {
-        $viewData = new stdClass();
         $seo_url = $this->uri->segment(2);
-        $this->load->model("test_model");
-        $this->load->model("options_model");
-        $viewData->test = $this->test_model->get(['seo_url' => $seo_url]);
-        $viewData->options = $this->options_model->get_all(['test_id' => $viewData->test->id, 'isActive' => 1]);
-        if (empty($viewData->test)) {
-            $this->load->view('404_v/index');
-        } else {
-            $this->load->view("test_detail_v/index", $viewData);
-        }
+        $this->viewData->test = $this->general_model->get("tests",null,['seo_url' => $seo_url]);
+        $this->viewData->options = $this->general_model->get_all("options",null,"rank ASC",['test_id' => $this->viewData->test->id, 'isActive' => 1]);
+        if (empty($this->viewData->test)) :
+            $this->viewFolder = "404_v/index";
+        else :
+            $this->viewFolder = "test_detail_v/index";
+        endif;
+        $this->render();
     }
+
     public function news()
     {
-        $viewData = new stdClass();
         $seo_url = $this->uri->segment(2);
-        $this->load->model("news_model");
 
-        $viewData->news = $this->news_model->get(['seo_url' => $seo_url]);
-        $viewData->benzer = $this->news_model->get_records(3, 0, ['category_id' => $viewData->news->category_id]);
-        $viewData->most_read = $this->news_model->get_records(3, 0, array(), "hit desc");
-
-        $hit_update = $this->news_model->update(['seo_url' => $seo_url], ['hit' => $viewData->news->hit + 1]);
-        if (empty($viewData->news)) {
-            $this->load->view('404_v/index');
-        } else {
-            $this->load->view("news_v/index", $viewData);
-        }
+        $this->viewData->news = $this->general_model->get("news",null,['seo_url' => $seo_url]);
+        $this->viewData->writer = $this->general_model->get("writers",null,['id' => $this->viewData->news->writer_id]);
+        $this->viewData->benzer = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id]);
+        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",[],[],[],[3,0]);
+        $this->general_model->update("news",['seo_url' => $seo_url], ['hit' => $this->viewData->news->hit + 1]);
+        if (empty($this->viewData->news)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "news_v/index";
+        endif;
+        $this->render();
     }
+
     public function references()
     {
-        $viewData = new stdClass();
-        $viewData->references = $this->brand_model->get_all(["isActive" => 1]);
-        $this->load->view('referances_v/index', $viewData);
+        $this->viewData->references = $this->general_model->get_all("references",null,null,["isActive" => 1]);
+        $this->viewFolder = "references_v/index";
+        $this->render();
     }
-    public function hata()
-    {
-        $this->load->view('404_v/index');
-    }
+
     public function contact()
     {
-        $this->load->view('contact_v/index');
+        $this->viewFolder = "contact_v/index";
+        $this->render();
     }
+
     public function urlEmotion()
     {
-        $id = $this->input->post('id');
-        $emoji = $this->input->post('ad');
-        $user_id = $this->session->userdata("users");
-
-        $this->load->model("news_model");
-        $this->load->model("news_emoji_model");
-        $item = $this->news_model->get(['id' => $id]);
-        $reaction = json_decode($item->reaction);
-        $reaction->$emoji = $reaction->$emoji + 1;
-        $res = $reaction->$emoji;
-        $user = $this->news_emoji_model->get_all(["user_id" => $user_id, "news_id" => $id]);
-        $user = (array) $user;
-        if (count($user) <= 1) {
-            $this->news_emoji_model->add([
-                'user_id' => $user_id,
-                'news_id' => $id,
-                'type' => $emoji
-            ]);
-            $reaction = json_encode($reaction);
-
-            $reaction_update = $this->news_model->update(['id' => $id], ['reaction' => $reaction]);
-
-            echo $res;
-        } else {
-            echo "alert";
-        }
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "\"{$key}\" Bilgisini Seçtiğinizden Emin Olup Tekrar Deneyin."]);
+        else :
+            $ad = $data["ad"];
+            $user_id = $this->session->userdata("users");
+            $item = $this->general_model->get("news",null,['id' => $data["id"]]);
+            $reaction = json_decode($item->reaction);
+            $reaction->$ad = $reaction->$ad + 1;
+            $user = $this->general_model->get_all("news_emoji",null,"rank ASC",["user_id" => $user_id, "news_id" => $data["id"]]);
+            $user = (array) $user;
+            if (count($user) <= 1) :
+                $this->general_model->add("news_emoji",[
+                    'user_id' => $user_id,
+                    'news_id' => $data["id"],
+                    'type' => $data["ad"]
+                ]);
+                $reactionn = json_encode($reaction);
+                if($this->general_model->update("news",['id' => $data["id"]], ['reaction' => $reactionn])):
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Bu Habere Verdiğiniz Tepki Güncellendi.","response_data"=>$reaction->$ad]);
+                else:
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Habere Tepki Verilirken Hata Oluştu."]);
+                endif;
+            else:
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Bir Habere En Fazla 2 Tepki Verebilirsiniz."]);
+            endif;
+        endif;
     }
 
     public function test_check()
@@ -134,10 +149,7 @@ class Home extends CI_Controller
         $id = $this->input->post('id');
         $test_id = $this->input->post('test_id');
         $user_id = $this->session->userdata("users");
-
-        $this->load->model("test_answer_model");
-        $this->load->model("options_model");
-        $item = $this->options_model->get(['id' => $id]);
+        $item = $this->general_model->get(['id' => $id]);
         $hit = $item->hit + 1;
 
 
@@ -187,10 +199,7 @@ class Home extends CI_Controller
         }
     }
     public function category()
-
     {
-        $this->load->library("pagination");
-        $viewData = new stdClass();
         $seo_url = $this->uri->segment(2);
         $category_id = $this->product_category_model->get(["seo_url" => $seo_url]);
         $config["base_url"] = base_url("kategori") . "/" . $seo_url;
@@ -198,16 +207,16 @@ class Home extends CI_Controller
         $config["uri_segment"] = 3;
         $config["per_page"] = 8;
         $this->pagination->initialize($config);
-        $viewData->category = $category_id;
+        $this->viewData->category = $category_id;
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
         if ($category_id) {
-            $viewData->products = $this->product_model->get_records($config["per_page"], $page, ["category_id" => $category_id->id]);
+            $this->viewData->products = $this->product_model->get_records($config["per_page"], $page, ["category_id" => $category_id->id]);
         } else {
             return $this->load->view("404_v/index");
         }
 
-        $viewData->links = $this->pagination->create_links();
+        $this->viewData->links = $this->pagination->create_links();
 
 
         //kATEGORİLER

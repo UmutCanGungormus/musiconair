@@ -1,7 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php $this->load->view("includes/head"); ?>
-<?php $this->load->view("includes/header"); ?>
-<?php $this->load->view("includes/sidebar"); ?>
 <div class="container mt-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
@@ -64,7 +61,7 @@
                                         <?php endforeach; ?>
                                     </div>
                                     <div class="d-inline-block">
-                                        <i class="fa fa-clock-o mr-1"></i><?= date("d/m/Y", strtotime($haber->date));  ?>
+                                        <i class="fa fa-clock-o mr-1"></i><?= turkishDate("d F Y, l H:i", $haber->createdAt);  ?>
                                     </div>
                                 </small>
 
@@ -95,7 +92,7 @@
                                         <i class="fa fa-user"></i> <?= $yazar->ad; ?>
                                     </div>
                                     <div class="d-inline-block">
-                                        <i class="fa fa-clock-o mr-1"></i><?= $haber->news_create_time; ?>
+                                        <i class="fa fa-clock-o mr-1"></i><?= turkishDate("d F Y, l H:i", $haber->createdAt);  ?>
                                     </div>
                                 </div>
                                 <h6 class="px-1 py-3"><b><?= $haber->news_title; ?></b></h6>
@@ -135,7 +132,7 @@
                                         <?php endforeach; ?>
                                     </div>
                                     <div class="d-inline-block">
-                                        <i class="fa fa-clock-o mr-1"></i><?= $haber->date; ?>
+                                        <i class="fa fa-clock-o mr-1"></i><?= turkishDate("d F Y, l H:i", $haber->createdAt);  ?>
                                     </div>
                                 </div>
 
@@ -232,7 +229,7 @@
                                         <?php endforeach; ?>
                                     </div>
                                     <div class="d-inline-block">
-                                        <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?= $haber->date; ?>
+                                        <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?= $haber->createdAt; ?>
                                     </div>
                                 </div>
 
@@ -288,5 +285,3 @@
     </div>
 </div>
 </section>
-
-<?php $this->load->view("includes/footer"); ?>

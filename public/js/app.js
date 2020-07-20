@@ -102,6 +102,16 @@ $(document).ready(function () {
 		navText: ['<i class="fa fa-chevron-left left d-none d-md-block d-lg-block d-xl-block"></i>', '<i class="fa fa-chevron-right right d-none d-md-block d-lg-block d-xl-block"></i>'],
 		//responsive: true
 	});
+
+	$(".owl-trends").owlCarousel({
+		margin: 20,
+		nav: true,
+		lazyLoad: true,
+		loop: true,
+		items: 4,
+		navText: ['<i class="fa fa-chevron-left left d-none d-md-block d-lg-block d-xl-block"></i>', '<i class="fa fa-chevron-right right d-none d-md-block d-lg-block d-xl-block"></i>'],
+		//responsive: true
+	});
 	/* Carousel */
 	
 	/* Theme Color Switcher */
@@ -169,7 +179,7 @@ $(window).on("load", function () {
 
 /* Functions */
 
-function createAjax(url, formData) {
+function createAjax(url, formData, successFnc = function(){},errorFnc = function(){}) {
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -180,14 +190,16 @@ function createAjax(url, formData) {
 		dataType: "JSON"
 	}).done(function (response) {
 		if (response.success) {
-			iziToast.success({ title: response.title, message: response.message, position: "topCenter" });
+			iziToast.success({ title: response.title, message: response.message, position: "topCenter" ,displayMode: 'once',});
+			successFnc(response);
 			if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
 				setTimeout(function () {
 					window.location.href = response.redirect;
 				}, 2000);
 			}
 		} else {
-			iziToast.error({ title: response.title, message: response.message, position: "topCenter" });
+			iziToast.error({ title: response.title, message: response.message, position: "topCenter",displayMode: 'once', });
+			errorFnc(response);
 			if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
 				setTimeout(function () {
 					window.location.href = response.redirect;

@@ -8,20 +8,26 @@ class Userop extends CI_Controller
     {
         parent::__construct();
         $this->viewFolder = "users_v";
+        $this->viewData = new stdClass();
     }
+
+    public function render()
+    {
+        $this->load->view("includes/head", $this->viewData);
+        $this->load->view("includes/header");
+        $this->load->view("includes/sidebar");
+        $this->load->view($this->viewFolder);
+        $this->load->view("includes/footer");
+    }
+
     public function login()
     {
         if (get_active_user()) :
             redirect(base_url());
         endif;
         $data = rClean($this->input->post());
-        $error = false;
-        foreach ($data as $key => $value) :
-            $value = trim($value);
-            if (empty($value))
-                $error = true;
-        endforeach;
-        if ($error) :
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Oturum Açılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
             $user = $this->general_model->get("users", null, ["email" => $data["email"], "password" => md5($data["password"]), "isActive" => 1, "role_id" => 1]);
@@ -34,46 +40,6 @@ class Userop extends CI_Controller
             endif;
         endif;
     }
-    public function logout()
-    {
-        $this->session->unset_userdata("user");
-        $this->session->set_flashdata("alert", ["title" => "Başarılı!", "text" => "Başarıyla Çıkış Yaptınız...", "type" => "success"]);
-        redirect(base_url());
-    }
-    public function reset_password()
-    {
-        if (get_active_user()) :
-            redirect(base_url());
-        endif;
-        $data = rClean($this->input->post());
-        $error = false;
-        foreach ($data as $key => $value) :
-            $value = trim($value);
-            if (empty($value))
-                $error = true;
-        endforeach;
-        if ($error) :
-            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Oturum Açılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
-        else :
-            $user = $this->general_model->get("users", null, ["isActive" => 1, "email" => $data["email"]]);
-            if ($user) :
-                $temp_password = random_string();
-                $send = send_email($user->email, "MuzikOnAir Şifremi Unuttum", "MuzikOnAir'e geçiçi olarak <b>{$temp_password}</b> şifresiyle giriş yapabilirsiniz!");
-                if ($send) :
-                    if ($this->general_model->update("users", ["id" => $user->id], ["password" => md5($temp_password)])) :
-                        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Şifreniz Başarılı Bir Şekilde Sıfırlandı. Lütfen E-Postanızı Kontrol Ediniz..."]);
-                    else :
-                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Şifreniz Sıfırlanırken Hata Oluştu. Lütfen Tekrar Deneyin..."]);
-                    endif;
-                else :
-                    //echo $this->email->print_debugger();
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sıfırlama Maili Gönderilirken Hata Oluştu. Lütfen Tekrar Deneyin..."]);
-                endif;
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Girmiş Olduğunuz Bilgilerle Eşleşen Kullanıcı Bilgisi Bulunamadı..."]);
-            endif;
-        endif;
-    }
 
     public function register()
     {
@@ -81,14 +47,8 @@ class Userop extends CI_Controller
             redirect(base_url());
         endif;
         $data = rClean($this->input->post());
-        $error = false;
-        foreach ($data as $key => $value) :
-            
-            $value = trim($value);
-            if (empty($value))
-                $error = true;
-        endforeach;
-        if ($error) :
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Oturum Açılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
             $data["password"] = md5($data["password"]);
@@ -105,5 +65,85 @@ class Userop extends CI_Controller
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sitemize Kayıt Olurken Hata Oluştu. Lütfen Tekrar Deneyin..."]);
             endif;
         endif;
+    }
+
+    public function logout()
+    {
+        $this->session->unset_userdata("user");
+        $this->session->set_flashdata("alert", ["title" => "Başarılı!", "text" => "Başarıyla Çıkış Yaptınız...", "type" => "success"]);
+        redirect(base_url());
+    }
+
+    public function reset_password()
+    {
+        if (get_active_user()) :
+            redirect(base_url());
+        endif;
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Şifre Sıfırlama Linki Gönderilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            $user = $this->general_model->get("users", null, ["isActive" => 1, "email" => $data["email"]]);
+            if ($user) :
+                $email_message = "Sayın {$user->full_name},</br> <b>Şifre Sıfırlama Linkiniz : </b> <a href='" . base_url("sifre-sifirla/{$user->email}/{$user->pass_reset}") . "'>Şifremi Sıfırla</a>";
+                $send = send_email($user->email, $email_message, 1);
+                if ($send) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Şifre Sıfırlama Mailiniz <b>{$user->email}</b> Mail Adresinize İletildi..."]);
+                else :
+                    //echo $this->email->print_debugger();
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sıfırlama Maili Gönderilirken Hata Oluştu. Lütfen Tekrar Deneyin..."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Girmiş Olduğunuz Bilgilerle Eşleşen Kullanıcı Bilgisi Bulunamadı..."]);
+            endif;
+        endif;
+    }
+
+    public function reset_password_v($email = null, $token = null)
+    {
+        if (get_active_user()) :
+            redirect(base_url());
+        endif;
+        if (empty($email) || empty($token)) :
+            $user = $this->general_model->get("users", null, ["email" => $email, "token" => $token]);
+            if (!empty($user)) :
+                $this->viewData["email"] = $user->email;
+                $this->viewData["token"] = $user->token;
+                $this->viewFolder = "pass_reset_v/index";
+                $this->render();
+            else :
+                $this->session->set_flashdata('alert', ["success" => false, "title" => "Başarısız!", "msg" => "Bilgilerinizin Doğru Olduğundan Emin Olup Lütfen Tekrar Deneyin."]);
+                redirect(base_url("sifremi-unuttum/{$email}/{$token}"));
+            endif;
+        else :
+            $this->session->set_flashdata('alert', ["success" => false, "title" => "Başarısız!", "msg" => "Geçersiz Parametre. Lütfen Şifrenizi Tekrar Sıfırlamayı Deneyin."]);
+            redirect(base_url());
+        endif;
+    }
+
+    public function reset_password_end()
+    {
+        $data = $this->input->post();
+        $user = $this->general_model->get("users", null, ["email" => $data["email"], "token" => $data["token"]]);
+        if (!empty($user)) {
+            if ($data["password"] == $data["confirm_password"]) {
+                $update_data["token"] = md5(rand(0, 9999999999999999999));
+                $update_data["password"] = md5($data["password"]);
+                if($this->user_model->update(["email" => $data["email"], "token" => $data["token"]], $update_data)):
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Şifreniz Başarıyla Değiştirildi Giriş Yapabilirsiniz."]);
+                    redirect(base_url());
+                else:
+                    echo json_encode(["success" => false, "title" => "Başarılı!", "message" => "Şifreniz Güncelleştirilirken Hata Oluştu Lütfen Tekrar Deneyin."]);
+                    redirect(base_url("sifremi-unuttum/".$data["email"]."/".$data["token"]));
+                endif;
+            } else {
+                $this->viewData["email"] = $data["email"];
+                $this->viewData["key"] = $data["token"];
+                $this->session->set_flashdata('alert', ["success" => false, "title" => "Başarısız!", "msg" => "Girdiğiniz Şifreler Uyuşmamaktadır."]);
+                $this->viewFolder = "pass_reset_v/index";
+                $this->render();
+            }
+        }
     }
 }

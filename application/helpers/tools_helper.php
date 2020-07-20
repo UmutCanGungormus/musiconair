@@ -602,19 +602,18 @@ function mb_word_wrap($string, $max_length, $end_substitute = null, $html_linebr
 }
 
 // Function to get the user IP address
-function getUserIP()
+function GetUserIP()
 {
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-        //ip from share internet
-        $ip = $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        //ip pass from proxy
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    if (getenv("HTTP_CLIENT_IP")) {
+        $ip = getenv("HTTP_CLIENT_IP");
+    } elseif (getenv("HTTP_X_FORWARDED_FOR")) {
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+        if (strstr($ip, ',')) {
+            $tmp = explode(',', $ip);
+            $ip = trim($tmp[0]);
+        }
     } else {
-        $ip = $_SERVER['REMOTE_ADDR'];
-    }
-    if ($ip === "::1") {
-        $ip = "localhost";
+        $ip = getenv("REMOTE_ADDR");
     }
     return $ip;
 }
@@ -754,24 +753,21 @@ function get_settings($language = "tr")
     return $settings;
 }
 
-function send_email($toEmail = "", $subject = "", $message = "")
+function send_email($toEmail = "", $subject = "", $message = "",$mail_settings="")
 {
     $t = &get_instance();
     $t->load->model("emailsettings_model");
-    $email_settings = $t->emailsettings_model->get(
+    $emailsettings = $t->emailsettings_model->get(
         array(
-            "isActive" => 1
+            "id" => $mail_settings
         )
     );
-    if (empty($toEmail)) {
-        $toEmail = $email_settings->to;
-    }
     $config = array(
-        "protocol" => $email_settings->protocol,
-        "smtp_host" => $email_settings->host,
-        "smtp_port" => $email_settings->port,
-        "smtp_user" => $email_settings->user,
-        "smtp_pass" => $email_settings->password,
+        "protocol" => $emailsettings->protocol,
+        "smtp_host" => $emailsettings->host,
+        "smtp_port" => $emailsettings->port,
+        "smtp_user" => $emailsettings->user,
+        "smtp_pass" => $emailsettings->password,
         "starttls" => true,
         "charset" => "utf-8",
         "mailtype" => "html",
@@ -779,13 +775,12 @@ function send_email($toEmail = "", $subject = "", $message = "")
         "newline" => "\r\n"
     );
     $t->load->library("email", $config);
-    $t->email->from($email_settings->from, $email_settings->user_name);
+    $t->email->from($emailsettings->from, $emailsettings->user_name);
     $t->email->to($toEmail);
     $t->email->subject($subject);
     $t->email->message($message);
     return $t->email->send();
 }
-
 function get_picture($path = "", $picture = "", $resolution = "50x50")
 {
     if ($picture != "") {
@@ -883,7 +878,7 @@ function get_sub_menu()
 function userRole()
 {
     $t = &get_instance();
-    $c = $t->general_model->get_all("user_role",null,null,['isActive' => 1]);
+    $c = $t->general_model->get_all("user_role", null, null, ['isActive' => 1]);
     $roles = [];
     foreach ($c as $v) {
         $roles[$v->id] = $v->permissions;
@@ -900,4 +895,15 @@ function get_active_user()
     } else {
         return false;
     }
+}
+
+function checkEmpty($data)
+{
+    $error = false;
+    foreach ($data as $key => $value) :
+        $value = trim($value);
+        if (empty($value))
+            $error = true;
+    endforeach;
+    return ["error" => $error, "key" => (!empty($key) ? $key : null)];
 }

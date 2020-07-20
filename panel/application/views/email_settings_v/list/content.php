@@ -29,7 +29,9 @@
                 <table class="table table-hover table-striped table-bordered content-container emailTable">
 
                     <thead>
-                        <th class="w50">#id</th>
+                        <th class="w50"><i class="fa fa-order"></i></th>
+                        <th class="w50"><i class="fa fa-order"></i></th>
+                        <th class="w50">#Id</th>
                         <th>E-Posta Başlık</th>
                         <th>Sunucu Adı</th>
                         <th>E-Posta</th>
