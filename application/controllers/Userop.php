@@ -52,7 +52,7 @@ class Userop extends CI_Controller
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Oturum Açılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
             $data["password"] = md5($data["password"]);
-            $data["createdAt"] = date("Y-m-d H:i:s");
+            //$data["createdAt"] = date("Y-m-d H:i:s");
             $data["isActive"] = 1;
             $data["role_id"] = 1;
             $data["full_name"] = strto("lower|upper", $data["name"]) . " " . strto("lower|upper", $data["surname"]);

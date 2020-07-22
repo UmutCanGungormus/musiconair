@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="datetimepicker1">Eğitim Tarihi</label>
-                        <input type="hidden" name="date" value="<?= $item->date; ?>" id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss' }" />
+                        <input type="hidden" name="date" value="<?= $item->event_date; ?>" id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss' }" />
                     </div><!-- END column -->
                     <div class="col-md-1 image_upload_container">
                         <img src="<?= get_picture($viewFolder, $item->img_url, "255x157"); ?>" class="img-fluid">
