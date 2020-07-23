@@ -30,7 +30,7 @@
                     <td class="w100 text-center">
                         <div class="custom-control custom-switch"><input data-id="<?=$image->id?>" data-url="<?= base_url("product/isCoverSetter/{$image->id}/{$image->product_id}"); ?>" data-status="<?= ($image->isCover) ? "checked" : ""; ?>" id="customSwitch<?=$image->id?>" type="checkbox" <?= ($image->isCover) ? "checked" : ""; ?> class="my-check custom-control-input">  <label class="custom-control-label" for="customSwitch<?=$image->id?>"></label></div>
                     </td>
-                    <td class="w100 text-center"><button data-url="<?= base_url("product/imageDelete/$image->id/$image->product_id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn btn-block"><i class="fa fa-trash"></i> Sil</button></td>
+                    <td class="w100 text-center"><button data-url="<?= base_url("product/imageDelete/$image->id/$image->product_id"); ?>" class="btn btn-sm btn-sm btn-outline-danger rounded-0 remove-btn btn-sm btn-block"><i class="fa fa-trash"></i> Sil</button></td>
                 </tr>
             <?php endforeach ?>
         </tbody>

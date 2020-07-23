@@ -20,7 +20,7 @@
                 <td class="w50 text-center">#<?php echo $item->id; ?></td>
                 <td class="w100 text-center">
                     <?php if($gallery_type == "image"){ ?>
-                        <img width="100" src="<?php echo get_picture("galleries_v/images/$folder_name",$item->url,"252x156"); ?>" alt="<?php echo $item->url; ?>" class="img-responsive">
+                        <img width="100" src="<?php echo get_picture("galleries_v/images/$folder_name",$item->url,"252x156"); ?>" alt="<?php echo $item->url; ?>" class="img-fluid">
                     <?php } else if($gallery_type == "file") { ?>
                         <i class="fa fa-folder fa-2x"></i>
                     <?php } ?>
@@ -32,14 +32,14 @@
                 <td class="w100 text-center">
                     <a
                         href="<?php echo base_url("galleries/fileUpdate/$item->id/$item->gallery_id/$gallery_type"); ?>"
-                        class="btn btn-sm btn-success   btn-block">
+                        class="btn btn-sm btn-sm btn-outline-success rounded-0   btn-block">
                         <i class="fa fa-pen"></i> Resim Açıklama Ekle
                     </a>
                     </td>
                 <td class="w100 text-center">
                     <button
                         data-url="<?php echo base_url("galleries/fileDelete/$item->id/$item->gallery_id/$gallery_type"); ?>"
-                        class="btn btn-sm btn-danger btn-outline remove-btn btn-block">
+                        class="btn btn-sm btn-sm btn-outline-danger rounded-0 remove-btn btn-sm btn-block">
                         <i class="fa fa-trash"></i> Sil
                     </button>
                     

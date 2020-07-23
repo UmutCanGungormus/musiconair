@@ -11,11 +11,11 @@
                     <form action="<?= base_url("news_box/save"); ?>" method="post">
                     <div class="form-group">
                         <label>Widget Title</label>
-                        <input type="text" class="form-control" name="title">
+                        <input type="text" class="form-control form-control-sm rounded-0" name="title">
                     </div>
                         <div class="form-group">
                             <label>Eklenecek Olan Widget </label>
-                            <select class="selectpicker form-control" name="added_news_id" data-show-subtext="true" data-live-search="true">
+                            <select class="selectpicker form-control form-control-sm rounded-0" name="added_news_id" data-show-subtext="true" data-live-search="true">
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id ?>"><?= $category->title ?></option>
                                 <?php endforeach ?>
@@ -23,14 +23,14 @@
                         </div>
                         <div class="form-group">
                             <label>Widget Eklenecek Haber </label>
-                            <select class="selectpicker form-control" name="which_news_id" data-show-subtext="true" data-live-search="true">
+                            <select class="selectpicker form-control form-control-sm rounded-0" name="which_news_id" data-show-subtext="true" data-live-search="true">
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id ?>"><?= $category->title ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("news_box"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("news_box"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div>
             </div>

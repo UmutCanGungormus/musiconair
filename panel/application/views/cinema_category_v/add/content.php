@@ -10,14 +10,14 @@
             <form action="<?= base_url("cinema_category/save"); ?>" method="post">
                 <div class="form-group">
                     <label>Başlık</label>
-                    <input class="form-control" placeholder="Başlık" name="title">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title">
                     <?php if (isset($form_error)) : ?>
                         <small class="float-right input-form-error"> <?= form_error("title"); ?></small>
                     <?php endif ?>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                <a href="<?= base_url("cinema_category"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                <a href="<?= base_url("cinema_category"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div>
     </div>

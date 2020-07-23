@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade p-4" id="tab-2">
+<div class="tab-pane fade" id="about-us" role="tabpanel" aria-labelledby="about-us-tab">
 	<div class="row">
 		<div class="form-group col-md-12">
 			<label>Hakkımızda</label>

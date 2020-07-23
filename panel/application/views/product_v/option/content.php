@@ -58,25 +58,25 @@
 
                                     ?>
                                         <tr>
-                                            <td><button class="plus btn btn-success"><i class="fa fa-plus"></i></button></td>
+                                            <td><button class="plus btn btn-sm btn-outline-success rounded-0"><i class="fa fa-plus"></i></button></td>
                                             
-                                            <td><button class="minus btn btn-danger"><i class="fa fa-minus"></i></button></td>
+                                            <td><button class="minus btn btn-sm btn-outline-danger rounded-0"><i class="fa fa-minus"></i></button></td>
                                             <td><input type="hidden" class="autocomplete" value="<?= $product->id ?>" name="product_id[]"><?= $product->title ?></td>
-                                            <td><select class="form-control" name="options_category[]">
+                                            <td><select class="form-control form-control-sm rounded-0" name="options_category[]">
                                                     <?php foreach ($option_categories as $category) { ?>
                                                         <option  <?= ($v["option_id"]==$category->id)?"selected":"";?> value="<?= $category->id ?>"><?= $category->title ?></option>
 
                                                     <?php } ?>
                                                 </select></td>
-                                            <td><select class="form-control" name="options[]">
+                                            <td><select class="form-control form-control-sm rounded-0" name="options[]">
                                                     <?php foreach ($options as $option) { ?>
                                                         <option <?= ($v["option_id"]==$option->id)?"selected":"";?> value="<?= $option->id ?>"><?= $option->title ?></option>
 
                                                     <?php } ?>
                                                 </select></td>
-                                            <td><input class="form-control" type="text" value="<?= $v["stock"]?>" name="stocks[]"></td>
-                                            <td><input class="form-control" type="text"  value="<?= $v["price"]?>"  name="prices[]"></td>
-                                            <td><input type="file" class="form-control"   name="photos[]"><input type="hidden" name="photosCounter[]" value=""></td>
+                                            <td><input class="form-control form-control-sm rounded-0" type="text" value="<?= $v["stock"]?>" name="stocks[]"></td>
+                                            <td><input class="form-control form-control-sm rounded-0" type="text"  value="<?= $v["price"]?>"  name="prices[]"></td>
+                                            <td><input type="file" class="form-control form-control-sm rounded-0"   name="photos[]"><input type="hidden" name="photosCounter[]" value=""></td>
                                         </tr>
 
                                     <?php
@@ -84,24 +84,24 @@
                                 }
                                 } else { ?>
                                     <tr>
-                                        <td><button class="plus btn btn-success"><i class="fa fa-plus"></i></button></td>
-                                        <td><button class="minus btn btn-danger"><i class="fa fa-minus"></i></button></td>
+                                        <td><button class="plus btn btn-sm btn-outline-success rounded-0"><i class="fa fa-plus"></i></button></td>
+                                        <td><button class="minus btn btn-sm btn-outline-danger rounded-0"><i class="fa fa-minus"></i></button></td>
                                         <td><input type="hidden" class="autocomplete" value="<?= $product->id ?>" name="product_id[]"><?= $product->title ?></td>
-                                        <td><select class="form-control" name="options_category[]">
+                                        <td><select class="form-control form-control-sm rounded-0" name="options_category[]">
                                                 <?php foreach ($option_categories as $category) { ?>
                                                     <option value="<?= $category->id ?>"><?= $category->title ?></option>
 
                                                 <?php } ?>
                                             </select></td>
-                                        <td><select class="form-control" name="options[]">
+                                        <td><select class="form-control form-control-sm rounded-0" name="options[]">
                                                 <?php foreach ($options as $option) { ?>
                                                     <option value="<?= $option->id ?>"><?= $option->title ?></option>
 
                                                 <?php } ?>
                                             </select></td>
-                                        <td><input class="form-control" type="text" name="stocks[]"></td>
-                                        <td><input class="form-control" type="text" name="prices[]"></td>
-                                        <td><input type="file" class="form-control" name="photos[]"><input type="hidden" name="photosCounter[]" value=""></td>
+                                        <td><input class="form-control form-control-sm rounded-0" type="text" name="stocks[]"></td>
+                                        <td><input class="form-control form-control-sm rounded-0" type="text" name="prices[]"></td>
+                                        <td><input type="file" class="form-control form-control-sm rounded-0" name="photos[]"><input type="hidden" name="photosCounter[]" value=""></td>
                                     </tr>
                                 <?php
                                 }
@@ -110,7 +110,7 @@
                             </table>
                         </form>
                     </div>
-                    <button class="product_option btn btn-primary">Varyasyonları Ekle</button>
+                    <button class="product_option btn btn-sm btn-outline-primary rounded-0">Varyasyonları Ekle</button>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->
         </div><!-- END column -->

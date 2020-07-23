@@ -12,21 +12,21 @@
                     <form action="<?= base_url("video/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Albüm & Single Adı</label>
-                            <input class="form-control" placeholder="Albüm & Single Adı" name="title">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Albüm & Single Adı" name="title">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Yapımcı</label>
-                            <input class="form-control" placeholder="Yapımcı" name="producer">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Yapımcı" name="producer">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("producer"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Çıkış Yılı</label>
-                            <input class="form-control" placeholder="Çıkış Yılı" name=" release_year">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Çıkış Yılı" name=" release_year">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error(" release_year"); ?></small>
                             <?php endif ?>
@@ -40,11 +40,11 @@
                         <?php if (isset($form_error)) : ?>
                             <div class="form-group ">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                             <div class="form-group ">
                                 <label>Video Url</label>
-                                <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                                 <?php if (isset($form_error)) : ?>
                                     <small class="input-form-error float-right"><?= form_error("video_url"); ?></small>
                                 <?php endif ?>
@@ -52,16 +52,16 @@
                         <?php else : ?>
                             <div class="form-group ">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                             <div class="form-group ">
                                 <label>Video Url</label>
-                                <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                             </div>
                         <?php endif ?>
 
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("video"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("video"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

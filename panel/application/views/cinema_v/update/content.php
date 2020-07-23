@@ -10,7 +10,7 @@
             <form action="<?= base_url("cinema/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Film Adı</label>
-                    <input class="form-control" placeholder="Kitap Adı" name="title" value="<?= $item->title; ?>">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Kitap Adı" name="title" value="<?= $item->title; ?>">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                     <?php endif ?>
@@ -18,7 +18,7 @@
 
                 <div class="form-group">
                     <label>Film Türü</label>
-                    <select class="form-control selectpicker" size="4" multiple name="category_id[]">
+                    <select class="form-control form-control-sm rounded-0 selectpicker" size="4" multiple name="category_id[]">
                         <?php foreach ($categories as $category) : ?>
                             <option <?php foreach (json_decode($item->category_id) as $cat) : ($category->id == $cat ? "selected" : null) ?> value="<?= $category->id ?>"><?= $category->title ?> </option>
                         <?php endforeach ?>
@@ -31,21 +31,21 @@
 
                 <div class="form-group">
                     <label>Film Dili</label>
-                    <input class="form-control" placeholder="Film Dili" value="<?= $item->language; ?>" name="language">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Film Dili" value="<?= $item->language; ?>" name="language">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("language"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label> Yönetmen</label>
-                    <input class="form-control" placeholder="Yönetmen" value="<?= $item->director; ?>" name="director">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Yönetmen" value="<?= $item->director; ?>" name="director">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("director"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Senarist</label>
-                    <input class="form-control" type="text" placeholder="Senarist" value="<?= $item->scriptwriter; ?>" name="scriptwriter">
+                    <input class="form-control form-control-sm rounded-0" type="text" placeholder="Senarist" value="<?= $item->scriptwriter; ?>" name="scriptwriter">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("scriptwriter"); ?></small>
                     <?php endif ?>
@@ -53,21 +53,21 @@
 
                 <div class="form-group">
                     <label>Yapım</label>
-                    <input class="form-control" placeholder="Yapım" value="<?= $item->production; ?>" name="production">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Yapım" value="<?= $item->production; ?>" name="production">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("production"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Oyuncular</label>
-                    <input class="form-control" placeholder="Oyuncular" value="<?= $item->players; ?>" name="players">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Oyuncular" value="<?= $item->players; ?>" name="players">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("players"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Bilet Alma Linki</label>
-                    <input class="form-control" placeholder="Bilet Alma Linki" value="<?= $item->url; ?>" name="url">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Bilet Alma Linki" value="<?= $item->url; ?>" name="url">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("url"); ?></small>
                     <?php endif ?>
@@ -84,11 +84,11 @@
                     </div>
                     <div class="col-md-7 form-group image_upload_container">
                         <label>Görsel Seçiniz</label>
-                        <input type="file" name="img_url" class="form-control">
+                        <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                <a href="<?= base_url("cinema"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                <a href="<?= base_url("cinema"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div><!-- END column -->
     </div>

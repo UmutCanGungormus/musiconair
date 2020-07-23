@@ -9,13 +9,13 @@
             <form action="<?= base_url("galleries/gallery_video_save/$gallery_id"); ?>" method="post">
                 <div class="form-group">
                     <label>Video URL</label>
-                    <input class="form-control" placeholder="Video bağlantısını (id) buraya yapıştırınız" name="url">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını (id) buraya yapıştırınız" name="url">
                     <?php if (isset($form_error)) : ?>
                         <small class="float-right input-form-error"> <?= form_error("url"); ?></small>
                     <?php endif ?>
                 </div>
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                <a href="<?= base_url("galleries/gallery_video_list/$gallery_id"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                <a href="<?= base_url("galleries/gallery_video_list/$gallery_id"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div>
     </div>

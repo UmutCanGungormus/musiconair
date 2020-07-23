@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade p-4" id="tab-9">
+<div class="tab-pane fade" id="site-analysis" role="tabpanel" aria-labelledby="site-analysis-tab">
 	<div class="row">
 		<div class="form-group col-md-12">
 			<label>Google Analytics (Script kodlarını editörün "Code View (< / >)" bölümünden ekleyiniz!)</label>

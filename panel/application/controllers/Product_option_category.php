@@ -41,7 +41,7 @@ class Product_option_category extends MY_Controller
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("Product_option_category/update_form/$item->id") . '">Kaydı Düzenle</a>
                     <a class="dropdown-item" href="' . base_url("Product_option_category/delete/$item->id") . '">Kaydı Sil</a>
                 </div>

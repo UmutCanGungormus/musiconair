@@ -13,7 +13,7 @@
                     <form action="<?= base_url("news/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Haber Adı</label>
-                            <input class="form-control" placeholder="Haber Adı" name="title">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Haber Adı" name="title">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                             <?php endif ?>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label>Haber Kategori</label>
-                            <select class="form-control" name="category_id">
+                            <select class="form-control form-control-sm rounded-0" name="category_id">
 
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id; ?>"><?= $category->title; ?></option>
@@ -38,7 +38,7 @@
                             <div class="alert alert-info">Not:Her Etiket Kelimesi Yazıldıktan Sonra Virgül Yada Enter Tuşuna Basın!</div>
 
                             <label>Haber Etiketleri</label>
-                            <input type="text" name="tags" class="form-control" >
+                            <input type="text" name="tags" class="form-control form-control-sm rounded-0" >
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right js-example-tokenizer"><?= form_error("title"); ?></small>
                             <?php endif ?>
@@ -48,7 +48,7 @@
 
                         <div class="form-group">
                             <label>Yazar / Editör</label>
-                            <select class="form-control" name="writer_id">
+                            <select class="form-control form-control-sm rounded-0" name="writer_id">
 
                                 <?php foreach ($writers as $category) : ?>
                                     <option value="<?= $category->id; ?>"><?= $category->name; ?></option>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group">
                             <label>Emoji</label>
-                            <select class="form-control" name="emoji">
+                            <select class="form-control form-control-sm rounded-0" name="emoji">
                                 <option value="cok-iyi">Kahkaha</option>
 
                                 <option value="yerim">Kalpli Göz</option>
@@ -74,11 +74,11 @@
                         <?php if (isset($form_error)) : ?>
                             <div class="form-group ">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                             <div class="form-group ">
                                 <label>Video Url</label>
-                                <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                                 <?php if (isset($form_error)) : ?>
                                     <small class="input-form-error float-right"><?= form_error("video_url"); ?></small>
                                 <?php endif ?>
@@ -86,16 +86,16 @@
                         <?php else : ?>
                             <div class="form-group ">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                             <div class="form-group ">
                                 <label>Video Url</label>
-                                <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                             </div>
                         <?php endif ?>
 
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("news"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("news"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

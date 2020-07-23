@@ -2,14 +2,14 @@
 <?php $user = get_active_user(); ?>
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-xl navbar-dark fixed-top hk-navbar">
-    <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><i class="fa fa-list"></i></a>
+    <a id="navbar_toggle_btn" class="navbar-toggle-btn btn-sm nav-link-hover" href="javascript:void(0);"><i class="fa fa-list"></i></a>
     <a class="navbar-brand" href="<?=base_url()?>">
-        <img class="brand-img d-inline-block" width="160" src="https://mutfakyapim.com/images/mutfak/logo.png?v=1" alt="Mutfak Yapım" />
+        <img class="brand-img img-fluid" width="160" src="https://mutfakyapim.com/images/mutfak/logo.png?v=1" alt="Mutfak Yapım" />
     </a>
     <ul class="navbar-nav hk-navbar-content">
         <li class="nav-item dropdown dropdown-notifications">
             <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge-wrap"><span class="badge badge-primary badge-indicator badge-indicator-sm badge-pill pulse"></span></span></a>
-            <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+            <div class="dropdown-menu rounded-0 dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                 <h6 class="dropdown-header">Notifications <a href="javascript:void(0);" class="">View all</a></h6>
                 <div class="notifications-nicescroll-bar">
                     <a href="javascript:void(0);" class="dropdown-item">
@@ -70,7 +70,7 @@
         </li>
         <li class="nav-item dropdown dropdown-authentication">
             <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="badge-wrap"><span class="badge badge-success badge-indicator badge-indicator-sm badge-pill pulse ml-1 mr-1"></span></span><small><?= $user->full_name; ?> <i class="ml-1 fa fa-chevron-down"></i></small></a>
-            <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
+            <div class="dropdown-menu rounded-0 dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                 <a class="dropdown-item" href="<?= base_url("users/update_form/$user->id"); ?>"><i class="dropdown-icon fa fa-user"></i><span>Profilim</span></a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?= base_url("logout"); ?>"><i class="dropdown-icon fa fa-power-off"></i><span>Çıkış Yap</span></a>

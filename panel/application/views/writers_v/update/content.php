@@ -11,43 +11,43 @@
                     <form action="<?= base_url("writers/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Ad Soyad</label>
-                            <input class="form-control" placeholder="Ad Soyad" name="name" value="<?= $item->name; ?>">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Ad Soyad" name="name" value="<?= $item->name; ?>">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("name"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Görev</label>
-                            <input class="form-control" placeholder="Görev" name="type" value="<?= $item->type; ?>">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Görev" name="type" value="<?= $item->type; ?>">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("type"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>E-Mail</label>
-                            <input class="form-control" placeholder="E-Mail" type="email" name="email" value="<?= $item->email; ?>">
+                            <input class="form-control form-control-sm rounded-0" placeholder="E-Mail" type="email" name="email" value="<?= $item->email; ?>">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("email"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input class="form-control" placeholder="E-Mail" type="password" name="password" value="">
+                            <input class="form-control form-control-sm rounded-0" placeholder="E-Mail" type="password" name="password" value="">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("password"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="row">
                             <div class="col-md-1 image_upload_container">
-                                <img src="<?= get_picture($viewFolder, $item->img_url, "90x90"); ?>" alt="" class="img-responsive">
+                                <img src="<?= get_picture($viewFolder, $item->img_url, "90x90"); ?>" alt="" class="img-fluid">
                             </div>
                             <div class="col-md-9 form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                        <a href="<?= base_url("writers"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                        <a href="<?= base_url("writers"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

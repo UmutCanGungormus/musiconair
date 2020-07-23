@@ -11,38 +11,38 @@
                     <form action="<?= base_url("writers/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Ad Soyad</label>
-                            <input class="form-control" placeholder="Ad Soyad" name="name">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Ad Soyad" name="name">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("name"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Görevi</label>
-                            <input class="form-control" placeholder="Görevi" name="type">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Görevi" name="type">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("type"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>E-Mail</label>
-                            <input class="form-control" type="email" placeholder="E-Mail" name="email">
+                            <input class="form-control form-control-sm rounded-0" type="email" placeholder="E-Mail" name="email">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("email"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Şifre</label>
-                            <input class="form-control" type="password" placeholder="****" name="password">
+                            <input class="form-control form-control-sm rounded-0" type="password" placeholder="****" name="password">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("password"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group image_upload_container">
                             <label>Görsel Seçiniz</label>
-                            <input type="file" name="img_url" class="form-control">
+                            <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("writers"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("writers"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div>
             </div>

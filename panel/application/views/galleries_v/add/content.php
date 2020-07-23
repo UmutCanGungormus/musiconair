@@ -10,7 +10,7 @@
             <form action="<?= base_url("galleries/save"); ?>" method="post">
                 <div class="form-group">
                     <label>Galeri Adı</label>
-                    <input class="form-control" placeholder="Galeri Adı" name="title">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                     <?php endif ?>
@@ -18,13 +18,13 @@
                 <div class="form-group">
                     <label for="control-demo-6" class="">Galeri Türü</label>
                     <div id="control-demo-6" class="">
-                        <select class="form-control" name="gallery_type">
+                        <select class="form-control form-control-sm rounded-0" name="gallery_type">
                             <option <?= (isset($gallery_type) && $gallery_type == "image") ? "selected" : ""; ?> value="image">Resim</option>
                         </select>
                     </div>
                 </div><!-- .form-group -->
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                <a href="<?= base_url("galleries"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                <a href="<?= base_url("galleries"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div><!-- END column -->
     </div>

@@ -11,19 +11,19 @@
                     <form action="<?= base_url("product_option/save"); ?>" method="post">
                         <div class="form-group">
                             <label>Varyasyon Başlık</label>
-                            <input type="text" class="form-control" name="title">
+                            <input type="text" class="form-control form-control-sm rounded-0" name="title">
                         </div>
 
                         <div class="form-group">
                             <label>Varyasyon Eklenecek Kategori </label>
-                            <select class="selectpicker form-control" name="category_id" data-show-subtext="true" data-live-search="true">
+                            <select class="selectpicker form-control form-control-sm rounded-0" name="category_id" data-show-subtext="true" data-live-search="true">
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id ?>"><?= $category->title ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("product_option"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("product_option"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div>
             </div>

@@ -48,8 +48,8 @@ $permissions = json_decode($item->permissions);
 
                         <hr>
 
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                        <a href="<?= base_url("users"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                        <a href="<?= base_url("users"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

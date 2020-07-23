@@ -28,8 +28,8 @@
                                     <img width="75" src="<?= get_picture($viewFolder, $item->mobile_logo, "165x57"); ?>" alt="" class="img-fluid">
                                 </td>
                                 <td class="text-center w200">
-                                    <button data-url="<?= base_url("settings/delete/$item->id"); ?>" class="btn btn-sm btn-outline-danger remove-btn rounded-0"><i class="fa fa-trash"></i> Sil</button>
-                                    <a href="<?= base_url("settings/update_form/$item->id"); ?>" class="btn btn-sm btn-outline-info rounded-0"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
+                                    <button data-url="<?= base_url("settings/delete/$item->id"); ?>" class="btn btn-sm btn-sm btn-outline-danger remove-btn btn-sm rounded-0"><i class="fa fa-trash"></i> Sil</button>
+                                    <a href="<?= base_url("settings/update_form/$item->id"); ?>" class="btn btn-sm btn-sm btn-outline-info rounded-0"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

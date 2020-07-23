@@ -10,13 +10,13 @@
             <form action="<?= base_url("galleries/update/$item->id/$item->gallery_type/$item->folder_name"); ?>" method="post">
                 <div class="form-group">
                     <label>Galeri Adı</label>
-                    <input class="form-control" placeholder="Galeri Adı" name="title" value="<?= $item->title; ?>">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title" value="<?= $item->title; ?>">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                     <?php endif ?>
                 </div>
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                <a href="<?= base_url("galleries"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                <a href="<?= base_url("galleries"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div><!-- END column -->
     </div>

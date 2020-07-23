@@ -1,10 +1,10 @@
 <header class="d-flex justify-content-between align-items-center">
     <a class="d-flex auth-brand" href="<?= base_url() ?>">
-        <img class="brand-img" src="<?= base_url("uploads/site/logo.png") ?>" alt="Mutfak Yapım" />
+        <img class="brand-img img-fluid" src="https://mutfakyapim.com/images/mutfak/logo.png?v=1" alt="Mutfak Yapım" />
     </a>
     <div class="btn-group btn-group-sm">
-        <a href="https://mutfakyapim.com/iletisim" class="btn btn-outline-secondary">İletişim</a>
-        <a href="https://mutfakyapim.com/biz-kimiz" class="btn btn-outline-secondary">Hakkımızda</a>
+        <a href="https://mutfakyapim.com/iletisim" class="btn btn-sm btn-outline-secondary">İletişim</a>
+        <a href="https://mutfakyapim.com/biz-kimiz" class="btn btn-sm btn-outline-secondary">Hakkımızda</a>
     </div>
 </header>
 <div class="container-fluid">
@@ -29,19 +29,19 @@
                         <h1 class="display-4 mb-10">Tekrar Hoşgeldiniz :)</h1>
                         <p class="mb-30">Bilgilerinizle Panele giriş Yapın.</p>
                         <div class="form-group">
-                            <input id="sign-in-email" type="email" class="form-control" placeholder="Email" name="user_email">
+                            <input id="sign-in-email" type="email" class="form-control form-control-sm rounded-0" placeholder="Email" name="user_email">
                             <?php if (isset($form_error)) : ?><small class="input-form-error float-right"><?= form_error("user_email"); ?></small> <?php endif; ?>
                         </div>
                         <div class="form-group">
-                            <div class="input-group">
-                                <input id="sign-in-password" type="password" class="form-control" placeholder="Şifre" name="user_password">
+                            <div class="input-group input-group-sm">
+                                <input id="sign-in-password" type="password" class="form-control form-control-sm rounded-0" placeholder="Şifre" name="user_password">
                                 <?php if (isset($form_error)) : ?><small class="input-form-error float-right"><?= form_error("user_password"); ?></small> <?php endif; ?>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-eye"></i></span>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-pink btn-block login-btn" type="submit">Giriş Yap</button>
+                        <button class="btn btn-sm btn-pink btn-block login-btn" type="submit">Giriş Yap</button>
                         <p class="font-14 text-center mt-15">Oturum Açarken Problem Mi Yaşıyorsunuz?</p>
                         <p class="text-center"><a href="<?= base_url("sifremi-unuttum"); ?>">Şifremi unuttum.</a></p>
                     </form>

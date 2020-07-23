@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Galeri Listesi
-                <a href="<?= base_url("galleries/new_form"); ?>" class="btn btn-outline btn-primary btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="<?= base_url("galleries/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
             <hr>
         </div><!-- END column -->
@@ -34,7 +34,7 @@
                                     <td class="text-center"><?= $item->folder_name; ?></td>
                                     <td class="text-center"><?= $item->url; ?></td>
                                     <td class="text-center"><div class="custom-control custom-switch"><input data-id="<?=$item->id?>" data-url="<?= base_url("galleries/isActiveSetter/{$item->id}"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?=$item->id?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input">  <label class="custom-control-label" for="customSwitch<?=$item->id?>"></label></div></td>
-                                    <td class="text-center"><button data-url="<?= base_url("galleries/delete/$item->id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                                    <td class="text-center"><button data-url="<?= base_url("galleries/delete/$item->id"); ?>" class="btn btn-sm btn-sm btn-outline-danger rounded-0 remove-btn"><i class="fa fa-trash"></i> Sil</button>
                                         <?php
                                         if ($item->gallery_type == "image") :
                                             $button_icon = "fa-image";
@@ -47,8 +47,8 @@
                                             $button_url = "galleries/upload_form/$item->id";
                                         endif
                                         ?>
-                                        <a href="<?= base_url("galleries/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
-                                        <a href="<?= base_url($button_url); ?>" class="btn btn-sm btn-dark btn-outline"><i class="fa <?= $button_icon; ?>"></i> Galeriye gözat</a>
+                                        <a href="<?= base_url("galleries/update_form/$item->id"); ?>" class="btn btn-sm btn-sm btn-outline-info rounded-0"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
+                                        <a href="<?= base_url($button_url); ?>" class="btn btn-sm btn-sm btn-outline-dark rounded-0"><i class="fa <?= $button_icon; ?>"></i> Galeriye gözat</a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>

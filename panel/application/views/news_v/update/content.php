@@ -23,7 +23,7 @@
                                         <form action="<?= base_url("news/save"); ?>" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Haber Adı</label>
-                                                <input class="form-control" placeholder="Haber Adı" value="<?= $item->title ?>" name="title">
+                                                <input class="form-control form-control-sm rounded-0" placeholder="Haber Adı" value="<?= $item->title ?>" name="title">
                                                 <?php if (isset($form_error)) : ?>
                                                     <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                                                 <?php endif ?>
@@ -34,7 +34,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Haber Kategori</label>
-                                                <select class="form-control" name="category_id">
+                                                <select class="form-control form-control-sm rounded-0" name="category_id">
 
                                                     <?php foreach ($categories as $category) : ?>
                                                         <option <?= ($category->id == $item->category_id ? "selected" : null) ?> value="<?= $category->id; ?>"><?= $category->title; ?></option>
@@ -46,14 +46,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Haber Etiketleri</label>
-                                                <input type="text" name="tags" value="<?= $item->tags ?>" class="form-control" data-role="tagsinput">
+                                                <input type="text" name="tags" value="<?= $item->tags ?>" class="form-control form-control-sm rounded-0" data-role="tagsinput">
                                                 <?php if (isset($form_error)) : ?>
                                                     <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                                                 <?php endif ?>
                                             </div>
                                             <div class="form-group">
                                                 <label>Yazar / Editör</label>
-                                                <select class="form-control" name="writer_id">
+                                                <select class="form-control form-control-sm rounded-0" name="writer_id">
 
                                                     <?php foreach ($writers as $category) : ?>
                                                         <option <?= ($category->id == $item->writer_id ? "selected" : null) ?> value="<?= $category->id; ?>"><?= $category->name; ?></option>
@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Emoji</label>
-                                                <select class="form-control" name="emoji">
+                                                <select class="form-control form-control-sm rounded-0" name="emoji">
                                                     <option value="cok-iyi">Kahkaha</option>
 
                                                     <option value="yerim">Kalpli Göz</option>
@@ -79,11 +79,11 @@
                                             <?php if (isset($form_error)) : ?>
                                                 <div class="form-group ">
                                                     <label>Görsel Seçiniz</label>
-                                                    <input type="file" name="img_url" class="form-control">
+                                                    <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                                                 </div>
                                                 <div class="form-group ">
                                                     <label>Video Url</label>
-                                                    <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                                    <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                                                     <?php if (isset($form_error)) : ?>
                                                         <small class="input-form-error float-right"><?= form_error("video_url"); ?></small>
                                                     <?php endif ?>
@@ -95,17 +95,17 @@
                                                     </div>
                                                     <div class="col-md-9 form-group ">
                                                         <label>Görsel Seçiniz</label>
-                                                        <input type="file" name="img_url" class="form-control">
+                                                        <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label>Video Url</label>
-                                                    <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url" value="<?= $item->video_url; ?>">
+                                                    <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url" value="<?= $item->video_url; ?>">
                                                 </div>
                                             <?php endif ?>
 
-                                            <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                                            <a href="<?= base_url("news"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                                            <a href="<?= base_url("news"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                                         </form>
                                     </div><!-- .widget-body -->
                                 </div><!-- .widget -->

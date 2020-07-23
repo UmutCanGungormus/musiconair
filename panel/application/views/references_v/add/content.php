@@ -12,7 +12,7 @@
                     <form action="<?= base_url("references/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Ülke Adı</label>
-                            <input class="form-control" placeholder="Ülke Adı" name="title">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Ülke Adı" name="title">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                             <?php endif ?>
@@ -23,18 +23,18 @@
                         </div>
                         <div class="form-group image_upload_container">
                             <label>Görsel Seçiniz</label>
-                            <input type="file" name="img_url" class="form-control">
+                            <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                         </div>
                         <div class="form-group">
                             <label>Dil</label>
-                            <select class="form-control" name="language">
+                            <select class="form-control form-control-sm rounded-0" name="language">
                                 <option value="TR">TR (Türkçe/Turkish)</option>
                                 <option value="EN">EN (İngilizce/English)</option>
                                 <option value="DE">DE (Almanca/German)</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("references"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("references"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

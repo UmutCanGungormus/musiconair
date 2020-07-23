@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <h4 class="mb-3">
                 Portfolyo Kategori Listesi
-                <a href="<?php echo base_url("portfolio_categories/new_form"); ?>" class="btn btn-outline btn-primary btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="<?php echo base_url("portfolio_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>
         <div class="col-md-12">
@@ -16,13 +16,13 @@
                     <form id="filter_form" onsubmit="return false">
 						<div class="d-flex flex-wrap">
 							<label for="search" class="flex-fill mx-1">
-								<input class="form-control" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'portfolioCategoryTable')" name="search">
+								<input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'portfolioCategoryTable')" name="search">
 							</label>
 							<label for="clear_button" class="mx-1">
-								<button class="btn btn-danger btn-md" onclick="clearFilter('filter_form','portfolioCategoryTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+								<button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','portfolioCategoryTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
 							</label>
 							<label for="search_button" class="mx-1">
-								<button class="btn btn-success btn-md" onclick="reloadTable('portfolioCategoryTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
+								<button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('portfolioCategoryTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
 						</div>
 			</div>
 

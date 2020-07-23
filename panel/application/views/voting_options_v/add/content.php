@@ -11,18 +11,18 @@
                     <form action="<?= base_url("voting_options/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Başlık</label>
-                            <input class="form-control" placeholder="Başlık" name="title">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("title"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group image_upload_container">
                             <label>Görsel Seçiniz</label>
-                            <input type="file" name="img_url" class="form-control">
+                            <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                         </div>
                         <div class="form-group">
                             <label>Test Seç</label>
-                            <select class="form-control" name="voting_id">
+                            <select class="form-control form-control-sm rounded-0" name="voting_id">
                                 <option value="0">Seçiniz</option>
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id; ?>"><?= $category->title; ?></option>
@@ -32,8 +32,8 @@
                                 <small class="float-right input-form-error"> <?= form_error("category_id"); ?></small>
                             <?php endif ?>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("voting_options"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("voting_options"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div>
             </div>

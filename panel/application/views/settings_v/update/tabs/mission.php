@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade p-4" id="tab-3">
+<div class="tab-pane fade" id="mission" role="tabpanel" aria-labelledby="mission-tab">
 	<div class="row">
 		<div class="form-group col-md-12">
 			<label>Misyonumuz</label>

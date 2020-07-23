@@ -12,7 +12,7 @@
                     <form action="<?= base_url("references/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Referans Adı</label>
-                            <input class="form-control" placeholder="Referans Adı" name="title" value="<?= $item->title; ?>">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Referans Adı" name="title" value="<?= $item->title; ?>">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                             <?php endif ?>
@@ -27,12 +27,12 @@
                             </div>
                             <div class="col-md-9 form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Dil</label>
-                            <select class="form-control" name="language">
+                            <select class="form-control form-control-sm rounded-0" name="language">
                                 <?php if ($item->language == "TR") : ?>
                                     <option selected="selected" value="TR">TR (Türkçe/Turkish)</option>
                                     <option value="EN">EN (İngilizce/English)</option>
@@ -48,8 +48,8 @@
                                 <?php endif ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                        <a href="<?= base_url("references"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                        <a href="<?= base_url("references"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

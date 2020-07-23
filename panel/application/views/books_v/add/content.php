@@ -11,7 +11,7 @@
                 <div class="form-group">
 
                     <label>Kitap Adı</label>
-                    <input class="form-control" placeholder="Kitap Adı" name="title">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Kitap Adı" name="title">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                     <?php endif ?>
@@ -19,7 +19,7 @@
 
                 <div class="form-group">
                     <label>Kitap Kategori</label>
-                    <select class="form-control" name="category_id">
+                    <select class="form-control form-control-sm rounded-0" name="category_id">
                         <?php foreach ($categories as $category) : ?>
                             <option value="<?= $category->id ?>"><?= $category->title ?> </option>
                         <?php endforeach ?>
@@ -30,42 +30,42 @@
                 </div>
                 <div class="form-group">
                     <label>Yazar Adı</label>
-                    <input class="form-control" placeholder="Yazar Adı" name="writer_name">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Yazar Adı" name="writer_name">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("writer_name"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Kitap Dili</label>
-                    <input class="form-control" placeholder="Kitap Dili" name="language">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Kitap Dili" name="language">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("language"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Çevirmen</label>
-                    <input class="form-control" placeholder="Çevirmen" name="translator">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Çevirmen" name="translator">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("translator"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Sayfa Sayısı</label>
-                    <input class="form-control" type="text" placeholder="Sayfa Sayısı" name="page_count">
+                    <input class="form-control form-control-sm rounded-0" type="text" placeholder="Sayfa Sayısı" name="page_count">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("page_count"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>İlk Baskı</label>
-                    <input class="form-control" placeholder="İlk Baskı" name="first_print">
+                    <input class="form-control form-control-sm rounded-0" placeholder="İlk Baskı" name="first_print">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("first_print"); ?></small>
                     <?php endif ?>
                 </div>
                 <div class="form-group">
                     <label>Kitap Satın Alma Linki</label>
-                    <input class="form-control" placeholder="Kitap Satın Alma Linki" name="url">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Kitap Satın Alma Linki" name="url">
                     <?php if (isset($form_error)) : ?>
                         <small class="input-form-error float-right"><?= form_error("url"); ?></small>
                     <?php endif ?>
@@ -79,11 +79,11 @@
 
                     <div class="form-group image_upload_container col-md-8">
                         <label>Görsel Seçiniz</label>
-                        <input type="file" name="img_url" class="form-control">
+                        <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                <a href="<?= base_url("book"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                <a href="<?= base_url("book"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div><!-- END column -->
     </div>

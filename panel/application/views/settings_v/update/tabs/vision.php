@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade p-4" id="tab-4">
+<div class="tab-pane fade" id="vision" role="tabpanel" aria-labelledby="vision-tab">
 	<div class="row">
 		<div class="form-group col-md-12">
 			<label>Vizyonumuz</label>

@@ -12,7 +12,7 @@
                     <form action="<?= base_url("social_media_talk/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Haber Seç</label>
-                            <select class="form-control" name="news_id">
+                            <select class="form-control form-control-sm rounded-0" name="news_id">
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id ?>"><?= $category->title ?></option>
                                 <?php endforeach ?>
@@ -23,13 +23,13 @@
                         </div>
                         <div class="form-group video_url_container">
                                 <label>Widget Title</label>
-                                <input class="form-control" placeholder="Başlık Giriniz" name="title">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Başlık Giriniz" name="title">
                             </div>
 
                         <div class="form-group">
                             <label for="control-demo-6" class="">İçerik Türü</label>
                             <div id="control-demo-6" class="">
-                                <select class="form-control social_media_talk_type_select" name="social_media_talk_type">
+                                <select class="form-control form-control-sm rounded-0 social_media_talk_type_select" name="social_media_talk_type">
                                     <option <?= (isset($social_media_talk_type) && $social_media_talk_type == "image") ? "selected" : ""; ?> value="image">Resim</option>
                                     <option <?= (isset($social_media_talk_type) && $social_media_talk_type == "video") ? "selected" : ""; ?> value="video">Video</option>
                                 </select>
@@ -38,11 +38,11 @@
                         <?php if (isset($form_error)) : ?>
                             <div class="form-group image_upload_container" style="display: <?= ($social_media_talk_type == "image") ? "block" : "none"; ?>">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                             <div class="form-group video_url_container" style="display: <?= ($social_media_talk_type == "video") ? "block" : "none"; ?>">
                                 <label>Video Url</label>
-                                <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                                 <?php if (isset($form_error)) : ?>
                                     <small class="input-form-error float-right"><?= form_error("video_url"); ?></small>
                                 <?php endif ?>
@@ -50,16 +50,16 @@
                         <?php else : ?>
                             <div class="form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                             <div class="form-group video_url_container">
                                 <label>Video Url</label>
-                                <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                                <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
                             </div>
                         <?php endif ?>
 
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("social_media_talk"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("social_media_talk"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

@@ -19,7 +19,7 @@
                     <td class="order"><i class="fa fa-reorder"></i></td>
                     <td class="w50 text-center">#<?= $image->id; ?></td>
                     <td class="w100 text-center">
-                        <img width="30" src="<?= get_picture($viewFolder, $image->img_url, "255x157"); ?>" alt="<?= $image->img_url; ?>" class="img-responsive">
+                        <img width="30" src="<?= get_picture($viewFolder, $image->img_url, "255x157"); ?>" alt="<?= $image->img_url; ?>" class="img-fluid">
                     </td>
                     <td><?= $image->img_url; ?></td>
                     <td class="w100 text-center">
@@ -29,7 +29,7 @@
                         <div class="custom-control custom-switch"><input data-id="<?= $image->id ?>" data-url="<?= base_url("portfolio/isCoverSetter/{$image->id}/{$image->portfolio_id}"); ?>" data-status="<?= ($image->isActive) ? "checked" : ""; ?>" id="customSwitch<?= $image->id ?>" type="checkbox" <?= ($image->isActive) ? "checked" : ""; ?> class="my-check custom-control-input"> <label class="custom-control-label" for="customSwitch<?= $image->id ?>"></label></div>
                     </td>
                     <td class="w100 text-center">
-                        <button data-url="<?= base_url("portfolio/imageDelete/$image->id/$image->portfolio_id"); ?>" class="btn btn-sm btn-danger btn-outline remove-btn btn-block">
+                        <button data-url="<?= base_url("portfolio/imageDelete/$image->id/$image->portfolio_id"); ?>" class="btn btn-sm btn-sm btn-outline-danger rounded-0 remove-btn btn-sm btn-block">
                             <i class="fa fa-trash"></i> Sil
                         </button>
                     </td>

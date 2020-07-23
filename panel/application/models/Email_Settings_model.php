@@ -7,9 +7,9 @@ class Email_settings_model extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->column_order = array('rank', 'id', 'id', 'user_name', 'host', 'from','to','isActive');
+		$this->column_order = array('rank', 'id', 'id', 'user_name','user', 'host', 'from','to','isActive');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'id', 'user_name', 'host','from','to', 'isActive');
+        $this->column_search = array('rank', 'id', 'id', 'user_name','user', 'host','from','to', 'isActive');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}

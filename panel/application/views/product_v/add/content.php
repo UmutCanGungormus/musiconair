@@ -12,14 +12,14 @@
                     <form action="<?= base_url("product/save"); ?>" method="post">
                         <div class="form-group">
                             <label>Ürün Adı</label>
-                            <input class="form-control" placeholder="Ürün Adı" name="title">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Ürün Adı" name="title">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                             <?php endif ?>
                         </div>
                         <div class="form-group">
                             <label>Kategori</label>
-                            <select class="form-control" name="category_id">
+                            <select class="form-control form-control-sm rounded-0" name="category_id">
                                 <?php foreach ($categories as $category) : ?>
                                     <option value="<?= $category->id; ?>"><?= $category->title; ?></option>
                                 <?php endforeach ?>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label>Ürün Fiyat</label>
-                            <input type="number" min="0.00" max="10000.00" step="0.10" class="form-control" placeholder="Ürün Fiyatı" name="price">
+                            <input type="number" min="0.00" max="10000.00" step="0.10" class="form-control form-control-sm rounded-0" placeholder="Ürün Fiyatı" name="price">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("price"); ?></small>
                             <?php endif ?>
@@ -39,8 +39,8 @@
                             <label>Açıklama</label>
                             <textarea name="description" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("product"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("product"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

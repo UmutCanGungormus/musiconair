@@ -12,20 +12,20 @@
                     <form action="<?= base_url("users/update_password/$item->id"); ?>" method="post">
                         <div class="form-group">
                             <label>Şifre</label>
-                            <input type="password" class="form-control" placeholder="Şifre" name="password">
+                            <input type="password" class="form-control form-control-sm rounded-0" placeholder="Şifre" name="password">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("password"); ?></small>
                             <?php endif; ?>
                         </div>
                         <div class="form-group">
                             <label>Şifre Tekrar</label>
-                            <input type="password" class="form-control" placeholder="Şifre Tekrar" name="re_password">
+                            <input type="password" class="form-control form-control-sm rounded-0" placeholder="Şifre Tekrar" name="re_password">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("re_password"); ?></small>
                             <?php endif; ?>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                        <a href="<?= base_url("users"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                        <a href="<?= base_url("users"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

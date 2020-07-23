@@ -12,14 +12,14 @@
                     <form action="<?= base_url("user_role/save"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Başlık</label>
-                            <input class="form-control" placeholder="Başlık" name="title">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title">
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                             <?php endif; ?>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                        <a href="<?= base_url("user_role"); ?>" class="btn btn-md btn-danger btn-outlinen">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
+                        <a href="<?= base_url("user_role"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>
                 </div><!-- .widget-body -->
             </div><!-- .widget -->

@@ -11,14 +11,14 @@
 
                 <div class="form-group">
                     <label>Video URL</label>
-                    <input class="form-control" placeholder="Video bağlantısını buraya yapıştırınız" name="url" value="<?= $item->url; ?>">
+                    <input class="form-control form-control-sm rounded-0" placeholder="Video bağlantısını buraya yapıştırınız" name="url" value="<?= $item->url; ?>">
                     <?php if (isset($form_error)) : ?>
                         <small class="float-right input-form-error"> <?= form_error("url"); ?></small>
                     <?php endif ?>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                <a href="<?= base_url("galleries/gallery_video_list/$item->gallery_id"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                <a href="<?= base_url("galleries/gallery_video_list/$item->gallery_id"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>
         </div><!-- END column -->
     </div>

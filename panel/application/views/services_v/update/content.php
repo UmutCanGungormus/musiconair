@@ -11,7 +11,7 @@
                     <form action="<?= base_url("services/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Başlık</label>
-                            <input class="form-control" placeholder="Başlık" name="title" value="<?= $item->title; ?>">
+                            <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title" value="<?= $item->title; ?>">
                             <?php if (isset($form_error)) : ?>
                                 <small class="float-right input-form-error"> <?= form_error("title"); ?></small>
                             <?php endif ?>
@@ -22,16 +22,16 @@
                         </div>
                         <div class="row">
                             <div class="col-md-1 image_upload_container">
-                                <img src="<?= get_picture($viewFolder, $item->img_url, "800x625"); ?>" alt="" class="img-responsive">
+                                <img src="<?= get_picture($viewFolder, $item->img_url, "800x625"); ?>" alt="" class="img-fluid">
                             </div>
                             <div class="col-md-9 form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control">
+                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Hizmet Dili</label>
-                            <select class="form-control" name="language">
+                            <select class="form-control form-control-sm rounded-0" name="language">
                                 <?php if ($item->language == "TR") : ?>
                                     <option selected="selected" value="TR">TR (Türkçe/Turkish)</option>
                                     <option value="EN">EN (İngilizce/English)</option>
@@ -47,8 +47,8 @@
                                 <?php endif ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                        <a href="<?= base_url("services"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
+                        <a href="<?= base_url("services"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
                 </div>
             </div>

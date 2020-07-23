@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade p-4" id="tab-10">
+<div class="tab-pane fade" id="live-support" role="tabpanel" aria-labelledby="live-support-tab">
 	<div class="row">
 		<div class="form-group col-md-12">
 			<label>Canlı Destek (Script kodlarını editörün "Code View (< / >)" bölümünden ekleyiniz!)</label>
