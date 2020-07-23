@@ -4,11 +4,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Userop extends CI_Controller
 {
     public $viewFolder = "";
+    public $site_settings = "";
     public function __construct()
     {
         parent::__construct();
         $this->viewFolder = "users_v";
         $this->viewData = new stdClass();
+        $this->site_settings = get_settings();
     }
 
     public function render()
@@ -86,8 +88,8 @@ class Userop extends CI_Controller
         else :
             $user = $this->general_model->get("users", null, ["isActive" => 1, "email" => $data["email"]]);
             if ($user) :
-                $email_message = "Sayın {$user->full_name},</br> <b>Şifre Sıfırlama Linkiniz : </b> <a href='" . base_url("sifre-sifirla/{$user->email}/{$user->pass_reset}") . "'>Şifremi Sıfırla</a>";
-                $send = send_email($user->email, $email_message, 1);
+                $email_message = "Sayın {$user->full_name},</br> <b>Şifre Sıfırlama Linkiniz : </b> <a href='" . base_url("sifremi-unuttum/".rawurlencode($user->email)."/{$user->token}") . "'>Şifremi Sıfırla</a>";
+                $send = send_email($user->email,"{$this->site_settings->company_name} Şifre Sıfırlama", $email_message, 1);
                 if ($send) :
                     echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Şifre Sıfırlama Mailiniz <b>{$user->email}</b> Mail Adresinize İletildi..."]);
                 else :
@@ -105,16 +107,19 @@ class Userop extends CI_Controller
         if (get_active_user()) :
             redirect(base_url());
         endif;
-        if (empty($email) || empty($token)) :
+        
+        if (!empty($email) || !empty($token)) :
+            $email = rawurldecode($email);
             $user = $this->general_model->get("users", null, ["email" => $email, "token" => $token]);
             if (!empty($user)) :
-                $this->viewData["email"] = $user->email;
-                $this->viewData["token"] = $user->token;
+                $this->viewData->email = $user->email;
+                $this->viewData->token = $user->token;
                 $this->viewFolder = "pass_reset_v/index";
                 $this->render();
             else :
+                die("asdfdf");
                 $this->session->set_flashdata('alert', ["success" => false, "title" => "Başarısız!", "msg" => "Bilgilerinizin Doğru Olduğundan Emin Olup Lütfen Tekrar Deneyin."]);
-                redirect(base_url("sifremi-unuttum/{$email}/{$token}"));
+                redirect(base_url("sifremi-unuttum/".rawurlencode($email)."/{$token}"));
             endif;
         else :
             $this->session->set_flashdata('alert', ["success" => false, "title" => "Başarısız!", "msg" => "Geçersiz Parametre. Lütfen Şifrenizi Tekrar Sıfırlamayı Deneyin."]);

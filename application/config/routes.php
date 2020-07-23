@@ -50,13 +50,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home/index';
-$route['404_override'] = 'home/hata';
+$route['404_override'] = '';
+//$route['404_override'] = 'home/error';
 $route['translate_uri_dashes'] = FALSE;
 
 $route["giris-yap"] = "userop/login";
 $route["kayit-ol"] = "userop/register";
 $route["sifremi-unuttum"] = "userop/reset_password";
-$route["sifremi-unuttum/(:any)/(:any)"] = "userop/reset_password_v";
+$route["sifremi-unuttum/(:any)"] = "userop/reset_password_v/$1";
+$route["sifremi-unuttum/(:any)/(:any)"] = "userop/reset_password_v/$1/$2";
 $route["cikis"] = "userop/logout";
 $route['urunler']='home/product_list';
 $route['kategori/(.*)']='home/category';

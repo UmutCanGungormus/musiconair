@@ -668,15 +668,14 @@ function isValidURL($url)
 function get_product_cover_image($product_id)
 {
     $t = &get_instance();
-    $t->load->model("product_image_model");
-    $cover_image = $t->product_image_model->get(
+    $cover_image = $t->general_model->get("product_images",null,
         array(
             "isCover"       => 1,
             "product_id"    => $product_id
         )
     );
     if (empty($cover_image)) {
-        $cover_image = $t->product_image_model->get(
+        $cover_image = $t->general_model->get("product_images",null,
             array(
                 "product_id"    => $product_id
             )
@@ -688,8 +687,7 @@ function get_product_cover_image($product_id)
 function get_portfolio_category_title($id)
 {
     $t = &get_instance();
-    $t->load->model("portfolio_category_model");
-    $portfolio = $t->portfolio_category_model->get(
+    $portfolio = $t->general_model->get("portfolio_categories",null,
         array(
             "id" => $id
         )
@@ -700,8 +698,7 @@ function get_portfolio_category_title($id)
 function get_product_category_title($id)
 {
     $t = &get_instance();
-    $t->load->model("product_category_model");
-    $product = $t->product_category_model->get(
+    $product = $t->general_model->get("product_categories",null,
         array(
             "id" => $id
         )
@@ -712,23 +709,21 @@ function get_product_category_title($id)
 function get_writer($id)
 {
     $t = &get_instance();
-    $t->load->model("writers_model");
-    $writer = $t->writers_model->get(['id' => $id]);
+    $writer = $t->general_model->get("writers",null,['id' => $id]);
     return  $writer;
 }
 
 function get_portfolio_cover_image($id)
 {
     $t = &get_instance();
-    $t->load->model("portfolio_image_model");
-    $cover_image = $t->portfolio_image_model->get(
+    $cover_image = $t->general_model->get("portfolio_images",null,
         array(
             "isCover"       => 1,
             "portfolio_id"    => $id
         )
     );
     if (empty($cover_image)) {
-        $cover_image = $t->portfolio_image_model->get(
+        $cover_image = $t->general_model->get("portfolio_images",null,
             array(
                 "portfolio_id"    => $id
             )
@@ -742,8 +737,7 @@ function get_settings($language = "tr")
     $t = &get_instance();
     $settings = $t->session->userdata("settings");
     if (empty($settings)) {
-        $t->load->model("settings_model");
-        $settings = $t->settings_model->get(
+        $settings = $t->general_model->get("settings",null,
             array(
                 "language" => $language
             )
@@ -753,11 +747,10 @@ function get_settings($language = "tr")
     return $settings;
 }
 
-function send_email($toEmail = "", $subject = "", $message = "",$mail_settings="")
+/* function send_email($toEmail = "", $subject = "", $message = "",$mail_settings="")
 {
     $t = &get_instance();
-    $t->load->model("emailsettings_model");
-    $emailsettings = $t->emailsettings_model->get(
+    $emailsettings = $t->general_model->get("email_settings",null,
         array(
             "id" => $mail_settings
         )
@@ -775,11 +768,46 @@ function send_email($toEmail = "", $subject = "", $message = "",$mail_settings="
         "newline" => "\r\n"
     );
     $t->load->library("email", $config);
+    $t->email->initialize($config);
     $t->email->from($emailsettings->from, $emailsettings->user_name);
     $t->email->to($toEmail);
     $t->email->subject($subject);
     $t->email->message($message);
     return $t->email->send();
+}
+*/
+function send_email($toEmail = "", $subject = "", $message = "",$mail_settings=""){
+    $t = &get_instance();
+    $email_settings = $t->general_model->get("email_settings",null,
+        array(
+            "id" => $mail_settings
+        )
+    );
+    $transport = (new Swift_SmtpTransport($email_settings->host, intval($email_settings->port), strto("lower",$email_settings->protocol)))
+        ->setUsername($email_settings->user)
+        ->setPassword($email_settings->password);
+
+    // Create the Mailer using your created Transport
+    $mailer = new Swift_Mailer($transport);
+    if(empty($toEmail)):
+        $email_settings->user_name;
+    endif;
+    // Create a message
+    $msg = (new Swift_Message($subject))
+        ->setFrom([$email_settings->from => $email_settings->user_name])
+        ->setTo($toEmail)
+        ->setCharset('utf-8');;
+
+    $msg->setBody($message, 'text/html', 'utf-8');
+
+    // Send the message
+    $result = $mailer->send($msg);
+
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
 }
 function get_picture($path = "", $picture = "", $resolution = "50x50")
 {
@@ -798,8 +826,7 @@ function get_picture($path = "", $picture = "", $resolution = "50x50")
 function get_popup_service($page = "")
 {
     $t = &get_instance();
-    $t->load->model("popup_model");
-    $popup = $t->popup_model->get(
+    $popup = $t->general_model->get("popups",null,
         array(
             "isActive" => 1,
             "page" => $page
@@ -811,8 +838,7 @@ function get_popup_service($page = "")
 function get_gallery_by_url($url = "")
 {
     $t = &get_instance();
-    $t->load->model("gallery_model");
-    $gallery = $t->gallery_model->get(
+    $gallery = $t->general_model->get("galleries",null,
         array(
             "isActive" => 1,
             "url" => $url
@@ -838,8 +864,7 @@ function get_menu()
     $t = &get_instance();
     $menu = $t->session->userdata("menu");
     if (empty($menu)) {
-        $t->load->model("product_category_model");
-        $menu = $t->product_category_model->get_all();
+        $menu = $t->general_model->get_all("product_categories",null,"id ASC",["isActive" => 1]);
         $t->session->set_userdata("menu", $menu);
     }
 
@@ -852,8 +877,7 @@ function get_service()
     $t = &get_instance();
     $service = $t->session->userdata("service");
     if (empty($service)) {
-        $t->load->model("service_model");
-        $service = $t->service_model->get_all();
+        $service = $t->general_model->get_all("services",null,"id ASC",["isActive" => 1]);
         $t->session->set_userdata("service", $service);
     }
 
@@ -866,8 +890,7 @@ function get_sub_menu()
     $t = &get_instance();
     $menu = $t->session->userdata("sub_menu");
     if (empty($menu)) {
-        $t->load->model("product_category_model");
-        $menu = $t->product_category_model->get_sub();
+        $menu = $t->general_model->get_all("product_categories",null,"id ASC",["isActive" => 1,"ust_id!=" => 0]);
         $t->session->set_userdata("sub_menu", $menu);
     }
 

@@ -26,6 +26,11 @@ class Home extends CI_Controller
         $this->load->view("includes/footer");
     }
 
+    public function error(){
+        $this->viewFolder = "404_v/index";
+        $this->render();
+    }
+
     public function index()
     {
         $this->viewData->news = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1]);
@@ -209,20 +214,18 @@ class Home extends CI_Controller
         $this->pagination->initialize($config);
         $this->viewData->category = $category_id;
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $this->viewData->links = $this->pagination->create_links();   
 
-        if ($category_id) {
+        //KATEGORİLER
+        if (empty($category_id)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "category_v/index";
             $this->viewData->products = $this->product_model->get_records($config["per_page"], $page, ["category_id" => $category_id->id]);
-        } else {
-            return $this->load->view("404_v/index");
-        }
-
-        $this->viewData->links = $this->pagination->create_links();
-
-
-        //kATEGORİLER
-
-        return $this->load->view("category_v/index", $viewData);
+        endif;
+        $this->render();
     }
+
     public function teklif()
     {
         $this->load->library("form_validation");
