@@ -114,11 +114,11 @@
 
                 <?php foreach ($news as $haber) {
                 ?>
-                    <a target="_blank" href="<?php echo base_url("haber_detay/" . $haber->id); ?>">
+                    <a target="_blank" href="<?= base_url("haber_detay/" . $haber->id); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div style="position: relative;">
-                                    <img src="<?php echo base_url("public/uploads/news/" . $haber->id . ".jpg"); ?>" class="img-fluid">
+                                    <img src="<?= base_url("public/uploads/news/" . $haber->id . ".jpg"); ?>" class="img-fluid">
                                     <i class="emoji-love"></i>
                                 </div>
 
@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
 
-                                <h6 class="px-1 py-3"><b><?php echo $haber->title; ?></b></h6>
+                                <h6 class="px-1 py-3"><b><?= $haber->title; ?></b></h6>
                             </div>
                         </div>
                     </a>
@@ -156,23 +156,23 @@
                     <div class="card item mb-3 dark">
                         <div class="card-body p-0 m-0">
                             <div style="position: relative;" class="video-list">
-                                <img src="<?php echo base_url("public/uploads/video_photos/" . $tv->id . ".jpg"); ?>" class="img-fluid" />
+                                <img src="<?= base_url("public/uploads/video_photos/" . $tv->id . ".jpg"); ?>" class="img-fluid" />
                                 <i class="emoji-love"></i>
-                                <a class="popup-video" data-fancybox data-width="640" data-height="360" data-small-btn="true" href="https://www.youtube.com/watch?v=<?php echo $tvHaber->video_embed_kodu; ?>"></a>
-                                <a class="link-video" target="_blank" href="<?php echo base_url("video_detay/" . $tv->id); ?>"></a>
+                                <a class="popup-video" data-fancybox data-width="640" data-height="360" data-small-btn="true" href="https://www.youtube.com/watch?v=<?= $tvHaber->video_embed_kodu; ?>"></a>
+                                <a class="link-video" target="_blank" href="<?= base_url("video_detay/" . $tv->id); ?>"></a>
                                 <span></span>
                             </div>
 
                             <div style="font-size: 11px;">
                                 <div class="d-inline-block mr-1 py-2 px-2">
-                                    <i class="fa fa-user"></i> <?php echo $yazar->ad ?>
+                                    <i class="fa fa-user"></i> <?= $yazar->ad ?>
                                 </div>
                                 <div class="d-inline-block">
                                     <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?php setlocale(LC_ALL, 'tr_TR.UTF-8');
                                                                                                 echo strftime("%d %B %Y", strtotime($tvHaber->news_create_time)); ?>
                                 </div>
                             </div>
-                            <h6 class="px-1 py-3" style="font-size: 17px;"><b><?php echo $haber->news_title; ?></b></h6>
+                            <h6 class="px-1 py-3" style="font-size: 17px;"><b><?= $haber->news_title; ?></b></h6>
                         </div>
                     </div>
                 <?php } ?>
@@ -211,11 +211,11 @@
             <h4 class="title"><b>Onair</b> Vitrin</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php foreach ($news as $haber) { ?>
-                    <a target="_blank" href="<?php echo base_url("haber_detay/" . $haber->id); ?>">
+                    <a target="_blank" href="<?= base_url("haber_detay/" . $haber->id); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div style="position: relative;">
-                                    <img src="<?php echo base_url("public/uploads/news/" . $haber->id . ".jpg"); ?>" class="img-fluid">
+                                    <img src="<?= base_url("public/uploads/news/" . $haber->id . ".jpg"); ?>" class="img-fluid">
                                     <i class="emoji-love"></i>
                                 </div>
 
@@ -233,7 +233,7 @@
                                     </div>
                                 </div>
 
-                                <h6 class="px-1 py-3"><b><?php echo $haber->title; ?></b></h6>
+                                <h6 class="px-1 py-3"><b><?= $haber->title; ?></b></h6>
                             </div>
                         </div>
                     </a>
@@ -252,16 +252,16 @@
 
                 <?php foreach ($keyifler as $keyif) { ?>
                     <div class="col-md-3 px-1 my-3 dark">
-                        <a href="<?php echo base_url("video_detay/" . $keyif->id); ?>">
+                        <a href="<?= base_url("video_detay/" . $keyif->id); ?>">
                             <div class="container mx-2 p-1">
                                 <div style="position: relative;">
-                                    <img src="<?php echo base_url("public/uploads/news/" . $keyif->id . ".jpg"); ?>" class="img-fluid">
+                                    <img src="<?= base_url("public/uploads/news/" . $keyif->id . ".jpg"); ?>" class="img-fluid">
                                     <i class="emoji-love"></i>
                                 </div>
 
                                 <div style="font-size: 11px;">
                                     <div class="d-inline-block mr-1 py-2 px-2">
-                                        <i class="fa fa-user"></i> <?php echo $yazar->ad; ?>
+                                        <i class="fa fa-user"></i> <?= $yazar->ad; ?>
                                     </div>
                                     <div class="d-inline-block">
                                         <i class="fa fa-clock-o mr-1" style="font-size: 11px;"></i><?php setlocale(LC_ALL, 'tr_TR.UTF-8');
@@ -269,7 +269,7 @@
                                     </div>
                                 </div>
 
-                                <span class="px-1py-3"><b><?php echo $keyif->news_title; ?></b></span>
+                                <span class="px-1py-3"><b><?= $keyif->news_title; ?></b></span>
                             </div>
                         </a>
                     </div>

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <h4 class="mb-3">
-                Portfolyo Kategori Listesi
+                Ürün Kategorileri
                 <a href="<?= base_url("product_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>

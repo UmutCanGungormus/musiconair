@@ -273,9 +273,6 @@
                                     <li class="nav-item <?= ($this->uri->segment(1)=="product_option_category")? "active":"" ?>">
                                         <a class="nav-link" href="<?= base_url("product_option_category"); ?>">Varyasyon Kategori</a>
                                     </li>
-                                    <li class="nav-item <?= ($this->uri->segment(1)=="product_option_category")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("product_option_add"); ?>">Ürüne Varyasyon Ekle</a>
-                                    </li>
 
                                    
                                 </ul>

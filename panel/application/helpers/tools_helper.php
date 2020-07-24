@@ -729,6 +729,7 @@ function get_cinema_category_title($id)
     $ci = &get_instance();
     $ci->load->model("cinema_category_model");
     $item = $ci->cinema_category_model->get(['id' => $id]);
+    
     return $item->title;
 }
 function isAdmin()

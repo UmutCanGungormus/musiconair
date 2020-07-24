@@ -12,8 +12,8 @@
         </div>
         <div class="row mt-1">
             <div class="container-fluid">
-                <h2><?php echo $test->title ?></h2>
-                <img src="<?php echo base_url("panel/uploads/tests_v/800x625/" . $test->img_url) ?>" class="img-fluid">
+                <h2><?= $test->title ?></h2>
+                <img src="<?= base_url("panel/uploads/tests_v/800x625/" . $test->img_url) ?>" class="img-fluid">
                 <h3>Seç Bakalım</h3>
             
 
@@ -27,11 +27,11 @@
 
                     ?>
                         <div class="col-md-3 my-3">
-                            <img width="100%" src="<?php echo base_url("panel/uploads/options_v/800x625/" . $option->img_url) ?>" alt="metin">
+                            <img width="100%" src="<?= base_url("panel/uploads/options_v/800x625/" . $option->img_url) ?>" alt="metin">
                             <div class="form-group" style="text-align:center;">
-                                <span style="font-size: larger"><?php echo $option->title ?></span>
+                                <span style="font-size: larger"><?= $option->title ?></span>
 
-                                <input class="form-control check" type="radio" data-options="<?php echo $option->id ?>" name="<?php echo $test->title ?>" value="<?php echo $option->title ?>">
+                                <input class="form-control check" type="radio" data-options="<?= $option->id ?>" name="<?= $test->title ?>" value="<?= $option->title ?>">
 
                             </div>
                         </div>
@@ -53,15 +53,15 @@
 
                     ?>
                         <div class="col-md-3 my-3">
-                            <img width="100%" src="<?php echo base_url("panel/uploads/options_v/800x625/" . $option->img_url) ?>" alt="metin">
+                            <img width="100%" src="<?= base_url("panel/uploads/options_v/800x625/" . $option->img_url) ?>" alt="metin">
                             <div class="form-group" style="text-align:center;">
-                                <span style="font-size: larger"><?php echo $option->title ?></span>
+                                <span style="font-size: larger"><?= $option->title ?></span>
 
-                                <input class="form-control check" type="radio" data-options="<?php echo $option->id ?>" name="<?php echo $test->title ?>" value="<?php echo $option->title ?>">
-                                <p>Toplam Yanıtlarda % <?php echo $cevap ?> Oranında Bu Cevap Seçildi. </p>
+                                <input class="form-control check" type="radio" data-options="<?= $option->id ?>" name="<?= $test->title ?>" value="<?= $option->title ?>">
+                                <p>Toplam Yanıtlarda % <?= $cevap ?> Oranında Bu Cevap Seçildi. </p>
                                 <div class="yuzde" style=" border-radius: 5px; background-color:#f9dddd">
-                                    <div class="ic" style="border-radius: 5px; background-color: #228203;width:<?php echo $cevap; ?>% ; ">
-                                        % <?php echo $cevap ?>
+                                    <div class="ic" style="border-radius: 5px; background-color: #228203;width:<?= $cevap; ?>% ; ">
+                                        % <?= $cevap ?>
                                     </div>
                                 </div>
                             </div>

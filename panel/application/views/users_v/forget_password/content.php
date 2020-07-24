@@ -3,8 +3,8 @@
         <img class="brand-img" src="https://mutfakyapim.com/images/mutfak/logo.png?v=1" alt="Mutfak Yapım" />
     </a>
     <div class="btn-group btn-group-sm">
-        <a href="https://mutfakyapim.com/iletisim" class="btn btn-sm btn-outline-secondary">İletişim</a>
-        <a href="https://mutfakyapim.com/biz-kimiz" class="btn btn-sm btn-outline-secondary">Hakkımızda</a>
+        <a href="https://mutfakyapim.com/iletisim" class="btn btn-sm btn-outline-secondary rounded-0">İletişim</a>
+        <a href="https://mutfakyapim.com/biz-kimiz" class="btn btn-sm btn-outline-secondary rounded-0">Hakkımızda</a>
     </div>
 </header>
 <div class="container-fluid">
@@ -32,7 +32,7 @@
                             <input type="email" class="form-control form-control-sm rounded-0" placeholder="E-Posta Adresi" name="email" value="<?= isset($form_error) ? set_value("email") : ""; ?>">
                             <?php if (isset($form_error)) : ?><small class="input-form-error float-right"><?= form_error("email"); ?></small> <?php endif; ?>
                         </div>
-                        <button class="btn btn-sm btn-pink btn-block login-btn" type="submit">Şifremi Sıfırla</button>
+                        <button class="btn btn-sm btn-pink rounded-0 btn-block login-btn" type="submit">Şifremi Sıfırla</button>
                         <p class="font-14 text-center mt-15">Şifrenizi Hatırladınız Mı?</p>
                         <p class="text-center"><a href="<?= base_url("login"); ?>">Giriş Yapın.</a></p>
                     </form>

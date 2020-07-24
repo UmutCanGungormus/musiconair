@@ -11,7 +11,7 @@
 			<?php if (empty($items)) : ?>
 				<div class="alert alert-info text-center">
 					<h5 class="alert-title">Kayıt Bulunamadı</h5>
-					<p>Burada herhangi bir veri bulunmamaktadır. Ekleme için lütfen <a href="<?= base_url("advertisement/new_form/?type=job"); ?>">tıklayınız...</a></p>
+					<p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?= base_url("advertisement/new_form/?type=job"); ?>">tıklayınız...</a></p>
 				</div>
 			<?php else : ?>
 				<table class="table table-hover table-striped table-bordered content-container">

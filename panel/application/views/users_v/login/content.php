@@ -3,8 +3,8 @@
         <img class="brand-img img-fluid" src="https://mutfakyapim.com/images/mutfak/logo.png?v=1" alt="Mutfak Yapım" />
     </a>
     <div class="btn-group btn-group-sm">
-        <a href="https://mutfakyapim.com/iletisim" class="btn btn-sm btn-outline-secondary">İletişim</a>
-        <a href="https://mutfakyapim.com/biz-kimiz" class="btn btn-sm btn-outline-secondary">Hakkımızda</a>
+        <a href="https://mutfakyapim.com/iletisim" class="btn btn-sm btn-outline-secondary rounded-0">İletişim</a>
+        <a href="https://mutfakyapim.com/biz-kimiz" class="btn btn-sm btn-outline-secondary rounded-0">Hakkımızda</a>
     </div>
 </header>
 <div class="container-fluid">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-sm btn-pink btn-block login-btn" type="submit">Giriş Yap</button>
+                        <button class="btn btn-sm btn-pink rounded-0 btn-block login-btn" type="submit">Giriş Yap</button>
                         <p class="font-14 text-center mt-15">Oturum Açarken Problem Mi Yaşıyorsunuz?</p>
                         <p class="text-center"><a href="<?= base_url("sifremi-unuttum"); ?>">Şifremi unuttum.</a></p>
                     </form>
