@@ -1,18 +1,12 @@
 $(document).ready(function () {
 	/* Login & Register Modal */
-	$("#modal-custom").iziModal({
+	/*$("#modal-custom").iziModal({
 		overlayClose: false,
 		overlayColor: 'rgba(0, 0, 0, 0.6)',
 		headerColor: (getCookie("theme") === "dark" ? "#202020" : "#eee"),
 		background: (getCookie("theme") === "dark" ? "#222222" : "#fff"),
 		zindex: 1030,
 		bodyOverflow: true
-	});
-
-	/*$(document).on('click', '.trigger-custom', function (e) {
-		e.preventDefault();
-		e.stopImmediatePropagation();
-		$('#modal-custom').iziModal('open');
 	});*/
 
 	/* JS inside the modal */
@@ -31,9 +25,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$("#modal-custom").on('click', '.submit', function (e) {
-		e.preventDefault();
-		e.stopImmediatePropagation();
+	$("#modal-custom").on('click', '.giris-yap,.kayit-ol', function () {
 		let fx = "wobble",  //wobble shake
 			$modal = $(this).closest('.iziModal');
 
@@ -138,34 +130,52 @@ $(document).ready(function () {
 	/* Theme Color Switcher */
 
 	/* Login */
-	$(document).on("click", ".giris-yap", function (e) {
+	$(document).on("click", ".login-form-btn", function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
-		let formData = new FormData(document.getElementById("giris-yap"));
-		createAjax(url, formData);
+		let formData = new FormData(document.getElementById("login-form"));
+		createAjax(url, formData,function(){
+			closeModal(".loginModal");
+		});
 	});
 	/* Login */
 
 	/* Register */
-	$(document).on("click", ".kayit-ol", function (e) {
+	$(document).on("click", ".register-form-btn", function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
-		let formData = new FormData(document.getElementById("kayit-ol"));
-		createAjax(url, formData);
+		let formData = new FormData(document.getElementById("register-form"));
+		createAjax(url, formData,function(){
+			closeModal(".loginModal");
+		});
 	});
 	/* Register */
 
-	/* Register */
-	$(document).on("click", ".sifremi-unuttum", function (e) {
+	/* Remember Password */
+	$(document).on("click", ".remember-password-form-btn", function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
-		let formData = new FormData(document.getElementById("remember-password"));
-		createAjax(url, formData);
+		let formData = new FormData(document.getElementById("remember-password-form"));
+		createAjax(url, formData,function(){
+			closeModal(".rememberPasswordModal");
+			closeModal(".loginModal");
+		});
 	});
-	/* Register */
+
+	$(document).on("click", ".reset-password-form-btn", function (e) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		let url = $(this).data("url");
+		let formData = new FormData(document.getElementById("reset-password-form"));
+		createAjax(url, formData,function(){
+			closeModal(".rememberPasswordModal");
+			closeModal(".loginModal");
+		});
+	});
+	/* Remember Password */
 });
 
 /* Set Theme Cookie */
@@ -209,7 +219,7 @@ function createAjax(url, formData, successFnc = function(){},errorFnc = function
 	});
 }
 
-function createModal(modalClass = null, modalTitle = null, modalSubTitle = null, width = 600, bodyOverflow = true, padding = "20px", radius = 0, headerColor = "#e20e17", background = "#fff", onOpening = function () { }, onOpened = function () { }, onClosing = function () { }, onClosed = function () { }, afterRender = function () { }, onFullScreen = function () { }, onResize = function () { }, fullscreen = true, openFullscreen = false, closeOnEscape = true, closeButton = true, overlayClose = false, autoOpen = 0, zindex = 1040) {
+function createModal(modalClass = null, modalTitle = null, modalSubTitle = null, width = 600, bodyOverflow = true, padding = "20px", radius = 0, headerColor = "#e20e17", background = "#fff", zindex = 1040, onOpening = function () { }, onOpened = function () { }, onClosing = function () { }, onClosed = function () { }, afterRender = function () { }, onFullScreen = function () { }, onResize = function () { }, fullscreen = true, openFullscreen = false, closeOnEscape = true, closeButton = true, overlayClose = false, autoOpen = 0) {
 	if (modalClass !== "" || modalClass !== null) {
 		$(modalClass).iziModal({
 			title: modalTitle,

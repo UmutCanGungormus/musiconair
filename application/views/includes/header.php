@@ -64,7 +64,7 @@
 
 				<?php if (!isset($_SESSION['user'])) : ?>
 					<li class="nav-item my-auto py-auto">
-						<a class="nav-link p-0 btn btn-danger btn-block d-inline-block px-3 py-2" class="trigger-custom" data-izimodal-open="#modal-custom" href="javascript:void(0)">
+						<a class="nav-link p-0 btn btn-danger btn-block d-inline-block px-3 py-2 trigger-custom" href="javascript:void(0)">
 							<i class="fa fa-user"></i>
 							<b>Giriş</b>
 						</a>

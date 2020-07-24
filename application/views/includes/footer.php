@@ -1,6 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div id="modal-custom" data-iziModal-group="grupo1">
-    <button data-iziModal-close class="icon-close">x</button>
+<div class="loginModal" id="modal-custom" data-iziModal-group="group1" style="display: none;">
     <header>
         <a href="javascript:void(0)" class="active" id="signin">Giriş Yap</a>
         <a href="javascript:void(0)">Kayıt Ol</a>
@@ -52,7 +51,7 @@
     </section>
 </div>
 
-<div class="rememberPasswordModal">
+<div class="rememberPasswordModal" style="display: none;">
     <form id="remember-password" onsubmit="return false" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="reset-email">E-Posta Adresi *</label>
@@ -60,82 +59,10 @@
         </div>
         <div class="form-group">
             <button class="btn btn-danger" data-iziModal-close>İPTAL ET</button>
-            <button class="btn btn-success sifremi-unuttum" data-url="<?= base_url("sifremi-unuttum") ?>"><i class="fa fa-check"></i> ŞİFREMİ SIFIRLA</button>
+            <button class="btn btn-success sifremi-unuttum" data-url="<?= base_url("sifremi-unuttum") ?>"><i class="fa fa-check"></i> SIFIRLAMA MAİLİ GÖNDER</button>
         </div>
     </form>
 </div>
-<script>
-    $(document).ready(function() {
-        let headerColor = (getCookie("theme") === "dark" ? "#202020" : "#e20e17");
-        let bgColor = (getCookie("theme") === "dark" ? "#222" : "#fff");
-        createModal(".rememberPasswordModal", "Şifremi Unuttum", "Şifremi Unuttum", 600, true, "20px", 0, headerColor, bgColor);
-        $(document).on("click", ".remember-password", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            openModal(".rememberPasswordModal");
-        });
-    });
-</script>
-<form id="iletisim" action="" method="post" style="display: none;width:100%;max-width:410px;">
-    <h4>İletişim</h4>
-    <p>
-        <b>Ad *</b>
-        <input type="text" class="form-control" value="" name="demo_name" placeholder="Ad" required="" />
-    </p>
-    <p>
-        <b>Soyad *</b>
-        <input type="text" class="form-control" value="" name="demo_surname" placeholder="Soyad" required="" />
-    </p>
-    <p>
-        <b>Konu *</b>
-        <select class="form-control" name="" required="">
-            <option value="">Lütfen Seçin</option>
-            <option value="İstek">İstek</option>
-            <option value="Öneri">Öneri</option>
-            <option value="Şikayet">Şikayet</option>
-        </select>
-    </p>
-    <p>
-        <b>E-Posta Adresi *</b>
-        <input type="text" class="form-control" value="" name="demo_surname" placeholder="E-Posta Adresi" required="" />
-    </p>
-    <p>
-        <b>E-Posta Adresi *</b>
-        <textarea class="form-control" name="" required=""></textarea>
-    </p>
-    <p>
-        <button class="btn btn-danger btn-sm float-right">
-            <i class="fa fa-check"></i>
-            Gönder
-            p</button>
-    </p>
-</form>
-
-<form id="ilanlar" action="" method="post" style="display: none;width:100%;max-width:410px;">
-    <h4>İlanlar</h4>
-
-    <div class="form-group">
-        <label for="name">Ad * </label>
-        <input type="text" class="form-control" name="name" id="name" placeholder="Ad" required="">
-    </div>
-    <div class="form-group">
-        <label for="surname">Soyad * </label>
-        <input type="text" class="form-control" name="surname" id="surname" placeholder="Soyad" required="">
-    </div>
-    <div class="form-group">
-        <label for="email">E-Posta Adresi * </label>
-        <input type="text" class="form-control" name="email" id="email" placeholder="Ad" required="">
-    </div>
-    <div class="form-group">
-        <label for="cw">CW * </label>
-        <input type="file" class="form-control" name="cw" id="cw">
-    </div>
-    <div class="form-group">
-        <button class="btn btn-sm btn-danger">
-            <i class="fa fa-check"></i> Gönder
-        </button>
-    </div>
-</form>
 
 <!-- SCRIPTS -->
 <!-- Bootstrap Bundle -->
@@ -154,7 +81,24 @@
 <script src="<?= base_url("public/js/app.js") ?>?v=<?= time() ?>"></script>
 <!-- SCRIPTS -->
 <?php $this->load->view("includes/alert") ?>
-
+<script>
+    $(document).ready(function() {
+        let headerColor = (getCookie("theme") === "dark" ? "#202020" : "#e20e17");
+        let bgColor = (getCookie("theme") === "dark" ? "#222" : "#fff");
+        createModal(".rememberPasswordModal", "Şifremi Unuttum", "Şifremi Unuttum", 600, true, "20px", 0, headerColor, bgColor,1050);
+        $(document).on("click", ".remember-password", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            openModal(".rememberPasswordModal");
+        });
+        createModal(".loginModal", "Giriş Yap / Kayıt Ol", "Giriş Yap Kayıt Ol", 600, true, "20px", 0, headerColor, bgColor,1040);
+        $(document).on("click", ".trigger-custom", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            openModal(".loginModal");
+        });
+    });
+</script>
 </body>
 
 </html>

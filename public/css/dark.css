@@ -111,16 +111,13 @@ html.dark #modal-custom .iziModal-content header a{
     padding: 0;
     text-align: center;
     color: #999;
-    height: 73px;
-    line-height: 73px;
+    height: 40px;
+    line-height: 40px;
     background: #202020;
 }
 html.dark #modal-custom .iziModal-content header a.active{
     background: #222222;
     color: #fff;
-}
-html.dark #modal-custom .iziModal-content section{
-    padding: 30px;
 }
 html.dark #modal-custom .iziModal-content section label[for="check"]{
     margin-bottom: 26px;
