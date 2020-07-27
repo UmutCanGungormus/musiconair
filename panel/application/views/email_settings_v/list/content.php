@@ -24,15 +24,15 @@
 
                 <thead>
                     <th class="w50"><i class="fa fa-reorder"></i></th>
-                    <th class="w50"><i class="fa fa-reorder"></i></th>
+                    <th class="w50 nosort"><i class="fa fa-reorder"></i></th>
                     <th class="w50">#Id</th>
                     <th>E-Posta Başlık</th>
-                    <th>Sunucu Adı</th>
                     <th>E-Posta</th>
-                    <th>Kimden</th>
-                    <th>Kime</th>
+                    <th>Sunucu Adı</th>
                     <th>Durum</th>
-                    <th>İşlem</th>
+                    <th>Oluşturulma Tarihi</th>
+                    <th>Güncelleme Tarihi</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>
 

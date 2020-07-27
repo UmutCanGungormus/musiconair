@@ -16,7 +16,49 @@
             </h4>
             <hr>
         </div><!-- END column -->
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 image_list_container">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <form id="filter_form" onsubmit="return false">
+				<div class="d-flex flex-wrap">
+					<label for="search" class="flex-fill mx-1">
+						<input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'galleryTable')" name="search">
+					</label>
+					<label for="clear_button" class="mx-1">
+						<button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','galleryTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+					</label>
+					<label for="search_button" class="mx-1">
+						<button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('galleryTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Galeri Ara"><i class="fa fa-search"></i></button>
+				</div>
+			</form>
+            <table class="table table-hover table-striped table-bordered content-container galleryTable">
+                <thead>
+                    <th class="w50">#</th>
+                    <th class="order nosort"><i class="fa fa-reorder"></i></th>
+                    <th class="w50">#id</th>
+                    <th>Görsel</th>
+                    <th>Dosya Yolu/Adı</th>
+                    <th>Durumu</th>
+                    <th class="nosort">Açıklama Ekle</th>
+                    <th>Oluşturulma Tarihi</th>
+                    <th>Güncelleme Tarihi</th>
+                    <th class="nosort">İşlem</th>
+                </thead>
+                <tbody >
+                    
+                </tbody>
+            </table>
+            <script>
+				function obj(d) {
+					let appendeddata = {};
+					$.each($("#filter_form").serializeArray(), function() {
+						d[this.name] = this.value;
+					});
+					return d;
+				}
+				$(document).ready(function() {
+					TableInitializerV2("galleryTable", obj, {}, "<?= base_url("galleries/datatable") ?>", "<?= base_url("galleries/rankSetter") ?>", true);
+
+				});
+			</script>
             <?php $this->load->view("{$viewFolder}/{$subViewFolder}/render_elements/file_list_v"); ?>
         </div><!-- END column -->
     </div>
