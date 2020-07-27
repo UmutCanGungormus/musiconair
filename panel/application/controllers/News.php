@@ -41,12 +41,12 @@ class News extends MY_Controller
 
             $proccessing = '
             <div class="dropdown">
-                <button class="btn btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("news/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item" href="' . base_url("news/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("news/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -107,8 +107,6 @@ class News extends MY_Controller
             redirect(base_url("news/new_form"));
         }
 
-        $this->form_validation->set_rules("video_url", "Video URL", "required|trim");
-
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
         $this->form_validation->set_message(
             array(
@@ -121,19 +119,20 @@ class News extends MY_Controller
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_370x297 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 370, 297, $file_name);
             $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+            $getRank = $this->news_model->rowCount();
             if ($image_370x297 && $image_1008x600) {
                 $data = array(
                     "title"         => $this->input->post("title"),
                     "content"   => $this->input->post("content"),
                     "seo_url"           => seo($this->input->post("title")),
-                    "tags"      => $this->input->post("tags"),
+                    "tags"      => implode(",",$this->input->post("tags")),
                     "img_url"     => $file_name,
                     'reaction' => json_encode($reaction),
                     "video_url"     => $this->input->post("video_url"),
                     "emoji"      => $this->input->post("emoji"),
                     "writer_id"      => $this->input->post("writer_id"),
                     "category_id"      => $this->input->post("category_id"),
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1
                 );
             } else {
@@ -219,7 +218,6 @@ class News extends MY_Controller
                         "writer_id"      => $this->input->post("writer_id"),
                         "tags"      => $this->input->post("tags"),
                         "category_id"      => $this->input->post("category_id"),
-                        "rank"          => 0,
                         "isActive"      => 1
                     );
                 } else {
@@ -241,7 +239,6 @@ class News extends MY_Controller
                     "writer_id"      => $this->input->post("writer_id"),
                     "tags"      => $this->input->post("tags"),
                     "category_id"      => $this->input->post("category_id"),
-                    "rank"          => 0,
                     "isActive"      => 1
                 );
             }

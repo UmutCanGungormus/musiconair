@@ -11,7 +11,7 @@
                 <div class="form-group">
 
                     <label>Kitap Kategori</label>
-                    <select name="category_id[]" class="form-control form-control-sm rounded-0 js-example-responsive" multiple="multiple" size="4">
+                    <select name="category_id[]" class="form-control form-control-sm rounded-0 tagsInput" multiple="multiple" size="4">
                         <?php foreach ($categories as $category) : ?>
                             <option value="<?= $category->id ?>"><?= $category->title ?> </option>
                         <?php endforeach ?>

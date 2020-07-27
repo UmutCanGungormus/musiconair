@@ -39,12 +39,12 @@ class Voting_options extends MY_Controller
             
             $proccessing = '
             <div class="dropdown">
-                <button class="btn btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("voting_options/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item" href="' . base_url("voting_options/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("voting_options/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -110,7 +110,7 @@ class Voting_options extends MY_Controller
                         "title"         => $this->input->post("title"),
                         "img_url"       => $file_name,
                         "voting_id"         => $this->input->post("voting_id"),
-                        "rank"          => 0,
+                        "rank"          => 1,
                         "isActive"      => 1
                     )
                 );

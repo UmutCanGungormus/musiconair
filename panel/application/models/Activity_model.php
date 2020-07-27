@@ -26,4 +26,9 @@ class Activity_model extends CI_Model
 	{
 		return $this->db->where($where)->delete($this->tableName);
 	}
+
+	public function rowCount($where = array())
+    {
+        return $this->db->where($where)->count_all_results($this->tableName);
+    }
 }

@@ -1,22 +1,12 @@
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Yazarlar / Editörler
                 <a href="<?= base_url("writers/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div><!-- END column -->
-        <div class="col-md-12">
-            <div class="widget p-lg">
-
-                <?php if (empty($items)) : ?>
-
-                    <div class="alert alert-info text-center">
-                        <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?= base_url("writers/new_form"); ?>">tıklayınız</a></p>
-                    </div>
-
-                <?php else : ?>
-
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <form id="filter_form" onsubmit="return false">
                         <div class="d-flex flex-wrap">
                             <label for="search" class="flex-fill mx-1">
@@ -28,8 +18,6 @@
                             <label for="search_button" class="mx-1">
                                 <button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('writersTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
                         </div>
-            </div>
-
             </form>
 
             <table width="100%" class="table table-hover table-striped table-bordered content-container writersTable">
@@ -44,18 +32,10 @@
                     <th>İşlem</th>
                 </thead>
                 <tbody class="sortable" data-url="<?= base_url("writers/rankSetter"); ?>">
-
-                   
-
                 </tbody>
-
             </table>
-
-        <?php endif ?>
-
         </div><!-- .widget -->
     </div><!-- END column -->
-</div>
 </div>
 <script>
     function obj(d) {

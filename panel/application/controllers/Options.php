@@ -60,6 +60,7 @@ class Options extends MY_Controller
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_800x625 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 800, 625, $file_name);
             $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+            $getRank = $this->options_model->rowCount();
             if ($image_800x625 && $image_1008x600) {
                 $insert = $this->options_model->add(
                     array(
@@ -67,7 +68,7 @@ class Options extends MY_Controller
                         "img_url"       => $file_name,
                         "id"         => $this->input->post("options_id"),
                         "test_id"         => $this->input->post("test_id"),
-                        "rank"          => 0,
+                        "rank"          => $getRank+1,
                         "isActive"      => 1
                     )
                 );

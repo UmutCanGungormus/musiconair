@@ -38,12 +38,12 @@ class Product_categories extends MY_Controller
 
             $proccessing = '
             <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle rounded-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm btn-outline-primary dropdown-toggle rounded-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("product_categories/update_form/$item->id") . '">Kaydı Düzenle</a>
-                    <a class="dropdown-item" href="' . base_url("product_categories/delete/$item->id") . '">Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("product_categories/delete/$item->id") . '">Kaydı Sil</a>
                 </div>
             </div>';
 

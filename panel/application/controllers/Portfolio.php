@@ -41,12 +41,12 @@ class Portfolio extends MY_Controller
 
             $proccessing = '
             <div class="dropdown">
-                <button class="btn btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("portfolio/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item" href="' . base_url("portfolio/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("portfolio/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -113,6 +113,7 @@ public function rankSetter()
         );
         $validate = $this->form_validation->run();
         if ($validate) {
+            $getRank = $this->portfolio_model->rowCount();
             $insert = $this->portfolio_model->add(
                 array(
                     "title"         => $this->input->post("title"),
@@ -123,7 +124,7 @@ public function rankSetter()
                     "category_id" => $this->input->post("category_id"),
                     "place" => $this->input->post("place"),
                     "portfolio_url" => $this->input->post("portfolio_url"),
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -376,11 +377,12 @@ public function rankSetter()
         $image_352x171 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder", 352, 171, $file_name);
         $image_1080x426 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder", 1080, 426, $file_name);
         $image_480x340 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder", 480, 340, $file_name);
+        $getRank = $this->portfolio_image_model->rowCount();
         if ($image_255x157 && $image_276x171 && $image_352x171 && $image_480x340 && $image_1080x426) {
             $this->portfolio_image_model->add(
                 array(
                     "img_url"       => $file_name,
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "isCover"       => 0,
                     "createdAt"     => date("Y-m-d H:i:s"),

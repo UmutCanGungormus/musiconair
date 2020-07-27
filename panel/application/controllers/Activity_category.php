@@ -16,13 +16,55 @@ class Activity_category extends MY_Controller
     public function index()
     {
         $viewData = new stdClass();
-        $items = $this->activity_category_model->get_all(
-            array()
-        );
+        $items = $this->activity_category_model->get_all();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
         $viewData->items = $items;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
+    public function datatable()
+    {
+        $items = $this->activity_category_model->getRows(
+            [],
+            $_POST
+        );
+        $data = $row = array();
+        $i = (!empty($_POST['start']) ? $_POST['start'] : 0);
+
+        foreach ($items as $item) {
+            $i++;
+            $j=$i+1;
+            
+            $proccessing = '
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    İşlemler
+                </button>
+                <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="' . base_url("activity_category/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("activity_category/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    </div>
+            </div>';
+
+
+
+            //array_push($renkler,$renk->negotiation_stage_color);
+            $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("activity_category/isActiveSetter/{$item->id}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
+            
+            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->seo_url,$item->createdAt,$item->updatedAt, $checkbox, $proccessing);
+        }
+        
+
+
+        $output = array(
+            "draw" => (!empty($_POST['draw']) ? $_POST['draw'] : 0),
+            "recordsTotal" => $this->activity_category_model->rowCount(),
+            "recordsFiltered" => $this->activity_category_model->countFiltered([], (!empty($_POST) ? $_POST : [])),
+            "data" => $data,
+        );
+
+        // Output to JSON format
+        echo json_encode($output);
     }
     public function new_form()
     {
@@ -43,13 +85,15 @@ class Activity_category extends MY_Controller
             )
         );
         $validate = $this->form_validation->run();
+        $getRank = $this->activity_category_model->rowCount();
         if ($validate) {
             $seo_url = seo($this->input->post("title"));
             $insert = $this->activity_category_model->add(
                 array(
                     "title"         => $this->input->post("title"),
-                    "isActive"      => 1
-
+                    "seo_url"           => $seo_url,
+                    "isActive"      => 1,
+                    "rank"          => $getRank+1
                 )
             );
             if ($insert) {
@@ -107,7 +151,8 @@ class Activity_category extends MY_Controller
                     "id" => $id
                 ),
                 array(
-                    "title" => $this->input->post("title")
+                    "title" => $this->input->post("title"),
+                    "seo_url"   => $seo_url
                 )
             );
             if ($update) {

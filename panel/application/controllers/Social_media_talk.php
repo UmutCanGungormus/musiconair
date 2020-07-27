@@ -41,13 +41,13 @@ class Social_media_talk extends MY_Controller
             
             $proccessing = '
             <div class="dropdown">
-                <button class="btn btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("social_media_talk/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item" href="' . base_url("social_media_talk/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
-                    </div>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("social_media_talk/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                </div>
             </div>';
 
 
@@ -120,7 +120,7 @@ class Social_media_talk extends MY_Controller
 
                 $image_370x297 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 370, 297, $file_name);
                 $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
-
+                $getRank = $this->brand_model->rowCount();
                 if ($image_370x297 && $image_1008x600) {
 
                     $data = array(
@@ -151,7 +151,7 @@ class Social_media_talk extends MY_Controller
                     "video_url"     => $this->input->post("video_url"),
                     "news_id"        => $this->input->post("news_id"),
                     "title"     =>$this->input->post("title"),
-                    "rank"          => 0,
+                    "rank"          => 1,
                     "isActive"      => 1
                 );
             }

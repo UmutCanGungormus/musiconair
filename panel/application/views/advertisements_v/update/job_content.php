@@ -22,7 +22,6 @@
                         <small class="input-form-error float-right"><?= form_error("city"); ?></small>
                     <?php endif ?>
                 </div>
-
                 <div class="form-group">
                     <label>Sektör </label>
                     <input class="form-control form-control-sm rounded-0" value="<?= $item->sector; ?>" placeholder="Sektör" name="sector">

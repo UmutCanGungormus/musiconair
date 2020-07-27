@@ -62,7 +62,7 @@ class Test extends MY_Controller
                         "title"         => $this->input->post("title"),
                         "img_url"       => $file_name,
                         "seo_url"          => seo($this->input->post("title")),
-                        "rank"          => 0,
+                        "rank"          => 1,
 
                         "isActive"      => 1
                     )

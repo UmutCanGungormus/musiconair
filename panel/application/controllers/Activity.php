@@ -63,11 +63,12 @@ class Activity extends MY_Controller
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
             $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
+            $getRank = $this->activity_model->rowCount();
             if ($image_255x157 && $image_1140x705) {
                 $insert = $this->activity_model->add(
                     array(
                         "title"         => $this->input->post("title"),
+                        "seo_url"       => seo($this->input->post("title")),
                         "category_id"         => $this->input->post("category_id"),
                         "content"   => $this->input->post("content"),
                         "place"   => $this->input->post("place"),
@@ -77,7 +78,7 @@ class Activity extends MY_Controller
                         "url"           => $this->input->post("url"),
                         "img_url"     => $file_name,
                         "date" => $this->input->post("event_date"),
-                        "rank"          => 0,
+                        "rank"          => $getRank+1,
                         "isActive"      => 1
                     )
                 );
@@ -144,10 +145,10 @@ class Activity extends MY_Controller
                 $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
                 $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
                 $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
                 if ($image_255x157 && $image_1140x705) {
                     $data = array(
                         "title"         => $this->input->post("title"),
+                        "seo_url"       => seo($this->input->post("title")),
                         "category_id"         => $this->input->post("category_id"),
                         "content"   => $this->input->post("content"),
                         "place"   => $this->input->post("place"),
@@ -157,7 +158,6 @@ class Activity extends MY_Controller
                         "url"           => $this->input->post("url"),
                         "img_url"     => $file_name,
                         "date" => $this->input->post("date"),
-                        "rank"          => 0,
                         "isActive"      => 1
                     );
                 } else {
@@ -180,7 +180,6 @@ class Activity extends MY_Controller
                     "info"   => $this->input->post("info"),
                     "url"           => $this->input->post("url"),
                     "date" => $this->input->post("date"),
-                    "rank"          => 0,
                     "isActive"      => 1
                 );
             }

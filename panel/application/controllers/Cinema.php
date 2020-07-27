@@ -65,7 +65,7 @@ class Cinema extends MY_Controller
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
             $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
+            $getRank = $this->cinema_model->rowCount();
             if ($image_255x157 && $image_1140x705) {
                 $insert = $this->cinema_model->add(
                     array(
@@ -79,7 +79,7 @@ class Cinema extends MY_Controller
                         "scriptwriter"           => $this->input->post("scriptwriter"),
                         "url"       => $this->input->post('url'),
                         "img_url"     => $file_name,
-                        "rank"          => 0,
+                        "rank"          => $getRank + 1,
                         "isActive"      => 1
                     )
                 );
@@ -159,7 +159,6 @@ class Cinema extends MY_Controller
                         "scriptwriter"           => $this->input->post("scriptwriter"),
                         "url"       => $this->input->post('url'),
                         "img_url"     => $file_name,
-                        "rank"          => 0,
                         "isActive"      => 1
                     );
                 } else {
@@ -182,7 +181,6 @@ class Cinema extends MY_Controller
                     "players"   => $this->input->post("players"),
                     "scriptwriter"           => $this->input->post("scriptwriter"),
                     "url"       => $this->input->post('url'),
-                    "rank"          => 0,
                     "isActive"      => 1
                 );
             }

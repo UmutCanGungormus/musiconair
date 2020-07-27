@@ -28,12 +28,12 @@ class Slides extends MY_Controller
             
             $proccessing = '
             <div class="dropdown">
-                <button class="btn btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="' . base_url("slides/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item" href="' . base_url("slides/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url' . base_url("slides/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -106,6 +106,7 @@ class Slides extends MY_Controller
         if ($validate) {
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
+            $getRank = $this->slide_model->rowCount();
             if ($image_857x505) {
                 $insert = $this->slide_model->add(
                     array(
@@ -116,7 +117,7 @@ class Slides extends MY_Controller
                         "button_url" => $this->input->post("button_url"),
                         "button_caption" => $this->input->post("button_caption"),
                         "language"      => $this->input->post("language"),
-                        "rank"          => 0,
+                        "rank"          => $getRank+1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s")
                     )

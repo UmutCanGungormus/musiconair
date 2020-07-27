@@ -61,7 +61,7 @@ class Book extends MY_Controller
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
             $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
+            $getRank = $this->book_model->rowCount();
             if ($image_255x157 && $image_1140x705) {
                 $insert = $this->book_model->add(
                     array(
@@ -75,7 +75,7 @@ class Book extends MY_Controller
                         "first_print"           => $this->input->post("first_print"),
                         "url"       => $this->input->post('url'),
                         "img_url"     => $file_name,
-                        "rank"          => 0,
+                        "rank"          => $getRank+1,
                         "isActive"      => 1
                     )
                 );
@@ -141,7 +141,7 @@ class Book extends MY_Controller
                 $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
                 $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
                 $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
+                
                 if ($image_255x157 && $image_1140x705) {
                     $data = array(
                         "title"         => $this->input->post("title"),
@@ -154,7 +154,6 @@ class Book extends MY_Controller
                         "first_print"           => $this->input->post("first_print"),
                         "url"       => $this->input->post('url'),
                         "img_url"     => $file_name,
-                        "rank"          => 0,
                         "isActive"      => 1
                     );
                 } else {
@@ -177,7 +176,6 @@ class Book extends MY_Controller
                     "page_count"   => $this->input->post("page_count"),
                     "first_print"           => $this->input->post("first_print"),
                     "url"       => $this->input->post('url'),
-                    "rank"          => 0,
                     "isActive"      => 1
                 );
             }

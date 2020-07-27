@@ -45,6 +45,7 @@ class Galleries extends MY_Controller
             )
         );
         $validate = $this->form_validation->run();
+        $getRank = $this->gallery_model->rowCount();
         if ($validate) {
             $gallery_type = $this->input->post("gallery_type");
             $path         = "uploads/$this->viewFolder/";
@@ -74,7 +75,7 @@ class Galleries extends MY_Controller
                     "gallery_type"  => $this->input->post("gallery_type"),
                     "url"           => seo($this->input->post("title")),
                     "folder_name"   => $folder_name,
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -340,10 +341,11 @@ class Galleries extends MY_Controller
         if ($upload) {
             $uploaded_file = $this->upload->data("file_name");
             $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
+            $getRank = $this->$modelName->rowCount();
             $this->$modelName->add(
                 array(
                     "url"           => "{$config["upload_path"]}$uploaded_file",
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s"),
                     "gallery_id"    => $gallery_id
@@ -361,10 +363,11 @@ class Galleries extends MY_Controller
             $image_350x216 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 350, 216, $file_name);
             $image_851x606 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 851, 606, $file_name);
             if ($image_252x156 && $image_350x216 && $image_851x606) {
+                $getRank = $this->image_model->rowCount();
                 $this->image_model->add(
                     array(
                         "url"           => $file_name,
-                        "rank"          => 0,
+                        "rank"          => $getRank+1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s"),
                         "gallery_id"    => $gallery_id
@@ -381,10 +384,11 @@ class Galleries extends MY_Controller
             $upload = $this->upload->do_upload("file");
             if ($upload) {
                 $uploaded_file = $this->upload->data("file_name");
+                $getRank = $this->file_model->rowCount();
                 $this->file_model->add(
                     array(
                         "url"           => $uploaded_file,
-                        "rank"          => 0,
+                        "rank"          => $getRank+1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s"),
                         "gallery_id"    => $gallery_id
@@ -500,11 +504,12 @@ class Galleries extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
+            $getRank = $this->video_model->rowCount();
             $insert = $this->video_model->add(
                 array(
                     "url"           => $this->input->post("url"),
                     "gallery_id"    => $id,
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -706,13 +711,14 @@ class Galleries extends CI_Controller {
                     die();
                 }
             }
+            $getRank = $this->gallery_model->rowCount();
             $insert = $this->gallery_model->add(
                 array(
                     "title"         => $this->input->post("title"),
                     "gallery_type"   => $this->input->post("gallery_type"),
                     "url"           => seo($this->input->post("title")),
                     "folder_name" => $folder_name,
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -985,10 +991,11 @@ class Galleries extends CI_Controller {
         if($upload){
             $uploaded_file = $this->upload->data("file_name");
             $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
+            $getRank = $this->$modelName->rowCount();
             $this->$modelName->add(
                 array(
                     "url"           => "{$config["upload_path"]}$uploaded_file",
-                    "rank"          => 0,
+                    "rank"          => $getRank+1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s"),
                     "gallery_id"    => $gallery_id

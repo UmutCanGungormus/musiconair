@@ -15,7 +15,6 @@
                         <small class="float-right input-form-error"> <?= form_error("title"); ?></small>
                     <?php endif ?>
                 </div>
-
                 <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
                 <a href="<?= base_url("activity_category"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
             </form>

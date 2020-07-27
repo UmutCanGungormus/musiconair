@@ -1,26 +1,23 @@
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<h4 class="mb-3">
 				Ürün Listesi
 				<a href="<?= base_url("product/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
 			</h4>
 		</div><!-- END column -->
-		<div class="col-md-12">
-			<div class="widget p-lg">
-				<form id="filter_form" onsubmit="return false">
-					<div class="d-flex flex-wrap">
-						<label for="search" class="flex-fill mx-1">
-							<input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'productTable')" name="search">
-						</label>
-						<label for="clear_button" class="mx-1">
-							<button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','productTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
-						</label>
-						<label for="search_button" class="mx-1">
-							<button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('productTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
-					</div>
-			</div>
-
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<form id="filter_form" onsubmit="return false">
+				<div class="d-flex flex-wrap">
+					<label for="search" class="flex-fill mx-1">
+						<input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'productTable')" name="search">
+					</label>
+					<label for="clear_button" class="mx-1">
+						<button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','productTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+					</label>
+					<label for="search_button" class="mx-1">
+						<button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('productTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Ürün Ara"><i class="fa fa-search"></i></button>
+				</div>
 			</form>
 			<table class="table table-hover table-striped table-bordered content-container productTable">
 
@@ -50,12 +47,10 @@
 					return d;
 				}
 				$(document).ready(function() {
-					TableInitializerV2("productTable", obj, {}, "<?= base_url("product/datatable") ?>", "<?= base_url("product/rankSetter") ?>",true);
+					TableInitializerV2("productTable", obj, {}, "<?= base_url("product/datatable") ?>", "<?= base_url("product/rankSetter") ?>", true);
 
 				});
-			
 			</script>
 		</div><!-- .widget -->
 	</div><!-- END column -->
-</div>
 </div>

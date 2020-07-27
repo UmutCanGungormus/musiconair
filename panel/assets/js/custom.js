@@ -1,132 +1,6 @@
 $(document).ready(function () {
-	$(document).on("click", ".my-check", function () {
-		let id = $(this).data("id");
-		let url = $(this).data("url");
-		let value = null;
-		if($(this).is(":checked")){
-			value = 1;
-		}else{
-			value = 0;
-		}
-		$.post(url, { "id": id,"data":value }, function (data) {
-			if (data.success) {
-				iziToast.success({
-					title: data.title,
-					message: data.msg,
-					position: "topCenter"
-				})
-			}
-			else {
-				iziToast.error({
-					title: data.title,
-					message: data.msg,
-					position: "topCenter"
-				});
-			}
-		}, "json");
-	});
-
-
-
-	$.fn.countTo = function (options) {
-		options = options || {};
-
-		return $(this).each(function () {
-			// set options for current element
-			var settings = $.extend({}, $.fn.countTo.defaults, {
-				from: $(this).data('from'),
-				to: $(this).data('to'),
-				speed: $(this).data('speed'),
-				refreshInterval: $(this).data('refresh-interval'),
-				decimals: $(this).data('decimals')
-			}, options);
-
-			// how many times to update the value, and how much to increment the value on each update
-			var loops = Math.ceil(settings.speed / settings.refreshInterval),
-				increment = (settings.to - settings.from) / loops;
-
-			// references & variables that will change with each update
-			var self = this,
-				$self = $(this),
-				loopCount = 0,
-				value = settings.from,
-				data = $self.data('countTo') || {};
-
-			$self.data('countTo', data);
-
-			// if an existing interval can be found, clear it first
-			if (data.interval) {
-				clearInterval(data.interval);
-			}
-			data.interval = setInterval(updateTimer, settings.refreshInterval);
-
-			// initialize the element with the starting value
-			render(value);
-
-			function updateTimer() {
-				value += increment;
-				loopCount++;
-
-				render(value);
-
-				if (typeof (settings.onUpdate) == 'function') {
-					settings.onUpdate.call(self, value);
-				}
-
-				if (loopCount >= loops) {
-					// remove the interval
-					$self.removeData('countTo');
-					clearInterval(data.interval);
-					value = settings.to;
-
-					if (typeof (settings.onComplete) == 'function') {
-						settings.onComplete.call(self, value);
-					}
-				}
-			}
-
-			function render(value) {
-				var formattedValue = settings.formatter.call(self, value, settings);
-				$self.html(formattedValue);
-			}
-		});
-	};
-
-	$.fn.countTo.defaults = {
-		from: 0,               // the number the element should start at
-		to: 0,                 // the number the element should end at
-		speed: 1000,           // how long it should take to count between the target numbers
-		refreshInterval: 100,  // how often the element should be updated
-		decimals: 0,           // the number of decimal places to show
-		formatter: formatter,  // handler for formatting the value before rendering
-		onUpdate: null,        // callback method for every time the element is updated
-		onComplete: null       // callback method for when the element finishes updating
-	};
-
-	function formatter(value, settings) {
-		return value.toFixed(settings.decimals);
-	}
-
-
-	jQuery(function ($) {
-		// custom formatting example
-		$('.count-number').data('countToOptions', {
-			formatter: function (value, options) {
-				return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
-			}
-		});
-
-		// start all the timers
-		$('.timer').each(count);
-
-		function count(options) {
-			var $this = $(this);
-			options = $.extend({}, options || {}, $this.data('countToOptions') || {});
-			$this.countTo(options);
-		}
-	});
-
-	$(".js-example-responsive").select2({
+	/** WORST CODES */
+	$(".tagsInput").select2({
 		width: 'resolve',
 		theme: "classic",
 		tags: true,
@@ -151,56 +25,28 @@ $(document).ready(function () {
 		"cancelClass": "btn-secondary",
 		maxYear: parseInt(moment().format('YYYY'), 10)
 	});
+	/** WORST CODES */
 
-
-
-
-	TinyMCEInit();
+	/** OwlCarousel */
 	$('.owl-carousel').owlCarousel({ loop: true, items: 1, });
-	$(".sortable").sortable();
-	$(".content-container, .image_list_container").on('click', '.remove-btn', function (e) {
-		let $data_url = $(this).data("url");
-		swal.fire({
-			title: 'Emin Misiniz?',
-			text: "Bu işlemi geri alamayacaksınız!",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Evet, Sil!',
-			cancelButtonText: "Hayır"
-		}).then(function (result) {
-			if (result.value) {
-				window.location.href = $data_url;
-			}
-		})
-	})
+	/** OwlCarousel */
 
-	$(".content-container, .image_list_container").on('change', '.isActive', function () {
-		let $data = $(this).prop("checked");
-		let $data_url = $(this).data("url");
-		if (typeof $data !== "undefined" && typeof $data_url !== "undefined") {
-			$.post($data_url, { data: $data }, function (response) { });
-		}
-	})
-	$(".image_list_container").on('change', '.isCover', function () {
-		let $data = $(this).prop("checked");
-		let $data_url = $(this).data("url");
-		if (typeof $data !== "undefined" && typeof $data_url !== "undefined") {
-			$.post($data_url, { data: $data }, function (response) {
-				$(".image_list_container").html(response);
-				$(".sortable").sortable();
-			});
-		}
-	})
-	$(".content-container, .image_list_container").on("sortupdate", '.sortable', function (event, ui) {
+	/** Sortable */
+	$(".sortable").sortable();
+	$(document).on("sortupdate", '.sortable', function (event, ui) {
 		let $data = $(this).sortable("serialize");
 		let $data_url = $(this).data("url");
-		$.post($data_url, { data: $data }, function (response) { })
-	})
-	$(".button_usage_btn").change(function () {
+		$.post($data_url, { data: $data }, function (response) { });
+	});
+	/** Sortable */
+
+	/** Button Usage */
+	$(document).on("change", ".button_usage_btn", function () {
 		$(".button-information-container").slideToggle();
-	})
+	});
+	/** Button Usage */
+	
+	/** Dropzone */
 	if ($("#dropzone").length > 0) {
 		Dropzone.autoDiscover = false;
 		let $uploadSection = Dropzone.forElement("#dropzone");
@@ -213,7 +59,69 @@ $(document).ready(function () {
 			});
 		});
 	}
+	/** Dropzone */
+
+	/** TinyMCE */
+	TinyMCEInit();
+	/** TinyMCE */
+
+	/** IsActiveSetter */
+	$(document).on("click", ".my-check", function () {
+		let id = $(this).data("id");
+		let url = $(this).data("url");
+		let value = null;
+		if ($(this).is(":checked")) {
+			value = 1;
+		} else {
+			value = 0;
+		}
+		$.post(url, { "id": id, "data": value }, function (data) {
+			if (data.success) {
+				iziToast.success({ title: data.title, message: data.msg, position: "topCenter" });
+			} else {
+				iziToast.error({ title: data.title, message: data.msg, position: "topCenter" });
+			}
+		}, "json");
+	});
+	/** IsActiveSetter */
+
+	/** IsCoverSetter */
+	$(document).on('change', '.isCover', function () {
+		let $data = $(this).prop("checked");
+		let $data_url = $(this).data("url");
+		if (typeof $data !== "undefined" && typeof $data_url !== "undefined") {
+			$.post($data_url, { data: $data }, function (response) {
+				$(".image_list_container").html(response);
+				$(".sortable").sortable();
+			});
+		}
+	});
+	/** IsCoverSetter */
+
+	/** Remove Button */
+	$(document).on('click', '.remove-btn', function (e) {
+		let url = $(this).data("url");
+		swal.fire({
+			title: 'Emin Misiniz?',
+			text: "Bu işlemi geri alamayacaksınız!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Evet, Sil!',
+			cancelButtonText: "Hayır"
+		}).then(function (result) {
+			if (result.value) {
+				window.location.href = url;
+			}
+		})
+	});
+	/** Remove Button */
 });
+
+/* Functions */
+
+/** TinyMCE */
 function TinyMCEInit(height = 300, fullpage = false, selector = '.tinymce') {
 	/* TinyMCE */
 	if ($("textarea" + selector).length <= 0) { return false; }
@@ -227,7 +135,8 @@ function TinyMCEInit(height = 300, fullpage = false, selector = '.tinymce') {
 		language_url: 'https://cdn.jsdelivr.net/npm/tinymce-lang/langs/tr_TR.js',
 		branding: false,
 		image_advtab: true,
-		plugins: (fullpage ? "fullpage " : "") + 'print preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable  charmap quickbars emoticons',
+		plugins: (fullpage ? "fullpage " : "") + 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+		toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
 		height: height,
 		mobile: {
 			theme: 'silver'
@@ -240,18 +149,13 @@ function TinyMCEInit(height = 300, fullpage = false, selector = '.tinymce') {
 	});
 	/* TinyMCE */
 }
+/** TinyMCE */
 
-function TableInitializerV2(gelentablo, gelendata, gelencolumn, gelenurl, rankUrl, filterSearch = false, aocolumndefs = [
-	{ "sClass": "text-center justify-content-center align-middle", "aTargets": "_all" },
-	{ "type": 'turkish', "targets": '_all' },
-	{ "targets": ['nosort'], "orderable": false, },
-
-]) {
-
+/** TableInitializerV2 */
+function TableInitializerV2(gelentablo, gelendata, gelencolumn, gelenurl, rankUrl, filterSearch = false, aocolumndefs = [{ "sClass": "text-center justify-content-center align-middle", "aTargets": "_all" }, { "type": 'turkish', "targets": '_all' }, { "targets": ['nosort'], "orderable": false, },]) {
 	$('table.' + gelentablo).on('draw.dt', function () {
 		$('table.' + gelentablo).DataTable().columns.adjust();
 		$('table.' + gelentablo).DataTable().responsive.recalc();
-
 	});
 	$('table.' + gelentablo).DataTable({
 		"destroy": true,
@@ -356,15 +260,6 @@ function TableInitializerV2(gelentablo, gelendata, gelencolumn, gelenurl, rankUr
 		}
 	});
 }
-
-function runScript(e, table) {
-	//See notes about 'which' and 'key'
-	if (e.keyCode == 13) {
-		reloadTable(table);
-		return false;
-	}
-}
-
 function reloadTable(table) {
 	$('.' + table).DataTable().ajax.reload(null, false);
 }
@@ -372,3 +267,124 @@ function clearFilter(form, table) {
 	$("#" + form)[0].reset();
 	reloadTable(table)
 }
+function runScript(e, table) {
+	//See notes about 'which' and 'key'
+	if (e.keyCode == 13) {
+		reloadTable(table);
+		return false;
+	}
+}
+/** TableInitializerV2 */
+
+/** createAjax */
+function createAjax(url, formData, successFnc = function () { }, errorFnc = function () { }) {
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: formData,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "JSON"
+	}).done(function (response) {
+		if (response.success) {
+			iziToast.success({ title: response.title, message: response.message, position: "topCenter", displayMode: 'once', });
+			successFnc(response);
+			if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
+				setTimeout(function () {
+					window.location.href = response.redirect;
+				}, 2000);
+			}
+		} else {
+			iziToast.error({ title: response.title, message: response.message, position: "topCenter", displayMode: 'once', });
+			errorFnc(response);
+			if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
+				setTimeout(function () {
+					window.location.href = response.redirect;
+				}, 2000);
+			}
+		}
+	});
+}
+/** createAjax */
+
+/** createModal */
+function createModal(modalClass = null, modalTitle = null, modalSubTitle = null, width = 600, bodyOverflow = true, padding = "20px", radius = 0, headerColor = "#e20e17", background = "#fff", zindex = 1040, onOpening = function () { }, onOpened = function () { }, onClosing = function () { }, onClosed = function () { }, afterRender = function () { }, onFullScreen = function () { }, onResize = function () { }, fullscreen = true, openFullscreen = false, closeOnEscape = true, closeButton = true, overlayClose = false, autoOpen = 0) {
+	if (modalClass !== "" || modalClass !== null) {
+		$(modalClass).iziModal({
+			title: modalTitle,
+			subtitle: modalSubTitle,
+			headerColor: headerColor,
+			background: background,
+			width: width,
+			zindex: zindex,
+			fullscreen: fullscreen,
+			openFullscreen: openFullscreen,
+			closeOnEscape: closeOnEscape,
+			closeButton: closeButton,
+			overlayClose: overlayClose,
+			autoOpen: autoOpen,
+			padding: padding,
+			bodyOverflow: bodyOverflow,
+			radius: radius,
+			onFullScreen: onFullScreen,
+			onResize: onResize,
+			onOpening: onOpening,
+			onOpened: onOpened,
+			onClosing: onClosing,
+			onClosed: onClosed,
+			afterRender: afterRender
+		});
+	}
+}
+/** createModal */
+
+/** openModal */
+function openModal(modalClass = null, event = function () { }) {
+	$(modalClass).iziModal('open', event);
+}
+/** openModal */
+
+/** closeModal */
+function closeModal(modalClass = null, event = function () { }) {
+	$(modalClass).iziModal('close', event);
+}
+/** closeModal */
+
+/** setCookie */
+function setCookie(name, value, days) {
+	let expires;
+
+	if (days) {
+		let date = new Date();
+		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		expires = "; expires=" + date.toGMTString();
+	} else {
+		expires = "";
+	}
+	document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+}
+/** setCookie */
+
+/** getCookie */
+function getCookie(name) {
+	let nameEQ = encodeURIComponent(name) + "=";
+	let ca = document.cookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) === ' ')
+			c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) === 0)
+			return decodeURIComponent(c.substring(nameEQ.length, c.length));
+	}
+	return null;
+}
+/**getCookie */
+
+/** deleteCookie */
+function deleteCookie(name) {
+	setCookie(name, "", -1);
+}
+/** deleteCookie */
+
+/* Functions */

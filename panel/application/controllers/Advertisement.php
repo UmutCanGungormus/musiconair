@@ -57,16 +57,18 @@ class Advertisement extends MY_Controller
             )
         );
         $validate = $this->form_validation->run();
+        $getRank = $this->advertisement_model->rowCount();
         if ($validate) {
             $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
             $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
+            
             if ($image_255x157 && $image_1140x705) {
                 if ($type == "job") {
                     $insert = $this->advertisement_model->add(
                         array(
                             "title"         => $this->input->post("title"),
+                            "seo_url"       => seo($this->input->post("title")),
                             "type"         => $type,
                             "content"   => $this->input->post("content"),
                             "city"   => $this->input->post("city"),
@@ -79,7 +81,7 @@ class Advertisement extends MY_Controller
                             "personal_count"           => $this->input->post("personal_count"),
                             "img_url"     => $file_name,
                             "holiday" => $this->input->post("holiday"),
-                            "rank"          => 0,
+                            "rank"          => $getRank+1,
                             "isActive"      => 1
                         )
                     );
@@ -87,6 +89,7 @@ class Advertisement extends MY_Controller
                     $insert = $this->advertisement_model->add(
                         array(
                             "title"         => $this->input->post("title"),
+                            "seo_url"       => seo($this->input->post("title")),
                             "type"         => $type,
                             "content"   => $this->input->post("content"),
                             "city"   => $this->input->post("city"),
@@ -98,7 +101,7 @@ class Advertisement extends MY_Controller
                             "advertisement_in"   => $this->input->post("advertisement_in"),
                             "advertisement_owner"   => $this->input->post("advertisement_owner"),
                             "img_url"     => $file_name,
-                            "rank"          => 0,
+                            "rank"          => $getRank+1,
                             "isActive"      => 1
                         )
                     );
@@ -170,12 +173,12 @@ class Advertisement extends MY_Controller
                 $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
                 $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
                 $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
-
                 if ($image_255x157 && $image_1140x705) {
                     if ($type == "job") {
                         $data =
                             array(
                                 "title"         => $this->input->post("title"),
+                                "seo_url"         => seo($this->input->post("seo_url")),
                                 "type"         => $type,
                                 "content"   => $this->input->post("content"),
                                 "city"   => $this->input->post("city"),
@@ -188,13 +191,13 @@ class Advertisement extends MY_Controller
                                 "personal_count"           => $this->input->post("personal_count"),
                                 "img_url"     => $file_name,
                                 "holiday" => $this->input->post("holiday"),
-                                "rank"          => 0,
                                 "isActive"      => 1
                             );
                     } else if ($type == "estate") {
                         $data =
                             array(
                                 "title"         => $this->input->post("title"),
+                                "seo_url"         => seo($this->input->post("seo_url")),
                                 "type"         => $type,
                                 "content"   => $this->input->post("content"),
                                 "city"   => $this->input->post("city"),
@@ -206,7 +209,6 @@ class Advertisement extends MY_Controller
                                 "advertisement_in"   => $this->input->post("advertisement_in"),
                                 "advertisement_owner"   => $this->input->post("advertisement_owner"),
                                 "img_url"     => $file_name,
-                                "rank"          => 0,
                                 "isActive"      => 1
                             );
                     }
@@ -224,6 +226,7 @@ class Advertisement extends MY_Controller
                     $data =
                         array(
                             "title"         => $this->input->post("title"),
+                            "seo_url"         => seo($this->input->post("seo_url")),
                             "type"         => $type,
                             "content"   => $this->input->post("content"),
                             "city"   => $this->input->post("city"),
@@ -235,13 +238,13 @@ class Advertisement extends MY_Controller
                             "education_level"           => $this->input->post("education_level"),
                             "personal_count"           => $this->input->post("personal_count"),
                             "holiday" => $this->input->post("holiday"),
-                            "rank"          => 0,
                             "isActive"      => 1
                         );
                 } else if ($type == "estate") {
                     $data =
                         array(
                             "title"         => $this->input->post("title"),
+                            "seo_url"         => seo($this->input->post("title")),
                             "type"         => $type,
                             "content"   => $this->input->post("content"),
                             "city"   => $this->input->post("city"),
@@ -252,7 +255,6 @@ class Advertisement extends MY_Controller
                             "company_name"   => $this->input->post("company_name"),
                             "advertisement_in"   => $this->input->post("advertisement_in"),
                             "advertisement_owner"   => $this->input->post("advertisement_owner"),
-                            "rank"          => 0,
                             "isActive"      => 1
                         );
                 }
