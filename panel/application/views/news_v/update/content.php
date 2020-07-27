@@ -46,8 +46,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Haber Etiketleri</label>
-
-                                                <select name="tags" value="<?= $item->tags ?>" class="form-control form-control-sm rounded-0 tagsInput" data-role="tagsinput">
+                                                <?php $tags = explode(",",$item->tags)?>
+                                                <select name="tags[]" value="<?= $item->tags ?>" class="form-control form-control-sm rounded-0 tagsInput" multiple="multiple" data-role="tagsinput">
+                                                    <?php foreach($tags as $key => $value):?>
+                                                        <option value="<?=$value?>" selected><?=$value?></option>
+                                                    <?php endforeach;?>
                                                 </select>
                                                 <?php if (isset($form_error)) : ?>
                                                     <small class="input-form-error float-right"><?= form_error("title"); ?></small>

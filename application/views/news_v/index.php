@@ -1,15 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="container-fluid px-0 pr-0 page-padding-top">
-
+<div class="container-fluid px-0 pr-0">
     <div class="container mt-3 p-0">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="container text-center bg-dark border" style="height: 90px;">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>
 
-            <div class="col-md-12 mt-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                 <div class="container breadcrumb p-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
                     <a href="<?= base_url(); ?>">Müzik Haberleri</a> <span>></span>
@@ -22,39 +21,39 @@
 
             <div class="row justify-content-between">
 
-                <div class="col-md-8">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
                     <div class="container px-0">
 
                         <h2 class="mt-1"><?= $news->title; ?></h2>
-                        <span class="grey-text"><i class="fa fa-clock-o"></i> Yayınlanma Tarihi: <?= date("d/m/Y", strtotime($news->createdAt)) ?></span>
+                        <span class="grey-text d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayınlanma Tarihi: <?= turkishDate("d F Y, l H:i",$news->createdAt) ?></span>
                         <?php if ($news->updatedAt) : ?>
-                            <span class="grey-text ml-2"><i class="fa fa-clock-o"></i> Güncellenme Tarihi: <?= date("d/m/Y", strtotime($news->updatedAt)) ?></span>
+                            <span class="grey-text ml-2 d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Güncellenme Tarihi: <?= turkishDate("d F Y, l H:i",$news->updatedAt) ?></span>
                         <?php endif; ?>
 
                         <div class="border mt-4 p-2 clearfix">
-                            <img class="float-left mr-2" src="<?= base_url('panel/uploads/writers_v/90x90/' . $news->img_url); ?>" width="40">
-                            <b class="d-block"><?= $writer->name ?> (<?= (!empty($writer->nick) ? $writer->nick : null); ?>)</b>
+                            <img class="float-left mr-2" src="<?= base_url('panel/uploads/writers_v/90x90/' . $writer->img_url); ?>" width="40">
+                            <b class="d-block"><?= $writer->name ?> <?= (!empty($writer->nick) ? "(".$writer->nick.")" : null); ?></b>
                             <span class="grey-text"><?= $writer->type; ?></span>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <?php if ($news->img_url) : ?>
                                 <img src="<?= base_url("panel/uploads/news_v/370x297/" . $news->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">
                             <?php endif; ?>
                             <div class="row">
 
-                                <div class="col-md-1">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1">
                                     <ul class="post-emoji-icons d-inline-block">
                                         <li style="background-position: inherit;" class="cok-iyi"></li>
                                         <li class="text-center">
                                             <p><b><?= $news->hit; ?></b></br>OKUNMA</p>
                                         </li>
                                         <li style="background-color: #3b5998 ; text-align: center; width: 40px; height: 40px; border-radius: 100% 100% 0 0; padding: 10px;">
-                                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ?>" target="_blank">
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
                                                 <i class="fa fa-facebook text-white"></i>
                                             </a>
                                         </li>
                                         <li style="background-color: #00acee; text-align: center; width: 40px; height: 40px; border-radius:0 0 100% 100% ; padding: 10px;">
-                                            <a href="http://twitter.com/share?text=<?= $news->title ?>&url=<?= "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ?>" target="_blank">
+                                            <a href="http://twitter.com/share?text=<?= $news->title ?>&url=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
                                                 <i class="fa fa-twitter text-white"></i>
                                             </a>
                                         </li>
@@ -297,10 +296,10 @@
                         <ul class="list-group list-group-flush">
                             <?php foreach ($benzer as $item) {
                             ?>
-                                <li style="border-bottom: 1px solid #dee2e6;    padding-bottom: 10px;" class="mb-4">
+                                <li class="mb-4 border-bottom border-secondary">
                                     <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="d-inline-block mt-2 text-color">
-                                        <img style="border-radius:100%;width:50px;display:inline-block" src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="img-fluid" alt="">
-                                        <b class="mt-2 d-inline-block" style="font-size: 17px;"><?= $item->title; ?></b>
+                                        <img src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="img-fluid" alt="">
+                                        <b class="mt-2 d-inline-block"><?= $item->title; ?></b>
                                     </a>
                                 </li>
                             <?php } ?>
@@ -313,9 +312,9 @@
                             <?php
                             foreach ($most_read as $item) {
                             ?>
-                                <li style="border-bottom: 1px solid #dee2e6;    padding-bottom: 10px;" class="mb-4">
+                                <li class="mb-4 border-bottom border-secondary">
                                     <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="d-inline-block mt-2 text-color">
-                                        <img style="border-radius:100%;width:50px;display:inline-block" src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="img-fluid" alt="">
+                                        <img src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="img-fluid" alt="<?= $item->title; ?>">
                                         <b class="mt-2 d-inline-block"><?= $item->title; ?></b>
                                     </a>
                                 </li>

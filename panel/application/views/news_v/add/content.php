@@ -38,7 +38,7 @@
                             <div class="alert alert-info">Not:Her Etiket Kelimesi Yazıldıktan Sonra Virgül Yada Enter Tuşuna Basın!</div>
 
                             <label>Haber Etiketleri</label>
-                            <select name="tags" class="form-control form-control-sm rounded-0 tagsInput" multiple="multiple"></select>
+                            <select name="tags[]" class="form-control form-control-sm rounded-0 tagsInput" multiple="multiple"></select>
                             <?php if (isset($form_error)) : ?>
                                 <small class="input-form-error float-right js-example-tokenizer"><?= form_error("title"); ?></small>
                             <?php endif ?>

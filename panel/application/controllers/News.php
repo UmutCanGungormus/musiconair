@@ -189,7 +189,7 @@ class News extends MY_Controller
     {
         $this->load->library("form_validation");
 
-        $this->form_validation->set_rules("video_url", "Video URL", "required|trim");
+        //$this->form_validation->set_rules("video_url", "Video URL", "required|trim");
 
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
         $this->form_validation->set_message(
@@ -216,7 +216,7 @@ class News extends MY_Controller
                         "video_url"     => $this->input->post("video_url"),
                         "emoji"      => $this->input->post("emoji"),
                         "writer_id"      => $this->input->post("writer_id"),
-                        "tags"      => $this->input->post("tags"),
+                        "tags"      => implode(",",$this->input->post("tags")),
                         "category_id"      => $this->input->post("category_id"),
                         "isActive"      => 1
                     );
@@ -237,7 +237,7 @@ class News extends MY_Controller
                     "video_url"     => $this->input->post("video_url"),
                     "emoji"      => $this->input->post("emoji"),
                     "writer_id"      => $this->input->post("writer_id"),
-                    "tags"      => $this->input->post("tags"),
+                    "tags"      => implode(",",$this->input->post("tags")),
                     "category_id"      => $this->input->post("category_id"),
                     "isActive"      => 1
                 );
