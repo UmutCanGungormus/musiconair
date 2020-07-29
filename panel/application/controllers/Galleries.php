@@ -313,6 +313,60 @@ class Galleries extends MY_Controller
         }
     }
 
+    public function detailDatatable($gallery_type,$folder_name)
+    {
+        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : "video_model"));
+        $folderName = ($gallery_type == "image" ? "images" : ($gallery_type == "file" ? "files" : "videos"));
+        $items = $this->$modelName->getRows(
+            [],
+            $_POST
+        );
+        $data = $row = array();
+        $i = (!empty($_POST['start']) ? $_POST['start'] : 0);
+
+        foreach ($items as $item) :
+            $i++;
+            $j=$i+1;
+            
+            $proccessing = '
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    İşlemler
+                </button>
+                <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    ';
+                    if($gallery_type == "image"):
+                        $proccessing.='<a href="'.base_url("galleries/fileUpdate/{$item->id}").'" class="dropdown-item"><i class="fa fa-pen"></i> Resim Açıklaması Ekle</a>';
+                    endif;
+                    $proccessing.='
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("galleries/fileDelete/{$item->id}/{$item->gallery_id}/{$gallery_type}") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    </div>
+            </div>';
+
+
+
+            //array_push($renkler,$renk->negotiation_stage_color);
+            
+            $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("galleries/fileIsActiveSetter/{$item->id}/{$gallery_type}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
+            if($folderName == "images"):
+                $image = '<img src="'.base_url("uploads/galleries_v/{$folderName}/{$folder_name}/252x156/{$item->url}").'" width="75">';
+                $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image,$item->url,$checkbox, turkishDate("d F Y, l H:i:s",$item->createdAt),turkishDate("d F Y, l H:i:s",$item->updatedAt), $proccessing);
+            endif;
+        endforeach;
+        
+
+
+        $output = array(
+            "draw" => (!empty($_POST['draw']) ? $_POST['draw'] : 0),
+            "recordsTotal" => $this->$modelName->rowCount(),
+            "recordsFiltered" => $this->$modelName->countFiltered([], (!empty($_POST) ? $_POST : [])),
+            "data" => $data,
+        );
+
+        // Output to JSON format
+        echo json_encode($output);
+    }
+
     public function upload_form($id)
     {
         $viewData = new stdClass();
@@ -384,39 +438,15 @@ class Galleries extends MY_Controller
         );
         redirect(base_url("galleries/upload_form/$category"));
     }
-    public function file_upload_old_method($gallery_id, $gallery_type, $folderName)
-    {
-        $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-        $config["allowed_types"] = "jpg|jpeg|png|pdf|doc|docx";
-        $config["upload_path"]   = ($gallery_type == "image") ? "uploads/$this->viewFolder/images/$folderName/" : "uploads/$this->viewFolder/files/$folderName/";
-        $config["file_name"]     = $file_name;
-        $this->load->library("upload", $config);
-        $upload = $this->upload->do_upload("file");
-        if ($upload) {
-            $uploaded_file = $this->upload->data("file_name");
-            $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
-            $getRank = $this->$modelName->rowCount();
-            $this->$modelName->add(
-                array(
-                    "url"           => "{$config["upload_path"]}$uploaded_file",
-                    "rank"          => $getRank+1,
-                    "isActive"      => 1,
-                    "createdAt"     => date("Y-m-d H:i:s"),
-                    "gallery_id"    => $gallery_id
-                )
-            );
-        } else {
-            echo "islem basarisiz";
-        }
-    }
+
     public function file_upload($gallery_id, $gallery_type, $folderName)
     {
         $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-        if ($gallery_type == "image") {
+        if ($gallery_type == "image") :
             $image_252x156 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 252, 156, $file_name);
             $image_350x216 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 350, 216, $file_name);
             $image_851x606 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 851, 606, $file_name);
-            if ($image_252x156 && $image_350x216 && $image_851x606) {
+            if ($image_252x156 && $image_350x216 && $image_851x606) :
                 $getRank = $this->image_model->rowCount();
                 $this->image_model->add(
                     array(
@@ -427,16 +457,37 @@ class Galleries extends MY_Controller
                         "gallery_id"    => $gallery_id
                     )
                 );
-            } else {
+            else:
                 echo "islem basarisiz";
-            }
-        } else {
+            endif;
+        elseif($gallery_type == "video"):
+            $config["allowed_types"] = "mpeg|mpg|mpe|qt|mov|avi|movie|3g2|3gp|mp4|f4v|flv|webm|wmv|ogg";
+            $config["upload_path"]   = "uploads/$this->viewFolder/videos/$folderName/";
+            $config["file_name"]     = $file_name;
+            $this->load->library("upload", $config);
+            $upload = $this->upload->do_upload("file");
+            if ($upload) :
+                $uploaded_file = $this->upload->data("file_name");
+                $getRank = $this->video_model->rowCount();
+                $this->video_model->add(
+                    array(
+                        "url"           => $uploaded_file,
+                        "rank"          => $getRank+1,
+                        "isActive"      => 1,
+                        "createdAt"     => date("Y-m-d H:i:s"),
+                        "gallery_id"    => $gallery_id
+                    )
+                );
+            else:
+                echo $this->upload->display_errors();
+            endif;
+        else:
             $config["allowed_types"] = "*";
             $config["upload_path"]   = "uploads/$this->viewFolder/files/$folderName/";
             $config["file_name"]     = $file_name;
             $this->load->library("upload", $config);
             $upload = $this->upload->do_upload("file");
-            if ($upload) {
+            if ($upload) :
                 $uploaded_file = $this->upload->data("file_name");
                 $getRank = $this->file_model->rowCount();
                 $this->file_model->add(
@@ -448,30 +499,17 @@ class Galleries extends MY_Controller
                         "gallery_id"    => $gallery_id
                     )
                 );
-            } else {
+            else:
                 echo $this->upload->display_errors();
-            }
-        }
+            endif;
+        endif;
     }
-    public function refresh_file_list($gallery_id, $gallery_type, $folder_name)
-    {
-        $viewData = new stdClass();
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "image";
-        $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
-        $viewData->items = $this->$modelName->get_all(
-            array(
-                "gallery_id"    => $gallery_id
-            )
-        );
-        $viewData->folder_name = $folder_name;
-        $viewData->gallery_type = $gallery_type;
-        $render_html = $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/file_list_v", $viewData, true);
-        echo $render_html;
-    }
+
     public function fileDelete($id, $parent_id, $gallery_type)
     {
-        $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
+        
+        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : "video_model"));
+        $gallery = $this->gallery_model->get(["id" => $parent_id]);
         $fileName = $this->$modelName->get(
             array(
                 "id"    => $id
@@ -483,16 +521,44 @@ class Galleries extends MY_Controller
             )
         );
         if ($delete) {
-            unlink($fileName->url);
+            if($gallery_type == "image"):
+                $url = FCPATH."uploads/galleries_v/images/{$gallery->url}/252x156/{$fileName->url}";
+                $url2 = FCPATH."uploads/galleries_v/images/{$gallery->url}/350x216/{$fileName->url}";
+                $url3 = FCPATH."uploads/galleries_v/images/{$gallery->url}/851x606/{$fileName->url}";
+                if(file_exists($url)):
+                    unlink($url);
+                endif;
+                if(file_exists($url2)):
+                    unlink($url2);
+                endif;
+                if(file_exists($url3)):
+                    unlink($url3);
+                endif;
+            elseif($gallery_type == "video"):
+                $url = FCPATH."uploads/galleries_v/videos/{$fileName->video_url}";
+                $url2 = FCPATH."uploads/galleries_v/videos/{$fileName->img_url}";
+                if(file_exists($url)):
+                    unlink($url);
+                endif;
+                if(file_exists($url2)):
+                    unlink($url2);
+                endif;
+            else:
+                $url = FCPATH."uploads/galleries_v/files/{$fileName->url}";
+                if(file_exists($url)):
+                    unlink($url);
+                endif;
+            endif;
             redirect(base_url("galleries/upload_form/$parent_id"));
         } else {
             redirect(base_url("galleries/upload_form/$parent_id"));
         }
     }
+
     public function fileIsActiveSetter($id,$gallery_type)
     {
         if ($id && $gallery_type) {
-            $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
+            $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : "video_model"));
             $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
             if ($this->$modelName->update(["id" => $id], ["isActive" => $isActive])) {
                 echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
@@ -501,24 +567,22 @@ class Galleries extends MY_Controller
             }
         }
     }
+
     public function fileRankSetter($gallery_type)
     {
-        $data = $this->input->post("data");
-        parse_str($data, $order);
-        $items = $order["ord"];
-        $modelName = ($gallery_type == "image") ? "image_model" : "file_model";
-        foreach ($items as $rank => $id) {
+        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : "video_model"));
+        $rows = $this->input->post("rows");
+
+        foreach ($rows as $row) {
             $this->$modelName->update(
                 array(
-                    "id"        => $id,
-                    "rank !="   => $rank
+                    "id" => $row["id"]
                 ),
-                array(
-                    "rank"      => $rank
-                )
+                array("rank" => $row["position"])
             );
         }
     }
+
     public function gallery_video_list($id)
     {
         $viewData = new stdClass();

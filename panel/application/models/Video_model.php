@@ -5,12 +5,13 @@ class Video_model extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->column_order = array('rank', 'id', 'id', 'title',  'img_url','isActive');
+        // Set orderable column fields
+            
+        $this->column_order = array('videos.rank', 'videos.id', 'videos.id', 'videos.img_url', 'videos.video_url','videos.isActive', 'videos.producer','videos.release_year', 'videos.createdAt','videos.updatedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'id', 'title', 'img_url', 'isActive');
+        $this->column_search = array('videos.rank', 'videos.id', 'videos.id', 'videos.img_url', 'videos.video_url','videos.isActive', 'videos.producer','videos.release_year', 'videos.createdAt','videos.updatedAt');
         // Set default order
-        $this->order = array('rank' => 'ASC');
+        $this->order = array('videos.rank' => 'ASC');
 	}
 	public function get_all($where = array(), $order = "id ASC")
 	{
@@ -32,31 +33,63 @@ class Video_model extends CI_Model
 	{
 		return $this->db->where($where)->delete($this->tableName);
 	}
+    
+    public function rowCount($where = array())
+    {
+        return $this->db->where($where)->count_all_results($this->tableName);
+    }
+
+    public function countFiltered($where = array(), $postData)
+    {
+
+        $this->_get_datatables_query($postData);
+        $this->db->select('
+            videos.rank,
+            videos.id,
+            videos.gallery_id,
+            videos.release_year,
+            videos.producer,
+            videos.content,
+            videos.img_url,
+            videos.video_url,
+            videos.isActive,
+            videos.createdAt,
+            videos.updatedAt',    false);
+
+
+        $query = $this->db->where($where)->get();
+  
+        return $query->num_rows();
+	}
+	
 	public function getRows($where = array(), $postData = array())
     {
 
         $this->_get_datatables_query($postData);
-  
+      
         if ($postData['length'] != -1) {
             $this->db->limit($postData['length'], $postData['start']);
         }
 
-     
-
+        $this->db->select('
+		videos.rank,
+		videos.id,
+		videos.gallery_id,
+		videos.release_year,
+		videos.producer,
+		videos.content,
+		videos.img_url,
+		videos.video_url,
+		videos.isActive,
+		videos.createdAt,
+		videos.updatedAt',    false);
         return $this->db->get()->result();
+        
     }
 
     private function _get_datatables_query($postData)
     {
-        $this->db->where(["id!=" => ""]);
-
-        if (!empty($this->input->post('search'))) {
-            $this->db->group_start();
-            $this->db->like('title', $this->input->post('search'), 'both');
-            $this->db->group_end();
-
-        
-        }
+        $this->db->where(["videos.id!=" => ""]);
 
         //print_r($postData);
 
@@ -67,7 +100,7 @@ class Video_model extends CI_Model
         foreach ($this->column_search as $item) {
             // if datatable send POST for search
 
-            if (!empty($postData['search'])  && $item == "title" ) {
+            if (!empty($postData['search'])) {
                 // first loop
                 if ($i === 0) {
                     // open bracket
@@ -93,24 +126,5 @@ class Video_model extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
-    }
-        public function get_data_table($where = array(), $order = "rank ASC")
-    {
-        return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
-    }
-
-    public function rowCount($where = array())
-    {
-        return $this->db->where($where)->count_all_results($this->tableName);
-    }
-
-    public function countFiltered($where = array(), $postData)
-    {
-        $this->_get_datatables_query($postData);
-      
-       
-        $query = $this->db->where($where)->get();
-
-        return $query->num_rows();
     }
 }

@@ -52,11 +52,8 @@ $(document).ready(function () {
 		let $uploadSection = Dropzone.forElement("#dropzone");
 		$uploadSection.on("complete", function (file) {
 			//console.log(file);
-			let $data_url = $("#dropzone").data("url");
-			$.post($data_url, {}, function (response) {
-				$(".image_list_container").html(response);
-				$(".sortable").sortable();
-			});
+			let dataTable = $("#dropzone").data("table");
+			reloadTable(dataTable);
 		});
 	}
 	/** Dropzone */

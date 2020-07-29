@@ -1,7 +1,7 @@
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <form data-url="<?= base_url("galleries/refresh_file_list/$item->id/$item->gallery_type/$folder_name"); ?>" action="<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>" id="dropzone" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>'}">
+            <form data-table="detailTable" action="<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>" id="dropzone" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>'}">
                 <div class="dz-message">
                     <h3 class="m-h-lg">Yüklemek istediğiniz dosyaları buraya sürükleyiniz</h3>
                     <p class="mb-3 text-muted">(Yüklemek için dosyalarınızı sürükleyiniz yada buraya tıklayınız)</p>
@@ -20,16 +20,16 @@
             <form id="filter_form" onsubmit="return false">
 				<div class="d-flex flex-wrap">
 					<label for="search" class="flex-fill mx-1">
-						<input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'galleryTable')" name="search">
+						<input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'detailTable')" name="search">
 					</label>
 					<label for="clear_button" class="mx-1">
-						<button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','galleryTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+						<button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','detailTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
 					</label>
 					<label for="search_button" class="mx-1">
-						<button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('galleryTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Galeri Ara"><i class="fa fa-search"></i></button>
+						<button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('detailTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Galeri Ara"><i class="fa fa-search"></i></button>
 				</div>
 			</form>
-            <table class="table table-hover table-striped table-bordered content-container galleryTable">
+            <table class="table table-hover table-striped table-bordered content-container detailTable">
                 <thead>
                     <th class="w50">#</th>
                     <th class="order nosort"><i class="fa fa-reorder"></i></th>
@@ -37,7 +37,6 @@
                     <th>Görsel</th>
                     <th>Dosya Yolu/Adı</th>
                     <th>Durumu</th>
-                    <th class="nosort">Açıklama Ekle</th>
                     <th>Oluşturulma Tarihi</th>
                     <th>Güncelleme Tarihi</th>
                     <th class="nosort">İşlem</th>
@@ -55,11 +54,10 @@
 					return d;
 				}
 				$(document).ready(function() {
-					TableInitializerV2("galleryTable", obj, {}, "<?= base_url("galleries/datatable") ?>", "<?= base_url("galleries/rankSetter") ?>", true);
+					TableInitializerV2("detailTable", obj, {}, "<?= base_url("galleries/detailDatatable/{$item->gallery_type}/{$item->folder_name}") ?>", "<?= base_url("galleries/fileRankSetter/{$item->gallery_type}") ?>", true);
 
 				});
 			</script>
-            <?php $this->load->view("{$viewFolder}/{$subViewFolder}/render_elements/file_list_v"); ?>
         </div><!-- END column -->
     </div>
 </div>
