@@ -776,7 +776,7 @@ function get_settings($language = "tr")
     return $t->email->send();
 }
 */
-function send_email($toEmail = "", $subject = "", $message = "",$mail_settings=""){
+function send_email($toEmail = [], $subject = "", $message = "",$mail_settings=""){
     $t = &get_instance();
     $email_settings = $t->general_model->get("email_settings",null,
         array(
@@ -790,13 +790,13 @@ function send_email($toEmail = "", $subject = "", $message = "",$mail_settings="
     // Create the Mailer using your created Transport
     $mailer = new Swift_Mailer($transport);
     if(empty($toEmail)):
-        $email_settings->user_name;
+        $toEmail = [$email_settings->user_name];
     endif;
     // Create a message
     $msg = (new Swift_Message($subject))
         ->setFrom([$email_settings->from => $email_settings->user_name])
         ->setTo($toEmail)
-        ->setCharset('utf-8');;
+        ->setCharset('utf-8');
 
     $msg->setBody($message, 'text/html', 'utf-8');
 

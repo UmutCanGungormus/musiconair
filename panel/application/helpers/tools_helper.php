@@ -874,33 +874,40 @@ function userRole()
     }
     $t->session->set_userdata('user_roles', $roles);
 }
-function send_email($toEmail = "", $subject = "", $message = "")
-{
+function send_email($toEmail = [], $subject = "", $message = "",$mail_settings=""){
     $t = &get_instance();
     $t->load->model("emailsettings_model");
-    $emailsettings = $t->emailsettings_model->get(
+    $email_settings = $t->emailsettings_model->get(
         array(
-            "isActive" => 1
+            "isActive" => 1,
+            "id" => $mail_settings
         )
     );
-    $config = array(
-        "protocol" => $emailsettings->protocol,
-        "smtp_host" => $emailsettings->host,
-        "smtp_port" => $emailsettings->port,
-        "smtp_user" => $emailsettings->user,
-        "smtp_pass" => $emailsettings->password,
-        "starttls" => true,
-        "charset" => "utf-8",
-        "mailtype" => "html",
-        "wordwrap" => true,
-        "newline" => "\r\n"
-    );
-    $t->load->library("email", $config);
-    $t->email->from($emailsettings->from, $emailsettings->user_name);
-    $t->email->to($toEmail);
-    $t->email->subject($subject);
-    $t->email->message($message);
-    return $t->email->send();
+    $transport = (new Swift_SmtpTransport($email_settings->host, intval($email_settings->port), strto("lower",$email_settings->protocol)))
+        ->setUsername($email_settings->user)
+        ->setPassword($email_settings->password);
+
+    // Create the Mailer using your created Transport
+    $mailer = new Swift_Mailer($transport);
+    if(empty($toEmail)):
+        $toEmail = [$email_settings->user_name];
+    endif;
+    // Create a message
+    $msg = (new Swift_Message($subject))
+        ->setFrom([$email_settings->from => $email_settings->user_name])
+        ->setTo($toEmail)
+        ->setCharset('utf-8');
+
+    $msg->setBody($message, 'text/html', 'utf-8');
+
+    // Send the message
+    $result = $mailer->send($msg);
+
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
 }
 function get_settings()
 {
@@ -931,7 +938,7 @@ function get_category_title($category_id = 0)
     if ($category) {
         return $category->title;
     } else {
-        return "<b style='color:red'>Tanımlı Değil</b>";
+        return "<b class='text-danger'>Tanımlı Değil</b>";
     }
 }
 function get_product_category_title($category_id = 0)
@@ -946,7 +953,7 @@ function get_product_category_title($category_id = 0)
     if ($category) {
         return $category->title;
     } else {
-        return "<b style='color:red'>Tanımlı Değil</b>";
+        return "<b class='text-danger'>Tanımlı Değil</b>";
     }
 }
 
