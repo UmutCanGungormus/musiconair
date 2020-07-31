@@ -1,31 +1,22 @@
-<div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <h4 class="mb-3">
-                Yeni Galeri Ekle
-            </h4>
-            <hr>
-        </div><!-- END column -->
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <form action="<?= base_url("galleries/save"); ?>" method="post">
-                <div class="form-group">
-                    <label>Galeri Adı</label>
-                    <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title">
-                    <?php if (isset($form_error)) : ?>
-                        <small class="input-form-error float-right"><?= form_error("title"); ?></small>
-                    <?php endif ?>
-                </div>
-                <div class="form-group">
-                    <label for="control-demo-6" class="">Galeri Türü</label>
-                    <div id="control-demo-6" class="">
-                        <select class="form-control form-control-sm rounded-0" name="gallery_type">
-                            <option <?= (isset($gallery_type) && $gallery_type == "image") ? "selected" : ""; ?> value="image">Resim</option>
-                        </select>
-                    </div>
-                </div><!-- .form-group -->
-                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
-                <a href="<?= base_url("galleries"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
-            </form>
-        </div><!-- END column -->
+
+<form onsubmit="return false" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label>Galeri Adı</label>
+        <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title">
+        <?php if (isset($form_error)) : ?>
+            <small class="input-form-error float-right"><?= form_error("title"); ?></small>
+        <?php endif ?>
     </div>
-</div>
+    <div class="form-group">
+        <label for="control-demo-6" class="">Galeri Türü</label>
+        <div id="control-demo-6" class="">
+            <select class="form-control form-control-sm rounded-0" name="gallery_type">
+                <option <?= (isset($gallery_type) && $gallery_type == "image") ? "selected" : ""; ?> value="image">Resim</option>
+                <option <?= (isset($gallery_type) && $gallery_type == "video") ? "selected" : ""; ?> value="video">Video</option>
+                <option <?= (isset($gallery_type) && $gallery_type == "file") ? "selected" : ""; ?> value="file">Dosya</option>
+            </select>
+        </div>
+    </div><!-- .form-group -->
+    <button data-url="<?= base_url("galleries/save"); ?>" type="button" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
+    <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger rounded-0 btnCancel">İptal</a>
+</form>

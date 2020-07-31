@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Galeri Listesi
-                <a href="<?= base_url("galleries/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="<?= base_url("galleries/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createGalleryBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
             <hr>
         </div><!-- END column -->
@@ -48,9 +48,25 @@
 				}
 				$(document).ready(function() {
 					TableInitializerV2("galleryTable", obj, {}, "<?= base_url("galleries/datatable") ?>", "<?= base_url("galleries/rankSetter") ?>", true);
-
 				});
 			</script>
         </div><!-- END column -->
     </div>
 </div>
+
+<div id="galleryModal"></div>
+
+<script>
+    $(document).ready(function(){
+        $(document).on("click",".createGalleryBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            createModal("#galleryModal","Yeni Galeri Ekle","Yeni Galeri Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(base_url+"galleries/new_form/",{},function(response){
+                    $("#galleryModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#galleryModal");
+        });
+    });
+</script>
