@@ -68,5 +68,14 @@
             });
             openModal("#galleryModal");
         });
+        $(document).on("click",".btnSave",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("#createGallery"));
+            createAjax(url,formData,function(){
+                closeModal("#galleryModal");
+            });
+        });
     });
 </script>

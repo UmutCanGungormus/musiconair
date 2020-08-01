@@ -83,16 +83,13 @@ class Galleries extends MY_Controller
 
     public function save()
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Galeri Adı", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
+        $data = rClean($this->input->post());
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
         $getRank = $this->gallery_model->rowCount();
-        if ($validate) :
             $gallery_type = $this->input->post("gallery_type");
             $path         = "uploads/$this->viewFolder/";
             $folder_name = "";
@@ -119,37 +116,21 @@ class Galleries extends MY_Controller
                 endif;
             endif;
             $insert = $this->gallery_model->add(
-                array(
-                    "title"         => $this->input->post("title"),
-                    "gallery_type"  => $this->input->post("gallery_type"),
-                    "url"           => seo($this->input->post("title")),
+                [
+                    "title"         => $data["title"],
+                    "gallery_type"  => $data["gallery_type"],
+                    "url"           => seo($data["title"]),
                     "folder_name"   => $folder_name,
                     "rank"          => $getRank + 1,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
-                )
+                ]
             );
             if ($insert) :
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde eklendi",
-                    "type"  => "success"
-                );
+                echo json_encode(["success" => true,"title" => "Başarılı!","message" => "Galeri Başarıyla Eklendi."]);
             else :
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
+                echo json_encode(["success" => false,"title" => "Başarısız!","message" => "Galeri Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("galleries"));
-        else :
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         endif;
     }
 
