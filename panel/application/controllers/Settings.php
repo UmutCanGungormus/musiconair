@@ -16,42 +16,10 @@ class Settings extends MY_Controller
     public function index()
     {
         $viewData = new stdClass();
-        $viewData->subViewFolder = "no_content";
         $viewData->viewFolder = $this->viewFolder;
-        $viewData->items = $this->general_model->get_all("settings");
+        $viewData->subViewFolder = "update";
+        $viewData->item = $this->general_model->get("settings");
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-
-    public function delete($id)
-    {
-        $kontrol = $this->general_model->get("settings",null,['id' => $id]);
-        if (!empty($kontrol)) :
-            if ($this->general_model->delete("settings",['id' => $id])) :
-                $alert = [
-                    "title" => "İşlem Başarılı!",
-                    "text" => "Site Ayarı Başarıyla Silindi.",
-                    "type"  => "success"
-                ];
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("settings"));
-            else :
-                $alert = [
-                    "title" => "İşlem Başarısız!",
-                    "text" => "Site Ayarı Silinirken Hata Oluştu.",
-                    "type"  => "error"
-                ];
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("settings"));
-            endif;
-        else :
-            $alert = [
-                "title" => "İşlem Başarısız!",
-                "text" => "Site Ayarı Silinirken Hata Oluştu.",
-                "type"  => "error"
-            ];
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("settings"));
-        endif;
     }
 
     public function update_form($id)
@@ -90,7 +58,6 @@ class Settings extends MY_Controller
                 "meta_description"  => $this->input->post("metadesc"),
                 "lat"               => $this->input->post("lat"),
                 "long"              => $this->input->post("long"),
-                "language"          => $this->input->post("language"),
                 "analytics"         => $this->input->post("analytics"),
                 "metrica"           => $this->input->post("metrica"),
                 "live_support"      => $this->input->post("live_support"),
@@ -170,6 +137,18 @@ class Settings extends MY_Controller
             $viewData->form_error = true;
             $viewData->item = $this->general_model->get("settings",null,["id" => $id]);
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+    }
+
+    public function uploadImage(){
+        $temp = current($_FILES);
+        $file_name = seo(sha1(md5(rand()))) . "." . pathinfo($temp["name"], PATHINFO_EXTENSION);
+        $image_32x32 = upload_picture($temp["tmp_name"], "uploads/tinyMCE", 1920, 1080, $file_name);
+        if ($image_32x32) {
+            echo json_encode(['location' => base_url("uploads/tinyMCE/1920x1080/{$file_name}")]);
+        }else{
+            // Notify editor that the upload failed
+        header("HTTP/1.1 500 Server Error");
         }
     }
 }

@@ -33,24 +33,4 @@
             <input class="form-control form-control-sm rounded-0" placeholder="Diğer fax numaranız (opsiyonel)" name="fax_2" value="<?= isset($form_error) ? set_value("fax_2") : $item->fax_2; ?>">
         </div>
     </div>
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label>Site Dili</label>
-            <select class="form-control form-control-sm rounded-0" name="language">
-                <?php if($item->language == "TR") { ?>
-                <option selected="selected" value="TR">TR (Türkçe/Turkish)</option>
-                <option value="EN">EN (İngilizce/English)</option>
-                <option value="DE">DE (Almanca/German)</option>
-                <?php }else if($item->language == "EN") { ?>
-                <option value="TR">TR (Türkçe/Turkish)</option>
-                <option selected="selected" value="EN">EN (İngilizce/English)</option>
-                <option value="DE">DE (Almanca/German)</option>
-                <?php }else{ ?>
-                <option value="TR">TR (Türkçe/Turkish)</option>
-                <option value="EN">EN (İngilizce/English)</option>
-                <option selected="selected" value="DE">DE (Almanca/German)</option>
-                <?php } ?>
-            </select>
-        </div>
-    </div>
 </div>

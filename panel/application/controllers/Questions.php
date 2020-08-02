@@ -105,7 +105,6 @@ public function rankSetter()
                 array(
                     "title"         => $this->input->post("title"),
                     "description"   => $this->input->post("description"),
-                    "language"     => $this->input->post("language"),
                     "isActive"      => 1,
                 )
             );
@@ -159,7 +158,6 @@ public function rankSetter()
             $data = array(
                 "title"         => $this->input->post("title"),
                 "description"   => $this->input->post("description"),
-                "language"     => $this->input->post("language"),
             );
             $update = $this->question_model->update(array("id" => $id), $data);
             if ($update) {

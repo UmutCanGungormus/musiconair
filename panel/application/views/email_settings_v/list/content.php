@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 E-Posta Listesi
-                <a href="<?= base_url("emailsettings/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("emailsettings/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm createEmailBtn"><i class="fa fa-plus"></i>Yeni Ekle</a>
             </h4>
             <hr>
         </div><!-- END column -->
@@ -53,5 +53,56 @@
     $(document).ready(function() {
         TableInitializerV2("emailTable", obj, {}, "<?= base_url("emailsettings/datatable") ?>", "<?= base_url("emailsettings/rankSetter") ?>", true);
 
+    });
+</script>
+
+<div id="emailModal"></div>
+
+<script>
+    $(document).ready(function(){
+        $(document).on("click",".createEmailBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#emailModal').iziModal('destroy');
+            createModal("#emailModal","Yeni E-Posta Hesabı Ekle","Yeni E-Posta Hesabı Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#emailModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#emailModal");
+        });
+        $(document).on("click",".btnSave",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createEmail"));
+            createAjax(url,formData,function(){
+                closeModal("#emailModal");
+                reloadTable("emailTable");
+            });
+        });
+        $(document).on("click",".updateEmailBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#emailModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#emailModal","E-Posta Hesabı Düzenle","E-Posta Hesabı Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#emailModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#emailModal");
+        });
+        $(document).on("click",".btnUpdate",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateEmail"));
+            createAjax(url,formData,function(){
+                closeModal("#emailModal");
+                reloadTable("emailTable");
+            });
+        });
     });
 </script>

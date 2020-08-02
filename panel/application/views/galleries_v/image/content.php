@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <h4 class="mb-3">
+            <h4 class="my-3">
                 <b><?= $item->title; ?></b> kaydına ait Dosyalar
             </h4>
             <hr>
@@ -34,7 +34,7 @@
                     <th class="w50">#</th>
                     <th class="order nosort"><i class="fa fa-reorder"></i></th>
                     <th class="w50">#id</th>
-                    <th>Görsel</th>
+                    <th>İçerik</th>
                     <th>Dosya Yolu/Adı</th>
                     <th>Durumu</th>
                     <th>Oluşturulma Tarihi</th>

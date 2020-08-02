@@ -20,14 +20,6 @@
                             <label>Açıklama</label>
                             <textarea name="description" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label>Soru Dili</label>
-                            <select class="form-control form-control-sm rounded-0" name="language">
-                                <option value="TR">TR (Türkçe/Turkish)</option>
-                                <option value="EN">EN (İngilizce/English)</option>
-                                <option value="DE">DE (Almanca/German)</option>
-                            </select>
-                        </div>
                         <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
                         <a href="<?= base_url("questions"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>

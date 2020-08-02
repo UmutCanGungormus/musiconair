@@ -12,6 +12,7 @@ class Galleries extends MY_Controller
         $this->load->model("gallery_model");
         $this->load->model("image_model");
         $this->load->model("video_model");
+        $this->load->model("video_url_model");
         $this->load->model("file_model");
         if (!get_active_user()) :
             redirect(base_url("login"));
@@ -45,9 +46,9 @@ class Galleries extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("galleries/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("galleries/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
-                    <a class="dropdown-item" href="' . base_url("galleries/upload_form/$item->id") . '"><i class="fa ' . ($item->gallery_type == "image" ? "fa-image" : ($item->gallery_type == "video" ? "fa-video" : "fa-file")) . ' mr-2"></i>' . ($item->gallery_type == "image" ? "Resimler" : ($item->gallery_type == "video" ? "Videolar" : "Dosyalar")) . '</a>
+                    <a class="dropdown-item updateGalleryBtn" href="javascript:void(0)" data-url="' . base_url("galleries/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="galleryTable" data-url="' . base_url("galleries/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item" href="' . base_url("galleries/upload_form/$item->id") . '"><i class="fa ' . ($item->gallery_type == "image" ? "fa-image" : ($item->gallery_type == "video" ? "fa-video" : "fa-file")) . ' mr-2"></i>' . ($item->gallery_type == "image" ? "Resimler" : ($item->gallery_type == "video" || $item->gallery_type == "video_url" ? "Videolar" : "Dosyalar")) . '</a>
                     </div>
             </div>';
 
@@ -84,12 +85,11 @@ class Galleries extends MY_Controller
     public function save()
     {
         $data = rClean($this->input->post());
-        $data = rClean($this->input->post());
         if (checkEmpty($data)["error"]) :
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
-        $getRank = $this->gallery_model->rowCount();
+            $getRank = $this->gallery_model->rowCount();
             $gallery_type = $this->input->post("gallery_type");
             $path         = "uploads/$this->viewFolder/";
             $folder_name = "";
@@ -103,17 +103,9 @@ class Galleries extends MY_Controller
                 $folder_name = seo($this->input->post("title"));
                 $path = "$path/videos/$folder_name";
             endif;
-            if ($gallery_type != "video_url") :
-                if (!mkdir($path, 0755, true)) :
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Galeri Üretilirken problem oluştu. (Yetki Hatası)",
-                        "type"  => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("galleries"));
-                    die();
-                endif;
+            if ($gallery_type != "video_url" && !mkdir($path, 0755, true)) :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Oluşturulurken Hata Oluştu. Klasör Erişim Yetkinizin Olduğundan Emin Olup Tekrar Deneyin."]);
+                die();
             endif;
             $insert = $this->gallery_model->add(
                 [
@@ -122,14 +114,12 @@ class Galleries extends MY_Controller
                     "url"           => seo($data["title"]),
                     "folder_name"   => $folder_name,
                     "rank"          => $getRank + 1,
-                    "isActive"      => 1,
-                    "createdAt"     => date("Y-m-d H:i:s")
                 ]
             );
             if ($insert) :
-                echo json_encode(["success" => true,"title" => "Başarılı!","message" => "Galeri Başarıyla Eklendi."]);
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Eklendi."]);
             else :
-                echo json_encode(["success" => false,"title" => "Başarısız!","message" => "Galeri Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
         endif;
     }
@@ -137,141 +127,72 @@ class Galleries extends MY_Controller
     public function update_form($id)
     {
         $viewData = new stdClass();
-        $item = $this->gallery_model->get(
-            array(
-                "id"    => $id,
-            )
-        );
+        $item = $this->gallery_model->get(["id" => $id,]);
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
 
     public function update($id, $gallery_type, $oldFolderName = "")
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Galeri Adı", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) :
-            $path         = "uploads/$this->viewFolder/";
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellemesi Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            $path         = FCPATH . "uploads/$this->viewFolder/";
             $folder_name = "";
             if ($gallery_type == "image") :
-                $folder_name = seo($this->input->post("title"));
+                $folder_name = seo($data["title"]);
                 $path = "$path/images";
             elseif ($gallery_type == "file") :
-                $folder_name = seo($this->input->post("title"));
+                $folder_name = seo($data["title"]);
                 $path = "$path/files";
             elseif ($gallery_type == "video") :
-                $folder_name = seo($this->input->post("title"));
+                $folder_name = seo($data["title"]);
                 $path = "$path/videos";
             endif;
-            if ($gallery_type != "video_url") :
-                if (!rename("$path/$oldFolderName", "$path/$folder_name")) :
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text"  => "Galeri Üretilirken problem oluştu. (Yetki Hatası)",
-                        "type"  => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("galleries"));
-                    die();
-                endif;
+            if ($gallery_type != "video_url" && !rename("$path/$oldFolderName", "$path/$folder_name")) :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellemesi Yapılırken Hata Oluştu. Klasör Erişim Yetkinizin Olduğundan Emin Olup Tekrar Deneyin."]);
+                die();
             endif;
-            $update = $this->gallery_model->update(
-                array(
-                    "id"    => $id
-                ),
-                array(
-                    "title"         => $this->input->post("title"),
-                    "folder_name"   => $folder_name,
-                    "url"           => seo($this->input->post("title")),
-                )
-            );
+            $update = $this->gallery_model->update(["id" => $id], ["title" => $data["title"], "folder_name" => $folder_name, "url" => seo($data["title"]),]);
             if ($update) :
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Güncellendi."]);
             else :
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Güncelleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("galleries"));
-        else :
-            $viewData = new stdClass();
-            $item = $this->gallery_model->get(
-                array(
-                    "id"    => $id,
-                )
-            );
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         endif;
     }
 
     public function delete($id)
     {
-        $gallery = $this->gallery_model->get(
-            array(
-                "id"    => $id
-            )
-        );
+        $gallery = $this->gallery_model->get(["id" => $id]);
         if (!empty($gallery)) :
             if ($gallery->gallery_type != "video_url") :
                 if ($gallery->gallery_type == "image") :
                     $subViewFolder = "images";
+                    $model = "image_model";
                 elseif ($gallery->gallery_type == "video") :
                     $subViewFolder = "videos";
+                    $model = "video_model";
                 else :
                     $subViewFolder = "files";
+                    $model = "file_model";
                 endif;
                 $path = FCPATH . "uploads/$this->viewFolder/$subViewFolder/$gallery->folder_name";
-               
                 rrmdir($path);
-            endif;
-            $model = "image_model";
-            if ($gallery->gallery_type == "image") :
-                $model = "image_model";
-            elseif ($gallery->gallery_type == "video") :
-                $model = "video_model";
             else :
-                $model = "file_model";
+                $model = "video_url_model";
             endif;
             $this->$model->delete(["gallery_id" => $id]);
-            $delete = $this->gallery_model->delete(
-                array(
-                    "id"    => $id
-                )
-            );
+            $delete = $this->gallery_model->delete(["id" => $id]);
             if ($delete) :
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde silindi",
-                    "type"  => "success"
-                );
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Silindi."]);
             else :
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt silme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("galleries"));
         endif;
     }
 
@@ -301,9 +222,9 @@ class Galleries extends MY_Controller
         }
     }
 
-    public function detailDatatable($gallery_type, $folder_name)
+    public function detailDatatable($gallery_type, $folder_name=null)
     {
-        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : "video_model"));
+        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : ($gallery_type == "video" ? "video_model" : "video_url_model")));
         $folderName = ($gallery_type == "image" ? "images" : ($gallery_type == "file" ? "files" : "videos"));
         $items = $this->$modelName->getRows(
             [],
@@ -327,7 +248,7 @@ class Galleries extends MY_Controller
                 $proccessing .= '<a href="' . base_url("galleries/fileUpdate/{$item->id}") . '" class="dropdown-item"><i class="fa fa-pen"></i> Resim Açıklaması Ekle</a>';
             endif;
             $proccessing .= '
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("galleries/fileDelete/{$item->id}/{$item->gallery_id}/{$gallery_type}") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="detailTable" data-url="' . base_url("galleries/fileDelete/{$item->id}/{$item->gallery_id}/{$gallery_type}") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -336,10 +257,22 @@ class Galleries extends MY_Controller
             //array_push($renkler,$renk->negotiation_stage_color);
 
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("galleries/fileIsActiveSetter/{$item->id}/{$gallery_type}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-            if ($folderName == "images") :
+            if ($gallery_type == "image") :
                 $image = '<img src="' . base_url("uploads/galleries_v/{$folderName}/{$folder_name}/252x156/{$item->url}") . '" width="75">';
-                $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image, $item->url, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing);
+            elseif ($gallery_type == "file") :
+                $image = '<a href="'.base_url("uploads/galleries_v/{$folderName}/{$folder_name}/{$item->url}").'" download><i class="fa fa-download fa-2x"></i></a>';
+            elseif ($gallery_type == "video" || $gallery_type == "video_url") :
+                $image = '<video id="my-video' . $i . '" class="video-js" controls preload="auto" width="300" height="150" data-setup="' . ($gallery_type == "video_url" ? '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "' . $item->url . '"}] }' : '{}') . '">';
+                if ($gallery_type == "video") :
+                    $image .= '<source src="' . base_url("uploads/galleries_v/{$folderName}/{$folder_name}/{$item->url}") . '"/>';
+                endif;
+                $image .= '<p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+                </video>';
             endif;
+            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image, $item->url, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing);
+
         endforeach;
 
 
@@ -360,35 +293,20 @@ class Galleries extends MY_Controller
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "image";
-        $item = $this->gallery_model->get(
-            array(
-                "id"    => $id
-            )
-        );
+        $item = $this->gallery_model->get(["id" => $id]);
         $viewData->item = $item;
-        if ($item->gallery_type == "image") {
-            $viewData->items = $this->image_model->get_all(
-                array(
-                    "gallery_id"    => $id
-                ),
-                "rank ASC"
-            );
+        if ($item->gallery_type == "image") :
+            $viewData->items = $this->image_model->get_all(["gallery_id" => $id], "rank ASC");
             $viewData->folder_name = $item->folder_name;
-        } else if ($item->gallery_type == "file") {
-            $viewData->items = $this->file_model->get_all(
-                array(
-                    "gallery_id"    => $id
-                ),
-                "rank ASC"
-            );
-        } else {
-            $viewData->items = $this->video_model->get_all(
-                array(
-                    "gallery_id"    => $id
-                ),
-                "rank ASC"
-            );
-        }
+        elseif ($item->gallery_type == "file") :
+            $viewData->items = $this->file_model->get_all(["gallery_id" => $id], "rank ASC");
+            $viewData->folder_name = $item->folder_name;
+        elseif ($item->gallery_type == "video") :
+            $viewData->items = $this->video_model->get_all(["gallery_id" => $id], "rank ASC");
+            $viewData->folder_name = $item->folder_name;
+        else :
+            $viewData->items = $this->video_url_model->get_all(["gallery_id" => $id], "rank ASC");
+        endif;
         $viewData->gallery_type = $item->gallery_type;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
@@ -440,8 +358,6 @@ class Galleries extends MY_Controller
                     array(
                         "url"           => $file_name,
                         "rank"          => $getRank + 1,
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s"),
                         "gallery_id"    => $gallery_id
                     )
                 );
@@ -461,8 +377,6 @@ class Galleries extends MY_Controller
                     array(
                         "url"           => $uploaded_file,
                         "rank"          => $getRank + 1,
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s"),
                         "gallery_id"    => $gallery_id
                     )
                 );
@@ -482,8 +396,6 @@ class Galleries extends MY_Controller
                     array(
                         "url"           => $uploaded_file,
                         "rank"          => $getRank + 1,
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s"),
                         "gallery_id"    => $gallery_id
                     )
                 );
@@ -496,51 +408,43 @@ class Galleries extends MY_Controller
     public function fileDelete($id, $parent_id, $gallery_type)
     {
 
-        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : "video_model"));
+        $modelName = ($gallery_type == "image" ? "image_model" : ($gallery_type == "file" ? "file_model" : ($gallery_type == "video" ? "video_model" : "video_url_model")));
         $gallery = $this->gallery_model->get(["id" => $parent_id]);
-        $fileName = $this->$modelName->get(
-            array(
-                "id"    => $id
-            )
-        );
-        $delete = $this->$modelName->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
+        $fileName = $this->$modelName->get(["id" => $id]);
+        $delete = $this->$modelName->delete(["id" => $id]);
+        if ($delete) :
             if ($gallery_type == "image") :
                 $url = FCPATH . "uploads/galleries_v/images/{$gallery->url}/252x156/{$fileName->url}";
                 $url2 = FCPATH . "uploads/galleries_v/images/{$gallery->url}/350x216/{$fileName->url}";
                 $url3 = FCPATH . "uploads/galleries_v/images/{$gallery->url}/851x606/{$fileName->url}";
-                if (file_exists($url)) :
+                if (!is_dir($url) && file_exists($url)) :
                     unlink($url);
                 endif;
-                if (file_exists($url2)) :
+                if (!is_dir($url2) && file_exists($url2)) :
                     unlink($url2);
                 endif;
-                if (file_exists($url3)) :
+                if (!is_dir($url3) && file_exists($url3)) :
                     unlink($url3);
                 endif;
             elseif ($gallery_type == "video") :
-                $url = FCPATH . "uploads/galleries_v/videos/{$fileName->video_url}";
-                $url2 = FCPATH . "uploads/galleries_v/videos/{$fileName->img_url}";
-                if (file_exists($url)) :
+                $url = FCPATH . "uploads/galleries_v/videos/{$gallery->url}/{$fileName->url}";
+                $url2 = FCPATH . "uploads/galleries_v/videos/{$gallery->url}/{$fileName->img_url}";
+                if (!is_dir($url) && file_exists($url)) :
                     unlink($url);
                 endif;
-                if (file_exists($url2)) :
+                if (!is_dir($url2) && file_exists($url2)) :
                     unlink($url2);
                 endif;
             else :
-                $url = FCPATH . "uploads/galleries_v/files/{$fileName->url}";
-                if (file_exists($url)) :
+                $url = FCPATH . "uploads/galleries_v/files/{$gallery->url}/{$fileName->url}";
+                if (!is_dir($url) && file_exists($url)) :
                     unlink($url);
                 endif;
             endif;
-            redirect(base_url("galleries/upload_form/$parent_id"));
-        } else {
-            redirect(base_url("galleries/upload_form/$parent_id"));
-        }
+            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri İçeriği Başarıyla Silindi."]);
+        else :
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri İçeriği Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+        endif;
     }
 
     public function fileIsActiveSetter($id, $gallery_type)
@@ -569,191 +473,5 @@ class Galleries extends MY_Controller
                 array("rank" => $row["position"])
             );
         }
-    }
-
-    public function gallery_video_list($id)
-    {
-        $viewData = new stdClass();
-        $gallery = $this->gallery_model->get(
-            array(
-                "id"    => $id
-            )
-        );
-        $items = $this->video_model->get_all(
-            array(
-                "gallery_id"    => $id
-            ),
-            "rank ASC"
-        );
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "video/list";
-        $viewData->items = $items;
-        $viewData->gallery = $gallery;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-    public function new_gallery_video_form($id)
-    {
-        $viewData = new stdClass();
-        $viewData->gallery_id = $id;
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "video/add";
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-    public function gallery_video_save($id)
-    {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("url", "Video URL", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            $getRank = $this->video_model->rowCount();
-            $insert = $this->video_model->add(
-                array(
-                    "url"           => $this->input->post("url"),
-                    "gallery_id"    => $id,
-                    "rank"          => $getRank + 1,
-                    "isActive"      => 1,
-                    "createdAt"     => date("Y-m-d H:i:s")
-                )
-            );
-            if ($insert) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde eklendi",
-                    "type"  => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("galleries/gallery_video_list/$id"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "video/add";
-            $viewData->form_error = true;
-            $viewData->gallery_id = $id;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
-    }
-    public function update_gallery_video_form($id)
-    {
-        $viewData = new stdClass();
-        $item = $this->video_model->get(
-            array(
-                "id"    => $id,
-            )
-        );
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "video/update";
-        $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-    public function gallery_video_update($id, $gallery_id)
-    {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("url", "Video URL", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            $update = $this->video_model->update(
-                array(
-                    "id"    => $id
-                ),
-                array(
-                    "url"   => $this->input->post("url"),
-                )
-            );
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Güncelleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("galleries/gallery_video_list/$gallery_id"));
-        } else {
-            $viewData = new stdClass();
-            $item = $this->video_model->get(
-                array(
-                    "id"    => $id,
-                )
-            );
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "video/update";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
-    }
-    public function rankGalleryVideoSetter()
-    {
-        $data = $this->input->post("data");
-        parse_str($data, $order);
-        $items = $order["ord"];
-        foreach ($items as $rank => $id) {
-            $this->video_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank"      => $rank
-                )
-            );
-        }
-    }
-    public function galleryVideoIsActiveSetter($id)
-    {
-        if ($id) {
-            $isActive = (intval($this->input->post("data")) === 1) ? 1 : 0;
-            if ($this->video_model->update(["id" => $id], ["isActive" => $isActive])) {
-                echo json_encode(["success" => True, "title" => "İşlem Başarıyla Gerçekleşti", "msg" => "Güncelleme İşlemi Yapıldı"]);
-            } else {
-                echo json_encode(["success" => False, "title" => "İşlem Başarısız Oldu", "msg" => "Güncelleme İşlemi Yapılamadı"]);
-            }
-        }
-    }
-    public function galleryVideoDelete($id, $gallery_id)
-    {
-        $delete = $this->video_model->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt başarılı bir şekilde silindi",
-                "type"  => "success"
-            );
-        } else {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Kayıt silme sırasında bir problem oluştu",
-                "type"  => "error"
-            );
-        }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("galleries/gallery_video_list/$gallery_id"));
     }
 }

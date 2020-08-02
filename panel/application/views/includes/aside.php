@@ -37,14 +37,6 @@
                         </a>
                     </li>
                 <?php } ?>
-                <?php if (isAllowedViewModule("video")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1)=="video")? "active":"" ?> ">
-                        <a class="nav-link" href="<?= base_url("video") ?>">
-                            <i class="fa fa-video"></i>
-                            <span class="nav-link-text">Video</span>
-                        </a>
-                    </li>
-                <?php } ?>
                 <?php if (isAllowedViewModule("writers")) { ?>
                     <li class="nav-item <?= ($this->uri->segment(1)=="writers")? "active":"" ?> ">
                         <a class="nav-link" href="<?= base_url("writers") ?>">

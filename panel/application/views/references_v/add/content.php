@@ -25,14 +25,6 @@
                             <label>Görsel Seçiniz</label>
                             <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
                         </div>
-                        <div class="form-group">
-                            <label>Dil</label>
-                            <select class="form-control form-control-sm rounded-0" name="language">
-                                <option value="TR">TR (Türkçe/Turkish)</option>
-                                <option value="EN">EN (İngilizce/English)</option>
-                                <option value="DE">DE (Almanca/German)</option>
-                            </select>
-                        </div>
                         <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
                         <a href="<?= base_url("references"); ?>" class="btn btn-sm btn-outline-danger rounded-0n">İptal</a>
                     </form>

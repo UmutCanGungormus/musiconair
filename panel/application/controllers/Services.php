@@ -109,7 +109,6 @@ class Services extends MY_Controller
                         "description"   => $this->input->post("description"),
                         "url"           => seo($this->input->post("title")),
                         "img_url"       => $file_name,
-                        "language"      => $this->input->post("language"),
                         "rank"          => $getRank+1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s")
@@ -184,7 +183,6 @@ class Services extends MY_Controller
                         "title" => $this->input->post("title"),
                         "description" => $this->input->post("description"),
                         "url" => seo($this->input->post("title")),
-                        "language"      => $this->input->post("language"),
                         "img_url" => $file_name,
                     );
                 } else {
@@ -201,7 +199,6 @@ class Services extends MY_Controller
                 $data = array(
                     "title" => $this->input->post("title"),
                     "description" => $this->input->post("description"),
-                    "language"      => $this->input->post("language"),
                     "url" => seo($this->input->post("title")),
                 );
             }

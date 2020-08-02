@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Galeri Listesi
-                <a href="<?= base_url("galleries/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createGalleryBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("galleries/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createGalleryBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
             <hr>
         </div><!-- END column -->
@@ -61,8 +61,10 @@
         $(document).on("click",".createGalleryBtn",function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#galleryModal').iziModal('destroy');
             createModal("#galleryModal","Yeni Galeri Ekle","Yeni Galeri Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
-                $.post(base_url+"galleries/new_form/",{},function(response){
+                $.post(url,{},function(response){
                     $("#galleryModal .iziModal-content").html(response);
                 });
             });
@@ -72,9 +74,32 @@
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            let formData = new FormData(document.getElementById("#createGallery"));
+            let formData = new FormData(document.getElementById("createGallery"));
             createAjax(url,formData,function(){
                 closeModal("#galleryModal");
+                reloadTable("galleryTable");
+            });
+        });
+        $(document).on("click",".updateGalleryBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#galleryModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#galleryModal","Galeri Düzenle","Galeri Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#galleryModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#galleryModal");
+        });
+        $(document).on("click",".btnUpdate",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateGallery"));
+            createAjax(url,formData,function(){
+                closeModal("#galleryModal");
+                reloadTable("galleryTable");
             });
         });
     });

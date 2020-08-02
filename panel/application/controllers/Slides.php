@@ -116,7 +116,6 @@ class Slides extends MY_Controller
                         "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
                         "button_url" => $this->input->post("button_url"),
                         "button_caption" => $this->input->post("button_caption"),
-                        "language"      => $this->input->post("language"),
                         "rank"          => $getRank+1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s")
@@ -192,7 +191,6 @@ class Slides extends MY_Controller
                         "description"   => $this->input->post("description"),
                         "img_url"       => $file_name,
                         "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
-                        "language"      => $this->input->post("language"),
                         "button_url" => $this->input->post("button_url"),
                         "button_caption" => $this->input->post("button_caption"),
                     );
@@ -211,7 +209,6 @@ class Slides extends MY_Controller
                     "title"         => $this->input->post("title"),
                     "description"   => $this->input->post("description"),
                     "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
-                    "language"      => $this->input->post("language"),
                     "button_url" => $this->input->post("button_url"),
                     "button_caption" => $this->input->post("button_caption"),
                 );

@@ -20,35 +20,6 @@
                             <label>Açıklama</label>
                             <textarea name="description" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"><?= isset($form_error) ? set_value("description") : $item->description; ?></textarea>
                         </div>
-                        <div class="form-group">
-                            <label>Soru Dili</label>
-                            <select class="form-control form-control-sm rounded-0" name="language">
-                                <?php if ($item->language == "TR") : ?>
-                                    <option selected="selected" value="TR">TR</option>
-                                    <option value="EN">EN</option>
-                                <?php else : ?><option value="TR">TR</option>
-                                    <option selected="selected" value="EN">EN</option>
-                                <?php endif ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Soru Dili</label>
-                            <select class="form-control form-control-sm rounded-0" name="language">
-                                <?php if ($item->language == "TR") : ?>
-                                    <option selected="selected" value="TR">TR (Türkçe/Turkish)</option>
-                                    <option value="EN">EN (İngilizce/English)</option>
-                                    <option value="DE">DE (Almanca/German)</option>
-                                <?php elseif ($item->language == "EN") : ?>
-                                    <option value="TR">TR (Türkçe/Turkish)</option>
-                                    <option selected="selected" value="EN">EN (İngilizce/English)</option>
-                                    <option value="DE">DE (Almanca/German)</option>
-                                <?php else : ?>
-                                    <option value="TR">TR (Türkçe/Turkish)</option>
-                                    <option value="EN">EN (İngilizce/English)</option>
-                                    <option selected="selected" value="DE">DE (Almanca/German)</option>
-                                <?php endif ?>
-                            </select>
-                        </div>
                         <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
                         <a href="<?= base_url("questions"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>

@@ -45,14 +45,6 @@
                                 <?php endif ?>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Slider Dili</label>
-                            <select class="form-control form-control-sm rounded-0" name="language">
-                                <option value="TR">TR (Türkçe/Turkish)</option>
-                                <option value="EN">EN (İngilizce/English)</option>
-                                <option value="DE">DE (Almanca/German)</option>
-                            </select>
-                        </div>
                         <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
                         <a href="<?= base_url("slides"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>
