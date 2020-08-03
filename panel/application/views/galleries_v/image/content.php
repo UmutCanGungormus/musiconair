@@ -1,4 +1,5 @@
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
+    <?php if($item->gallery_type != "video_url"):?>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <form data-table="detailTable" action="<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>" id="dropzone" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>'}">
@@ -9,10 +10,14 @@
             </form>
         </div><!-- END column -->
     </div>
+    <?php endif;?>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="my-3">
                 <b><?= $item->title; ?></b> kaydına ait Dosyalar
+                <?php if($item->gallery_type == "video_url"):?>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-info float-right rounded-0 createVideoUrlBtn"><i class="fa fa-plus"></i> Yeni Ekle</a>
+                <?php endif;?>
             </h4>
             <hr>
         </div><!-- END column -->
@@ -61,3 +66,54 @@
         </div><!-- END column -->
     </div>
 </div>
+
+<div id="fileModal"></div>
+
+<script>
+    $(document).ready(function(){
+        $(document).on("click",".createGalleryBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#galleryModal').iziModal('destroy');
+            createModal("#galleryModal","Yeni Galeri Ekle","Yeni Galeri Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#galleryModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#galleryModal");
+        });
+        $(document).on("click",".btnSave",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createGallery"));
+            createAjax(url,formData,function(){
+                closeModal("#galleryModal");
+                reloadTable("galleryTable");
+            });
+        });
+        $(document).on("click",".updateGalleryBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#galleryModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#galleryModal","Galeri Düzenle","Galeri Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#galleryModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#galleryModal");
+        });
+        $(document).on("click",".btnUpdate",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateGallery"));
+            createAjax(url,formData,function(){
+                closeModal("#galleryModal");
+                reloadTable("galleryTable");
+            });
+        });
+    });
+</script>

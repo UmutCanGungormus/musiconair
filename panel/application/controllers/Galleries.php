@@ -347,61 +347,65 @@ class Galleries extends MY_Controller
 
     public function file_upload($gallery_id, $gallery_type, $folderName)
     {
-        $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-        if ($gallery_type == "image") :
-            $image_252x156 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 252, 156, $file_name);
-            $image_350x216 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 350, 216, $file_name);
-            $image_851x606 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 851, 606, $file_name);
-            if ($image_252x156 && $image_350x216 && $image_851x606) :
-                $getRank = $this->image_model->rowCount();
-                $this->image_model->add(
-                    array(
-                        "url"           => $file_name,
-                        "rank"          => $getRank + 1,
-                        "gallery_id"    => $gallery_id
-                    )
-                );
+        if($gallery_type != "video_url"):
+            $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+            if ($gallery_type == "image") :
+                $image_252x156 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 252, 156, $file_name);
+                $image_350x216 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 350, 216, $file_name);
+                $image_851x606 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folderName/", 851, 606, $file_name);
+                if ($image_252x156 && $image_350x216 && $image_851x606) :
+                    $getRank = $this->image_model->rowCount();
+                    $this->image_model->add(
+                        array(
+                            "url"           => $file_name,
+                            "rank"          => $getRank + 1,
+                            "gallery_id"    => $gallery_id
+                        )
+                    );
+                else :
+                    echo "islem basarisiz";
+                endif;
+            elseif ($gallery_type == "video") :
+                $config["allowed_types"] = "mpeg|mpg|mpe|qt|mov|avi|movie|3g2|3gp|mp4|f4v|flv|webm|wmv|ogg";
+                $config["upload_path"]   = "uploads/$this->viewFolder/videos/$folderName/";
+                $config["file_name"]     = $file_name;
+                $this->load->library("upload", $config);
+                $upload = $this->upload->do_upload("file");
+                if ($upload) :
+                    $uploaded_file = $this->upload->data("file_name");
+                    $getRank = $this->video_model->rowCount();
+                    $this->video_model->add(
+                        array(
+                            "url"           => $uploaded_file,
+                            "rank"          => $getRank + 1,
+                            "gallery_id"    => $gallery_id
+                        )
+                    );
+                else :
+                    echo $this->upload->display_errors();
+                endif;
             else :
-                echo "islem basarisiz";
+                $config["allowed_types"] = "*";
+                $config["upload_path"]   = "uploads/$this->viewFolder/files/$folderName/";
+                $config["file_name"]     = $file_name;
+                $this->load->library("upload", $config);
+                $upload = $this->upload->do_upload("file");
+                if ($upload) :
+                    $uploaded_file = $this->upload->data("file_name");
+                    $getRank = $this->file_model->rowCount();
+                    $this->file_model->add(
+                        array(
+                            "url"           => $uploaded_file,
+                            "rank"          => $getRank + 1,
+                            "gallery_id"    => $gallery_id
+                        )
+                    );
+                else :
+                    echo $this->upload->display_errors();
+                endif;
             endif;
-        elseif ($gallery_type == "video") :
-            $config["allowed_types"] = "mpeg|mpg|mpe|qt|mov|avi|movie|3g2|3gp|mp4|f4v|flv|webm|wmv|ogg";
-            $config["upload_path"]   = "uploads/$this->viewFolder/videos/$folderName/";
-            $config["file_name"]     = $file_name;
-            $this->load->library("upload", $config);
-            $upload = $this->upload->do_upload("file");
-            if ($upload) :
-                $uploaded_file = $this->upload->data("file_name");
-                $getRank = $this->video_model->rowCount();
-                $this->video_model->add(
-                    array(
-                        "url"           => $uploaded_file,
-                        "rank"          => $getRank + 1,
-                        "gallery_id"    => $gallery_id
-                    )
-                );
-            else :
-                echo $this->upload->display_errors();
-            endif;
-        else :
-            $config["allowed_types"] = "*";
-            $config["upload_path"]   = "uploads/$this->viewFolder/files/$folderName/";
-            $config["file_name"]     = $file_name;
-            $this->load->library("upload", $config);
-            $upload = $this->upload->do_upload("file");
-            if ($upload) :
-                $uploaded_file = $this->upload->data("file_name");
-                $getRank = $this->file_model->rowCount();
-                $this->file_model->add(
-                    array(
-                        "url"           => $uploaded_file,
-                        "rank"          => $getRank + 1,
-                        "gallery_id"    => $gallery_id
-                    )
-                );
-            else :
-                echo $this->upload->display_errors();
-            endif;
+        else:
+            
         endif;
     }
 
