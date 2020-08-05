@@ -33,7 +33,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="datetimepicker1">Bitirme Tarihi</label>
-                                <input type="hidden" name="finishedAt" value="<?= (isset($form_error)) ? set_value("finishedAt") : $item->finishedAt; ?>" />
+                                <input type="date" name="finishedAt" value="<?= (isset($form_error)) ? set_value("finishedAt") : $item->finishedAt; ?>" />
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
@@ -79,15 +79,3 @@
         </div><!-- END column -->
     </div>
 </div>
-<script>
-    	$('input[name="finishedAt"]').daterangepicker({
-		singleDatePicker: true,
-		showDropdowns: true,
-		minYear: 1901,
-		"cancelClass": "btn-secondary",
-		maxYear: parseInt(moment().format('YYYY'),10)
-		}, function(start, end, label) {
-		var years = moment().diff(start, 'years');
-		alert("You are " + years + " years old!");
-	});
-</script>

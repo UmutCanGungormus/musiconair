@@ -8,7 +8,7 @@ html.dark form.search-bar button[type="submit"] {background-color: #272727; bord
 html.dark form.search-bar button.search-button::before{ font-family: "Font Awesome 5 Free";content: "\f002";display: inline-block;padding-right: 3px;vertical-align: middle;font-weight: 900;color:#fff}
 html.light form.search-bar input:focus{border-left:1px #DADADA!important;border-top:1px #DADADA!important;border-bottom: 1px #DADADA!important;border-right: none!important;}
 html.light form.search-bar button:focus{border-right:1px #DADADA!important;border-top:1px #DADADA!important;border-bottom: 1px #DADADA!important;border-left: none!important;}
-html.dark .breadcrumb {background-color: transparent !important; height: 20px; margin: 0px;}
+html.dark .breadcrumb {background-color: transparent !important; margin: 0px;}
 html.dark .breadcrumb a {color: #FFFFFF !important; font-size: 13px;}
 html.dark .breadcrumb span {margin: 0px 5px; display: inline-block;}
 
@@ -148,3 +148,17 @@ html.dark #modal-custom .iziModal-content .icon-close:hover, #modal-custom .iziM
 html.dark #modal-custom .iziModal-content{
     background: #222;
 }
+
+html.dark .pagination .page-item .page-link{
+    color: #fff!important;
+}
+html.dark .pagination .page-item .page-link:hover {
+    background-color: #333;
+    color: #eee!important;
+}
+html.dark .pagination .page-item.active .page-link {
+    background-color: #4285f4!important;
+}
+
+html.dark .card-title a {color:#fff}
+html.dark .card-title a:hover {color:#ddd}

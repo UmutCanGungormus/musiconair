@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.1/skins/ui/oxide/skin.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.1/skins/ui/oxide/skin.mobile.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.9.2/video-js.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.9.2/alt/video-js-cdn.min.css">
 

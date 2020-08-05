@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label for="datetimepicker1">Bitirme Tarihi</label>
-                                <input type="text" class="form-control form-control-sm rounded-0" name="finishedAt" />
+                                <input type="date" class="form-control form-control-sm rounded-0" name="finishedAt" />
                             </div>
                         </div>
 

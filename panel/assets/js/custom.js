@@ -6,25 +6,12 @@ $(document).ready(function () {
 		tags: true,
 		tokenSeparators: [',', ' ']
 	});
-	$('input[name="finishedAt"]').daterangepicker({
-		singleDatePicker: true,
-		showDropdowns: true,
-		minYear: 1901,
-		locale: {
-			format: 'MM/DD/YYYY HH:mm',
-			separator: ' - ',
-			applyLabel: 'Apply',
-			cancelLabel: 'Cancel',
-			fromLabel: 'From',
-			toLabel: 'To',
-			customRangeLabel: 'Custom',
-			daysOfWeek: ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
-			monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-			firstDay: 1
-		},
-		"cancelClass": "btn-secondary",
-		maxYear: parseInt(moment().format('YYYY'), 10)
+	$("input[type='date']").flatpickr({
+		enableTime: true,
+		dateFormat: "Y-m-d H:i",
+		time_24hr: true
 	});
+
 	/** WORST CODES */
 
 	/** OwlCarousel */

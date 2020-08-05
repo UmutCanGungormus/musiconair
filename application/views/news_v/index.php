@@ -1,300 +1,61 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="container-fluid px-0 pr-0">
-    <div class="container mt-3 p-0">
-        <div class="row justify-content-center">
+<div class="wrapper2 w-100">
+    <div class="container mt-3">
+        <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="container text-center bg-dark border" style="height: 90px;">
+                <div class="text-center bg-dark border p-3">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
-                <div class="container breadcrumb p-0">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="breadcrumb pl-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
-                    <a href="<?= base_url(); ?>">Müzik Haberleri</a> <span>></span>
-                    <a href="#"><?= $news->title; ?></a>
+                    <a href="<?= base_url("haberler/muzik-haberleri"); ?>">Müzik Haberleri</a>
                 </div>
             </div>
         </div>
 
-        <div class="container mb-2 p-0">
-
-            <div class="row justify-content-between">
-
-                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-                    <div class="container px-0">
-
-                        <h2 class="mt-1"><?= $news->title; ?></h2>
-                        <span class="grey-text d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayınlanma Tarihi: <?= turkishDate("d F Y, l H:i",$news->createdAt) ?></span>
-                        <?php if ($news->updatedAt) : ?>
-                            <span class="grey-text ml-2 d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Güncellenme Tarihi: <?= turkishDate("d F Y, l H:i",$news->updatedAt) ?></span>
-                        <?php endif; ?>
-
-                        <div class="border mt-4 p-2 clearfix">
-                            <img class="float-left mr-2" src="<?= base_url('panel/uploads/writers_v/90x90/' . $writer->img_url); ?>" width="40">
-                            <b class="d-block"><?= $writer->name ?> <?= (!empty($writer->nick) ? "(".$writer->nick.")" : null); ?></b>
-                            <span class="grey-text"><?= $writer->type; ?></span>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <?php if ($news->img_url) : ?>
-                                <img src="<?= base_url("panel/uploads/news_v/370x297/" . $news->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">
-                            <?php endif; ?>
-                            <div class="row">
-
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1">
-                                    <ul class="post-emoji-icons d-inline-block">
-                                        <li style="background-position: inherit;" class="cok-iyi"></li>
-                                        <li class="text-center">
-                                            <p><b><?= $news->hit; ?></b></br>OKUNMA</p>
-                                        </li>
-                                        <li style="background-color: #3b5998 ; text-align: center; width: 40px; height: 40px; border-radius: 100% 100% 0 0; padding: 10px;">
-                                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
-                                                <i class="fa fa-facebook text-white"></i>
-                                            </a>
-                                        </li>
-                                        <li style="background-color: #00acee; text-align: center; width: 40px; height: 40px; border-radius:0 0 100% 100% ; padding: 10px;">
-                                            <a href="http://twitter.com/share?text=<?= $news->title ?>&url=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
-                                                <i class="fa fa-twitter text-white"></i>
-                                            </a>
-                                        </li>
-                                        <li style="background-color: #333333; text-align: center; width: 40px; height: 40px; border-radius: 40px; padding: 10px;">
-                                            <a href="">
-                                                <i class="fa fa-share-alt text-white"></i>
-                                            </a>
-                                        </li>
-                                        <li style="background-color: #333333; text-align: center; width: 40px; height: 40px; border-radius: 40px; padding: 10px;">
-                                            <a href="">
-                                                <i class="fa fa-star text-white"></i>
-                                            </a>
-                                        </li>
-                                        <li style="background-color: #333333; text-align: center; width: 40px; height: 40px; border-radius: 40px; padding: 10px;">
-                                            <a href="">
-                                                <i class="fa fa-link text-white"></i>
-                                            </a>
-                                        </li>
-                                        <li style="background-color: #333333; text-align: center; width: 40px; height: 40px; border-radius: 40px; padding: 10px;">
-                                            <a href="">
-                                                <i class="fa fa-comment text-white"></i>
-                                            </a>
-                                        </li>
-                                        <li style="background-color: #333333; text-align: center; width: 40px; height: 40px; border-radius: 40px; padding: 10px;">
-                                            <a href="">
-                                                <i class="fa fa-exclamation-triangle text-white"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-11 d-inline-block">
-                                    <p><?= $news->content; ?></p>
-                                </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                <?php foreach ($news as $key => $value) : ?>
+                    <div class="card rounded-0 mb-3 bg-dark">
+                        <div class="row no-gutters">
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <a href="<?= base_url($value->seo_url) ?>"><img src="<?= base_url("panel/uploads/news_v/370x297/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
-
-                        </div>
-                        <div class="mt-2 d-none">
-                            <div style=" position:absolute; margin-left: -76px;">
-
-                                <div class="mt-2">
-                                    <div class="ml-3 text-center" style="background-color: #333333; width: 40px; height: 40px; border-radius: 40px; padding: 10px;">
-                                        <a href="">
-                                            <i class="fa fa-share-alt text-white"></i>
-                                        </a>
-                                    </div>
+                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="<?= base_url($value->seo_url) ?>"><?= $value->title ?></a></h5>
+                                    <p class="card-text">
+                                        <?php if ($value->updatedAt) : ?>
+                                            <small class="text-muted"><i class="fa fa-clock-o mr-1 my-auto"></i> Son Güncelleme : <?= turkishDate("d F Y, l H:i", $value->updatedAt) ?></small>
+                                        <?php else : ?>
+                                            <small class="text-muted"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayın Tarihi : <?= turkishDate("d F Y, l H:i", $value->createdAt) ?></small>
+                                        <?php endif; ?>
+                                    </p>
+                                    <p class="card-text"><?= mb_word_wrap($value->content, 150, "...") ?></p>
                                 </div>
-
-                                <div class="mt-2">
-                                    <div class="ml-3 text-center" style="border: solid 2px #a11f12; width: 40px; height: 40px; border-radius: 40px; margin-bottom: 10px;">
-                                        <a onclick="return false;" href="#" id="addFavorites">
-                                            <i class="fa fa-star" style="color: #a11f12; line-height: 37px; font-size: 20px;"></i>
-                                        </a>
-                                    </div>
-
-                                    <div class="ml-3 text-center" style="border: solid 2px #a11f12; width: 40px; height: 40px; border-radius: 40px; margin-bottom: 10px;">
-                                        <a href="#" id="ShortenerUrl">
-                                            <i class="fa fa-link text-center" style="color: #a11f12; line-height: 37px; font-size: 20px;"></i>
-                                        </a>
-                                    </div>
-
-                                    <div class="ml-3 text-center" style="border: solid 2px #a11f12; width: 40px; height: 40px; border-radius: 40px; margin-bottom: 10px;">
-                                        <a href="#comments">
-                                            <i class="fa fa-comment" style="color: #a11f12; line-height: 37px; font-size: 20px;"></i>
-                                        </a>
-                                    </div>
-
-                                    <div class="ml-3 text-center" style="border: solid 2px #a11f12; width: 40px; height: 40px; border-radius: 40px;">
-                                        <a href="#" data-toggle="modal" data-target="#hataBildirimModal">
-                                            <i class="fa fa-exclamation-triangle" style="color: #a11f12; line-height: 37px; font-size: 20px;"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                <p class="card-text"><a class="btn btn-danger float-right mr-0 mb-0 rounded-0" href="<?= base_url($value->seo_url) ?>">HABERİN DEVAMI</a></p>
                             </div>
-
-                            <?= $news->title; ?>
+                            
                         </div>
-
-                        <div class="container text-center bg-dark border" style="height: 90px;">
-                            <h3 class="text-white">Reklam Alanı</h3>
-                        </div>
-
-                        <div class="mt-4" style="height: 70px;">
-                            <b>Etiketler</b>
-                            <ul>
-                                <?php $tags = explode(",", $news->tags);
-                                foreach ($tags as $tag) {
-                                ?>
-                                    <a href="" class="btn btn-danger btn-sm m-1 p-1 float-left d-inline-block"><b>#<?= $tag; ?></b></a>
-                                <?php } ?>
-
-                                <!--                                <a href=""-->
-                                <!--                                   class="btn btn-danger btn-sm m-1 p-1 float-left d-inline-block"><b>#AylaÇelik</b></a>-->
-                                <!--                                <a href=""-->
-                                <!--                                   class="btn btn-danger btn-sm m-1 p-1 float-left d-inline-block"><b>#Twitter</b></a>-->
-                                <!--                                <a href="" class="btn btn-danger btn-sm m-1 p-1 float-left d-inline-block"><b>#Twit</b></a>-->
-                            </ul>
-                        </div>
-
-                        <div class="alert alert-warning mt-3" role="alert">
-                            Bu İçerik üyemiz tarafından eklenmiştir. Ekibimiz tarafından müdahalede bulunulmamıştır.
-                        </div>
-                        <div class="mt-4 post-emoji clearfix" style="height: 70px;">
-                            <b>Emoji Bırak</b>
-                            <?php
-
-                            $emotions = (array) json_decode($news->reaction);
-
-                            arsort($emotions);
-
-                            ?>
-                            <ul class="post-emoji-bars">
-
-                                <?php
-                                $i = 0;
-                                foreach ($emotions as $key => $val) {
-
-                                    switch ($key) {
-                                        case "cok_iyi":
-                                            echo "<li style='left:" . ($i * 60) . "px; height: " . $val . "px;' id='cok-iyi'><span>$val</span></li>";
-                                            break;
-                                        case "helal_olsun":
-                                            echo "<li style=' left:" . ($i * 60) . "px; height: " . $val . "px' id='helal-olsun'><span>$val</span></li>";
-                                            break;
-                                        case "kizgin":
-                                            echo "<li style=' left:" . ($i * 60) . "px; height: " . $val . "px' id='kizgin'><span>$val</span></li>";
-                                            break;
-                                        case "uzucu":
-                                            echo "<li style='  left:" . ($i * 60) . "px; height: " . $val . "px' id='uzucu'><span>$val</span></li>";
-                                            break;
-                                        case "yerim":
-                                            echo "<li style=' left:" . ($i * 60) . "px; height: " . $val . "px' id='yerim'><span>$val</span></li>";
-                                            break;
-                                        case "yok_artik":
-                                            echo "<li style=' left:" . ($i * 60) . "px; height: " . $val . "px' id='yok-artik'><span>$val</span></li>";
-                                            break;
-                                        case "hos_degil":
-                                            echo "<li style=' left:" . ($i * 60) . "px; height: " . $val . "px' id='hos-degil'><span>$val</span></li>";
-                                            break;
-                                    }
-                                    $i++;
-                                } ?>
-
-                            </ul>
-
-                            <ul class="post-emoji-icons">
-                                <!--                                burada istenilen verilen tepki çoğunluğuna göre azalan desc sıralama-->
-                                <?php
-                                foreach ($emotions as $key => $val) {
-
-                                    switch ($key) {
-                                        case "cok_iyi":
-                                            echo "<li class='cok-iyi'></li>";
-                                            break;
-                                        case "helal_olsun":
-                                            echo "<li class='helal-olsun'></li>";
-                                            break;
-                                        case "kizgin":
-                                            echo "<li class='kizgin'></li>";
-                                            break;
-                                        case "uzucu":
-                                            echo "<li class='uzucu'></li>";
-                                            break;
-                                        case "yerim":
-                                            echo "<li class='yerim'></li>";
-                                            break;
-                                        case "yok_artik":
-                                            echo "<li class='yok-artik'></li>";
-                                            break;
-                                        case "hos_degil":
-                                            echo "<li class='hos-degil'></li>";
-                                            break;
-                                    }
-                                } ?>
-                            </ul>
-                        </div>
-
-
-
-                        <div id="comments" style="clear: both" class="mt-4 clearfix">
-                            <b>Yorumlar</b>
-                            <?php if (isset($_SESSION['user']) || true) { ?>
-                                <div class="bg-light py-3">
-                                    <div class="row m-0 mb-3 justify-content-center">
-                                        <div class="col-md-2 p-0 text-center">
-                                            <img src="https://placehold.it/60x60&text=60x60" class="img-fluid">
-                                        </div>
-                                        <div class="col-md-10">
-                                            <form action="#" method="post">
-                                                <input type="hidden" name="haberid" value="<?= $news->id; ?>">
-                                                <input type="hidden" name="userid" value="<?php if (isset($_SESSION['user'])) {
-                                                                                                echo $_SESSION['user'];
-                                                                                            } else {
-                                                                                                echo 0;
-                                                                                            } ?>">
-                                                <label for="makeComment"></label>
-                                                <textarea name="makeComment" id="makeComment" class="form-control"></textarea>
-                                                <button type="submit" class="btn btn-danger btn-sm float-right">Gönder
-                                                </button>
-                                            </form>
-
-                                        </div>
-                                    </div>
-
-                                    <!--  <ul class="list-group list-group-flush">
-                                        <?php
-                                        foreach ($comments as $comment) {
-                                            $cUser = $this->db->query("select * from site_users WHERE id=$comment->yorum_yapan_id")->row();
-                                        ?>
-                                            <li class="list-group-item bg-transparent">
-                                                <b><?= $cUser->nick; ?>: </b><?= $comment->text; ?>
-                                            </li>
-                                        <?php } ?>
-                                        <!--                                        --><?php //for ($i = 1; $i <= 7; $i++): 
-                                                                                        ?>
-                                    <!--                                            <li class="list-group-item bg-transparent">-->
-                                    <!--                                                <b>Ahmet: </b>Lorem ipsum dolor sit amet, consectetur adipisicing-->
-                                    <!--                                                elit. Hic, consequatur, iusto. Quisquam facere, in at. Similique-->
-                                    <!--                                                odio natus possimus quasi, blanditiis, quos, cum tenetur pariatur-->
-                                    <!--                                                harum nemo architecto illo quisquam.-->
-                                    <!--                                            </li>-->
-                                    <!--                                        --><?php //endfor; 
-                                                                                    ?>
-                                    </ul>
-
-                                </div>
-                            <?php } ?>
-                        </div>
-
-
                     </div>
+                <?php endforeach; ?>
+                    <?=$links?>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                <div class="text-center bg-dark border">
+                    <h3 class="text-white">Reklam Alanı</h3>
                 </div>
-                <div class="col-md-4">
-                    <div class="container text-center bg-dark border" style="height: 300px;">
-                        <h3 class="text-white">Reklam Alanı</h3>
-                    </div>
 
 
-                    <div class="container p-3 mt-3">
-                        <h3 class="title">Benzer Haberler</h3>
-                        <ul class="list-group list-group-flush">
-                            <?php foreach ($benzer as $item) {
+                <div class="p-3 mt-3">
+                    <h3 class="title">Benzer Haberler</h3>
+                    <ul class="list-group list-group-flush">
+                        <?php if (!empty($similar)) : ?>
+                            <?php foreach ($similar as $item) {
                             ?>
                                 <li class="mb-4 border-bottom border-secondary">
                                     <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="d-inline-block mt-2 text-color">
@@ -303,12 +64,14 @@
                                     </a>
                                 </li>
                             <?php } ?>
-                        </ul>
-                    </div>
+                        <?php endif; ?>
+                    </ul>
+                </div>
 
-                    <div class="container p-3 mt-3">
-                        <h3 class="title">Çok Okunanlar</h3>
-                        <ul class="list-group list-group-flush">
+                <div class="p-3 mt-3">
+                    <h3 class="title">Çok Okunanlar</h3>
+                    <ul class="list-group list-group-flush">
+                        <?php if (!empty($most_read)) : ?>
                             <?php
                             foreach ($most_read as $item) {
                             ?>
@@ -320,151 +83,55 @@
                                 </li>
 
                             <?php } ?>
-                        </ul>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-3 text-center">
+                        <div class="p-2" style="background-color: #1877f2;">
+                            <i class="fa fa-facebook fa-2x text-white"></i>
+                        </div>
+                        <div class="p-2 border">
+                            100B
+                        </div>
                     </div>
 
-                    <div class="row justify-content-center">
-
-                        <div class="col-md-3 text-center">
-                            <div class="p-2" style="background-color: #1877f2;">
-                                <i class="fa fa-facebook fa-2x text-white"></i>
-                            </div>
-                            <div class="p-2 border">
-                                100B
-                            </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-2" style="background-color: #00acee;">
+                            <i class="fa fa-twitter fa-2x text-white"></i>
                         </div>
-
-                        <div class="col-md-3 text-center">
-                            <div class="p-2" style="background-color: #00acee;">
-                                <i class="fa fa-twitter fa-2x text-white"></i>
-                            </div>
-                            <div class="p-2 border">
-                                100B
-                            </div>
+                        <div class="p-2 border">
+                            100B
                         </div>
-
-                        <div class="col-md-3 text-center">
-                            <div class="p-2" style="background-color: #3f729b;">
-                                <i class="fa fa-instagram fa-2x text-white"></i>
-                            </div>
-                            <div class="p-2 border">
-                                103B
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 text-center">
-                            <div class="p-2" style="background-color: #c4302b;">
-                                <i class="fa fa-youtube fa-2x text-white"></i>
-                            </div>
-                            <div class="p-2 border">
-                                100B
-                            </div>
-                        </div>
-
                     </div>
 
-                    <div class="container text-center bg-dark border mt-3" style="height: 300px;">
-                        <h3 class="text-white">Reklam Alanı</h3>
+                    <div class="col-md-3 text-center">
+                        <div class="p-2" style="background-color: #3f729b;">
+                            <i class="fa fa-instagram fa-2x text-white"></i>
+                        </div>
+                        <div class="p-2 border">
+                            103B
+                        </div>
                     </div>
+
+                    <div class="col-md-3 text-center">
+                        <div class="p-2" style="background-color: #c4302b;">
+                            <i class="fa fa-youtube fa-2x text-white"></i>
+                        </div>
+                        <div class="p-2 border">
+                            100B
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center bg-dark border mt-3">
+                    <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </section>
-
-<script>
-    $(document).ready(function() {
-        $(document).on("click", ".cok-iyi", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "cok_iyi");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function(response) {
-                $height = parseInt($('#cok-iyi').css("height"));
-                $('#cok-iyi span').html(response.response_data);
-                $('#cok-iyi').css("background-color", "#9ceafd");
-                $('#cok-iyi').css("height", $height + 5);
-            });
-        });
-        $(document).on("click", ".helal-olsun", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "helal_olsun");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
-                $height = parseInt($('#helal-olsun').css("height"));
-                $('#helal-olsun span').html(res);
-                $('#helal-olsun').css("background-color", "#9ceafd");
-                $('#helal-olsun').css("height", $height + 5);
-            });
-        });
-        $(document).on("click", ".hos-degil", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "hos_degil");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
-                $height = parseInt($('#hos-degil').css("height"));
-                $('#hos-degil span').html(res);
-                $('#hos-degil').css("background-color", "#9ceafd");
-                $('#hos-degil').css("height", $height + 5);
-            });
-        });
-        $(document).on("click", ".kizgin", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "kizgin");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
-                $height = parseInt($('#kizgin').css("height"));
-                $('#kizgin span').html(res);
-                $('#kizgin').css("background-color", "#9ceafd");
-                $('#kizgin').css("height", $height + 5);
-            });
-        });
-        $(document).on("click", ".uzucu", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "uzucu");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
-                $height = parseInt($('#uzucu').css("height"));
-                $('#uzucu span').html(res);
-                $('#uzucu').css("background-color", "#9ceafd");
-                $('#uzucu').css("height", $height + 5);
-            });
-        });
-        $(document).on("click", ".yerim", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "yerim");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
-                $height = parseInt($('#yerim').css("height"));
-                $('#yerim span').html(res);
-                $('#yerim').css("background-color", "#9ceafd");
-                $('#yerim').css("height", $height + 5);
-            });
-        });
-        $(document).on("click", ".yok-artik", function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            let formData = new FormData();
-            formData.append("ad", "yok_artik");
-            formData.append("id", <?= $news->id ?>);
-            createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
-                $height = parseInt($('#yok-artik').css("height"));
-                $('#yok-artik span').html(res);
-                $('#yok-artik').css("background-color", "#9ceafd");
-                $('#yok-artik').css("height", $height + 5);
-            });
-        });
-    });
-</script>

@@ -1,26 +1,26 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <section class="d-flex wrapper">
 
-	<div class="sidebar-menu  d-none d-sm-block">
+	<div class="sidebar-menu">
 		<div class="mt-4 sidebar-content">
 
 			<div class="sidebar-category">
 				<div class="category-item">
-					<a href="<?= base_url('kurumsal/markalar'); ?>">
+					<a href="<?= base_url('onair'); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>ONAIR</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("muzik"); ?>">
+					<a href="<?= base_url("haberler/muzik-haberleri"); ?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>MÜZİK</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="#etkinlik.php">
+					<a href="<?= base_url("etkinlikler")?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>ETKİNLİK</span></div>
 					</a>
@@ -45,8 +45,6 @@
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>VİDEO</span></div>
 					</a>
-
-
 				</div>
 
 				<div class="category-item">

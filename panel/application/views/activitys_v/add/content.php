@@ -55,7 +55,7 @@
                     <?php endif ?>
                 </div>
                 <div class="form-group">
-                    <label>Detyalar</label>
+                    <label>Detaylar</label>
                     <textarea name="info" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"></textarea>
                 </div>
                 <div class="form-group">
@@ -63,9 +63,9 @@
                     <textarea name="content" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"></textarea>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="form-group col-md-4">
                         <label for="datetimepicker1">Etkinlik Tarihi</label>
-                        <input type="hidden" name="event_date" id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss' }" />
+                        <input type="date" placeholder="Etkinlik Tarihi Seçin..." name="event_date" class="form-control form-control-sm" />
                     </div><!-- END column -->
                     <div class="form-group image_upload_container col-md-8">
                         <label>Görsel Seçiniz</label>

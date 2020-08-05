@@ -8,7 +8,7 @@ html.light form.search-bar button[type="submit"] {background-color: #DADADA; bor
 html.light form.search-bar button.search-button::before{ font-family: "Font Awesome 5 Free";content: "\f002";display: inline-block;padding-right: 3px;vertical-align: middle;font-weight: 900;color:#222}
 html.light form.search-bar input:focus{border-left:1px #222!important;border-top:1px #222!important;border-bottom: 1px #222!important;border-right: none!important;}
 html.light form.search-bar button:focus{border-right:1px #222!important;border-top:1px #222!important;border-bottom: 1px #222!important;border-left: none!important;}
-html.light .breadcrumb {background-color: transparent !important; height: 20px; margin: 0px;}
+html.light .breadcrumb {background-color: transparent !important; margin: 0px;}
 html.light .breadcrumb a {color: #888888 !important; font-size: 13px;}
 html.light .breadcrumb span {margin: 0px 5px; display: inline-block;}
 

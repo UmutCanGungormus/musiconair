@@ -21,8 +21,8 @@ Version 1.0
 */
 @import url('dark.css?v=1');
 @import url('light.css?v=1');
-
-body {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; font-weight: 400 !important;}
+html{height:100%}
+body {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; font-weight: 400 !important;height:100%}
 
 ul {margin: 0px; padding: 0px;}
 ul li {list-style: none;}

@@ -54,6 +54,9 @@ $route['404_override'] = '';
 //$route['404_override'] = 'home/error';
 $route['translate_uri_dashes'] = FALSE;
 
+
+$route["haberler/(:any)"] = "home/news/$1";
+$route["haberler/(:any)/(:num)"] = "home/news/$1/$2";
 $route["giris-yap"] = "userop/login";
 $route["kayit-ol"] = "userop/register";
 $route["sifremi-unuttum"] = "userop/reset_password";
@@ -61,6 +64,8 @@ $route["sifremi-unuttum/(:any)"] = "userop/reset_password_v/$1";
 $route["sifremi-unuttum/(:any)/(:any)"] = "userop/reset_password_v/$1/$2";
 $route["sifremi-sifirla"] = "userop/reset_password_end";
 $route["cikis"] = "userop/logout";
+
+
 $route['urunler']='home/product_list';
 $route['kategori/(.*)']='home/category';
 $route['teklif-form']='home/teklif';
@@ -75,3 +80,4 @@ $route['test/(.*)']='home/test_detail';
 $route['urlEmotion']='home/urlEmotion';
 $route['hizmetler/(.*)']='home/service';
 
+$route["(:any)"] = "home/news_detail/$1";
