@@ -77,7 +77,7 @@ class Activity extends MY_Controller
                         "info"   => $this->input->post("info"),
                         "url"           => $this->input->post("url"),
                         "img_url"     => $file_name,
-                        "date" => $this->input->post("event_date"),
+                        "event_date" => $this->input->post("event_date"),
                         "rank"          => $getRank+1,
                         "isActive"      => 1
                     )

@@ -55,8 +55,16 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
+$route["haberler"] = "home/news";
+$route["haberler/(:num)"] = "home/news/$1";
 $route["haberler/(:any)"] = "home/news/$1";
 $route["haberler/(:any)/(:num)"] = "home/news/$1/$2";
+$route["etkinlikler"] = "home/activities";
+$route["etkinlikler/(:num)"] = "home/activities/$1";
+$route["etkinlikler/(:any)"] = "home/activities/$1";
+$route["etkinlikler/(:any)/(:num)"] = "home/activities/$1/$2";
+$route["onair"] = "home/onair";
+$route["onair/(:num)"] = "home/onair/$1";
 $route["giris-yap"] = "userop/login";
 $route["kayit-ol"] = "userop/register";
 $route["sifremi-unuttum"] = "userop/reset_password";
@@ -73,11 +81,11 @@ $route['iletisim-form']='home/teklif';
 $route['iletisim']='home/contact';
 $route['hakkimizda']='home/about_us';
 $route['referanslar']='home/references';
-$route['haber/(.*)']='home/news';
 $route['test']='home/test';
 $route['test-cevapla']='home/test_check';
 $route['test/(.*)']='home/test_detail';
 $route['urlEmotion']='home/urlEmotion';
 $route['hizmetler/(.*)']='home/service';
 
-$route["(:any)"] = "home/news_detail/$1";
+$route["haber/(:any)"] = "home/news_detail/$1";
+$route["etkinlik/(:any)"] = "home/activity_detail/$1";

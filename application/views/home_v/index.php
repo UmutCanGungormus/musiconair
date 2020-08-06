@@ -44,7 +44,7 @@
             <h4 class="title"><b>Onair</b> Vitrin</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php foreach ($news as $haber) : ?>
-                    <a href="<?= base_url("{$haber->seo_url}"); ?>">
+                    <a href="<?= base_url("haber/{$haber->seo_url}"); ?>">
                         <div class="card item mb-3 dark shadow-none">
                             <div class="card-body p-0 m-0">
                                 <div class="position-relative">
@@ -80,7 +80,7 @@
             <h4 class="title"><b>Müzik</b> Haberleri</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php foreach ($muzik_haberleri as $haber) : ?>
-                    <a href="<?= base_url($haber->seo_url); ?>">
+                    <a href="<?= base_url("haber/{$haber->seo_url}"); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div class="position-relative">
@@ -114,7 +114,7 @@
 
                 <?php foreach ($news as $haber) {
                 ?>
-                    <a href="<?= base_url($haber->seo_url); ?>">
+                    <a href="<?= base_url("haber/{$haber->seo_url}"); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div style="position: relative;">
@@ -211,7 +211,7 @@
             <h4 class="title"><b>Onair</b> Vitrin</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php foreach ($news as $haber) { ?>
-                    <a target="_blank" href="<?= base_url("haber_detay/" . $haber->id); ?>">
+                    <a target="_blank" href="<?= base_url("haber/{$haber->seo_url}"); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div style="position: relative;">

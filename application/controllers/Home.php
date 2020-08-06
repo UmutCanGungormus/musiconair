@@ -90,10 +90,12 @@ class Home extends CI_Controller
     public function news()
     {
         $seo_url = $this->uri->segment(2);
-        $category_id = $this->general_model->get("news_categories",null,["seo_url" => $seo_url])->id;
+        if(!empty($seo_url) && !is_numeric($seo_url)):
+            $category_id = $this->general_model->get("news_categories",null,["seo_url" => $seo_url])->id;
+        endif;
         $config = [];
-        $config['base_url'] = base_url("haberler/{$seo_url}");
-        $config['uri_segment'] = 3;
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url("haberler/{$seo_url}") : base_url("haberler"));
+        $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) ? 3: 2);
         $config['use_page_numbers'] = TRUE;
         $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
         $config["first_link"] = "İlk";
@@ -114,23 +116,25 @@ class Home extends CI_Controller
         $config["last_tag_close"] = "</li>";
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
-        $config['total_rows'] = $this->general_model->rowCount("news",["isActive" => 1,"category_id" => $category_id]);
+        $config['total_rows'] = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->rowCount("news",["isActive" => 1,"category_id" => $category_id]) : $this->general_model->rowCount("news",["isActive" => 1,]));
         $config['per_page'] = 1;
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $page = $config['uri_segment'] * $config['per_page'];
         $this->pagination->initialize($config);
-        if(!empty($this->uri->segment(3))):
+        if(!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(3))):
             $uri_segment = $this->uri->segment(3);
+        elseif(!empty($seo_url) && is_numeric($seo_url)):
+            $uri_segment = $this->uri->segment(2);
         else:
             $uri_segment = 1;
         endif;
 
         $offset = ($uri_segment-1)*$config['per_page'];
-        $this->viewData->news = $this->general_model->get_all("news",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]);
+        $this->viewData->news = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("news",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
         $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
         $this->viewData->links = $this->pagination->create_links();
-        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $category_id,"isActive" => 1],[],[],[5]);
+        $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news",null,"hit DESC",['category_id' => $category_id,"isActive" => 1],[],[],[5]) : $this->general_model->get_all("news",null,"hit DESC",["isActive" => 1],[],[],[5]));
         if (empty($this->viewData->news)) :
             $this->viewFolder = "404_v/index";
         else:
@@ -150,6 +154,125 @@ class Home extends CI_Controller
             $this->viewFolder = "404_v/index";
         else:
             $this->viewFolder = "news_detail_v/index";
+        endif;
+        $this->render();
+    }
+
+    public function onair()
+    {
+        $config = [];
+        $config['base_url'] = base_url("onair");
+        $config['uri_segment'] = 2;
+        $config['use_page_numbers'] = TRUE;
+        $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
+        $config["first_link"] = "İlk";
+        $config["first_tag_open"] = "<li class='page-item'>";
+        $config["first_tag_close"] = "</li>";
+        $config["prev_link"] = "<i class='fa fa-angle-double-left'></i>";
+        $config["prev_tag_open"] = "<li class='page-item'>";
+        $config["prev_tag_close"] = "</li>";
+        $config["cur_tag_open"] = "<li class='page-item active'><a class='page-link' href='javascript:void(0)'>";
+        $config["cur_tag_close"] = "</a></li>";
+        $config["num_tag_open"] = "<li class='page-item'>";
+        $config["num_tag_close"] = "</li>";
+        $config["next_link"] = "<i class='fa fa-angle-double-right'></i>";
+        $config["next_tag_open"] = "<li class='page-item'>";
+        $config["next_tag_close"] = "</li>";
+        $config["last_link"] = "Son";
+        $config["last_tag_open"] = "<li class='page-item'>";
+        $config["last_tag_close"] = "</li>";
+        $config["full_tag_close"] = "</ul>";
+        $config['attributes'] = array('class' => 'page-link');
+        $config['total_rows'] = $this->general_model->rowCount("brands",["isActive" => 1]);
+        $config['per_page'] = 10;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = round($choice);
+        $page = $config['uri_segment'] * $config['per_page'];
+        $this->pagination->initialize($config);
+        if(!empty($this->uri->segment(2))):
+            $uri_segment = $this->uri->segment(2);
+        else:
+            $uri_segment = 1;
+        endif;
+
+        $offset = ($uri_segment-1)*$config['per_page'];
+        $this->viewData->brands = $this->general_model->get_all("brands",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]);
+        $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->links = $this->pagination->create_links();
+        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",["isActive" => 1],[],[],[5]);
+        if (empty($this->viewData->brands)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "brands_v/index";
+        endif;
+        $this->render();
+    }
+
+    public function activities()
+    {
+        $seo_url = $this->uri->segment(2);
+        if(!empty($seo_url) && !is_numeric($seo_url)):
+            $category_id = $this->general_model->get("activity_categories",null,["seo_url" => $seo_url])->id;
+        endif;
+        $config = [];
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url("haberler/{$seo_url}") : base_url("haberler"));
+        $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) ? 3: 2);
+        $config['use_page_numbers'] = TRUE;
+        $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
+        $config["first_link"] = "İlk";
+        $config["first_tag_open"] = "<li class='page-item'>";
+        $config["first_tag_close"] = "</li>";
+        $config["prev_link"] = "<i class='fa fa-angle-double-left'></i>";
+        $config["prev_tag_open"] = "<li class='page-item'>";
+        $config["prev_tag_close"] = "</li>";
+        $config["cur_tag_open"] = "<li class='page-item active'><a class='page-link' href='javascript:void(0)'>";
+        $config["cur_tag_close"] = "</a></li>";
+        $config["num_tag_open"] = "<li class='page-item'>";
+        $config["num_tag_close"] = "</li>";
+        $config["next_link"] = "<i class='fa fa-angle-double-right'></i>";
+        $config["next_tag_open"] = "<li class='page-item'>";
+        $config["next_tag_close"] = "</li>";
+        $config["last_link"] = "Son";
+        $config["last_tag_open"] = "<li class='page-item'>";
+        $config["last_tag_close"] = "</li>";
+        $config["full_tag_close"] = "</ul>";
+        $config['attributes'] = array('class' => 'page-link');
+        $config['total_rows'] = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->rowCount("activities",["isActive" => 1,"category_id" => $category_id]) : $this->general_model->rowCount("activities",["isActive" => 1,]));
+        $config['per_page'] = 1;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = round($choice);
+        $page = $config['uri_segment'] * $config['per_page'];
+        $this->pagination->initialize($config);
+        if(!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(3))):
+            $uri_segment = $this->uri->segment(3);
+        elseif(!empty($seo_url) && is_numeric($seo_url)):
+            $uri_segment = $this->uri->segment(2);
+        else:
+            $uri_segment = 1;
+        endif;
+
+        $offset = ($uri_segment-1)*$config['per_page'];
+        $this->viewData->activities = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("activities",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("activities",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
+        $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->links = $this->pagination->create_links();
+        $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("activities",null,"event_date ASC",['category_id' => $category_id,"isActive" => 1],[],[],[5]) : $this->general_model->get_all("activities",null,"event_date ASC",["isActive" => 1],[],[],[5]));
+        if (empty($this->viewData->activities)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "activities_v/index";
+        endif;
+        $this->render();
+    }
+
+    public function activity_detail($seo_url)
+    {
+        $this->viewData->activities = $this->general_model->get("activities",null,['seo_url' => $seo_url]);
+        $this->viewData->similar = $this->general_model->get_all("activities",null,"event_date ASC",['category_id' => $this->viewData->activities->category_id]);
+        $this->viewData->most_read = $this->general_model->get_all("activities",null,"event_date ASC",[],[],[],[3,0]);
+        if (empty($this->viewData->activities)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "activity_detail_v/index";
         endif;
         $this->render();
     }

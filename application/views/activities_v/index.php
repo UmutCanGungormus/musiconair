@@ -11,23 +11,22 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="breadcrumb pl-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
-                    <a href="<?= base_url("haberler/muzik-haberleri"); ?>">Müzik Haberleri</a>
+                    <a href="<?= base_url("etkinlikler"); ?>">Etkinlikler</a>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-                <?php foreach ($news as $key => $value) : ?>
-                    <?php $tags = explode(",", $value->tags); ?>
+                <?php foreach ($activities as $key => $value) : ?>
                     <div class="card rounded-0 mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                         <div class="row no-gutters">
                             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                <a href="<?= base_url("haber/{$value->seo_url}") ?>"><img src="<?= base_url("panel/uploads/news_v/370x297/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
+                                <a href="<?= base_url("etkinlik/{$value->seo_url}") ?>"><img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a href="<?= base_url("haber/{$value->seo_url}") ?>"><?= $value->title ?></a></h5>
+                                    <h5 class="card-title"><a href="<?= base_url("etkinlik/{$value->seo_url}") ?>"><?= $value->title ?></a></h5>
 
                                     <p class="card-text">
                                         <?php if ($value->updatedAt) : ?>
@@ -36,14 +35,9 @@
                                             <small class="text-muted"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayın Tarihi : <?= turkishDate("d F Y, l H:i", $value->createdAt) ?></small>
                                         <?php endif; ?>
                                     </p>
-                                    <p class="card-text">
-                                        <?php foreach ($tags as $tag) : ?>
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm m-1 p-1"><b>#<?= $tag; ?></b></a>
-                                        <?php endforeach; ?>
-                                    </p>
                                     <p class="card-text"><?= mb_word_wrap($value->content, 300, "...") ?></p>
                                 </div>
-                                <a class="btn btn-danger mr-0 mb-0 rounded-0 float-right" href="<?= base_url("haber/{$value->seo_url}") ?>">HABERİN DEVAMI</a>
+                                <a class="btn btn-danger mr-0 mb-0 rounded-0 float-right" href="<?= base_url("etkinlik/{$value->seo_url}") ?>">ETKİNLİĞİN DEVAMI</a>
                             </div>
                         </div>
                     </div>
@@ -59,11 +53,11 @@
                 <h3 class="title">Çok Okunanlar</h3>
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
-                        <a href="<?= base_url("haber/{$item->seo_url}"); ?>" class="text-color">
+                        <a href="<?= base_url("etkinlik/{$item->seo_url}"); ?>" class="text-color">
                             <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">

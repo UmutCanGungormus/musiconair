@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<h4 class="mb-3">
-				Kitap Listesi
+				Marka Listesi
 				<a href="<?= base_url("brands/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
 			</h4>
 			<hr>
