@@ -44,7 +44,7 @@
             <h4 class="title"><b>Onair</b> Vitrin</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php foreach ($news as $haber) : ?>
-                    <a target="_blank" href="<?= base_url("haber/{$haber->seo_url}"); ?>">
+                    <a href="<?= base_url("{$haber->seo_url}"); ?>">
                         <div class="card item mb-3 dark shadow-none">
                             <div class="card-body p-0 m-0">
                                 <div class="position-relative">
@@ -80,11 +80,11 @@
             <h4 class="title"><b>Müzik</b> Haberleri</h4>
             <div class="owl-carousel owl-trends owl-theme mt-3">
                 <?php foreach ($muzik_haberleri as $haber) : ?>
-                    <a target="_blank" href="<?= base_url("haber_detay/{$haber->id}"); ?>">
+                    <a href="<?= base_url($haber->seo_url); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div class="position-relative">
-                                    <img src="<?= base_url("public/uploads/news/{$haber->id}"); ?>" class="img-fluid">
+                                    <img src="<?= base_url("panel/uploads/news_v/370x297/{$haber->img_url}"); ?>" class="img-fluid">
                                     <i class="emoji-love"></i>
                                 </div>
                                 <div>
@@ -114,11 +114,11 @@
 
                 <?php foreach ($news as $haber) {
                 ?>
-                    <a target="_blank" href="<?= base_url("haber_detay/" . $haber->id); ?>">
+                    <a href="<?= base_url($haber->seo_url); ?>">
                         <div class="card item mb-3 dark">
                             <div class="card-body p-0 m-0">
                                 <div style="position: relative;">
-                                    <img src="<?= base_url("public/uploads/news/" . $haber->id . ".jpg"); ?>" class="img-fluid">
+                                    <img src="<?= base_url("panel/uploads/news_v/370x297/{$haber->img_url}"); ?>" class="img-fluid">
                                     <i class="emoji-love"></i>
                                 </div>
 

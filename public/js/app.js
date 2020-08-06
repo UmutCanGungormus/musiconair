@@ -1,3 +1,4 @@
+new ClipboardJS('.btnCopyLink');
 $(document).ready(function () {
 	/* Login & Register Modal */
 	/*$("#modal-custom").iziModal({
@@ -10,7 +11,17 @@ $(document).ready(function () {
 	});*/
 
 	/* JS inside the modal */
-
+	/* Tooltip */
+	$('body').tooltip({
+		selector: '[data-toggle="tooltip"]',
+		trigger: 'hover',
+		container: 'body',
+		placement: 'top',
+		boundary: 'window',
+	}).on('click mousedown mouseup', '[data-toggle="tooltip"]', function () {
+		$('[data-toggle="tooltip"]').tooltip('dispose');
+	});
+	/* Tooltip */
 	$("#modal-custom").on('click', 'header a', function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
@@ -46,9 +57,9 @@ $(document).ready(function () {
 		$('div.sidebar-menu .category-item div.name').toggle();
 
 		if (sidebarToggle) {
-			if($(window).width() <=991){
+			if ($(window).width() <= 991) {
 				$('div.sidebar-menu').addClass('d-none');
-			}else{
+			} else {
 				$('div.sidebar-menu').addClass('d-block');
 			}
 			$('div.sidebar-menu').removeClass('d-none');
@@ -59,12 +70,12 @@ $(document).ready(function () {
 			sidebarToggle = false;
 		} else {
 			$('div.sidebar-menu').removeClass('d-block');
-			
+
 			$('div.sidebar-bottom').addClass('d-none');
 			$('div.menu-shadow').remove();
-			if($(window).width() <=991){
+			if ($(window).width() <= 991) {
 				$('div.sidebar-menu').addClass('d-none');
-			}else{
+			} else {
 				$('div.sidebar-menu').css('width', '70px');
 				$('div.sidebar-content').css('width', '70px');
 			}
@@ -72,7 +83,7 @@ $(document).ready(function () {
 		}
 	});
 
-	
+
 	$('body').on("click", 'div.menu-shadow', function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
@@ -115,7 +126,7 @@ $(document).ready(function () {
 		//responsive: true
 	});
 	/* Carousel */
-	
+
 	/* Theme Color Switcher */
 	$(document).on("click", ".top-theme", function (e) {
 		e.preventDefault();
@@ -124,10 +135,10 @@ $(document).ready(function () {
 
 		if (htmlClass === 'dark') {
 			$('html').attr('class', 'light');
-			if($(".card").hasClass("bg-dark")){
+			if ($(".card").hasClass("bg-dark")) {
 				$(".card").removeClass("bg-dark");
 			}
-			
+
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-light-theme.png');
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-light-theme.png');
 			setCookie('theme', 'light', 60 * 60 * 24 * 365);
@@ -135,7 +146,7 @@ $(document).ready(function () {
 
 		} else {
 			$('html').attr('class', 'dark');
-			if(!$(".card").hasClass("bg-dark")){
+			if (!$(".card").hasClass("bg-dark")) {
 				$(".card").addClass("bg-dark");
 			}
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-black-theme.png');
@@ -146,13 +157,19 @@ $(document).ready(function () {
 	});
 	/* Theme Color Switcher */
 
+	$(document).on("click", ".btnCopyLink", function (e) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		iziToast.success({ title: "İşlem Başarılı!", message: "Link Başarıyla Kopyalandı." });
+	});
+
 	/* Login */
 	$(document).on("click", ".login-form-btn", function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
 		let formData = new FormData(document.getElementById("login-form"));
-		createAjax(url, formData,function(){
+		createAjax(url, formData, function () {
 			closeModal(".loginModal");
 		});
 	});
@@ -164,7 +181,7 @@ $(document).ready(function () {
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
 		let formData = new FormData(document.getElementById("register-form"));
-		createAjax(url, formData,function(){
+		createAjax(url, formData, function () {
 			closeModal(".loginModal");
 		});
 	});
@@ -176,7 +193,7 @@ $(document).ready(function () {
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
 		let formData = new FormData(document.getElementById("remember-password-form"));
-		createAjax(url, formData,function(){
+		createAjax(url, formData, function () {
 			closeModal(".rememberPasswordModal");
 			closeModal(".loginModal");
 		});
@@ -187,38 +204,42 @@ $(document).ready(function () {
 		e.stopImmediatePropagation();
 		let url = $(this).data("url");
 		let formData = new FormData(document.getElementById("reset-password-form"));
-		createAjax(url, formData,function(){
+		createAjax(url, formData, function () {
 			closeModal(".rememberPasswordModal");
 			closeModal(".loginModal");
 		});
 	});
 	/* Remember Password */
 });
-$(window).on("resize",function(){
+$(window).on("resize", function () {
 	let w = $(this).width();
-	if(w<=991){
+	if (w <= 991) {
 		$('div.sidebar-menu').removeClass('d-block');
 		$('div.sidebar-menu').addClass('d-none');
 		$('div.menu-shadow').remove();
-		$("section.wrapper > div.wrapper2").css("margin-left","0");
-	}else{
+		$("section.wrapper > div.wrapper2").css("margin-left", "0");
+		$("section.wrapper > div.wrapper2").css("margin-right", "0");
+	} else {
 		$('div.sidebar-menu').removeClass('d-none');
 		$('div.sidebar-menu').addClass('d-block');
-		$("section.wrapper > div.wrapper2").css("margin-left","70px");
+		$("section.wrapper > div.wrapper2").css("margin-left", "140px");
+		$("section.wrapper > div.wrapper2").css("margin-right", "70px");
 	}
 });
 /* Set Theme Cookie */
 $(window).on("load", function () {
 	let w = $(this).width();
-	if(w<=991){
+	if (w <= 991) {
 		$('div.sidebar-menu').removeClass('d-block');
 		$('div.sidebar-menu').addClass('d-none');
 		$('div.menu-shadow').remove();
-		$("section.wrapper > div.wrapper2").css("margin-left","0");
-	}else{
+		$("section.wrapper > div.wrapper2").css("margin-left", "0");
+		$("section.wrapper > div.wrapper2").css("margin-right", "0");
+	} else {
 		$('div.sidebar-menu').removeClass('d-none');
 		$('div.sidebar-menu').addClass('d-block');
-		$("section.wrapper > div.wrapper2").css("margin-left","70px");
+		$("section.wrapper > div.wrapper2").css("margin-left", "140px");
+		$("section.wrapper > div.wrapper2").css("margin-right", "70px");
 	}
 	if (getCookie("theme") === null && getCookie("logo") === null) {
 		setCookie('theme', 'light', 60 * 60 * 24 * 365);
@@ -229,7 +250,7 @@ $(window).on("load", function () {
 
 /* Functions */
 
-function createAjax(url, formData, successFnc = function(){},errorFnc = function(){}) {
+function createAjax(url, formData, successFnc = function () { }, errorFnc = function () { }) {
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -240,7 +261,7 @@ function createAjax(url, formData, successFnc = function(){},errorFnc = function
 		dataType: "JSON"
 	}).done(function (response) {
 		if (response.success) {
-			iziToast.success({ title: response.title, message: response.message, position: "topCenter" ,displayMode: 'once',});
+			iziToast.success({ title: response.title, message: response.message, position: "topCenter", displayMode: 'once', });
 			successFnc(response);
 			if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
 				setTimeout(function () {
@@ -248,7 +269,7 @@ function createAjax(url, formData, successFnc = function(){},errorFnc = function
 				}, 2000);
 			}
 		} else {
-			iziToast.error({ title: response.title, message: response.message, position: "topCenter",displayMode: 'once', });
+			iziToast.error({ title: response.title, message: response.message, position: "topCenter", displayMode: 'once', });
 			errorFnc(response);
 			if (response.redirect !== null && response.redirect !== "" && response.redirect !== undefined) {
 				setTimeout(function () {

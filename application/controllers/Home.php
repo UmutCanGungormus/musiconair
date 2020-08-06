@@ -130,6 +130,7 @@ class Home extends CI_Controller
         $this->viewData->news = $this->general_model->get_all("news",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]);
         $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
         $this->viewData->links = $this->pagination->create_links();
+        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $category_id,"isActive" => 1],[],[],[5]);
         if (empty($this->viewData->news)) :
             $this->viewFolder = "404_v/index";
         else:
