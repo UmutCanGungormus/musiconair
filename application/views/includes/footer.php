@@ -66,7 +66,7 @@
 
 <!-- SCRIPTS -->
 <!-- Bootstrap Bundle -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <!-- MDBootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 <!-- Owl Carousel -->

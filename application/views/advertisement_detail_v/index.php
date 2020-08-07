@@ -11,8 +11,13 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                 <div class="breadcrumb pl-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
-                    <a href="<?= base_url("haberler/muzik-haberleri"); ?>">Müzik Haberleri</a> <span>></span>
-                    <a href="javascript:void(0)"><?= $activities->title; ?></a>
+                    <a href="<?= base_url("ilanlar"); ?>">İlanlar</a> <span>></span>
+                    <?php if($advertisement->type == "job"):?>
+                        <a href="<?=base_url("ilanlar/is")?>">İş İlanları</a> <span>></span>
+                    <?php else:?>
+                        <a href="<?=base_url("ilanlar/emlak")?>">Emlak İlanları</a> <span>></span>
+                    <?php endif;?>
+                    <a href="javascript:void(0)"><?= $advertisement->title; ?></a>
                 </div>
             </div>
         </div>
@@ -22,13 +27,13 @@
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
 
-                <h2 class="mt-1"><?= $activities->title; ?></h2>
-                <span class="grey-text d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayınlanma Tarihi: <?= turkishDate("d F Y, l H:i", $activities->createdAt) ?></span>
-                <?php if ($activities->updatedAt) : ?>
-                    <span class="grey-text ml-2 d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Güncellenme Tarihi: <?= turkishDate("d F Y, l H:i", $activities->updatedAt) ?></span>
+                <h2 class="mt-1"><?= $advertisement->title; ?></h2>
+                <span class="grey-text d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayınlanma Tarihi: <?= turkishDate("d F Y, l H:i", $advertisement->createdAt) ?></span>
+                <?php if ($advertisement->updatedAt) : ?>
+                    <span class="grey-text ml-2 d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Güncellenme Tarihi: <?= turkishDate("d F Y, l H:i", $advertisement->updatedAt) ?></span>
                 <?php endif; ?>
-                <?php if ($activities->img_url) : ?>
-                    <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $activities->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $activities->title ?>">
+                <?php if ($advertisement->img_url) : ?>
+                    <img src="<?= base_url("panel/uploads/advertisements_v/1140x705/" . $advertisement->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $advertisement->title ?>">
                 <?php endif; ?>
                 <div class="row">
 
@@ -36,12 +41,15 @@
                         <ul class="list-group px-auto mx-auto justify-content-center text-center w-100 d-flex">
                             <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 cok-iyi bg-transparent border-0 mb-1"></li>
                             <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
-                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$activities->seo_url}") ?>" target="_blank">
+                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="javascript:void(0)"><?= clean($advertisement->hit); ?></a>
+                            </li>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-facebook">
+                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$advertisement->seo_url}") ?>" target="_blank">
                                     <i class="fa fa-facebook mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
-                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="http://twitter.com/share?text=<?= $activities->title ?>&url=<?= base_url("haber/{$activities->seo_url}") ?>" target="_blank">
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-twitter mb-1">
+                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="http://twitter.com/share?text=<?= $advertisement->title ?>&url=<?= base_url("haber/{$advertisement->seo_url}") ?>" target="_blank">
                                     <i class="fa fa-twitter mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
@@ -51,7 +59,7 @@
                                 </a>
                             </li>
                             <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
-                                <a href="javascript:void(0)" class="btnCopyLink mx-auto px-auto justify-content-center text-center w-100 text-white" data-clipboard-text="<?= base_url($activities->seo_url) ?>">
+                                <a href="javascript:void(0)" class="btnCopyLink mx-auto px-auto justify-content-center text-center w-100 text-white" data-clipboard-text="<?= base_url($advertisement->seo_url) ?>">
                                     <i class="fa fa-link mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
@@ -68,17 +76,26 @@
                         </ul>
                     </div>
                     <div class="col-10 col-sm-10 col-md-10 col-lg-11 col-xl-11">
-                        <p><?= $activities->content; ?></p>
+                        <p><?= $advertisement->content; ?></p>
                     </div>
                 </div>
 
-                <div class="text-center bg-dark border p-3">
+                <div class="text-center bg-dark border p-3 mt-3">
                     <h3 class="text-white">Reklam Alanı</h3>
+                </div>
+
+                <div class="mt-4">
+                    <b>Etiketler</b>
+                    <?php $tags = explode(",", $advertisement->tags); ?>
+                    <?php foreach ($tags as $tag) : ?>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-sm m-1 p-1"><b>#<?= $tag; ?></b></a>
+                    <?php endforeach; ?>
                 </div>
 
                 <div class="alert alert-warning mt-3" role="alert">
                     Bu İçerik üyemiz tarafından eklenmiştir. Ekibimiz tarafından müdahalede bulunulmamıştır.
                 </div>
+
 
 
             </div>
@@ -92,11 +109,11 @@
                 <h3 class="title">Benzer Haberler</h3>
                 <?php if (!empty($similar)) : ?>
                     <?php foreach ($similar as $item) : ?>
-                        <a href="<?= base_url("etkinlik/" . $item->seo_url); ?>" class="text-color">
+                        <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
                             <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= base_url("panel/uploads/advertisements_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
@@ -113,11 +130,11 @@
                 <h3 class="title">Çok Okunanlar</h3>
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
-                        <a href="<?= base_url("etkinlik/" . $item->seo_url); ?>" class="text-color">
+                        <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
                             <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= base_url("panel/uploads/advertisements_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
@@ -187,7 +204,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "cok_iyi");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function(response) {
                 $height = parseInt($('#cok-iyi').css("height"));
                 $('#cok-iyi span').html(response.response_data);
@@ -200,7 +217,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "helal_olsun");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
                 $height = parseInt($('#helal-olsun').css("height"));
                 $('#helal-olsun span').html(res);
@@ -213,7 +230,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "hos_degil");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
                 $height = parseInt($('#hos-degil').css("height"));
                 $('#hos-degil span').html(res);
@@ -226,7 +243,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "kizgin");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
                 $height = parseInt($('#kizgin').css("height"));
                 $('#kizgin span').html(res);
@@ -239,7 +256,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "uzucu");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
                 $height = parseInt($('#uzucu').css("height"));
                 $('#uzucu span').html(res);
@@ -252,7 +269,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "yerim");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
                 $height = parseInt($('#yerim').css("height"));
                 $('#yerim span').html(res);
@@ -265,7 +282,7 @@
             e.stopImmediatePropagation();
             let formData = new FormData();
             formData.append("ad", "yok_artik");
-            formData.append("id", <?= $activities->id ?>);
+            formData.append("id", <?= $advertisement->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function() {
                 $height = parseInt($('#yok-artik').css("height"));
                 $('#yok-artik span').html(res);

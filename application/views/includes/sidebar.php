@@ -27,7 +27,7 @@
 				</div>
 
 				<div class="category-item">
-					<a href="#ilanlar.php">
+					<a href="<?=base_url("ilanlar")?>">
 						<div><i class="mr-1"></i></div>
 						<div class="name"><span>İLANLAR</span></div>
 					</a>

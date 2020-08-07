@@ -38,93 +38,50 @@
                 <?php endif; ?>
                 <div class="row">
 
-                    <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                        <ul class="list-group">
-                            <li class="list-group-item cok-iyi"></li>
-                            <li class="list-group-item"><?= $news->hit; ?></li>
-                            <li class="list-group-item">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
-                                    <i class="fa fa-facebook text-white"></i>
+                    <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                        <ul class="list-group px-auto mx-auto justify-content-center text-center w-100 d-flex">
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 cok-iyi bg-transparent border-0 mb-1"></li>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="javascript:void(0)"><?= clean($news->hit); ?></a>
+                            </li>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-facebook">
+                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
+                                    <i class="fa fa-facebook mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="http://twitter.com/share?text=<?= $news->title ?>&url=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
-                                    <i class="fa fa-twitter text-white"></i>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-twitter mb-1">
+                                <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="http://twitter.com/share?text=<?= $news->title ?>&url=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
+                                    <i class="fa fa-twitter mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="">
-                                    <i class="fa fa-star text-white"></i>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                                <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
+                                    <i class="fa fa-star mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="javascript:void(0)" class="btnCopyLink" data-clipboard-text="<?= base_url($news->seo_url) ?>">
-                                    <i class="fa fa-link text-white"></i>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                                <a href="javascript:void(0)" class="btnCopyLink mx-auto px-auto justify-content-center text-center w-100 text-white" data-clipboard-text="<?= base_url($news->seo_url) ?>">
+                                    <i class="fa fa-link mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="">
-                                    <i class="fa fa-comment text-white"></i>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                                <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
+                                    <i class="fa fa-comment mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                        </ul>
-
-
-
-
-
-
-
-
-                        <ul class="post-emoji-icons list-group d-inline-flex">
-                            <li class="list-group-item cok-iyi"></li>
-                            <li class="list-group-item text-center">
-                                <b><?= $news->hit; ?></b>
-                                <p>OKUNMA</p>
-                            </li>
-                            <li class="list-group-item radius-facebook">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
-                                    <i class="fa fa-facebook text-white"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item radius-twitter">
-                                <a href="http://twitter.com/share?text=<?= $news->title ?>&url=<?= base_url("haber/{$news->seo_url}") ?>" target="_blank">
-                                    <i class="fa fa-twitter text-white"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item radius-secondary text-center justify-content-center">
-                                <a href="">
-                                    <i class="fa fa-share-alt text-white"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item radius-secondary">
-                                <a href="">
-                                    <i class="fa fa-star text-white"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item radius-secondary">
-                                <a href="javascript:void(0)" class="btnCopyLink" data-clipboard-text="<?= base_url($news->seo_url) ?>">
-                                    <i class="fa fa-link text-white"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item radius-secondary">
-                                <a href="">
-                                    <i class="fa fa-comment text-white"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item radius-secondary">
-                                <a href="">
-                                    <i class="fa fa-exclamation-triangle text-white"></i>
+                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                                <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
+                                    <i class="fa fa-exclamation-triangle mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
+                    <div class="col-10 col-sm-10 col-md-10 col-lg-11 col-xl-11">
                         <p><?= $news->content; ?></p>
                     </div>
                 </div>
 
-                <div class="text-center bg-dark border p-3">
+                <div class="text-center bg-dark border p-3 mt-3">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
 
@@ -173,7 +130,6 @@
                             endswitch;
                             $i++;
                         endforeach; ?>
-
                     </ul>
 
                     <ul class="post-emoji-icons">

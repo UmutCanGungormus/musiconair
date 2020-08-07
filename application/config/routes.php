@@ -63,6 +63,10 @@ $route["etkinlikler"] = "home/activities";
 $route["etkinlikler/(:num)"] = "home/activities/$1";
 $route["etkinlikler/(:any)"] = "home/activities/$1";
 $route["etkinlikler/(:any)/(:num)"] = "home/activities/$1/$2";
+$route["ilanlar"] = "home/advertisements";
+$route["ilanlar/(:num)"] = "home/advertisements/$1";
+$route["ilanlar/(:any)"] = "home/advertisements/$1";
+$route["ilanlar/(:any)/(:num)"] = "home/advertisements/$1/$2";
 $route["onair"] = "home/onair";
 $route["onair/(:num)"] = "home/onair/$1";
 $route["giris-yap"] = "userop/login";
@@ -89,3 +93,4 @@ $route['hizmetler/(.*)']='home/service';
 
 $route["haber/(:any)"] = "home/news_detail/$1";
 $route["etkinlik/(:any)"] = "home/activity_detail/$1";
+$route["ilan/(:any)"] = "home/advertisement_detail/$1";
