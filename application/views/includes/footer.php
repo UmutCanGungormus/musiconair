@@ -80,20 +80,81 @@
 <!-- iziModal -->
 <script src="<?= base_url("public/js/iziModal.min.js") ?>"></script>
 <!-- App -->
+<script src="<?= base_url("public/js/zuck.css.min.js?v=" . sha1(md5(rand()))); ?>"></script>
+<script src="<?= base_url("public/js/zuck.min.js?v=" . sha1(md5(rand()))); ?>"></script>
 <script src="<?= base_url("public/js/app.js") ?>?v=<?= time() ?>"></script>
 <!-- SCRIPTS -->
+<script>
+		<?php if (!empty($stories)) : ?>
+			if ($("#stories").length > 0) {
+				// INSTAGRAM STORIES
+
+				let currentSkin = getCurrentSkin();
+				let stories = new Zuck('stories', {
+					backNative: true,
+					previousTap: true,
+					skin: currentSkin['name'],
+					autoFullScreen: currentSkin['params']['autoFullScreen'],
+					avatars: currentSkin['params']['avatars'],
+					paginationArrows: currentSkin['params']['paginationArrows'],
+					list: currentSkin['params']['list'],
+					cubeEffect: currentSkin['params']['cubeEffect'],
+					localStorage: true,
+					stories: [
+						<?php foreach ($stories as $story_key => $story_value) : ?>
+							<?php if($story_value->isActive):?>
+								Zuck.buildTimelineItem(
+									"<?= $story_value->title ?>",
+									"<?= base_url("panel/uploads/stories_v/{$story_value->folder_name}/covers/1920x1080/{$story_value->img_url}") ?>",
+									"<?= $story_value->title ?>",
+									"<?= $story_value->url ?>",
+									<?= strtotime($story_value->updatedAt) ?>,
+									[
+										<?php if (!empty($story_items)) : ?>
+											<?php foreach ($story_items as $story_item_key => $story_item_value) : ?>
+												<?php if($story_item_value->isActive && $story_item_value->story_id == $story_value->id):?>
+													["<?= $story_item_value->id ?>", "<?= $story_item_value->type ?>", <?= $story_item_value->length ?>, "<?= ($story_item_value->type == "photo" ? base_url("panel/uploads/stories_v/{$story_value->folder_name}/1920x1080/{$story_item_value->src}") : base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}"))  ?>", "<?= ($story_item_value->type == "photo" ? base_url("panel/uploads/stories_v/{$story_value->folder_name}/1920x1080/{$story_item_value->src}") : base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}"))  ?>", '<?= $story_item_value->url_text ?>', '<?= $story_item_value->url ?>', false, timestamp()],
+												<?php endif;?>
+											<?php endforeach; ?>
+										<?php endif; ?>
+									]
+								),
+							<?php endif;?>
+						<?php endforeach; ?>
+					],
+					language: { // if you need to translate :)
+						unmute: 'Sesi açmak için dokunun',
+						keyboardTip: 'Sonrakini görmek için boşluk tuşuna basın',
+						visitLink: 'Devamını Görüntüle',
+						time: {
+							ago: 'önce',
+							hour: 'saat',
+							hours: 'saat',
+							minute: 'dakika',
+							minutes: 'dakika',
+							fromnow: 'şu andan itibaren',
+							seconds: 'saniye',
+							yesterday: 'dün',
+							tomorrow: 'yarın',
+							days: 'gün'
+						}
+					}
+				});
+			}
+		<?php endif; ?>
+	</script>
 <?php $this->load->view("includes/alert") ?>
 <script>
     $(document).ready(function() {
         let headerColor = (getCookie("theme") === "dark" ? "#202020" : "#e20e17");
         let bgColor = (getCookie("theme") === "dark" ? "#222" : "#fff");
-        createModal(".rememberPasswordModal", "Şifremi Unuttum", "Şifremi Unuttum", 600, true, "20px", 0, headerColor, bgColor,1050);
+        createModal(".rememberPasswordModal", "Şifremi Unuttum", "Şifremi Unuttum", 600, true, "20px", 0, headerColor, bgColor, 1050);
         $(document).on("click", ".remember-password", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             openModal(".rememberPasswordModal");
         });
-        createModal(".loginModal", "Giriş Yap / Kayıt Ol", "Giriş Yap Kayıt Ol", 600, true, "20px", 0, headerColor, bgColor,1040);
+        createModal(".loginModal", "Giriş Yap / Kayıt Ol", "Giriş Yap Kayıt Ol", 600, true, "20px", 0, headerColor, bgColor, 1040);
         $(document).on("click", ".trigger-custom", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();

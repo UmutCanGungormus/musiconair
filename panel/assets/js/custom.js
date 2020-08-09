@@ -6,11 +6,15 @@ $(document).ready(function () {
 		tags: true,
 		tokenSeparators: [',', ' ']
 	});
-	$("input[type='date']").flatpickr({
-		enableTime: true,
-		dateFormat: "Y-m-d H:i",
-		time_24hr: true
+	$("input[type='date']").each(function(){
+		$(this).flatpickr({
+			enableTime: true,
+			enableSeconds:true,
+			dateFormat: "Y-m-d H:i:s",
+			time_24hr: true,
+		});
 	});
+	
 
 	/** WORST CODES */
 

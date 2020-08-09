@@ -1,7 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-if (!get_cookie("theme", true) && empty(get_cookie("theme",true))) :
+if (!get_cookie("theme", true) && empty(get_cookie("theme", true))) :
 	set_cookie("theme", "light", strtotime("+1 Year"));
 endif;
 ?>
@@ -46,6 +46,11 @@ endif;
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
 	<!-- iziModal -->
 	<link rel="stylesheet" href="<?= base_url("public/css/iziModal.min.css") ?>" />
+	<link rel="stylesheet" href="<?= base_url("public/css/zuck.min.css?v=" . sha1(md5(rand()))); ?>">
+	<link rel="stylesheet" href="<?= base_url("public/css/skins/facesnap.min.css?v=" . sha1(md5(rand()))); ?>">
+	<link rel="stylesheet" href="<?= base_url("public/css/skins/snapgram.min.css?v=" . sha1(md5(rand()))); ?>">
+	<link rel="stylesheet" href="<?= base_url("public/css/skins/snapssenger.min.css?v=" . sha1(md5(rand()))); ?>">
+	<link rel="stylesheet" href="<?= base_url("public/css/skins/vemdezap.min.css?v=" . sha1(md5(rand()))); ?>">
 	<!-- App -->
 	<link rel="stylesheet" href="<?= base_url("public/css/app.css") ?>?v=<?= time() ?>">
 	<!-- === STYLES === -->

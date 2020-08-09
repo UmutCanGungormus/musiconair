@@ -1,7 +1,7 @@
 <?php
 class Activity_model extends CI_Model
 {
-	public $tableName = "activitys";
+	public $tableName = "activities";
 	public function __construct()
 	{
 		parent::__construct();

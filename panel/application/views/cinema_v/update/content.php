@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Detyalar</label>
+                    <label>Detaylar</label>
                     <textarea name="content" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"><?= $item->content; ?></textarea>
                 </div>
                 <div class="row">

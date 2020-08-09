@@ -49,6 +49,10 @@
                                 <?php endif ?>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Gönderi Paylaşım Tarihi</label>
+                            <input type="date" name="sharedAt" placeholder="Gönderi Paylaşım Tarihi" value="<?=$item->sharedAt?>" class="form-control form-control-sm" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" data-default-date="<?=$item->sharedAt?>" data-date-format="Y-m-d H:i:S"> 
+                        </div>
                         <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Güncelle</button>
                         <a href="<?= base_url("slides"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
                     </form>

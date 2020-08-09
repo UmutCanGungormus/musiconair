@@ -138,25 +138,25 @@
                         foreach ($emotions as $key => $val) :
                             switch ($key):
                                 case "cok_iyi":
-                                    echo "<li class='cok-iyi'></li>";
+                                    echo "<li class='cok-iyi cok-iyi-btn'></li>";
                                     break;
                                 case "helal_olsun":
-                                    echo "<li class='helal-olsun'></li>";
+                                    echo "<li class='helal-olsun helal-olsun-btn'></li>";
                                     break;
                                 case "kizgin":
-                                    echo "<li class='kizgin'></li>";
+                                    echo "<li class='kizgin kizgin-btn'></li>";
                                     break;
                                 case "uzucu":
-                                    echo "<li class='uzucu'></li>";
+                                    echo "<li class='uzucu uzucu-btn'></li>";
                                     break;
                                 case "yerim":
-                                    echo "<li class='yerim'></li>";
+                                    echo "<li class='yerim yerim-btn'></li>";
                                     break;
                                 case "yok_artik":
-                                    echo "<li class='yok-artik'></li>";
+                                    echo "<li class='yok-artik yok-artik-btn'></li>";
                                     break;
                                 case "hos_degil":
-                                    echo "<li class='hos-degil'></li>";
+                                    echo "<li class='hos-degil hos-degil-btn'></li>";
                                     break;
                             endswitch;
                         endforeach; ?>
@@ -317,7 +317,7 @@
 
 <script>
     $(document).ready(function() {
-        $(document).on("click", ".cok-iyi", function(e) {
+        $(document).on("click", ".cok-iyi-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -330,7 +330,7 @@
                 $('#cok-iyi').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".helal-olsun", function(e) {
+        $(document).on("click", ".helal-olsun-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -343,7 +343,7 @@
                 $('#helal-olsun').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".hos-degil", function(e) {
+        $(document).on("click", ".hos-degil-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -356,7 +356,7 @@
                 $('#hos-degil').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".kizgin", function(e) {
+        $(document).on("click", ".kizgin-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -369,7 +369,7 @@
                 $('#kizgin').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".uzucu", function(e) {
+        $(document).on("click", ".uzucu-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -382,7 +382,7 @@
                 $('#uzucu').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".yerim", function(e) {
+        $(document).on("click", ".yerim-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -395,7 +395,7 @@
                 $('#yerim').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".yok-artik", function(e) {
+        $(document).on("click", ".yok-artik-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();

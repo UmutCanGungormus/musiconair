@@ -13,8 +13,11 @@ class Home extends CI_Controller
         $this->viewData = new stdClass();
         $ip_adresi = getUserIP();
 
-        if (!$this->session->userdata("users"))
+        if (!$this->session->userdata("users")):
             $this->session->set_userdata("users", $ip_adresi);
+        endif;
+        $this->viewData->stories = $this->general_model->get_all("stories",null,"rank ASC",["isActive" => 1]);
+        $this->viewData->story_items = $this->general_model->get_all("story_items",null,"rank ASC",["isActive" => 1]);
     }
 
     public function render()
@@ -65,7 +68,7 @@ class Home extends CI_Controller
 
     public function test()
     {
-        $this->viewData->test = $this->general_model->get_all("tests");
+        $this->viewData->test = $this->general_model->get_all("tests",null,["isActive" => 1]);
         if (empty($this->viewData->test)) :
             $this->viewFolder = "404_v/index";
         else:
@@ -77,7 +80,7 @@ class Home extends CI_Controller
     public function test_detail()
     {
         $seo_url = $this->uri->segment(2);
-        $this->viewData->test = $this->general_model->get("tests",null,['seo_url' => $seo_url]);
+        $this->viewData->test = $this->general_model->get("tests",null,['seo_url' => $seo_url,"isActive" => 1]);
         $this->viewData->options = $this->general_model->get_all("options",null,"rank ASC",['test_id' => $this->viewData->test->id, 'isActive' => 1]);
         if (empty($this->viewData->test)) :
             $this->viewFolder = "404_v/index";
@@ -91,7 +94,7 @@ class Home extends CI_Controller
     {
         $seo_url = $this->uri->segment(2);
         if(!empty($seo_url) && !is_numeric($seo_url)):
-            $category_id = $this->general_model->get("news_categories",null,["seo_url" => $seo_url])->id;
+            $category_id = $this->general_model->get("news_categories",null,["seo_url" => $seo_url,"isActive" => 1])->id;
         endif;
         $config = [];
         $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url("haberler/{$seo_url}") : base_url("haberler"));
@@ -117,7 +120,7 @@ class Home extends CI_Controller
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
         $config['total_rows'] = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->rowCount("news",["isActive" => 1,"category_id" => $category_id]) : $this->general_model->rowCount("news",["isActive" => 1,]));
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $page = $config['uri_segment'] * $config['per_page'];
@@ -145,12 +148,12 @@ class Home extends CI_Controller
 
     public function news_detail($seo_url)
     {
-        $this->viewData->news = $this->general_model->get("news",null,['seo_url' => $seo_url]);
-        $this->viewData->category = $this->general_model->get("news_categories",null,["id" => $this->viewData->news->category_id]);
-        $this->viewData->writer = $this->general_model->get("writers",null,['id' => $this->viewData->news->writer_id]);
-        $this->viewData->similar = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id]);
-        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id],[],[],[3,0]);
-        $this->general_model->update("news",['seo_url' => $seo_url], ['hit' => $this->viewData->news->hit + 1]);
+        $this->viewData->news = $this->general_model->get("news",null,['seo_url' => $seo_url,"isActive" => 1]);
+        $this->viewData->category = $this->general_model->get("news_categories",null,["id" => $this->viewData->news->category_id,"isActive" => 1]);
+        $this->viewData->writer = $this->general_model->get("writers",null,['id' => $this->viewData->news->writer_id,"isActive" => 1]);
+        $this->viewData->similar = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id,"isActive" => 1]);
+        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id,"isActive" => 1],[],[],[3,0]);
+        $this->general_model->update("news",['seo_url' => $seo_url,"isActive" => 1], ['hit' => $this->viewData->news->hit + 1]);
         if (empty($this->viewData->news)) :
             $this->viewFolder = "404_v/index";
         else:
@@ -212,8 +215,10 @@ class Home extends CI_Controller
     public function activities()
     {
         $seo_url = $this->uri->segment(2);
+        $category = null;
         if(!empty($seo_url) && !is_numeric($seo_url)):
-            $category_id = $this->general_model->get("activity_categories",null,["seo_url" => $seo_url])->id;
+            $category = $this->general_model->get("activity_categories",null,["seo_url" => $seo_url,"isActive" => 1]);
+            $category_id = $category->id;
         endif;
         $config = [];
         $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url("haberler/{$seo_url}") : base_url("haberler"));
@@ -239,7 +244,7 @@ class Home extends CI_Controller
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
         $config['total_rows'] = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->rowCount("activities",["isActive" => 1,"category_id" => $category_id]) : $this->general_model->rowCount("activities",["isActive" => 1,]));
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $page = $config['uri_segment'] * $config['per_page'];
@@ -255,6 +260,7 @@ class Home extends CI_Controller
         $offset = ($uri_segment-1)*$config['per_page'];
         $this->viewData->activities = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("activities",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("activities",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
         $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->category = $category;
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("activities",null,"event_date ASC",['category_id' => $category_id,"isActive" => 1],[],[],[5]) : $this->general_model->get_all("activities",null,"event_date ASC",["isActive" => 1],[],[],[5]));
         if (empty($this->viewData->activities)) :
@@ -267,9 +273,10 @@ class Home extends CI_Controller
 
     public function activity_detail($seo_url)
     {
-        $this->viewData->activities = $this->general_model->get("activities",null,['seo_url' => $seo_url]);
-        $this->viewData->similar = $this->general_model->get_all("activities",null,"event_date ASC",['category_id' => $this->viewData->activities->category_id]);
-        $this->viewData->most_read = $this->general_model->get_all("activities",null,"event_date ASC",[],[],[],[3,0]);
+        $this->viewData->activities = $this->general_model->get("activities",null,['seo_url' => $seo_url,"isActive" => 1]);
+        $this->viewData->category = $this->general_model->get("activity_categories",null,["id" => $this->viewData->activities->category_id,"isActive" => 1]);
+        $this->viewData->similar = $this->general_model->get_all("activities",null,"event_date ASC",['category_id' => $this->viewData->activities->category_id,"isActive" => 1]);
+        $this->viewData->most_read = $this->general_model->get_all("activities",null,"event_date ASC",["isActive" => 1],[],[],[3,0]);
         if (empty($this->viewData->activities)) :
             $this->viewFolder = "404_v/index";
         else:
@@ -313,7 +320,7 @@ class Home extends CI_Controller
         $config["full_tag_close"] = "</ul>";
         $config['attributes'] = array('class' => 'page-link');
         $config['total_rows'] = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->rowCount("advertisements",["isActive" => 1,"type" => $type]) : $this->general_model->rowCount("advertisements",["isActive" => 1,]));
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = round($choice);
         $page = $config['uri_segment'] * $config['per_page'];
@@ -341,10 +348,10 @@ class Home extends CI_Controller
 
     public function advertisement_detail($seo_url)
     {
-        $this->viewData->advertisement = $this->general_model->get("advertisements",null,['seo_url' => $seo_url]);
-        $this->viewData->similar = $this->general_model->get_all("advertisements",null,"hit DESC",['type' => $this->viewData->advertisement->type]);
-        $this->viewData->most_read = $this->general_model->get_all("advertisements",null,"hit DESC",[],[],[],[3,0]);
-        $this->general_model->update("advertisements",['seo_url' => $seo_url], ['hit' => $this->viewData->advertisement->hit + 1]);
+        $this->viewData->advertisement = $this->general_model->get("advertisements",null,['seo_url' => $seo_url,"isActive" => 1]);
+        $this->viewData->similar = $this->general_model->get_all("advertisements",null,"hit DESC",['type' => $this->viewData->advertisement->type,"isActive" => 1]);
+        $this->viewData->most_read = $this->general_model->get_all("advertisements",null,"hit DESC",["isActive" => 1],[],[],[3,0]);
+        $this->general_model->update("advertisements",['seo_url' => $seo_url,"isActive" => 1], ['hit' => $this->viewData->advertisement->hit + 1]);
         if (empty($this->viewData->advertisement)) :
             $this->viewFolder = "404_v/index";
         else:
@@ -459,7 +466,7 @@ class Home extends CI_Controller
         $config["base_url"] = base_url("kategori") . "/" . $seo_url;
         $config["total_rows"] = $this->product_model->get_count(["category_id" => $category_id->id]);
         $config["uri_segment"] = 3;
-        $config["per_page"] = 8;
+        $config["per_page"] = 10;
         $this->pagination->initialize($config);
         $this->viewData->category = $category_id;
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;

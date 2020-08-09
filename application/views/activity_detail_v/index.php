@@ -11,7 +11,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                 <div class="breadcrumb pl-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
-                    <a href="<?= base_url("haberler/muzik-haberleri"); ?>">Müzik Haberleri</a> <span>></span>
+                    <a href="<?= base_url("haberler/{$category->seo_url}"); ?>"><?= $category->title ?></a> <span>></span>
                     <a href="javascript:void(0)"><?= $activities->title; ?></a>
                 </div>
             </div>
@@ -68,6 +68,33 @@
                         </ul>
                     </div>
                     <div class="justify-content-end flex-grow-1 pl-4">
+                        <div class="jumbotron <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="row">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <b>Etkinlik Türü : </b> <span><?= $category->title ?></span><br>
+                                    <b>Tarih : </b> <span><?= turkishDate("d F Y, l", $activities->event_date) ?></span><br>
+                                    <b>Mekan : </b> <a href="javascript:void(0)" class="btn btn-danger btn-sm m-1 p-1">#<span><?= $activities->place ?></span></a>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <b>Saat : </b> <span><?= mb_substr($activities->hour,0,-3) ?></span><br>
+                                    <b>Şehir : </b> <a href="javascript:void(0)" class="btn btn-danger btn-sm m-1 p-1">#<span><?= $activities->city ?></span></a>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                                    <a class="btn btn-danger btn-lg btn-block" target="_blank" href="<?= $activities->url ?>" role="button">Bilet Al</a>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                                    <b>Detaylar : </b><br>
+                                    <?= $activities->info ?>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                                    <b>Bilet Fiyatları : </b><br>
+                                    <?= $activities->pricing ?>
+                                </div>
+                            </div>
+                        </div>
                         <p><?= $activities->content; ?></p>
                     </div>
                 </div>
@@ -182,7 +209,7 @@
 
 <script>
     $(document).ready(function() {
-        $(document).on("click", ".cok-iyi", function(e) {
+        $(document).on("click", ".cok-iyi-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -195,7 +222,7 @@
                 $('#cok-iyi').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".helal-olsun", function(e) {
+        $(document).on("click", ".helal-olsun-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -208,7 +235,7 @@
                 $('#helal-olsun').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".hos-degil", function(e) {
+        $(document).on("click", ".hos-degil-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -221,7 +248,7 @@
                 $('#hos-degil').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".kizgin", function(e) {
+        $(document).on("click", ".kizgin-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -234,7 +261,7 @@
                 $('#kizgin').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".uzucu", function(e) {
+        $(document).on("click", ".uzucu-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -247,7 +274,7 @@
                 $('#uzucu').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".yerim", function(e) {
+        $(document).on("click", ".yerim-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();
@@ -260,7 +287,7 @@
                 $('#yerim').css("height", $height + 5);
             });
         });
-        $(document).on("click", ".yok-artik", function(e) {
+        $(document).on("click", ".yok-artik-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let formData = new FormData();

@@ -37,6 +37,14 @@
                         </a>
                     </li>
                 <?php } ?>
+                <?php if (isAllowedViewModule("stories")) { ?>
+                    <li class="nav-item <?= ($this->uri->segment(1)=="stories")? "active":"" ?> ">
+                        <a class="nav-link" href="<?= base_url("stories") ?>">
+                            <i class="fa fa-photo-video"></i>
+                            <span class="nav-link-text">Hikaye İşlemleri</span>
+                        </a>
+                    </li>
+                <?php } ?>
                 <?php if (isAllowedViewModule("writers")) { ?>
                     <li class="nav-item <?= ($this->uri->segment(1)=="writers")? "active":"" ?> ">
                         <a class="nav-link" href="<?= base_url("writers") ?>">

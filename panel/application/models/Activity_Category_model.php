@@ -1,7 +1,7 @@
 <?php
 class Activity_Category_model extends CI_Model
 {
-	public $tableName = "activity_category";
+	public $tableName = "activity_categories";
 	public function __construct()
 	{
 		parent::__construct();

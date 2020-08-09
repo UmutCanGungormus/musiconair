@@ -2,7 +2,13 @@
 <div class="wrapper2 w-100">
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+            <div id="storiesSticky" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 storiesSticky">
+                <?php if (!empty($stories)) : ?>
+                    <div id="stories" class="stories carousel snapgram pt-1 px-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : "bg-light") ?>">
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 mt-3">
                 <div class="owl-wrapper">
                     <div class="owl-carousel owl-theme homeSlider">
                         <?php foreach ($slides as $slide) : ?>
@@ -17,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
                 <div class="row">
                     <?php foreach ($banners as $banner) : ?>
                         <div class="col-md-12 mb-1 mt-1">

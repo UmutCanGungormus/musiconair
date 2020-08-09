@@ -118,7 +118,8 @@ class Slides extends MY_Controller
                         "button_caption" => $this->input->post("button_caption"),
                         "rank"          => $getRank+1,
                         "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s")
+                        "createdAt"     => date("Y-m-d H:i:s"),
+                        "sharedAt"      => $this->input->post("sharedAt"),
                     )
                 );
                 if ($insert) {
@@ -193,6 +194,7 @@ class Slides extends MY_Controller
                         "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
                         "button_url" => $this->input->post("button_url"),
                         "button_caption" => $this->input->post("button_caption"),
+                        "sharedAt"      => $this->input->post("sharedAt"),
                     );
                 } else {
                     $alert = array(
@@ -211,6 +213,7 @@ class Slides extends MY_Controller
                     "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
                     "button_url" => $this->input->post("button_url"),
                     "button_caption" => $this->input->post("button_caption"),
+                    "sharedAt"      => $this->input->post("sharedAt"),
                 );
             }
             $update = $this->slide_model->update(array("id" => $id), $data);

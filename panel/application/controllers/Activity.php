@@ -8,7 +8,7 @@ class Activity extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->viewFolder = "activitys_v";
+        $this->viewFolder = "activities_v";
         $this->load->model("activity_model");
         $this->load->model("activity_category_model");
         if (!get_active_user()) {
@@ -75,6 +75,7 @@ class Activity extends MY_Controller
                         "hour"   => $this->input->post("hour"),
                         "city"   => $this->input->post("city"),
                         "info"   => $this->input->post("info"),
+                        "pricing"   => $this->input->post("pricing"),
                         "url"           => $this->input->post("url"),
                         "img_url"     => $file_name,
                         "event_date" => $this->input->post("event_date"),
@@ -155,6 +156,7 @@ class Activity extends MY_Controller
                         "hour"   => $this->input->post("hour"),
                         "city"   => $this->input->post("city"),
                         "info"   => $this->input->post("info"),
+                        "pricing"   => $this->input->post("pricing"),
                         "url"           => $this->input->post("url"),
                         "img_url"     => $file_name,
                         "date" => $this->input->post("date"),
@@ -178,6 +180,7 @@ class Activity extends MY_Controller
                     "hour"   => $this->input->post("hour"),
                     "city"   => $this->input->post("city"),
                     "info"   => $this->input->post("info"),
+                    "pricing"   => $this->input->post("pricing"),
                     "url"           => $this->input->post("url"),
                     "date" => $this->input->post("date"),
                     "isActive"      => 1
