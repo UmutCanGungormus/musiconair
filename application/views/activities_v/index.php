@@ -25,8 +25,8 @@
                                 <a href="<?= base_url("etkinlik/{$value->seo_url}") ?>"><img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="<?= base_url("etkinlik/{$value->seo_url}") ?>"><?= $value->title ?></a></h5>
+                                <div class="card-body position-relative mb-5">
+                                    <h5 class="card-title"><a href="<?= base_url("haber/{$value->seo_url}") ?>"><?= $value->title ?></a></h5>
 
                                     <p class="card-text">
                                         <?php if ($value->updatedAt) : ?>
@@ -37,7 +37,7 @@
                                     </p>
                                     <p class="card-text"><?= mb_word_wrap($value->content, 300, "...") ?></p>
                                 </div>
-                                <a class="btn btn-danger mr-0 mb-0 rounded-0 float-right" href="<?= base_url("etkinlik/{$value->seo_url}") ?>">ETKİNLİĞİN DEVAMI</a>
+                                <a class="btn btn-danger mr-0 mb-0 rounded-0 btnBottomRight" href="<?= base_url("etkinlik/{$value->seo_url}") ?>">ETKİNLİĞİN DEVAMI</a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
                         <a href="<?= base_url("etkinlik/{$item->seo_url}"); ?>" class="text-color">
-                            <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
                                         <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
@@ -62,7 +62,7 @@
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
                                             <h6 class="card-title"><?= $item->title; ?></h6>
-                                            <p class="card-text"><?= mb_word_wrap($item->content, 150, "...") ?></p>
+                                            <p class="card-text"><?= mb_word_wrap($item->content, 50, "...") ?></p>
                                         </div>
                                     </div>
                                 </div>

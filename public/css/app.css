@@ -182,7 +182,7 @@ li.cok-iyi {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/cok-iyi.png);
 }
@@ -191,7 +191,7 @@ li.kizgin {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/kizgin.png);
 }
@@ -200,7 +200,7 @@ li.yerim {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/yerim.png);
 }
@@ -209,7 +209,7 @@ li.uzucu {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/uzucu.png);
 }
@@ -218,7 +218,7 @@ li.yok-artik {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/yok-artik.png);
 }
@@ -227,7 +227,7 @@ li.helal-olsun {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/helal-olsun.png);
 }
@@ -236,7 +236,7 @@ li.hos-degil {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/hos-degil.png);
 }
@@ -245,7 +245,7 @@ li.roket {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 64px;
-  height: 64px;
+  height: 51px;
   background-position: center center;
   background-image: url(../../panel/assets/img/emojies/roket.png);
 }
@@ -389,7 +389,7 @@ div.owl-carousel i.right {
 .radius-twitter {
   background-color: #00acee;
   text-align: center;
-  border-radius:  0 0 100% 100%;
+  border-radius: 0 0 100% 100%;
   justify-content: center;
   width: 100%;
 }
@@ -401,4 +401,17 @@ div.owl-carousel i.right {
   border-radius: 100% !important;
   justify-content: center;
   width: 100%;
+}
+
+.owl-stage {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+}
+
+.btnBottomRight {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }

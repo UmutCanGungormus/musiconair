@@ -11,6 +11,7 @@ $(document).ready(function () {
 	});*/
 
 	/* JS inside the modal */
+
 	/* Tooltip */
 	$('body').tooltip({
 		selector: '[data-toggle="tooltip"]',
@@ -104,28 +105,6 @@ $(document).ready(function () {
 		$(".wrapper").toggleClass("toggled", 2000);
 	});
 	/* Sidebar Toggler */
-
-	/* Carousel */
-	$(".homeSlider").owlCarousel({
-		margin: 20,
-		nav: true,
-		lazyLoad: true,
-		loop: true,
-		items: 1,
-		navText: ['<i class="fa fa-chevron-left left d-none d-md-block d-lg-block d-xl-block"></i>', '<i class="fa fa-chevron-right right d-none d-md-block d-lg-block d-xl-block"></i>'],
-		//responsive: true
-	});
-
-	$(".owl-trends").owlCarousel({
-		margin: 20,
-		nav: true,
-		lazyLoad: true,
-		loop: true,
-		items: 4,
-		navText: ['<i class="fa fa-chevron-left left d-none d-md-block d-lg-block d-xl-block"></i>', '<i class="fa fa-chevron-right right d-none d-md-block d-lg-block d-xl-block"></i>'],
-		//responsive: true
-	});
-	/* Carousel */
 
 	/* Theme Color Switcher */
 	$(document).on("click", ".top-theme", function (e) {
@@ -228,6 +207,50 @@ $(window).on("resize", function () {
 });
 /* Set Theme Cookie */
 $(window).on("load", function () {
+	owlWrapperWidth('.owl-wrapper');
+	/* Carousel */
+	$(".homeSlider").owlCarousel({
+		margin: 20,
+		nav: true,
+		lazyLoad: true,
+		loop: true,
+		items: 1,
+		onInitialized: fixOwl(),
+		onRefreshed: fixOwl(),
+		navText: ['<i class="fa fa-chevron-left left d-none d-md-block d-lg-block d-xl-block"></i>', '<i class="fa fa-chevron-right right d-none d-md-block d-lg-block d-xl-block"></i>'],
+		//responsive: true
+	});
+
+	$(".owl-trends").owlCarousel({
+		margin: 20,
+		nav: true,
+		lazyLoad: true,
+		loop: true,
+		items: 4,
+		onInitialized: fixOwl(),
+		onRefreshed: fixOwl(),
+		responsiveClass: true,
+		responsive: {
+			0: {
+				items: 1,
+			},
+			576: {
+				items: 2,
+			},
+			768: {
+				items: 3,
+			},
+			991: {
+				items: 3,
+			},
+			1199:{
+				items: 4,
+			}
+		},
+		navText: ['<i class="fa fa-chevron-left left d-none d-md-block d-lg-block d-xl-block"></i>', '<i class="fa fa-chevron-right right d-none d-md-block d-lg-block d-xl-block"></i>'],
+		//responsive: true
+	});
+	/* Carousel */
 	let w = $(this).width();
 	if (w <= 991) {
 		$('div.sidebar-menu').removeClass('d-block');
@@ -347,4 +370,26 @@ function deleteCookie(name) {
 	setCookie(name, "", -1);
 }
 
+function fixOwl() {
+	var $stage = $('.owl-stage'),
+		stageW = $stage.width(),
+		$el = $('.owl-item'),
+		elW = 0;
+	$el.each(function () {
+		elW += $(this).width() + +($(this).css("margin-right").slice(0, -2))
+	});
+	if (elW > stageW) {
+		$stage.width(elW);
+	};
+}
+// trigger on start and resize
+$(window).resize(function () {
+	owlWrapperWidth($('.owl-wrapper'));
+});
+// set owl-carousel width equals to owl-wrapper width
+function owlWrapperWidth(selector) {
+	$(selector).each(function () {
+		$(this).find('.owl-carousel').outerWidth($(this).closest(selector).innerWidth());
+	});
+}
 /* Functions */

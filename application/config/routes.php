@@ -69,6 +69,9 @@ $route["ilanlar/(:any)"] = "home/advertisements/$1";
 $route["ilanlar/(:any)/(:num)"] = "home/advertisements/$1/$2";
 $route["onair"] = "home/onair";
 $route["onair/(:num)"] = "home/onair/$1";
+$route['test']='home/test';
+$route['test-cevapla']='home/test_check';
+$route['test/(.*)']='home/test_detail';
 $route["giris-yap"] = "userop/login";
 $route["kayit-ol"] = "userop/register";
 $route["sifremi-unuttum"] = "userop/reset_password";
@@ -85,9 +88,7 @@ $route['iletisim-form']='home/teklif';
 $route['iletisim']='home/contact';
 $route['hakkimizda']='home/about_us';
 $route['referanslar']='home/references';
-$route['test']='home/test';
-$route['test-cevapla']='home/test_check';
-$route['test/(.*)']='home/test_detail';
+
 $route['urlEmotion']='home/urlEmotion';
 $route['hizmetler/(.*)']='home/service';
 

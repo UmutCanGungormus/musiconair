@@ -146,9 +146,10 @@ class Home extends CI_Controller
     public function news_detail($seo_url)
     {
         $this->viewData->news = $this->general_model->get("news",null,['seo_url' => $seo_url]);
+        $this->viewData->category = $this->general_model->get("news_categories",null,["id" => $this->viewData->news->category_id]);
         $this->viewData->writer = $this->general_model->get("writers",null,['id' => $this->viewData->news->writer_id]);
         $this->viewData->similar = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id]);
-        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",[],[],[],[3,0]);
+        $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id],[],[],[3,0]);
         $this->general_model->update("news",['seo_url' => $seo_url], ['hit' => $this->viewData->news->hit + 1]);
         if (empty($this->viewData->news)) :
             $this->viewFolder = "404_v/index";

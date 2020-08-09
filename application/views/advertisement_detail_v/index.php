@@ -35,47 +35,47 @@
                 <?php if ($advertisement->img_url) : ?>
                     <img src="<?= base_url("panel/uploads/advertisements_v/1140x705/" . $advertisement->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $advertisement->title ?>">
                 <?php endif; ?>
-                <div class="row">
+                <div class="d-flex justify-content-between">
 
-                    <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    <div class="justify-content-start flex-shrink-1">
                         <ul class="list-group px-auto mx-auto justify-content-center text-center w-100 d-flex">
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 cok-iyi bg-transparent border-0 mb-1"></li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 cok-iyi bg-transparent border-0 mb-1"></li>
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
                                 <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="javascript:void(0)"><?= clean($advertisement->hit); ?></a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-facebook">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-facebook">
                                 <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url("haber/{$advertisement->seo_url}") ?>" target="_blank">
                                     <i class="fa fa-facebook mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-twitter mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-twitter mb-1">
                                 <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="http://twitter.com/share?text=<?= $advertisement->title ?>&url=<?= base_url("haber/{$advertisement->seo_url}") ?>" target="_blank">
                                     <i class="fa fa-twitter mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
                                 <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
                                     <i class="fa fa-star mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
                                 <a href="javascript:void(0)" class="btnCopyLink mx-auto px-auto justify-content-center text-center w-100 text-white" data-clipboard-text="<?= base_url($advertisement->seo_url) ?>">
                                     <i class="fa fa-link mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
                                 <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
                                     <i class="fa fa-comment mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
-                            <li class="list-group-item py-3 py-sm-3 py-md-3 py-lg-4 py-xl-4 px-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
                                 <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
                                     <i class="fa fa-exclamation-triangle mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-10 col-sm-10 col-md-10 col-lg-11 col-xl-11">
+                    <div class="justify-content-end flex-grow-1 pl-4">
                         <p><?= $advertisement->content; ?></p>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                <div class="container text-center bg-dark border" style="height: 300px;">
+                <div class="container text-center bg-dark border p-5">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
 
@@ -110,7 +110,7 @@
                 <?php if (!empty($similar)) : ?>
                     <?php foreach ($similar as $item) : ?>
                         <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
-                            <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
                                         <img src="<?= base_url("panel/uploads/advertisements_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
@@ -118,7 +118,7 @@
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
                                             <h6 class="card-title"><?= $item->title; ?></h6>
-                                            <p class="card-text"><?= mb_word_wrap($item->content, 150, "...") ?></p>
+                                            <p class="card-text"><?= mb_word_wrap($item->content, 50, "...") ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
                         <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
-                            <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
                                         <img src="<?= base_url("panel/uploads/advertisements_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
@@ -139,7 +139,7 @@
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
                                             <h6 class="card-title"><?= $item->title; ?></h6>
-                                            <p class="card-text"><?= mb_word_wrap($item->content, 150, "...") ?></p>
+                                            <p class="card-text"><?= mb_word_wrap($item->content, 50, "...") ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
 
                 </div>
 
-                <div class="container text-center bg-dark border mt-3" style="height: 300px;">
+                <div class="container text-center bg-dark border mt-3 p-5">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>

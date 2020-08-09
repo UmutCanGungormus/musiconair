@@ -56,7 +56,7 @@
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
                         <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
-                            <div class="card rounded-0 border-bottom border-secondary mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
                                         <img src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
@@ -64,7 +64,7 @@
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
                                             <h6 class="card-title"><?= $item->title; ?></h6>
-                                            <p class="card-text"><?= mb_word_wrap($item->content, 150, "...") ?></p>
+                                            <p class="card-text"><?= mb_word_wrap($item->content, 50, "...") ?></p>
                                         </div>
                                     </div>
                                 </div>
