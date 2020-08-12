@@ -12,7 +12,7 @@ html.dark .breadcrumb {background-color: transparent !important; margin: 0px;}
 html.dark .breadcrumb a {color: #FFFFFF !important; font-size: 13px;}
 html.dark .breadcrumb span {margin: 0px 5px; display: inline-block;}
 
-html.dark .navbar {background-color: #202020;z-index: 2!important;}
+html.dark .navbar {background-color: #202020;z-index: 2!important;min-height: 74px;}
 html.dark .navbar i.sidebar-toggle {color: #FFFFFF; cursor: pointer; text-align: center;}
 html.dark .navbar .navbar-toggler-icon i {color: #FFFFFF; cursor: pointer; text-align: center;}
 
@@ -26,7 +26,7 @@ html.dark .fancybox-content {background-color: #222222;color:white;}
     color:white !important;
 }
 html.dark div.sidebar-content {width: 70px;}
-html.dark div.sidebar-menu {min-height: 100vh; background-color: #272727; position: fixed; z-index: 900;}
+html.dark div.sidebar-menu {min-height: 100vh; background-color: #272727; position: fixed; z-index: 1040;}
 html.dark div.sidebar-menu div.sidebar-category {height: 360px; margin-top: -20px !important; margin-bottom: 20px; padding-bottom: 30px !important;}
 html.dark div.sidebar-menu div.category-item {width: 100%; display: inline-block;}
 html.dark div.sidebar-menu div.category-item div {color: #FFFFFF !important; font-size: 21px; font-weight: 500;}

@@ -1,5 +1,42 @@
 new ClipboardJS('.btnCopyLink');
 $(document).ready(function () {
+	// Get the header
+if ($("#storiesSticky").length > 0) {
+	// When the user scrolls the page, execute myFunction
+	let header = $("#storiesSticky");
+
+	// Get the offset position of the navbar
+	let sticky = header.scrollTop();
+	$(parent.window.document).scroll(function() {
+		// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+		if ($(window).scrollTop() > sticky) {
+			header.css("top", "74px");
+			header.css("left", "72px");
+			header.addClass("fixed-top");
+			header.addClass("px-0");
+		} else {
+			header.removeClass("fixed-top");
+			header.removeClass("px-0");
+			header.css("top", "0");
+			header.css("left", "0");
+		}
+	});
+	let w = $(window).width();
+	if (w <= 991 && $(window).scrollTop() > sticky) {
+		$('div.sidebar-menu').removeClass('d-block');
+		$('div.sidebar-menu').addClass('d-none');
+		$('div.menu-shadow').remove();
+		$("section.wrapper > div.wrapper2").css("margin-left", "0");
+		$("section.wrapper > div.wrapper2").css("margin-right", "0");
+		$("#storiesSticky").css("left","0");
+	} else {
+		$('div.sidebar-menu').removeClass('d-none');
+		$('div.sidebar-menu').addClass('d-block');
+		$("section.wrapper > div.wrapper2").css("margin-left", "140px");
+		$("section.wrapper > div.wrapper2").css("margin-right", "70px");
+		$("#storiesSticky").css("left","74px");
+	}
+}
 	/* Login & Register Modal */
 	/*$("#modal-custom").iziModal({
 		overlayClose: false,
@@ -120,6 +157,9 @@ $(document).ready(function () {
 			if ($(".jumbotron").hasClass("bg-dark")) {
 				$(".jumbotron").removeClass("bg-dark");
 			}
+			if ($("#stories").hasClass("bg-dark")) {
+				$("#stories").removeClass("bg-dark");
+			}
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-light-theme.png');
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-light-theme.png');
 			setCookie('theme', 'light', 60 * 60 * 24 * 365);
@@ -129,6 +169,9 @@ $(document).ready(function () {
 			$('html').attr('class', 'dark');
 			if (!$(".card").hasClass("bg-dark")) {
 				$(".card").addClass("bg-dark");
+			}
+			if (!$("#stories").hasClass("bg-dark")) {
+				$("#stories").addClass("bg-dark");
 			}
 			if (!$(".jumbotron").hasClass("bg-dark")) {
 				$(".jumbotron").addClass("bg-dark");
@@ -203,11 +246,13 @@ $(window).on("resize", function () {
 		$('div.menu-shadow').remove();
 		$("section.wrapper > div.wrapper2").css("margin-left", "0");
 		$("section.wrapper > div.wrapper2").css("margin-right", "0");
+		$("#storiesSticky").css("left","0");
 	} else {
 		$('div.sidebar-menu').removeClass('d-none');
 		$('div.sidebar-menu').addClass('d-block');
 		$("section.wrapper > div.wrapper2").css("margin-left", "140px");
 		$("section.wrapper > div.wrapper2").css("margin-right", "70px");
+		$("#storiesSticky").css("left","74px");
 	}
 });
 /* Set Theme Cookie */
@@ -248,7 +293,7 @@ $(window).on("load", function () {
 			991: {
 				items: 3,
 			},
-			1199:{
+			1199: {
 				items: 4,
 			}
 		},
@@ -457,25 +502,3 @@ var getCurrentSkin = function () {
 
 
 
-// Get the header
-if ($("#storiesSticky").length > 0) {
-	// When the user scrolls the page, execute myFunction
-	window.onscroll = function () { stickyStories() };
-
-	let header = document.getElementById("storiesSticky");
-
-	// Get the offset position of the navbar
-	let sticky = header.offsetTop;
-
-	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-	function stickyStories() {
-		if (window.pageYOffset > sticky) {
-			header.classList.add("fixed-top");
-			header.classList.add("px-0");
-		} else {
-			header.classList.remove("fixed-top");
-			header.classList.remove("px-0");
-		}
-	}
-
-}

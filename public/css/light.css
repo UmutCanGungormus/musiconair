@@ -12,7 +12,7 @@ html.light .breadcrumb {background-color: transparent !important; margin: 0px;}
 html.light .breadcrumb a {color: #888888 !important; font-size: 13px;}
 html.light .breadcrumb span {margin: 0px 5px; display: inline-block;}
 
-html.light .navbar {background-color: #FFFFFF;z-index: 2!important;}
+html.light .navbar {background-color: #FFFFFF;z-index: 2!important;min-height: 74px;}
 html.light .navbar i.sidebar-toggle {color: #212121; cursor: pointer; text-align: center;}
 html.light .navbar .navbar-toggler-icon i {color: #212121; cursor: pointer; text-align: center;}
 
@@ -23,7 +23,7 @@ html.light li.nav-item i {font-size: 20px !important;}
 html.light li.nav-item a {font-weight: bold;}
 
 html.light div.sidebar-content {width: 70px;}
-html.light div.sidebar-menu {min-height: 100vh; background-color: #f7f7f7f7; position: fixed; z-index: 900;}
+html.light div.sidebar-menu {min-height: 100vh; background-color: #f7f7f7f7; position: fixed; z-index: 1040;}
 html.light div.sidebar-menu div.sidebar-category {height: 360px; margin-top: -20px !important; margin-bottom: 20px; padding-bottom: 30px !important;}
 html.light div.sidebar-menu div.category-item {width: 100%; display: inline-block;}
 html.light div.sidebar-menu div.category-item div {color: #333333 !important; font-size: 21px; font-weight: 500;}

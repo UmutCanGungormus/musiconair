@@ -4,7 +4,7 @@
         <div class="row">
             <div id="storiesSticky" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 storiesSticky">
                 <?php if (!empty($stories)) : ?>
-                    <div id="stories" class="stories carousel snapgram pt-1 px-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : "bg-light") ?>">
+                    <div id="stories" class="stories carousel snapgram pt-1 px-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : "bg-white") ?> border">
                     </div>
                 <?php endif; ?>
             </div>
