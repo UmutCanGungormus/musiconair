@@ -245,7 +245,7 @@ class Galleries extends MY_Controller
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     ';
             if ($gallery_type == "image") :
-                $proccessing .= '<a href="' . base_url("galleries/fileUpdate/{$item->id}") . '" class="dropdown-item"><i class="fa fa-pen"></i> Resim Açıklaması Ekle</a>';
+                $proccessing .= '<a href="javascript:void(0)" data-url="' . base_url("galleries/fileUpdate/{$item->id}") . '" class="dropdown-item updateGalleryBtn"><i class="fa fa-pen"></i> Resim Açıklaması Ekle</a>';
             endif;
             $proccessing .= '
                     <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="detailTable" data-url="' . base_url("galleries/fileDelete/{$item->id}/{$item->gallery_id}/{$gallery_type}") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
@@ -325,24 +325,17 @@ class Galleries extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "file_update";
         $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
 
     public function file_update($id)
     {
-        $this->load->library("form_validation");
-        $category = $this->uri->segment(4);
-
-        $update = $this->image_model->update(
-            array(
-                "id"    => $id
-            ),
-            array(
-                "description"         => $this->input->post("description")
-
-            )
-        );
-        redirect(base_url("galleries/upload_form/$category"));
+        $update = $this->image_model->update(["id" => $id],["title" => $this->input->post("title"),"description" => $this->input->post("description")]);
+        if($update):
+            echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri İçeriği Başarıyla Güncelleştirildi."]);
+        else :
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri İçeriği Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+        endif;
     }
 
     public function file_upload($gallery_id, $gallery_type, $folderName)

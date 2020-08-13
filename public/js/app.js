@@ -9,9 +9,14 @@ if ($("#storiesSticky").length > 0) {
 	let sticky = header.scrollTop();
 	$(parent.window.document).scroll(function() {
 		// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-		if ($(window).scrollTop() > sticky) {
+		if ($(window).scrollTop() > sticky && $(window).scrollTop() > sticky) {
 			header.css("top", "74px");
-			header.css("left", "72px");
+			if($(window).width() <= 991){
+				header.css("left", "0")
+			}else{
+				header.css("left", "72px")
+			}
+			;
 			header.addClass("fixed-top");
 			header.addClass("px-0");
 		} else {
@@ -21,21 +26,7 @@ if ($("#storiesSticky").length > 0) {
 			header.css("left", "0");
 		}
 	});
-	let w = $(window).width();
-	if (w <= 991 && $(window).scrollTop() > sticky) {
-		$('div.sidebar-menu').removeClass('d-block');
-		$('div.sidebar-menu').addClass('d-none');
-		$('div.menu-shadow').remove();
-		$("section.wrapper > div.wrapper2").css("margin-left", "0");
-		$("section.wrapper > div.wrapper2").css("margin-right", "0");
-		$("#storiesSticky").css("left","0");
-	} else {
-		$('div.sidebar-menu').removeClass('d-none');
-		$('div.sidebar-menu').addClass('d-block');
-		$("section.wrapper > div.wrapper2").css("margin-left", "140px");
-		$("section.wrapper > div.wrapper2").css("margin-right", "70px");
-		$("#storiesSticky").css("left","74px");
-	}
+	
 }
 	/* Login & Register Modal */
 	/*$("#modal-custom").iziModal({

@@ -75,13 +75,13 @@
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            $('#galleryModal').iziModal('destroy');
-            createModal("#galleryModal","Yeni Galeri Ekle","Yeni Galeri Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+            $('#fileModal').iziModal('destroy');
+            createModal("#fileModal","Yeni Galeri Ekle","Yeni Galeri Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
                 $.post(url,{},function(response){
-                    $("#galleryModal .iziModal-content").html(response);
+                    $("#fileModal .iziModal-content").html(response);
                 });
             });
-            openModal("#galleryModal");
+            openModal("#fileModal");
         });
         $(document).on("click",".btnSave",function(e){
             e.preventDefault();
@@ -89,21 +89,22 @@
             let url = $(this).data("url");
             let formData = new FormData(document.getElementById("createGallery"));
             createAjax(url,formData,function(){
-                closeModal("#galleryModal");
+                closeModal("#fileModal");
                 reloadTable("galleryTable");
             });
         });
         $(document).on("click",".updateGalleryBtn",function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
-            $('#galleryModal').iziModal('destroy');
+            $('#fileModal').iziModal('destroy');
             let url = $(this).data("url");
-            createModal("#galleryModal","Galeri Düzenle","Galeri Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+            createModal("#fileModal","Galeri Düzenle","Galeri Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
                 $.post(url,{},function(response){
-                    $("#galleryModal .iziModal-content").html(response);
+                    $("#fileModal .iziModal-content").html(response);
+                    TinyMCEInit();
                 });
             });
-            openModal("#galleryModal");
+            openModal("#fileModal");
         });
         $(document).on("click",".btnUpdate",function(e){
             e.preventDefault();
@@ -111,7 +112,7 @@
             let url = $(this).data("url");
             let formData = new FormData(document.getElementById("updateGallery"));
             createAjax(url,formData,function(){
-                closeModal("#galleryModal");
+                closeModal("#fileModal");
                 reloadTable("galleryTable");
             });
         });

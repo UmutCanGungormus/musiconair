@@ -46,7 +46,8 @@ class Image_model extends CI_Model
         $this->db->select('
             images.rank,
             images.id,
-			images.gallery_id,
+            images.gallery_id,
+            images.title,
 			images.description,
             images.url,
             images.isActive,
@@ -71,7 +72,8 @@ class Image_model extends CI_Model
         $this->db->select('
 		images.rank,
 		images.id,
-		images.gallery_id,
+        images.gallery_id,
+        images.title,
 		images.description,
 		images.url,
 		images.isActive,

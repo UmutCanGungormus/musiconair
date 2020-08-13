@@ -360,6 +360,82 @@ class Home extends CI_Controller
         $this->render();
     }
 
+    public function galleries()
+    {
+        $seo_url = $this->uri->segment(2);
+        if(!empty($seo_url) && !is_numeric($seo_url)):
+            $gallery_id = $this->general_model->get("galleries",null,["seo_url" => $seo_url,"isActive" => 1,"isCover" => 1])->id;
+        endif;
+        $config = [];
+        $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url("galeriler/{$seo_url}") : base_url("galeriler"));
+        $config['uri_segment'] = (!empty($seo_url) && !is_numeric($seo_url) ? 3: 2);
+        $config['use_page_numbers'] = TRUE;
+        $config["full_tag_open"] = "<ul class='pagination justify-content-center'>";
+        $config["first_link"] = "İlk";
+        $config["first_tag_open"] = "<li class='page-item'>";
+        $config["first_tag_close"] = "</li>";
+        $config["prev_link"] = "<i class='fa fa-angle-double-left'></i>";
+        $config["prev_tag_open"] = "<li class='page-item'>";
+        $config["prev_tag_close"] = "</li>";
+        $config["cur_tag_open"] = "<li class='page-item active'><a class='page-link' href='javascript:void(0)'>";
+        $config["cur_tag_close"] = "</a></li>";
+        $config["num_tag_open"] = "<li class='page-item'>";
+        $config["num_tag_close"] = "</li>";
+        $config["next_link"] = "<i class='fa fa-angle-double-right'></i>";
+        $config["next_tag_open"] = "<li class='page-item'>";
+        $config["next_tag_close"] = "</li>";
+        $config["last_link"] = "Son";
+        $config["last_tag_open"] = "<li class='page-item'>";
+        $config["last_tag_close"] = "</li>";
+        $config["full_tag_close"] = "</ul>";
+        $config['attributes'] = array('class' => 'page-link');
+        $config['total_rows'] = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->rowCount("galleries",["isActive" => 1,"gallery_id" => $gallery_id]) : $this->general_model->rowCount("galleries",["isActive" => 1,]));
+        $config['per_page'] = 10;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = round($choice);
+        $page = $config['uri_segment'] * $config['per_page'];
+        $this->pagination->initialize($config);
+        if(!empty($seo_url) && !is_numeric($seo_url) && !empty($this->uri->segment(3))):
+            $uri_segment = $this->uri->segment(3);
+        elseif(!empty($seo_url) && is_numeric($seo_url)):
+            $uri_segment = $this->uri->segment(2);
+        else:
+            $uri_segment = 1;
+        endif;
+
+        $offset = ($uri_segment-1)*$config['per_page'];
+        $this->viewData->galleries = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("galleries",null,null,['gallery_id' => $gallery_id,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("galleries",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
+        $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news",null,"hit DESC",["isActive" => 1],[],[],[5]) : $this->general_model->get_all("news",null,"hit DESC",["isActive" => 1],[],[],[5]));
+        $this->viewData->links = $this->pagination->create_links();
+        if (empty($this->viewData->galleries)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "galleries_v/index";
+        endif;
+        $this->render();
+    }
+
+    public function gallery_detail($seo_url)
+    {
+        $this->viewData->gallery = $this->general_model->get("galleries",null,['seo_url' => $seo_url,"isActive" => 1]);
+        if($this->viewData->gallery->gallery_type == "image"):
+            $table="images";
+        elseif($this->viewData->gallery->gallery_type == "file"):
+            $table="files";
+        elseif($this->viewData->gallery->gallery_type == "video"):
+            $table="videos";
+        else:
+            $table="video_urls";
+        endif;
+        $this->viewData->gallery_items = $this->general_model->get($table,null,["id" => $this->viewData->gallery->id,"isActive" => 1]);
+        if (empty($this->viewData->gallery_items)) :
+            $this->viewFolder = "404_v/index";
+        else:
+            $this->viewFolder = "gallery_detail_v/index";
+        endif;
+        $this->render();
+    }
+
     public function references()
     {
         $this->viewData->references = $this->general_model->get_all("references",null,null,["isActive" => 1]);

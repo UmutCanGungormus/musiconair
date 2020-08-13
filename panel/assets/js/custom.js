@@ -133,6 +133,11 @@ function TinyMCEInit(height = 300, fullpage = false, selector = '.tinymce') {
 		mobile: {
 			theme: 'silver'
 		},
+		setup: function (editor) {
+			editor.on('change', function () {
+				editor.save();
+			});
+		},
 		// without images_upload_url set, Upload tab won't show up
 		images_upload_url: base_url+'settings/uploadImage',
 		convert_urls: false,
