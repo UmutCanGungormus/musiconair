@@ -364,7 +364,7 @@ class Home extends CI_Controller
     {
         $seo_url = $this->uri->segment(2);
         if(!empty($seo_url) && !is_numeric($seo_url)):
-            $gallery_id = $this->general_model->get("galleries",null,["seo_url" => $seo_url,"isActive" => 1,"isCover" => 1])->id;
+            $gallery_id = $this->general_model->get("galleries",null,["url" => $seo_url,"isActive" => 1,"isCover" => 1])->id;
         endif;
         $config = [];
         $config['base_url'] = (!empty($seo_url) && !is_numeric($seo_url) ? base_url("galeriler/{$seo_url}") : base_url("galeriler"));
@@ -417,7 +417,7 @@ class Home extends CI_Controller
 
     public function gallery_detail($seo_url)
     {
-        $this->viewData->gallery = $this->general_model->get("galleries",null,['seo_url' => $seo_url,"isActive" => 1]);
+        $this->viewData->gallery = $this->general_model->get("galleries",null,['url' => $seo_url,"isActive" => 1]);
         if($this->viewData->gallery->gallery_type == "image"):
             $table="images";
         elseif($this->viewData->gallery->gallery_type == "file"):
@@ -427,7 +427,8 @@ class Home extends CI_Controller
         else:
             $table="video_urls";
         endif;
-        $this->viewData->gallery_items = $this->general_model->get($table,null,["id" => $this->viewData->gallery->id,"isActive" => 1]);
+        $this->viewData->gallery_items = $this->general_model->get_all("{$table}",null,"rank ASC",["gallery_id" => $this->viewData->gallery->id,"isActive" => 1]);
+
         if (empty($this->viewData->gallery_items)) :
             $this->viewFolder = "404_v/index";
         else:

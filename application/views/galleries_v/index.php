@@ -19,15 +19,14 @@
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
                 <?php foreach ($galleries as $key => $value) : ?>
-                    <?php $tags = explode(",", $value->tags); ?>
                     <div class="card rounded-0 mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                         <div class="row no-gutters">
                             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                <a href="<?= base_url("galeri/{$value->seo_url}") ?>"><img src="<?= base_url("panel/uploads/news_v/370x297/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
+                                <a href="<?= base_url("galeri/{$value->url}") ?>"><img src="<?= base_url("panel/uploads/news_v/370x297/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                 <div class="card-body position-relative mb-5">
-                                    <h5 class="card-title"><a href="<?= base_url("galeri/{$value->seo_url}") ?>"><?= $value->title ?></a></h5>
+                                    <h5 class="card-title"><a href="<?= base_url("galeri/{$value->url}") ?>"><?= $value->title ?></a></h5>
 
                                     <p class="card-text">
                                         <?php if ($value->updatedAt) : ?>
@@ -38,7 +37,7 @@
                                     </p>
                                     <p class="card-text"><?= mb_word_wrap($value->content, 300, "...") ?></p>
                                 </div>
-                                <a class="btn btn-danger mr-0 mb-0 rounded-0 btnBottomRight" href="<?= base_url("galeri/{$value->seo_url}") ?>">GALERİYİ İNCELE</a>
+                                <a class="btn btn-danger mr-0 mb-0 rounded-0 btnBottomRight" href="<?= base_url("galeri/{$value->url}") ?>">GALERİYİ İNCELE</a>
                             </div>
                         </div>
                     </div>
