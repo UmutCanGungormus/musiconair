@@ -170,7 +170,8 @@ function strto($to, $str)
             else :
                 $str = te();
             endif;
-        } else :
+        }
+    else :
         $str = te();
     endif;
     return $str;
@@ -658,19 +659,19 @@ function get_product_option_title($id)
     return $item->title;
 }
 
-function get_portfolio_cover($id){
-    $t=&get_instance();
+function get_portfolio_cover($id)
+{
+    $t = &get_instance();
     $t->load->model("portfolio_image_model");
-    $photo=$t->portfolio_image_model->get([
-        "portfolio_id"=>$id,
-        "isCover"=>1
+    $photo = $t->portfolio_image_model->get([
+        "portfolio_id" => $id,
+        "isCover" => 1
     ]);
     if ($photo) {
         return $photo->img_url;
     } else {
         return "default_image.png";
     }
-
 }
 
 
@@ -688,11 +689,12 @@ function get_news_category_title($id)
     $item = $ci->news_category_model->get(['id' => $id]);
     return $item->title;
 }
-function get_rank($id,$model){
- $t= &get_instance();
- $t->load->model($model);
- $rank=$t->$model->get(["id"=>$id]);
- return $rank;
+function get_rank($id, $model)
+{
+    $t = &get_instance();
+    $t->load->model($model);
+    $rank = $t->$model->get(["id" => $id]);
+    return $rank;
 }
 function get_news_title($id)
 {
@@ -701,11 +703,12 @@ function get_news_title($id)
     $item = $ci->news_model->get(['id' => $id]);
     return $item->title;
 }
-function get_count($model){
-    $t=&get_instance();
+function get_count($model)
+{
+    $t = &get_instance();
     $t->load->model($model);
-    $count= $t->$model->rowCount([
-        "isActive"=>1
+    $count = $t->$model->rowCount([
+        "isActive" => 1
     ]);
     return $count;
 }
@@ -729,7 +732,7 @@ function get_cinema_category_title($id)
     $ci = &get_instance();
     $ci->load->model("cinema_category_model");
     $item = $ci->cinema_category_model->get(['id' => $id]);
-    
+
     return $item->title;
 }
 function isAdmin()
@@ -874,7 +877,8 @@ function userRole()
     }
     $t->session->set_userdata('user_roles', $roles);
 }
-function send_email($toEmail = [], $subject = "", $message = "",$mail_settings=""){
+function send_email($toEmail = [], $subject = "", $message = "", $mail_settings = "")
+{
     $t = &get_instance();
     $t->load->model("emailsettings_model");
     $email_settings = $t->emailsettings_model->get(
@@ -883,13 +887,13 @@ function send_email($toEmail = [], $subject = "", $message = "",$mail_settings="
             "id" => $mail_settings
         )
     );
-    $transport = (new Swift_SmtpTransport($email_settings->host, intval($email_settings->port), strto("lower",$email_settings->protocol)))
+    $transport = (new Swift_SmtpTransport($email_settings->host, intval($email_settings->port), strto("lower", $email_settings->protocol)))
         ->setUsername($email_settings->user)
         ->setPassword($email_settings->password);
 
     // Create the Mailer using your created Transport
     $mailer = new Swift_Mailer($transport);
-    if(empty($toEmail)):
+    if (empty($toEmail)) :
         $toEmail = [$email_settings->user_name];
     endif;
     // Create a message
@@ -964,7 +968,7 @@ function get_product_cover_photo($id)
     $photo = $t->product_image_model->get(
         array(
             "product_id" => $id,
-            "isCover"=>1
+            "isCover" => 1
         )
     );
     if ($photo) {
@@ -976,35 +980,28 @@ function get_product_cover_photo($id)
 //$_FILES["img_url"]["tmp_name"]
 //100,200
 //uploads/$t->viewFolder/deneme.png
-function upload_picture($file, $uploadPath, $width, $height, $name)
+function upload_picture($file, $uploadPath)
 {
     $t = &get_instance();
-    $t->load->library("simpleimagelib");
-    if (!is_dir("{$uploadPath}/{$width}x{$height}")) {
-        mkdir("{$uploadPath}/{$width}x{$height}",0755,true);
+    if (!is_dir("{$uploadPath}")) {
+        mkdir("{$uploadPath}", 0755, true);
     }
-    $upload_error = false;
-    try {
-        $simpleImage = $t->simpleimagelib->get_simple_image_instance();
-        $simpleImage
-            ->fromFile($file)
-            //->thumbnail($width,$height,'center')
-            ->toFile("{$uploadPath}/{$width}x{$height}/$name", null, 75);
-    } catch (Exception $err) {
-        $error =  $err->getMessage();
-        $upload_error = true;
-    }
-    if ($upload_error) {
-        echo $error;
+    $config["upload_path"] = FCPATH."{$uploadPath}";
+    $config["allowed_types"] = "bmp|gif|jpeg|jpg|jpe|jp2|j2k|jpf|jpg2|jpx|jpm|mj2|mjp2|tiff|tif|svg|ico";
+    $config["encrypt_name"] = TRUE;
+    $t->load->library("upload", $config);
+
+    if (!$t->upload->do_upload($file)) {
+        return ["success" => false,"error" => $t->upload->display_errors()];
     } else {
-        return true;
+        return ["success" => true,"file_name" => $t->upload->data()["file_name"]];
     }
 }
-function get_picture($path = "", $picture = "", $resolution = "50x50")
+function get_picture($path = "", $picture = "")
 {
     if ($picture != "") {
-        if (file_exists(FCPATH . "uploads/$path/$resolution/$picture")) {
-            $picture = base_url("uploads/$path/$resolution/$picture");
+        if (file_exists(FCPATH . "uploads/$path/$picture")) {
+            $picture = base_url("uploads/$path/$picture");
         } else {
             $picture = base_url("assets/img/default_image.png");
         }
@@ -1051,7 +1048,7 @@ function checkEmpty($data)
     $error = false;
     foreach ($data as $key => $value) :
         $value = trim($value);
-        if (empty($value)):
+        if (empty($value)) :
             $error = true;
             return ["error" => $error, "key" => (!empty($key) ? $key : null)];
         endif;

@@ -418,17 +418,8 @@ class Home extends CI_Controller
     public function gallery_detail($seo_url)
     {
         $this->viewData->gallery = $this->general_model->get("galleries",null,['url' => $seo_url,"isActive" => 1]);
-        if($this->viewData->gallery->gallery_type == "image"):
-            $table="images";
-        elseif($this->viewData->gallery->gallery_type == "file"):
-            $table="files";
-        elseif($this->viewData->gallery->gallery_type == "video"):
-            $table="videos";
-        else:
-            $table="video_urls";
-        endif;
-        $this->viewData->gallery_items = $this->general_model->get_all("{$table}",null,"rank ASC",["gallery_id" => $this->viewData->gallery->id,"isActive" => 1]);
-
+        $this->viewData->gallery_items = $this->general_model->get_all("{$this->viewData->gallery->gallery_type}",null,"rank ASC",["gallery_id" => $this->viewData->gallery->id,"isActive" => 1]);
+        print_r($this->viewData);
         if (empty($this->viewData->gallery_items)) :
             $this->viewFolder = "404_v/index";
         else:

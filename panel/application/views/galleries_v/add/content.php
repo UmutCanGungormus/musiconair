@@ -1,8 +1,7 @@
-
 <form id="createGallery" onsubmit="return false" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label>Galeri Adı</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title" required>
+        <input type="text" class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title" required>
     </div>
     <div class="form-group">
         <label for="control-demo-6" class="">Galeri Türü</label>
@@ -14,7 +13,20 @@
                 <option <?= (isset($gallery_type) && $gallery_type == "video_url") ? "selected" : ""; ?> value="video_url">Video URL</option>
             </select>
         </div>
-    </div><!-- .form-group -->
+    </div>
+    <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Galeri Kapak Görseli</span>
+        </div>
+        <div class="form-control form-control-sm rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <span class="input-group-append">
+            <span class=" btn btn-sm btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+                <input type="hidden"><input type="file" name="img_url">
+            </span>
+            <a href="#" class="btn btn-sm btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+        </span>
+    </div>
+    <!-- .form-group -->
     <button data-url="<?= base_url("galleries/save"); ?>" type="button" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
     <a href="javascript:void(0)" onclick="closeModal('#galleryModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

@@ -46,7 +46,6 @@ class Product_option extends MY_Controller
                 }
                 foreach ($key["tmp_name"] as $k => $v) {
                     $image_348x215 = upload_picture($v, "uploads/$this->viewFolder", 348, 215, $file_name[$k]);
-                    $image_1080x426 = upload_picture($v, "uploads/$this->viewFolder", 1080, 426, $file_name[$k]);
                 }
             }
             $file_name = json_encode($file_name);

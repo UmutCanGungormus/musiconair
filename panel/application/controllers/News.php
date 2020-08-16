@@ -115,18 +115,15 @@ class News extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_370x297 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 370, 297, $file_name);
-            $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->news_model->rowCount();
-            if ($image_370x297 && $image_1008x600) {
+            if ($image["success"]) {
                 $data = array(
                     "title"         => $this->input->post("title"),
                     "content"   => $this->input->post("content"),
                     "seo_url"           => seo($this->input->post("title")),
                     "tags"      => implode(",",$this->input->post("tags")),
-                    "img_url"     => $file_name,
+                    "img_url"     => $image["file_name"],
                     'reaction' => json_encode($reaction),
                     "video_url"     => $this->input->post("video_url"),
                     "emoji"      => $this->input->post("emoji"),
@@ -202,17 +199,15 @@ class News extends MY_Controller
         if ($validate) {
 
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_370x297 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 370, 297, $file_name);
-                $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
 
-                if ($image_370x297 && $image_1008x600) {
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "content"   => $this->input->post("content"),
                         "seo_url"           => seo($this->input->post("title")),
 
-                        "img_url"     => $file_name,
+                        "img_url"     => $image["file_name"],
                         "video_url"     => $this->input->post("video_url"),
                         "emoji"      => $this->input->post("emoji"),
                         "writer_id"      => $this->input->post("writer_id"),

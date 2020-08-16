@@ -12,6 +12,7 @@ $(document).ready(function () {
 			enableSeconds:true,
 			dateFormat: "Y-m-d H:i:s",
 			time_24hr: true,
+			disableMobile: "true"
 		});
 	});
 	

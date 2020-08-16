@@ -62,11 +62,9 @@ class Cinema extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
-            $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->cinema_model->rowCount();
-            if ($image_255x157 && $image_1140x705) {
+            if ($image["success"]) {
                 $insert = $this->cinema_model->add(
                     array(
                         "title"         => $this->input->post("title"),
@@ -78,7 +76,7 @@ class Cinema extends MY_Controller
                         "players"   => $this->input->post("players"),
                         "scriptwriter"           => $this->input->post("scriptwriter"),
                         "url"       => $this->input->post('url'),
-                        "img_url"     => $file_name,
+                        "img_url"     => $image["file_name"],
                         "rank"          => $getRank + 1,
                         "isActive"      => 1
                     )
@@ -143,11 +141,9 @@ class Cinema extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_255x157 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 255, 157, $file_name);
-                $image_1140x705 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1140, 705, $file_name);
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
 
-                if ($image_255x157 && $image_1140x705) {
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "category_id"         => $cat,
@@ -158,7 +154,7 @@ class Cinema extends MY_Controller
                         "players"   => $this->input->post("players"),
                         "scriptwriter"           => $this->input->post("scriptwriter"),
                         "url"       => $this->input->post('url'),
-                        "img_url"     => $file_name,
+                        "img_url"     => $image["file_name"],
                         "isActive"      => 1
                     );
                 } else {

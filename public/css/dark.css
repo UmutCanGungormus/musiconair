@@ -12,7 +12,7 @@ html.dark .breadcrumb {background-color: transparent !important; margin: 0px;}
 html.dark .breadcrumb a {color: #FFFFFF !important; font-size: 13px;}
 html.dark .breadcrumb span {margin: 0px 5px; display: inline-block;}
 
-html.dark .navbar {background-color: #202020;z-index: 2!important;min-height: 74px;}
+html.dark .navbar {background-color: #202020;z-index: 1040!important;min-height: 74px;}
 html.dark .navbar i.sidebar-toggle {color: #FFFFFF; cursor: pointer; text-align: center;}
 html.dark .navbar .navbar-toggler-icon i {color: #FFFFFF; cursor: pointer; text-align: center;}
 

@@ -112,14 +112,13 @@ class Brands extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_178x57 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 178, 57, $file_name);
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->brand_model->rowCount();
-            if ($image_178x57) {
+            if ($image["success"]) {
                 $insert = $this->brand_model->add(
                     array(
                         "title"         => $this->input->post("title"),
-                        "img_url"     => $file_name,
+                        "img_url"     => $image["file_name"],
                         "rank"          => $getRank + 1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s")
@@ -183,13 +182,12 @@ class Brands extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_178x57 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 178, 57, $file_name);
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
 
-                if ($image_178x57) {
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
-                        "img_url"     => $file_name
+                        "img_url"     => $image["file_name"]
                     );
                 } else {
                     $alert = array(

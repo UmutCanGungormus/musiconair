@@ -107,15 +107,14 @@ class Home_banner extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
-            if ($image_857x505) {
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
+            if ($image["success"]) {
                 $getRank = $this->home_banner_model->rowCount();
                 $insert = $this->home_banner_model->add(
                     array(
                         "title"         => $this->input->post("title"),
                         "url"         => $this->input->post("url"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "category_id" =>$this->input->post("category_id"),
                         "rank"          => $getRank+1,
                         "isActive"      => 1
@@ -185,13 +184,12 @@ class Home_banner extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
-                if ($image_857x505) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "url"         => $this->input->post("url"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "category_id" =>$this->input->post("category_id")
 
                     );

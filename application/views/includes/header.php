@@ -22,7 +22,7 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
 					<form class="form-inline search-bar ">
-						<div class="input-group">
+						<div class="input-group w-100">
 							<input class="form-control" type="search" placeholder="Ne aramıştınız ?" aria-label="Search">
 							<button class="search-button" type="submit"></button>
 						</div>

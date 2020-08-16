@@ -57,15 +57,13 @@ class Options extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_800x625 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 800, 625, $file_name);
-            $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->options_model->rowCount();
-            if ($image_800x625 && $image_1008x600) {
+            if ($image["success"]) {
                 $insert = $this->options_model->add(
                     array(
                         "title"         => $this->input->post("title"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "id"         => $this->input->post("options_id"),
                         "test_id"         => $this->input->post("test_id"),
                         "rank"          => $getRank+1,
@@ -133,17 +131,12 @@ class Options extends MY_Controller
         $seo_url = seo($this->input->post("title"));
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_800x625 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 800, 625, $file_name);
-                $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
-                $config = [];
-                $this->load->library("upload", $config);
-                $upload = $this->upload->do_upload("img_url");
-                if ($image_800x625 && $image_1008x600) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) {
                     $data = array(
                         "title" => $this->input->post("title"),
                         "test_id" => $this->input->post("test_id"),
-                        "img_url" => $file_name,
+                        "img_url" => $image["file_name"],
                     );
                 } else {
                     $alert = array(
