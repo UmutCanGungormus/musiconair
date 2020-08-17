@@ -6,15 +6,8 @@ $(document).ready(function () {
 		tags: true,
 		tokenSeparators: [',', ' ']
 	});
-	$("input[type='date']").each(function(){
-		$(this).flatpickr({
-			enableTime: true,
-			enableSeconds:true,
-			dateFormat: "Y-m-d H:i:s",
-			time_24hr: true,
-			disableMobile: "true"
-		});
-	});
+
+	flatPickrInit();
 	
 
 	/** WORST CODES */
@@ -413,5 +406,18 @@ function deleteCookie(name) {
 	setCookie(name, "", -1);
 }
 /** deleteCookie */
+
+function flatPickrInit(){
+	$("input.datetimepicker").each(function(){
+		$(this).flatpickr({
+			enableTime: true,
+			enableSeconds:true,
+			dateFormat: "Y-m-d H:i:s",
+			time_24hr: true,
+			disableMobile: true,
+			inline:false,
+		});
+	});
+}
 
 /* Functions */

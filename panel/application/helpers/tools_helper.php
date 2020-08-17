@@ -765,10 +765,10 @@ function get_controller_name($seo)
     $t = &get_instance();
 
     $tr = [
-        'activity' => "Etkinlik",
+        'activities' => "Etkinlik",
         "product_categories" => "Ürün Kategorileri",
         'product' => "Ürünler",
-        'activity_category' => "Etkinlik Kategori",
+        'activity_categories' => "Etkinlik Kategori",
         'advertisement' => "İlanlar",
         'book' => "Kitaplar",
         'book_category' => "Kitap Kategori",
@@ -793,7 +793,6 @@ function get_controller_name($seo)
         'video' => "Videolar",
         'votings' => "Oylama Soruları",
         'voting_options' => "Oylama Şıkları",
-        'writers' => "Yazarlar/Editörler"
     ];
     foreach ($tr as $key => $v) {
         if ($key == $seo) {

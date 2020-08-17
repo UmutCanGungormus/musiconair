@@ -5,7 +5,7 @@
     </div>
     <div class="form-group row">
         <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-            <img src="<?=get_picture($viewFolder,$item->img_url) ?>" class="img-fluid" alt="<?=$item->title?>">
+            <img src="<?=get_picture("$viewFolder/{$item->gallery_type}",$item->img_url) ?>" class="img-fluid" alt="<?=$item->title?>">
         </div>
         <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
             <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">

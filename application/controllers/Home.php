@@ -37,7 +37,6 @@ class Home extends CI_Controller
     public function index()
     {
         $this->viewData->news = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1]);
-        $this->viewData->products = $this->general_model->get_all("products", null, "id DESC", ["isActive" => 1]);
         $this->viewData->slides = $this->general_model->get_all("slides", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1,"role_id!=" => 2]);
@@ -526,28 +525,6 @@ class Home extends CI_Controller
                 echo "ok";
             }
         }
-    }
-    public function category()
-    {
-        $seo_url = $this->uri->segment(2);
-        $category_id = $this->product_category_model->get(["seo_url" => $seo_url]);
-        $config["base_url"] = base_url("kategori") . "/" . $seo_url;
-        $config["total_rows"] = $this->product_model->get_count(["category_id" => $category_id->id]);
-        $config["uri_segment"] = 3;
-        $config["per_page"] = 10;
-        $this->pagination->initialize($config);
-        $this->viewData->category = $category_id;
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $this->viewData->links = $this->pagination->create_links();   
-
-        //KATEGORİLER
-        if (empty($category_id)) :
-            $this->viewFolder = "404_v/index";
-        else:
-            $this->viewFolder = "category_v/index";
-            $this->viewData->products = $this->product_model->get_records($config["per_page"], $page, ["category_id" => $category_id->id]);
-        endif;
-        $this->render();
     }
 
     public function teklif()

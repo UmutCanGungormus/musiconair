@@ -201,7 +201,7 @@
                         </ul>
                     </li>
                 <?php } ?>
-                <?php if (isAllowedViewModule("activity")) { ?>
+                <?php if (isAllowedViewModule("activities")) { ?>
                     <li class="nav-item <?= ($this->uri->segment(1)=="activity")? "active":"" ?> ">
                         <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#activity_nav">
                             <i class="fa fa-snowboarding"></i>
@@ -211,10 +211,10 @@
                             <li class="nav-item">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("activity_category"); ?>">Etkinlik Kategorileri</a>
+                                        <a class="nav-link" href="<?= base_url("activity_categories"); ?>">Etkinlik Kategorileri</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("activity"); ?>">Etkinlikler</a>
+                                        <a class="nav-link" href="<?= base_url("activities"); ?>">Etkinlikler</a>
                                     </li>
                                 </ul>
                             </li>
@@ -238,35 +238,6 @@
                                     <li class="nav-item <?= ($this->uri->segment(1)=="users")? "active":"" ?>">
                                         <a class="nav-link" href="<?= base_url("users"); ?>">Kullanıcılar</a>
                                     </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                <?php } ?>
-
-                <?php if (isAllowedViewModule("product")) { ?>
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#product_nav">
-                            <i class="fa fa-dropbox"></i>
-                            <span class="nav-link-text">Ürün İşlemleri</span>
-                        </a>
-                        <ul id="product_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="product_categories")||($this->uri->segment(1)=="product")?"show":""?> collapse-level-1">
-                            <li class="nav-item">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item <?= ($this->uri->segment(1)=="product_categories")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("product_categories"); ?>">Ürün Kategorileri</a>
-                                    </li>
-                                    <li class="nav-item <?= ($this->uri->segment(1)=="product")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("product"); ?>">Ürünler</a>
-                                    </li>
-                                    <li class="nav-item <?= ($this->uri->segment(1)=="product_option")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("product_option"); ?>">Varyasyon</a>
-                                    </li>
-                                    <li class="nav-item <?= ($this->uri->segment(1)=="product_option_category")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("product_option_category"); ?>">Varyasyon Kategori</a>
-                                    </li>
-
-                                   
                                 </ul>
                             </li>
                         </ul>

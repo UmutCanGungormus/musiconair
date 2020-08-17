@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Banner Listesi
-                <a href="<?= base_url("home_banner/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("home_banner/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createHomeBannerBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
             <hr>
         </div><!-- END column -->
@@ -35,19 +35,70 @@
 
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("homeBannerTable", obj, {}, "<?= base_url("home_banner/datatable") ?>", "<?= base_url("home_banner/rankSetter") ?>", true);
+
+                });
+            </script>
         </div>
     </div>
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("homeBannerTable", obj, {}, "<?= base_url("home_banner/datatable") ?>", "<?= base_url("home_banner/rankSetter") ?>", true);
 
+<div id="homeBannerModal"></div>
+
+<script>
+    $(document).ready(function(){
+        $(document).on("click",".createHomeBannerBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#homeBannerModal').iziModal('destroy');
+            createModal("#homeBannerModal","Yeni Banner Ekle","Yeni Banner Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#homeBannerModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#homeBannerModal");
+        });
+        $(document).on("click",".btnSave",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createHomeBanner"));
+            createAjax(url,formData,function(){
+                closeModal("#homeBannerModal");
+                reloadTable("homeBannerTable");
+            });
+        });
+        $(document).on("click",".updateHomeBannerBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#homeBannerModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#homeBannerModal","Banner Düzenle","Banner Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#homeBannerModal .iziModal-content").html(response);
+                });
+            });
+            openModal("#homeBannerModal");
+        });
+        $(document).on("click",".btnUpdate",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateHomeBanner"));
+            createAjax(url,formData,function(){
+                closeModal("#homeBannerModal");
+                reloadTable("homeBannerTable");
+            });
+        });
     });
 </script>

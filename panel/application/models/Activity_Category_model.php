@@ -7,9 +7,9 @@ class Activity_Category_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('rank', 'id', 'products.id', 'products.title', 'product_categories.title', 'product_images.img_url','products.isActive','products.isHome');
+        $this->column_order = array('rank', 'id', 'activity_categories.id', 'activity_categories.title','activity_categories.isActive','activity_categories.createdAt','activity_categories.updatedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'products.id', 'products.title', 'product_categories.title','product_images.img_url', 'products.isActive','products.isHome');
+        $this->column_search = array('rank', 'id', 'activity_categories.id', 'activity_categories.title','activity_categories.isActive','activity_categories.createdAt','activity_categories.updatedAt');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}
@@ -42,13 +42,13 @@ class Activity_Category_model extends CI_Model
 
         $this->_get_datatables_query($postData);
         $this->db->select('
-            products.rank product_rank,
-            products.id,
-            products.title product_title,
-            product_categories.title category_title,
-            products.isActive,
-            products.isHome',    false);
-        $this->db->join('product_categories', 'products.category_id = product_categories.id', 'left');
+            activity_categories.rank,
+            activity_categories.id,
+            activity_categories.title,
+            activity_categories.isActive,
+            activity_categories.createdAt,
+            activity_categories.updatedAt,
+            ',    false);
 
 
         $query = $this->db->where($where)->get();
@@ -59,34 +59,30 @@ class Activity_Category_model extends CI_Model
     {
 
         $this->_get_datatables_query($postData);
-        $this->db->join('product_categories', 'products.category_id = product_categories.id', 'left');
       
         if ($postData['length'] != -1) {
             $this->db->limit($postData['length'], $postData['start']);
         }
 
         $this->db->select('
-        products.rank product_rank,
-        products.id,
-        products.title product_title,
-        product_categories.title category_title,
-        products.isActive,
-        products.isHome',    false);
+        activity_categories.rank,
+        activity_categories.id,
+        activity_categories.title,
+        activity_categories.isActive,
+        activity_categories.createdAt,
+        activity_categories.updatedAt
+        ',    false);
         return $this->db->get()->result();
         
     }
 
     private function _get_datatables_query($postData)
     {
-        $this->db->where(["products.id!=" => ""]);
+        $this->db->where(["activity_categories.id!=" => ""]);
 
         if (!empty($this->input->post('search'))) {
             $this->db->group_start();
-            $this->db->like('products.title', $this->input->post('search'), 'both');
-            $this->db->group_end();
-
-            $this->db->group_start();
-            $this->db->like('product_categories.title', $this->input->post('search'), 'both');
+            $this->db->like('activity_categories.title', $this->input->post('search'), 'both');
             $this->db->group_end();
         }
 
@@ -99,7 +95,7 @@ class Activity_Category_model extends CI_Model
         foreach ($this->column_search as $item) {
             // if datatable send POST for search
 
-            if (!empty($postData['search'])  && ($item == "products.title" || $item == "product_categories.title")) {
+            if (!empty($postData['search'])  && ($item == "activity_categories.title")) {
                 // first loop
                 if ($i === 0) {
                     // open bracket

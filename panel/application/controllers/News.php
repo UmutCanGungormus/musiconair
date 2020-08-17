@@ -121,14 +121,14 @@ class News extends MY_Controller
                     "title"         => $this->input->post("title"),
                     "content"   => $this->input->post("content"),
                     "seo_url"           => seo($this->input->post("title")),
-                    "tags"      => implode(",",$this->input->post("tags")),
+                    "tags"      => implode(",", $this->input->post("tags")),
                     "img_url"     => $image["file_name"],
                     'reaction' => json_encode($reaction),
                     "video_url"     => $this->input->post("video_url"),
                     "emoji"      => $this->input->post("emoji"),
                     "writer_id"      => $this->input->post("writer_id"),
                     "category_id"      => $this->input->post("category_id"),
-                    "rank"          => $getRank+1,
+                    "rank"          => $getRank + 1,
                     "isActive"      => 1
                 );
             } else {
@@ -210,7 +210,7 @@ class News extends MY_Controller
                         "video_url"     => $this->input->post("video_url"),
                         "emoji"      => $this->input->post("emoji"),
                         "writer_id"      => $this->input->post("writer_id"),
-                        "tags"      => implode(",",$this->input->post("tags")),
+                        "tags"      => implode(",", $this->input->post("tags")),
                         "category_id"      => $this->input->post("category_id"),
                         "isActive"      => 1
                     );
@@ -231,7 +231,7 @@ class News extends MY_Controller
                     "video_url"     => $this->input->post("video_url"),
                     "emoji"      => $this->input->post("emoji"),
                     "writer_id"      => $this->input->post("writer_id"),
-                    "tags"      => implode(",",$this->input->post("tags")),
+                    "tags"      => implode(",", $this->input->post("tags")),
                     "category_id"      => $this->input->post("category_id"),
                     "isActive"      => 1
                 );

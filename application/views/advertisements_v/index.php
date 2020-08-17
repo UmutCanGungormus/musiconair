@@ -35,7 +35,7 @@
                     <div class="card rounded-0 mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                         <div class="row no-gutters">
                             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                <a href="<?= base_url("ilan/{$value->seo_url}") ?>"><img src="<?=get_picture($viewFolder,$value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
+                                <a href="<?= base_url("ilan/{$value->seo_url}") ?>"><img src="<?=get_picture("advertisements_v",$value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                 <div class="card-body position-relative mb-5">
@@ -74,7 +74,7 @@
                             <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?=get_picture($viewFolder,$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?=get_picture("advertisements_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">

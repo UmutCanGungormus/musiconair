@@ -25,27 +25,27 @@ class Slides extends MY_Controller
 
         foreach ($items as $item) {
             $i++;
-            
+
             $proccessing = '
             <div class="dropdown">
                 <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("slides/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url' . base_url("slides/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updateSlideBtn" href="javascript:void(0)" data-url="' . base_url("slides/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="sliderTable" data-url="' . base_url("slides/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
 
 
             //array_push($renkler,$renk->negotiation_stage_color);
-            
-            $item->img_url="<img src='".get_picture($this->viewFolder,$item->img_url)."' width='60px' height='60px' >";
-            $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("slides/isActiveSetter/{$item->id}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
+
+            $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url) . "' width='60px' height='60px' >";
+            $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("slides/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->description, $item->img_url, $checkbox, $proccessing);
         }
-        
+
 
 
         $output = array(
@@ -75,84 +75,36 @@ class Slides extends MY_Controller
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $this->load->library("form_validation");
-        if ($_FILES["img_url"]["name"] == "") {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel seçiniz",
-                "type"  => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-
-            redirect(base_url("slides/new_form"));
-
-            die();
-        }
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        if ($this->input->post("allowButton") == "on") {
-            $this->form_validation->set_rules("button_caption", "Buton Başlık", "required|trim");
-            $this->form_validation->set_rules("button_url", "Button URL Bilgisi", "required|trim");
-        }
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
+        $data = rClean($this->input->post());
+        if (!empty($data["allowButton"]) && $data["allowButton"] == "on" && (empty($data["button_caption"]) || empty($data["button_url"]))) :
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Kaydı Yapılırken Hata Oluştu. Buton Başlık ve URL Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] == "") :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Eklenirken Hata Oluştu. Slayt Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                die();
+            endif;
             $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->slide_model->rowCount();
-            if ($image["success"]) {
-                $insert = $this->slide_model->add(
-                    array(
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "img_url"       => $image["file_name"],
-                        "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
-                        "button_url" => $this->input->post("button_url"),
-                        "button_caption" => $this->input->post("button_caption"),
-                        "rank"          => $getRank+1,
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s"),
-                        "sharedAt"      => $this->input->post("sharedAt"),
-                    )
-                );
-                if ($insert) {
-                    $alert = array(
-                        "title" => "İşlem Başarılı",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type"  => "success"
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                        "type"  => "error"
-                    );
-                }
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Görsel yüklenirken bir problem oluştu",
-                    "type"  => "error"
-                );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("slides/new_form"));
-                die();
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("slides"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $data["description"] = $this->input->post("description");
+                $data["allowButton"] = (!empty($data["allowButton"]) && $data["allowButton"] == "on") ? 1 : 0;
+                $insert = $this->slide_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Slayt Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Eklenirken Hata Oluştu. Slayt Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -165,108 +117,46 @@ class Slides extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        if ($this->input->post("allowButton") == "on") {
-            $this->form_validation->set_rules("button_caption", "Buton Başlık", "required|trim");
-            $this->form_validation->set_rules("button_url", "Button URL Bilgisi", "required|trim");
-        }
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            if ($_FILES["img_url"]["name"] !== "") {
+        $data = rClean($this->input->post());
+        if (!empty($data["allowButton"]) && $data["allowButton"] == "on" && (empty($data["button_caption"]) || empty($data["button_url"]))) :
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Güncelleştirilirken Hata Oluştu. Buton Başlık ve URL Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] !== "") :
                 $image = upload_picture("img_url", "uploads/$this->viewFolder");
-                if ($image["success"]) {
-                    $data = array(
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "img_url"       => $image["file_name"],
-                        "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
-                        "button_url" => $this->input->post("button_url"),
-                        "button_caption" => $this->input->post("button_caption"),
-                        "sharedAt"      => $this->input->post("sharedAt"),
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel yüklenirken bir problem oluştu",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("slides/update_form/$id"));
-                    die();
-                }
-            } else {
-                $data = array(
-                    "title"         => $this->input->post("title"),
-                    "description"   => $this->input->post("description"),
-                    "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
-                    "button_url" => $this->input->post("button_url"),
-                    "button_caption" => $this->input->post("button_caption"),
-                    "sharedAt"      => $this->input->post("sharedAt"),
-                );
-            }
-            $update = $this->slide_model->update(array("id" => $id), $data);
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            } else {
-
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Güncelleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("slides"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $this->slide_model->get(
-                array(
-                    "id"    => $id,
-                )
-            );
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Güncelleştirilirken Hata Oluştu. Slayt Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                endif;
+            endif;
+            $getRank = $this->slide_model->rowCount();
+            $data["isActive"] = 1;
+            $data["rank"] = $getRank + 1;
+            $data["description"] = $this->input->post("description");
+            $data["allowButton"] = (!empty($data["allowButton"]) && $data["allowButton"] == "on") ? 1 : 0;
+            $update = $this->slide_model->update(["id" => $id],$data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Slayt Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function delete($id)
     {
-        $delete = $this->slide_model->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt başarılı bir şekilde silindi",
-                "type"  => "success"
-            );
-        } else {
-
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt silme sırasında bir problem oluştu",
-                "type"  => "error"
-            );
-        }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("slides"));
+        $slide = $this->slide_model->get(["id" => $id]);
+        if (!empty($slide)) :
+            $delete = $this->slide_model->delete(["id"    => $id]);
+            if ($delete) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Slayt Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Slayt Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function rankSetter()
     {

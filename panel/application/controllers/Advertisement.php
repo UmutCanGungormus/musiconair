@@ -13,10 +13,9 @@ class Advertisement extends MY_Controller
             redirect(base_url("login"));
         }
     }
-    public function index()
+    public function index($type)
     {
         $viewData = new stdClass();
-        $type = $_GET['type'];
 
         $items = $this->advertisement_model->get_all(
             ['type' => $type],

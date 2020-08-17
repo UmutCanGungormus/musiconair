@@ -9,7 +9,6 @@ class Home_banner extends MY_Controller
         parent::__construct();
         $this->viewFolder = "home_banner_v";
         $this->load->model("home_banner_model");
-        $this->load->model("product_category_model");
         $this->load->helper("text");
         if (!get_active_user()) {
             redirect(base_url("login"));
@@ -45,8 +44,8 @@ class Home_banner extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("home_banner/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("home_banner/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updateHomeBannerBtn" href="javascript:void(0)" data-url="' . base_url("home_banner/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="homeBannerTable" data-url="' . base_url("home_banner/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -75,83 +74,36 @@ class Home_banner extends MY_Controller
     {
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
-        $viewData->categories = $this->product_category_model->get_all(
-            array(
-                "isActive" => 1
-            )
-        );
         $viewData->subViewFolder = "add";
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $this->load->library("form_validation");
-        if ($_FILES["img_url"]["name"] == "") {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel seçiniz",
-                "type"  => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-
-            redirect(base_url("home_banner/new_form"));
-
-            die();
-        }
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            $image = upload_picture("img_url", "uploads/$this->viewFolder");
-            if ($image["success"]) {
-                $getRank = $this->home_banner_model->rowCount();
-                $insert = $this->home_banner_model->add(
-                    array(
-                        "title"         => $this->input->post("title"),
-                        "url"         => $this->input->post("url"),
-                        "img_url"       => $image["file_name"],
-                        "category_id" =>$this->input->post("category_id"),
-                        "rank"          => $getRank+1,
-                        "isActive"      => 1
-                    )
-                );
-                if ($insert) {
-                    $alert = array(
-                        "title" => "İşlem Başarılı",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type"  => "success"
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                        "type"  => "error"
-                    );
-                }
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Görsel yüklenirken bir problem oluştu",
-                    "type"  => "error"
-                );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("home_banner/new_form"));
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] == "") :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Eklenirken Hata Oluştu. Banner Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                 die();
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("home_banner"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+            endif;
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
+            $getRank = $this->home_banner_model->rowCount();
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $insert = $this->home_banner_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Banner Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Eklenirken Hata Oluştu. Banner Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -161,110 +113,46 @@ class Home_banner extends MY_Controller
                 "id"    => $id,
             )
         );
-        $viewData->categories = $this->product_category_model->get_all(
-            array(
-                "isActive" => 1
-            )
-        );
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            if ($_FILES["img_url"]["name"] !== "") {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] !== "") :
                 $image = upload_picture("img_url", "uploads/$this->viewFolder");
-                if ($image["success"]) {
-                    $data = array(
-                        "title"         => $this->input->post("title"),
-                        "url"         => $this->input->post("url"),
-                        "img_url"       => $image["file_name"],
-                        "category_id" =>$this->input->post("category_id")
-
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel yüklenirken bir problem oluştu",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("home_banner/update_form/$id"));
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Güncelleştirilirken Hata Oluştu. Banner Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                     die();
-                }
-            } else {
-                $data = array(
-                    "title"         => $this->input->post("title"),
-                    "url"         => $this->input->post("url"),
-                    "category_id" =>$this->input->post("category_id")
-
-
-                );
-            }
-            $update = $this->home_banner_model->update(array("id" => $id), $data);
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            } else {
-
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Güncelleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("home_banner"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $this->home_banner_model->get(
-                array(
-                    "id"    => $id,
-                )
-            );
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+                endif;
+            endif;
+            $update = $this->home_banner_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Banner Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function delete($id)
     {
-        $delete = $this->home_banner_model->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt başarılı bir şekilde silindi",
-                "type"  => "success"
-            );
-        } else {
-
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt silme sırasında bir problem oluştu",
-                "type"  => "error"
-            );
-        }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("home_banner"));
+        $home_banner = $this->home_banner_model->get(["id" => $id]);
+        if (!empty($home_banner)) :
+            $delete = $this->home_banner_model->delete(["id"    => $id]);
+            if ($delete) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Banner Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Banner Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function rankSetter()
     {
