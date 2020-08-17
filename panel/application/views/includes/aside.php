@@ -71,10 +71,10 @@
                             <li class="nav-item">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("advertisement/?type=job"); ?>">İş İlanları</a>
+                                        <a class="nav-link" href="<?= base_url("advertisement/index/job"); ?>">İş İlanları</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("advertisement/?type=estate"); ?>">Emlak İlanları</a>
+                                        <a class="nav-link" href="<?= base_url("advertisement/index/estate"); ?>">Emlak İlanları</a>
                                     </li>
                                 </ul>
                             </li>
