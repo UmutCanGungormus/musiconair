@@ -3,11 +3,9 @@
         <label>Galeri Adı</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title" value="<?= $item->title; ?>" required>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
         <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-            <?php if(!empty($item->img_url)):?>
             <img src="<?=get_picture($viewFolder,$item->img_url) ?>" class="img-fluid" alt="<?=$item->title?>">
-            <?php endif;?>
         </div>
         <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
             <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">

@@ -337,10 +337,6 @@ class Stories extends MY_Controller
         $fileName = $this->story_item_model->get(["id" => $id]);
         $delete = $this->story_item_model->delete(["id" => $id]);
         if ($delete) :
-                $url = FCPATH . "uploads/stories_v/{$story->folder_name}/1920x1080/{$fileName->src}";
-                if (!is_dir($url) && file_exists($url)) :
-                    unlink($url);
-                endif;
                 $url = FCPATH . "uploads/stories_v/{$story->folder_name}/{$fileName->src}";
                 if (!is_dir($url) && file_exists($url)) :
                     unlink($url);

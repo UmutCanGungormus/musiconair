@@ -89,9 +89,10 @@ class Galleries extends MY_Controller
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
+
             $getRank = $this->gallery_model->rowCount();
             $gallery_type = $this->input->post("gallery_type");
-            $path         = "uploads/$this->viewFolder/";
+            $path         = FCPATH."uploads/$this->viewFolder/";
             $folder_name = seo($this->input->post("title"));
                 $path = "$path/$gallery_type/$folder_name";
             if (!mkdir($path, 0755, true)) :
@@ -152,7 +153,7 @@ class Galleries extends MY_Controller
     {
         $gallery = $this->gallery_model->get(["id" => $id]);
         if (!empty($gallery)) :
-            if ($gallery->gallery_type != "video_url") :
+            if ($gallery->gallery_type != "video_urls") :
                 if ($gallery->gallery_type == "images") :
                     $model = "image_model";
                 elseif ($gallery->gallery_type == "videos") :
@@ -382,17 +383,9 @@ class Galleries extends MY_Controller
         $delete = $this->$modelName->delete(["id" => $id]);
         if ($delete) :
             if ($gallery_type == "images") :
-                $url = FCPATH . "uploads/galleries_v/images/{$gallery->url}/252x156/{$fileName->url}";
-                $url2 = FCPATH . "uploads/galleries_v/images/{$gallery->url}/350x216/{$fileName->url}";
-                $url3 = FCPATH . "uploads/galleries_v/images/{$gallery->url}/851x606/{$fileName->url}";
+                $url = FCPATH . "uploads/galleries_v/images/{$gallery->url}/{$fileName->url}";
                 if (!is_dir($url) && file_exists($url)) :
                     unlink($url);
-                endif;
-                if (!is_dir($url2) && file_exists($url2)) :
-                    unlink($url2);
-                endif;
-                if (!is_dir($url3) && file_exists($url3)) :
-                    unlink($url3);
                 endif;
             elseif ($gallery_type == "videos") :
                 $url = FCPATH . "uploads/galleries_v/videos/{$gallery->url}/{$fileName->url}";
