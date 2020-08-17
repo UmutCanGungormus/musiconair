@@ -126,7 +126,7 @@ public function rankSetter()
             );
             if ($insert) {
                 $alert = array(
-                    "title" => "İşlem Başarılıyla Gerçekleşti.",
+                    "title" => "İşlem Başarıyla Gerçekleşti.",
                     "text" => "Kayıt başarılı bir şekilde eklendi",
                     "type" => "success"
                 );
@@ -196,7 +196,7 @@ public function rankSetter()
             );
             if ($update) {
                 $alert = array(
-                    "title" => "İşlem Başarılıyla Gerçekleşti.",
+                    "title" => "İşlem Başarıyla Gerçekleşti.",
                     "text" => "Kayıt başarılı bir şekilde güncellendi.",
                     "type" => "success"
                 );
@@ -232,7 +232,7 @@ public function rankSetter()
         );
         if ($delete) {
             $alert = array(
-                "title" => "İşlem Başarılıyla Gerçekleşti.",
+                "title" => "İşlem Başarıyla Gerçekleşti.",
                 "text" => "Kayıt silme işlemi başarılı bir şekilde silindi.",
                 "type" => "success"
             );
@@ -280,7 +280,7 @@ public function rankSetter()
             );
             if ($update) {
                 $alert = array(
-                    "title" => "İşlem Başarılıyla Gerçekleşti.",
+                    "title" => "İşlem Başarıyla Gerçekleşti.",
                     "text" => "Şifreniz başarılı bir şekilde güncellendi.",
                     "type" => "success"
                 );

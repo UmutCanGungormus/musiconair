@@ -56,7 +56,7 @@ class Userop extends CI_Controller
             );
             if ($user) {
                 $alert = array(
-                    "title" => "İşlem Başarılıyla Gerçekleşti.",
+                    "title" => "İşlem Başarıyla Gerçekleşti.",
                     "text" => "$user->full_name Hoşgeldiniz...",
                     "type" => "success"
                 );
@@ -129,7 +129,7 @@ class Userop extends CI_Controller
                         )
                     );
                     $alert = array(
-                        "title" => "İşlem Başarılıyla Gerçekleşti...",
+                        "title" => "İşlem Başarıyla Gerçekleşti...",
                         "text" => "Şifreniz başarılı bir şekilde resetlendi. Lütfen E-Postanızı kontrol ediniz...",
                         "type" => "success"
                     );

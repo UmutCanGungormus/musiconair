@@ -120,7 +120,7 @@ class Product extends MY_Controller
             );
             if ($insert) {
                 $alert = array(
-                    "title" => "İşlem Başarılıyla Gerçekleşti.",
+                    "title" => "İşlem Başarıyla Gerçekleşti.",
                     "text" => "Kayıt başarılı bir şekilde eklendi",
                     "type" => "success"
                 );
@@ -186,7 +186,7 @@ class Product extends MY_Controller
             );
             if ($update) {
                 $alert = array(
-                    "title" => "İşlem Başarılıyla Gerçekleşti.",
+                    "title" => "İşlem Başarıyla Gerçekleşti.",
                     "text" => "Kayıt başarılı bir şekilde güncellendi.",
                     "type" => "success"
                 );
@@ -228,13 +228,13 @@ class Product extends MY_Controller
         );
         if ($delete) {
             $alert = array(
-                "title" => "İşlem Başarılıyla Gerçekleşti.",
+                "title" => "İşlem Başarıyla Gerçekleşti.",
                 "text" => "Kayıt silme işlemi başarılı bir şekilde silindi.",
                 "type" => "success"
             );
         } else {
             $alert = array(
-                "title" => "İşlem Başarılıyla Gerçekleşti.",
+                "title" => "İşlem Başarıyla Gerçekleşti.",
                 "text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
                 "type" => "error"
             );
