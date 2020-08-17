@@ -7,9 +7,9 @@ class Job_Advertisement_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('rank', 'id', 'job_advertisements.id', 'job_advertisements.title','job_advertisements.img_url','job_advertisements.isActive','job_advertisements.createdAt','job_advertisements.updatedAt');
+        $this->column_order = array('rank', 'id', 'id', 'title','img_url','isActive','createdAt','updatedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'job_advertisements.id', 'job_advertisements.title','job_advertisements.img_url','job_advertisements.isActive','job_advertisements.createdAt','job_advertisements.updatedAt');
+        $this->column_search = array('rank', 'id', 'id', 'title','img_url','isActive','createdAt','updatedAt');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}
@@ -42,13 +42,13 @@ class Job_Advertisement_model extends CI_Model
 
         $this->_get_datatables_query($postData);
         $this->db->select('
-            job_advertisements.rank,
-            job_advertisements.id,
-            job_advertisements.title,
-            job_advertisements.img_url,
-            job_advertisements.isActive,
-            job_advertisements.createdAt,
-            job_advertisements.updatedAt,
+            rank,
+            id,
+            title,
+            img_url,
+            isActive,
+            createdAt,
+            updatedAt,
             ',    false);
 
 
@@ -66,13 +66,13 @@ class Job_Advertisement_model extends CI_Model
         }
 
         $this->db->select('
-        job_advertisements.rank,
-        job_advertisements.id,
-        job_advertisements.title,
-        job_advertisements.img_url,
-        job_advertisements.isActive,
-        job_advertisements.createdAt,
-        job_advertisements.updatedAt
+        rank,
+        id,
+        title,
+        img_url,
+        isActive,
+        createdAt,
+        updatedAt
         ',    false);
         return $this->db->get()->result();
         
@@ -80,11 +80,11 @@ class Job_Advertisement_model extends CI_Model
 
     private function _get_datatables_query($postData)
     {
-        $this->db->where(["job_advertisements.id!=" => ""]);
+        $this->db->where(["id!=" => ""]);
 
         if (!empty($this->input->post('search'))) {
             $this->db->group_start();
-            $this->db->like('job_advertisements.title', $this->input->post('search'), 'both');
+            $this->db->like('title', $this->input->post('search'), 'both');
             $this->db->group_end();
         }
 
@@ -97,7 +97,7 @@ class Job_Advertisement_model extends CI_Model
         foreach ($this->column_search as $item) {
             // if datatable send POST for search
 
-            if (!empty($postData['search'])  && ($item == "job_advertisements.title")) {
+            if (!empty($postData['search'])  && ($item == "title")) {
                 // first loop
                 if ($i === 0) {
                     // open bracket

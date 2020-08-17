@@ -18,6 +18,7 @@ class Job_advertisement extends MY_Controller
         $viewData = new stdClass();
 
         $items = $this->job_advertisement_model->get_all(
+            [],
             "rank ASC"
         );
         $viewData->viewFolder = $this->viewFolder;
@@ -45,7 +46,7 @@ class Job_advertisement extends MY_Controller
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item updateJobAdvertisementBtn" href="javascript:void(0)" data-url="' . base_url("job_advertisement/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="jobTable" data-url="' . base_url("job_advertisement/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="jobAdvertisementTable" data-url="' . base_url("job_advertisement/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -53,8 +54,8 @@ class Job_advertisement extends MY_Controller
 
             //array_push($renkler,$renk->negotiation_stage_color);
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("job_advertisement/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-            $image = '<img src="'.get_picture($this->viewFolder,$item->img_url).'" class="img-fluid" width="75">';
-            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title,$image, $checkbox, turkishDate("d F Y, l H:i:s",$item->createdAt), turkishDate("d F Y, l H:i:s",$item->updatedAt),  $proccessing);
+            $image = '<img src="' . get_picture($this->viewFolder, $item->img_url) . '" class="img-fluid" width="75">';
+            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $image, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt),  $proccessing);
         }
 
 
@@ -110,7 +111,7 @@ class Job_advertisement extends MY_Controller
     public function update_form($id)
     {
         $viewData = new stdClass();
-        $item = $this->advertisement_model->get(
+        $item = $this->job_advertisement_model->get(
             array(
                 "id" => $id
             )
@@ -127,25 +128,23 @@ class Job_advertisement extends MY_Controller
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
-            if ($_FILES["img_url"]["name"] == "") :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu. Etkinlik Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
-                die();
-            endif;
-            $image = upload_picture("img_url", "uploads/$this->viewFolder");
-            $getRank = $this->job_advertisement_model->rowCount();
-            if ($image["success"]) :
-                $data["img_url"] = $image["file_name"];
-                $data["seo_url"] = seo($data["title"]);
-                $data["content"] = $this->input->post("content");
-                $update = $this->job_advertisement_model->update(["id" => $id],$data);
-                if ($update) :
-                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "İş İlanı Başarıyla Güncelleştirildi."]);
+            if ($_FILES["img_url"]["name"] !== "") :
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
                 else :
-                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu. İş İlanı Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                 endif;
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu. İş İlanı Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
             endif;
+            $data["seo_url"] = seo($data["title"]);
+            $data["content"] = $this->input->post("content");
+            $update = $this->job_advertisement_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "İş İlanı Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+
         endif;
     }
 

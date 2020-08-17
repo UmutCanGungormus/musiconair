@@ -1,4 +1,4 @@
-<form action="<?= base_url("job_advertisement/save/"); ?>" method="post" enctype="multipart/form-data">
+<form id="createJobAdvertisement" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>İlan Başlığı</label>
         <input class="form-control form-control-sm rounded-0" placeholder="İlan Başlığı" name="title">
@@ -45,13 +45,11 @@
         <label>Açıklama</label>
         <textarea name="content" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"></textarea>
     </div>
-    <div class="row">
 
-        <div class="form-group image_upload_container col-md-8">
-            <label>Görsel Seçiniz</label>
-            <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
-        </div>
+    <div class="form-group">
+        <label>Görsel Seçiniz</label>
+        <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
     </div>
-    <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
-    <a href="<?= base_url("job_advertisement"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
+    <button role="button" data-url="<?= base_url("job_advertisement/save/"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
+    <a href="javascript:void(0)" onclick="closeModal('#jobAdvertisementModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

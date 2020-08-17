@@ -25,7 +25,7 @@
         <!--========== END app aside -->
         <!-- Main Content -->
         <div class="hk-pg-wrapper">
-            <?php $this->load->view("{$viewFolder}/{$subViewFolder}/{$type}_content"); ?>
+            <?php $this->load->view("{$viewFolder}/{$subViewFolder}/content"); ?>
 
             <!-- APP FOOTER -->
             <?php $this->load->view("includes/footer"); ?>

@@ -61,8 +61,8 @@
                         </a>
                     </li>
                 <?php } ?>
-                <?php if (isAllowedViewModule("advertisement")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1)=="advertisement")? "active":"" ?> ">
+                <?php if (isAllowedViewModule("job_advertisement") || isAllowedViewModule("estate_advertisement")) { ?>
+                    <li class="nav-item <?= ($this->uri->segment(1)=="job_advertisement" || $this->uri->segment(1) == "estate_advertisement")? "active":"" ?> ">
                         <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#advertisement_nav">
                             <i class="fa fa-newspaper"></i>
                             <span class="nav-link-text">İlan İşlemleri</span>
@@ -71,10 +71,10 @@
                             <li class="nav-item">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("advertisement/index/job"); ?>">İş İlanları</a>
+                                        <a class="nav-link" href="<?= base_url("job_advertisement"); ?>">İş İlanları</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("advertisement/index/estate"); ?>">Emlak İlanları</a>
+                                        <a class="nav-link" href="<?= base_url("estate_advertisement"); ?>">Emlak İlanları</a>
                                     </li>
                                 </ul>
                             </li>
