@@ -45,14 +45,6 @@
                         </a>
                     </li>
                 <?php } ?>
-                <?php if (isAllowedViewModule("writers")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1)=="writers")? "active":"" ?> ">
-                        <a class="nav-link" href="<?= base_url("writers") ?>">
-                            <i class="fa fa-edit"></i>
-                            <span class="nav-link-text">Editörler/Yazarlar</span>
-                        </a>
-                    </li>
-                <?php } ?>
                 <?php if (isAllowedViewModule("slides")) { ?>
                     <li class="nav-item <?= ($this->uri->segment(1)=="slides")? "active":"" ?> ">
                         <a class="nav-link" href="<?= base_url("slides") ?>">

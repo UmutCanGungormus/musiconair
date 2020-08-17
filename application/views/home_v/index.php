@@ -62,7 +62,7 @@
                                                 <i class="fa fa-user mr-1"></i>
                                                 <?php foreach ($writers as $writer_key => $writer_value) : ?>
                                                     <?php if ($haber->writer_id == $writer_value->id) : ?>
-                                                        <?= $writer_value->name ?>
+                                                        <?= $writer_value->full_name ?>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
                                             </div>

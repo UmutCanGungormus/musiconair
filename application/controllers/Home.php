@@ -40,7 +40,7 @@ class Home extends CI_Controller
         $this->viewData->products = $this->general_model->get_all("products", null, "id DESC", ["isActive" => 1]);
         $this->viewData->slides = $this->general_model->get_all("slides", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
-        $this->viewData->writers = $this->general_model->get_all("writers", null, "rank ASC", ["isActive" => 1]);
+        $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1,"role_id!=" => 2]);
         $this->viewData->keyifler = [];
         $this->viewData->muzik_haberleri = [];
         $this->viewFolder = "home_v/index";
@@ -135,7 +135,7 @@ class Home extends CI_Controller
 
         $offset = ($uri_segment-1)*$config['per_page'];
         $this->viewData->news = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("news",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
-        $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1,"role_id!=" => 2]);
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news",null,"hit DESC",['category_id' => $category_id,"isActive" => 1],[],[],[5]) : $this->general_model->get_all("news",null,"hit DESC",["isActive" => 1],[],[],[5]));
         if (empty($this->viewData->news)) :
@@ -150,7 +150,7 @@ class Home extends CI_Controller
     {
         $this->viewData->news = $this->general_model->get("news",null,['seo_url' => $seo_url,"isActive" => 1]);
         $this->viewData->category = $this->general_model->get("news_categories",null,["id" => $this->viewData->news->category_id,"isActive" => 1]);
-        $this->viewData->writer = $this->general_model->get("writers",null,['id' => $this->viewData->news->writer_id,"isActive" => 1]);
+        $this->viewData->writer = $this->general_model->get("users",null,['id' => $this->viewData->news->writer_id,"isActive" => 1,"role_id!=" => 2]);
         $this->viewData->similar = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id,"isActive" => 1]);
         $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",['category_id' => $this->viewData->news->category_id,"isActive" => 1],[],[],[3,0]);
         $this->general_model->update("news",['seo_url' => $seo_url,"isActive" => 1], ['hit' => $this->viewData->news->hit + 1]);
@@ -201,7 +201,7 @@ class Home extends CI_Controller
 
         $offset = ($uri_segment-1)*$config['per_page'];
         $this->viewData->brands = $this->general_model->get_all("brands",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]);
-        $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1,"role_id!=" => 2]);
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->most_read = $this->general_model->get_all("news",null,"hit DESC",["isActive" => 1],[],[],[5]);
         if (empty($this->viewData->brands)) :
@@ -259,7 +259,7 @@ class Home extends CI_Controller
 
         $offset = ($uri_segment-1)*$config['per_page'];
         $this->viewData->activities = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("activities",null,null,['category_id' => $category_id,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("activities",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
-        $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1,"role_id!=" => 2]);
         $this->viewData->category = $category;
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("activities",null,"event_date ASC",['category_id' => $category_id,"isActive" => 1],[],[],[5]) : $this->general_model->get_all("activities",null,"event_date ASC",["isActive" => 1],[],[],[5]));
@@ -335,7 +335,7 @@ class Home extends CI_Controller
 
         $offset = ($uri_segment-1)*$config['per_page'];
         $this->viewData->advertisements = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("advertisements",null,null,['type' => $type,"isActive" => 1],[],[],[$config["per_page"],$offset]) : $this->general_model->get_all("advertisements",null,null,["isActive" => 1],[],[],[$config["per_page"],$offset]));
-        $this->viewData->writers = $this->general_model->get_all("writers",null,null,['isActive' => 1]);
+        $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1,"role_id!=" => 2]);
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("advertisements",null,"hit DESC",['type' => $type,"isActive" => 1],[],[],[5]) : $this->general_model->get_all("advertisements",null,"hit DESC",["isActive" => 1],[],[],[5]));
         if (empty($this->viewData->advertisements)) :

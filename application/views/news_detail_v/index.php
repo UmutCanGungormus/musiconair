@@ -29,9 +29,9 @@
                 <?php endif; ?>
 
                 <div class="border mt-4 p-2 clearfix">
-                    <img class="float-left mr-2" src="<?= base_url('panel/uploads/writers_v/90x90/' . $writer->img_url); ?>" width="40">
-                    <b class="d-block"><?= $writer->name ?> <?= (!empty($writer->nick) ? "(" . $writer->nick . ")" : null); ?></b>
-                    <span class="grey-text"><?= $writer->type; ?></span>
+                    <img class="float-left mr-2" src="<?=get_picture("users_v",$writer->img_url)?>" width="40">
+                    <b class="d-block"><?= $writer->full_name ?> <?= (!empty($writer->username) ? "(" . $writer->username . ")" : null); ?></b>
+                    <span class="grey-text"><?= $writer->role_id; ?></span>
                 </div>
                 <?php if ($news->img_url) : ?>
                     <img src="<?=get_picture("news_v",$item->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">

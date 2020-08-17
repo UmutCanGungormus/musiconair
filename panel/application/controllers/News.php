@@ -10,7 +10,6 @@ class News extends MY_Controller
         $this->viewFolder = "news_v";
         $this->load->model("news_model");
         $this->load->model("news_category_model");
-        $this->load->model("writers_model");
         if (!get_active_user()) {
             redirect(base_url("login"));
         }
@@ -78,7 +77,7 @@ class News extends MY_Controller
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->categories = $this->news_category_model->get_all();
-        $viewData->writers = $this->writers_model->get_all();
+        $viewData->writers = $this->user_model->get_all(["role_id!=" => 2]);
         $viewData->subViewFolder = "add";
         $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
@@ -178,7 +177,7 @@ class News extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->categories = $this->news_category_model->get_all();
-        $viewData->writers = $this->writers_model->get_all();
+        $viewData->writers = $this->writers_model->get_all(["role_id!=" => 2]);
         $viewData->item = $item;
         $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
