@@ -52,7 +52,7 @@ class Votings extends MY_Controller
 
             //array_push($renkler,$renk->negotiation_stage_color);
             
-            $item->img_url="<img src='".get_picture($this->viewFolder, $item->img_url, "800x625")."' width='60px' height='60px' >";
+            $item->img_url="<img src='".get_picture($this->viewFolder, $item->img_url)."' width='60px' height='60px' >";
             $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("votings/isActiveSetter/{$item->id}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title,  $item->img_url, $checkbox, $proccessing);
         }
@@ -97,14 +97,12 @@ class Votings extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_800x625 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 800, 625, $file_name);
-            $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
-            if ($image_800x625 && $image_1008x600) {
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
+            if ($image["success"]) {
                 $insert = $this->votings_model->add(
                     array(
                         "title"         => $this->input->post("title"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "rank"          => 1,
                         "isActive"      => 1
                     )
@@ -167,17 +165,12 @@ class Votings extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_800x625 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 800, 625, $file_name);
-                $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
-                $config = [];
-                $this->load->library("upload", $config);
-                $upload = $this->upload->do_upload("img_url");
-                if ($image_800x625 && $image_1008x600) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) {
                     $data = array(
                         "title" => $this->input->post("title"),
 
-                        "img_url" => $file_name,
+                        "img_url" => $image["file_name"],
                     );
                 } else {
                     $alert = array(

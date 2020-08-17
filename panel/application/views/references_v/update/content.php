@@ -23,7 +23,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-1 image_upload_container">
-                                <img src="<?= get_picture($viewFolder, $item->img_url, "80x80"); ?>" class="img-fluid">
+                                <img src="<?= get_picture($viewFolder, $item->img_url); ?>" class="img-fluid">
                             </div>
                             <div class="col-md-9 form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>

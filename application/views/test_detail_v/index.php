@@ -13,7 +13,7 @@
         <div class="row mt-1">
             <div class="container-fluid">
                 <h2><?= $test->title ?></h2>
-                <img src="<?= base_url("panel/uploads/tests_v/800x625/" . $test->img_url) ?>" class="img-fluid">
+                <img src="<?=get_picture("tests_v",$test->img_url) ?>" class="img-fluid">
                 <h3>Seç Bakalım</h3>
             
 
@@ -27,7 +27,7 @@
 
                     ?>
                         <div class="col-md-3 my-3">
-                            <img width="100%" src="<?= base_url("panel/uploads/options_v/800x625/" . $option->img_url) ?>" alt="metin">
+                            <img width="100%" src="<?=get_picture("options_v",$option->img_url) ?>" alt="metin">
                             <div class="form-group" style="text-align:center;">
                                 <span style="font-size: larger"><?= $option->title ?></span>
 
@@ -53,7 +53,7 @@
 
                     ?>
                         <div class="col-md-3 my-3">
-                            <img width="100%" src="<?= base_url("panel/uploads/options_v/800x625/" . $option->img_url) ?>" alt="metin">
+                            <img width="100%" src="<?=get_picture("options_v",$option->img_url) ?>" alt="metin">
                             <div class="form-group" style="text-align:center;">
                                 <span style="font-size: larger"><?= $option->title ?></span>
 

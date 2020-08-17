@@ -28,7 +28,7 @@
                     <span class="grey-text ml-2 d-inline-flex align-middle"><i class="fa fa-clock-o mr-1 my-auto"></i> Güncellenme Tarihi: <?= turkishDate("d F Y, l H:i", $activities->updatedAt) ?></span>
                 <?php endif; ?>
                 <?php if ($activities->img_url) : ?>
-                    <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $activities->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $activities->title ?>">
+                    <img src="<?=get_picture($viewFolder,$activities->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $activities->title ?>">
                 <?php endif; ?>
                 <div class="d-flex justify-content-between">
 
@@ -123,7 +123,7 @@
                             <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?=get_picture($viewFolder,$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
@@ -144,7 +144,7 @@
                             <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/activities_v/1140x705/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?=get_picture($viewFolder,$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">

@@ -65,10 +65,9 @@ class Settings extends MY_Controller
             ];
 
             if (!empty($_FILES["logo"]["name"])) {
-                $file_name = seo($this->input->post("company_name")) . "." . pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
-                $image_165x57 = upload_picture($_FILES["logo"]["tmp_name"], "uploads/$this->viewFolder", 165, 57, $file_name);
-                if ($image_165x57) {
-                    $data["logo"] = $file_name;
+                $image = upload_picture("logo", "uploads/$this->viewFolder");
+                if ($image["success"]) {
+                    $data["logo"] = $image["file_name"];
                 } else {
                     $alert = [
                         "title" => "İşlem Başarısız!",
@@ -81,10 +80,9 @@ class Settings extends MY_Controller
                 }
             }
             if (!empty($_FILES["mobile_logo"]["name"])) {
-                $file_name = seo($this->input->post("company_name")) . "." . pathinfo($_FILES["mobile_logo"]["name"], PATHINFO_EXTENSION);
-                $image_135x42 = upload_picture($_FILES["mobile_logo"]["tmp_name"], "uploads/$this->viewFolder", 135, 42, $file_name);
-                if ($image_135x42) {
-                    $data["mobile_logo"] = $file_name;
+                $image = upload_picture("mobile_logo", "uploads/$this->viewFolder");
+                if ($image["success"]) {
+                    $data["mobile_logo"] = $image["file_name"];
                 } else {
                     $alert = [
                         "title" => "İşlem Başarısız!",
@@ -97,10 +95,9 @@ class Settings extends MY_Controller
                 }
             }
             if (!empty($_FILES["favicon"]["name"])) {
-                $file_name = seo($this->input->post("company_name")) . "." . pathinfo($_FILES["favicon"]["name"], PATHINFO_EXTENSION);
-                $image_32x32 = upload_picture($_FILES["favicon"]["tmp_name"], "uploads/$this->viewFolder", 32, 32, $file_name);
-                if ($image_32x32) {
-                    $data["favicon"] = $file_name;
+                $image = upload_picture("favicon", "uploads/$this->viewFolder");
+                if ($image["success"]) {
+                    $data["favicon"] = $image["file_name"];
                 } else {
                     $alert = [
                         "title" => "İşlem Başarısız!",
@@ -142,10 +139,10 @@ class Settings extends MY_Controller
 
     public function uploadImage(){
         $temp = current($_FILES);
-        $file_name = seo(sha1(md5(rand()))) . "." . pathinfo($temp["name"], PATHINFO_EXTENSION);
-        $image_32x32 = upload_picture($temp["tmp_name"], "uploads/tinyMCE", 1920, 1080, $file_name);
-        if ($image_32x32) {
-            echo json_encode(['location' => base_url("uploads/tinyMCE/1920x1080/{$file_name}")]);
+        $image = upload_picture($temp["tmp_name"], "uploads/tinyMCE");
+        if ($image["success"]) {
+            $filename = $image["file_name"];
+            echo json_encode(['location' => base_url("uploads/tinyMCE/1920x1080/{$filename}")]);
         }else{
             // Notify editor that the upload failed
         header("HTTP/1.1 500 Server Error");

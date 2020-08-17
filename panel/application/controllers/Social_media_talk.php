@@ -56,7 +56,7 @@ class Social_media_talk extends MY_Controller
             if($item->video_url!="#"){
                 $item->img_url=' <iframe width="200" height="100" src="https://www.youtube.com/embed/'.  $item->video_url.'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
             }else{
-                $item->img_url="<img src='".get_picture($this->viewFolder, $item->img_url, "370x297")."' width='60px' height='60px' >";
+                $item->img_url="<img src='".get_picture($this->viewFolder, $item->img_url)."' width='60px' height='60px' >";
             }
             $item->category_title= get_news_title($item->news_id);
             $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("social_media_talk/isActiveSetter/{$item->id}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
@@ -114,19 +114,14 @@ class Social_media_talk extends MY_Controller
         if ($validate) {
 
             if ($social_media_talk_type == "image") {
-
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-
-
-                $image_370x297 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 370, 297, $file_name);
-                $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
                 $getRank = $this->brand_model->rowCount();
-                if ($image_370x297 && $image_1008x600) {
+                if ($image["success"]) {
 
                     $data = array(
 
                         "social_media_talk_type"     => $social_media_talk_type,
-                        "img_url"     => $file_name,
+                        "img_url"     => $image["file_name"],
                         "title"     =>$this->input->post("title"),
                         "video_url"     => "#",
                         "news_id"        => $this->input->post("news_id"),
@@ -216,17 +211,15 @@ class Social_media_talk extends MY_Controller
             if ($social_media_talk_type == "image") {
 
                 if ($_FILES["img_url"]["name"] !== "") {
-                    $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                    $image_370x297 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 370, 297, $file_name);
-                    $image_1008x600 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 1008, 600, $file_name);
+                    $image = upload_picture("img_url", "uploads/$this->viewFolder");
 
-                    if ($image_370x297 && $image_1008x600) {
+                    if ($image["success"]) {
 
 
                         $data = array(
 
                             "social_media_talk_type"     => $social_media_talk_type,
-                            "img_url"     => $file_name,
+                            "img_url"     => $image["file_name"],
                             "title"     =>$this->input->post("title"),
                             "video_url"     => "#"
                         );

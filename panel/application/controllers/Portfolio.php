@@ -54,7 +54,7 @@ class Portfolio extends MY_Controller
 
             //array_push($renkler,$renk->negotiation_stage_color);
             $img_url=get_portfolio_cover($item->id);
-            $img_url = "<img src='" . get_picture($this->viewFolder, $img_url, "255x157") . "' width='60px' height='60px' >";
+            $img_url = "<img src='" . get_picture($this->viewFolder, $img_url) . "' width='60px' height='60px' >";
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("portfolio/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title,  $img_url, $checkbox, $proccessing);
         }

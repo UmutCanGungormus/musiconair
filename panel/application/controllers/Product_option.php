@@ -45,7 +45,7 @@ class Product_option extends MY_Controller
                     $file_name[$k] = seo(pathinfo($v, PATHINFO_FILENAME)) . "." . pathinfo($v, PATHINFO_EXTENSION);
                 }
                 foreach ($key["tmp_name"] as $k => $v) {
-                    $image_348x215 = upload_picture($v, "uploads/$this->viewFolder", 348, 215, $file_name[$k]);
+                    $image = upload_picture($v, "uploads/$this->viewFolder");
                 }
             }
             $file_name = json_encode($file_name);

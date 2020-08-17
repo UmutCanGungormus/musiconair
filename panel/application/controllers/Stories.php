@@ -89,14 +89,13 @@ class Stories extends MY_Controller
             $path         = "uploads/$this->viewFolder/";
             $folder_name = seo($this->input->post("title"));
             $path = "$path/$folder_name";
-            $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
             if (!mkdir($path, 0755, true)) :
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Hikaye Oluşturulurken Hata Oluştu. Klasör Erişim Yetkinizin Olduğundan Emin Olup Tekrar Deneyin."]);
                 die();
             endif;
-            $image_1920x1080 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/$folder_name/covers/", 1920, 1080, $file_name);
-            if ($image_1920x1080) :
-                $data["img_url"] = $file_name;
+            $image = upload_picture("file", "uploads/$this->viewFolder/$folder_name/covers/");
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
             else :
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Hikaye Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
                 die();
@@ -137,15 +136,14 @@ class Stories extends MY_Controller
         else :
             $path         = FCPATH . "uploads/$this->viewFolder/";
             $folder_name = seo($data["title"]);
-            $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
             if ($oldFolderName != $folder_name && !rename("{$path}{$oldFolderName}", "{$path}{$folder_name}")) :
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Hikaye Güncellemesi Yapılırken Hata Oluştu. Klasör Erişim Yetkinizin Olduğundan Emin Olup Tekrar Deneyin."]);
                 die();
             endif;
             if (!empty($_FILES["file"]["name"])) :
-                $image_1920x1080 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/$folder_name/covers/", 1920, 1080, $file_name);
-                if ($image_1920x1080) :
-                    $data["img_url"] = $file_name;
+                $image = upload_picture("file", "uploads/$this->viewFolder/$folder_name/covers/");
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
                     $url = FCPATH . "uploads/$this->viewFolder/{$folder_name}/covers/1920x1080/{$story->img_url}";
                     if (!is_dir($url) && file_exists($url)) :
                         unlink($url);
@@ -241,7 +239,7 @@ class Stories extends MY_Controller
 
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("stories/fileIsActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
             if ($item->type == "photo") :
-                $image = '<img src="' . base_url("uploads/stories_v/{$folder_name}/1920x1080/{$item->src}") . '" width="75">';
+                $image = '<img src="' . base_url("uploads/stories_v/{$folder_name}/{$item->src}") . '" width="75">';
             else :
                 $image = '<video id="my-video' . $i . '" class="video-js" controls preload="auto" width="300" height="150">';
                 $image .= '<source src="' . base_url("uploads/stories_v/{$folder_name}/{$item->src}") . '"/>';
@@ -298,10 +296,9 @@ class Stories extends MY_Controller
 
     public function file_upload($story_id, $folderName)
     {
-        $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
         $config["allowed_types"] = "mpeg|mpg|mpe|qt|mov|avi|movie|3g2|3gp|mp4|f4v|flv|webm|wmv|ogg";
         $config["upload_path"]   = "uploads/$this->viewFolder/$folderName/";
-        $config["file_name"]     = $file_name;
+        $config["encrypt_name"]     = TRUE;
         $this->load->library("upload", $config);
         $upload = $this->upload->do_upload("file");
         if ($upload) :
@@ -316,12 +313,12 @@ class Stories extends MY_Controller
                 )
             );
         else :
-            $image_1920x1080 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/$folderName/", 1920, 1080, $file_name);
-            if ($image_1920x1080) :
+            $image = upload_picture("file", "uploads/$this->viewFolder/$folderName/");
+            if ($image["success"]) :
                 $getRank = $this->story_item_model->rowCount();
                 $this->story_item_model->add(
                     array(
-                        "src"           => $file_name,
+                        "src"           => $image["file_name"],
                         "rank"          => $getRank + 1,
                         "story_id"    => $story_id,
                         "type"          => "photo"

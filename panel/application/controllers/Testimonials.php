@@ -53,7 +53,7 @@ class Testimonials extends MY_Controller
 
             //array_push($renkler,$renk->negotiation_stage_color);
             $item->description = mb_word_wrap($item->description, 30, "...");
-            $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url, "90x90") . "' width='60px' height='60px' >";
+            $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url) . "' width='60px' height='60px' >";
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("testimonials/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->full_name, $item->description,    $item->img_url, $checkbox, $proccessing);
         }
@@ -117,16 +117,15 @@ class Testimonials extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_90x90 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 90, 90, $file_name);
-            if ($image_90x90) {
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
+            if ($image["success"]) {
                 $insert = $this->testimonial_model->add(
                     array(
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
                         "company"       => $this->input->post("company"),
                         "full_name"     => $this->input->post("full_name"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s")
                     )
@@ -192,15 +191,14 @@ class Testimonials extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_90x90 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 90, 90, $file_name);
-                if ($image_90x90) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
                         "company"       => $this->input->post("company"),
                         "full_name"     => $this->input->post("full_name"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                     );
                 } else {
                     $alert = array(

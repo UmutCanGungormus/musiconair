@@ -69,19 +69,16 @@
                             <div class="mb-4">
                                 <h2 class="mt-1"><?= $value->title; ?></h2>
                                 <?php if (!empty($folderName) && ($gallery->gallery_type == "file")) : ?>
-                                    <?php $url = base_url("panel/uploads/galleries_v/{$folderName}/{$gallery->url}/{$value->url}") ?>
-                                    DOSYAYI İNDİRİN : <a href="<?=$url?>" download><i class="fa fa-download fa-2x"></i></a>
+                                    DOSYAYI İNDİRİN : <a href="<?=get_picture("$viewFolder/$folderName/{$gallery->url}",$value->url) ?>" download><i class="fa fa-download fa-2x"></i></a>
                                 <?php elseif(!empty($folderName) && ($gallery->gallery_type == "video")):?>
                                     <video id="my-video<?=$key?>" class="video-js" controls preload="auto" width="300" height="150" data-setup="<?=($gallery_type == "video_url" ? '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "' . $value->url . '"}] }' : '{}')?>">
                                         <?php if ($gallery_type == "video") : ?>
-                                            <?php $url = base_url("panel/uploads/galleries_v/{$folderName}/{$gallery->url}/{$value->url}") ?>
-                                            <source src="<?=$url?>"/>
+                                            <source src="<?=get_picture("$viewFolder/$folderName/{$gallery->url}",$value->url) ?>"/>
                                         <?php endif; ?>
                                         <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
                                     </video>
                                 <?php else: ?>
-                                    <?php $url = base_url("panel/uploads/galleries_v/{$folderName}/{$gallery->url}/851x606/{$value->url}") ?>
-                                    <img src="<?= $url ?>" class="img-fluid w-100 my-3" alt="<?= $value->title ?>">
+                                    <img src="<?=get_picture("$viewFolder/$folderName/{$gallery->url}",$value->url) ?>" class="img-fluid w-100 my-3" alt="<?= $value->title ?>">
                                 <?php endif; ?>
                                 <?= $value->content; ?>
                             </div>
@@ -108,7 +105,7 @@
                             <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?=get_picture("news_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">

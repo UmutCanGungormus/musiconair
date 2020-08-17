@@ -13,7 +13,7 @@
                     <div class="owl-carousel owl-theme homeSlider">
                         <?php foreach ($slides as $slide) : ?>
                             <div class="item">
-                                <img width="100%" class="img-fluid" src="<?= base_url("panel/uploads/slides_v/857x505/{$slide->img_url}"); ?>" alt="<?= $slide->title ?>">
+                                <img width="100%" class="img-fluid" src="<?=get_picture("slides_v",$slide->img_url) ?>" alt="<?= $slide->title ?>">
                                 <div class="carousel-caption p-1">
                                     <h5><?= $slide->title ?></h5>
                                     <p><?= $slide->description ?></p>
@@ -28,7 +28,7 @@
                     <?php foreach ($banners as $banner) : ?>
                         <div class="col-md-12 mb-1 mt-1">
                             <a href="<?= $banner->url ?>">
-                                <img src="<?= base_url("panel/uploads/home_banner_v/857x505/{$banner->img_url}"); ?>" class="img-fluid w-100 banner160">
+                                <img src="<?=get_picture("home_banner_v",$banner->img_url) ?>" class="img-fluid w-100 banner160">
                             </a>
                         </div>
                     <?php endforeach ?>
@@ -54,7 +54,7 @@
                                 <div class="card item mb-3 dark shadow-none">
                                     <div class="card-body p-0 m-0">
                                         <div class="position-relative">
-                                            <img src="<?= base_url("panel/uploads/news_v/370x297/{$haber->img_url}"); ?>" class="img-fluid">
+                                            <img src="<?=get_picture("news_v",$haber->img_url) ?>" class="img-fluid">
                                             <i class="<?= $haber->emoji ?>"></i>
                                         </div>
                                         <small>
@@ -89,7 +89,7 @@
                                 <div class="card item mb-3 dark">
                                     <div class="card-body p-0 m-0">
                                         <div class="position-relative">
-                                            <img src="<?= base_url("panel/uploads/news_v/370x297/{$haber->img_url}"); ?>" class="img-fluid">
+                                            <img src="<?=get_picture("news_v",$haber->img_url) ?>" class="img-fluid">
                                             <i class="emoji-love"></i>
                                         </div>
                                         <div>

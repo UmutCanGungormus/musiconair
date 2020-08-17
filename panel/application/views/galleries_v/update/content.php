@@ -6,7 +6,7 @@
     <div class="form-group">
         <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
             <?php if(!empty($item->img_url)):?>
-            <img src="<?=base_url("uploads/galleries_v/")?>" class="img-fluid" alt="<?=$item->title?>">
+            <img src="<?=get_picture($viewFolder,$item->img_url) ?>" class="img-fluid" alt="<?=$item->title?>">
             <?php endif;?>
         </div>
         <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">

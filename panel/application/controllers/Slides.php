@@ -41,7 +41,7 @@ class Slides extends MY_Controller
 
             //array_push($renkler,$renk->negotiation_stage_color);
             
-            $item->img_url="<img src='".get_picture($this->viewFolder,$item->img_url,"857x505")."' width='60px' height='60px' >";
+            $item->img_url="<img src='".get_picture($this->viewFolder,$item->img_url)."' width='60px' height='60px' >";
             $checkbox= '<div class="custom-control custom-switch"><input data-id="'.$item->id.'" data-url="'.base_url("slides/isActiveSetter/{$item->id}").'" data-status="'.($item->isActive == 1 ? "checked" : null).'" id="customSwitch'.$i.'" type="checkbox" '.($item->isActive == 1 ? "checked" : null).' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch'.$i.'"></label></div>';
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->description, $item->img_url, $checkbox, $proccessing);
         }
@@ -104,15 +104,14 @@ class Slides extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->slide_model->rowCount();
-            if ($image_857x505) {
+            if ($image["success"]) {
                 $insert = $this->slide_model->add(
                     array(
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
                         "button_url" => $this->input->post("button_url"),
                         "button_caption" => $this->input->post("button_caption"),
@@ -184,13 +183,12 @@ class Slides extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_857x505 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 857, 505, $file_name);
-                if ($image_857x505) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "allowButton" => ($this->input->post("allowButton") == "on") ? 1 : 0,
                         "button_url" => $this->input->post("button_url"),
                         "button_caption" => $this->input->post("button_caption"),

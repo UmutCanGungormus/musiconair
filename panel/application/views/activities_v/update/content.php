@@ -75,7 +75,7 @@
                         <input type="date" name="date" class="form-control form-control-sm" value="<?= $item->event_date; ?>" id="datetimepicker1" placeholder="Etkinlik Tarihi" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss' }" />
                     </div><!-- END column -->
                     <div class="col-md-1 image_upload_container">
-                        <img src="<?= get_picture($viewFolder, $item->img_url, "255x157"); ?>" class="img-fluid">
+                        <img src="<?= get_picture($viewFolder, $item->img_url); ?>" class="img-fluid">
                     </div>
                     <div class="col-md-7 form-group image_upload_container">
                         <label>Görsel Seçiniz</label>

@@ -1,7 +1,7 @@
 <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
     <div class="row">
         <div class="col-md-2">
-            <img src="<?= get_picture($viewFolder, $item->logo, "165x57"); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
+            <img src="<?= get_picture($viewFolder, $item->logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
         <div class="form-group col-md-6">
             <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
@@ -20,7 +20,7 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <img src="<?= get_picture($viewFolder, $item->mobile_logo, "135x42"); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
+            <img src="<?= get_picture($viewFolder, $item->mobile_logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
         <div class="form-group col-md-6">
             <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
@@ -39,7 +39,7 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <img src="<?= get_picture($viewFolder, $item->favicon, "32x32"); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
+            <img src="<?= get_picture($viewFolder, $item->favicon); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
         <div class="form-group col-md-6">
             <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">

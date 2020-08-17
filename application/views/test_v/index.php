@@ -22,7 +22,7 @@
                         <a href="<?=base_url("test/".$item->seo_url) ?>">
                             <div class="container mx-2 p-1 bg-white shadow">
                                 <div class="position-relative">
-                                    <img src="<?=base_url("panel/uploads/tests_v/800x625/{$item->img_url}");?>" class="img-fluid w-100">
+                                    <img src="<?=get_picture("tests_v",$item->img_url) ?>" class="img-fluid w-100">
                                 </div>
                                 <i class="fa fa-question-circle" style="width: 42px; height: 42px; text-align: center; position: absolute; bottom: 40px; right: 32px; padding: 10px; font-size: 22px; border-radius: 35px; background-color: #94191c; color: #FFFFFF;"></i>
                                 <div class="px-1 pt-4 pb-2 position-relative">

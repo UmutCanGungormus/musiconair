@@ -52,7 +52,7 @@ class References extends MY_Controller
 
             //array_push($renkler,$renk->negotiation_stage_color);
 
-            $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url, "80x80") . "' width='60px' height='60px' >";
+            $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url) . "' width='60px' height='60px' >";
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("references/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title,  $item->img_url, $checkbox, $proccessing);
         }
@@ -112,17 +112,15 @@ class References extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_80x80 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 80, 80, $file_name);
-            $image_555x343 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 555, 343, $file_name);
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->reference_model->rowCount();
-            if ($image_80x80 && $image_555x343) {
+            if ($image["success"]) {
                 $insert = $this->reference_model->add(
                     array(
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
                         "url"           => seo($this->input->post("title")),
-                        "img_url"     => $file_name,
+                        "img_url"     => $image["file_name"],
                         "rank"          => $getRank+1,
                         "isActive"      => 1,
                         "createdAt"     => date("Y-m-d H:i:s")
@@ -186,15 +184,13 @@ class References extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_80x80 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 80, 80, $file_name);
-                $image_555x343 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 555, 343, $file_name);
-                if ($image_80x80 && $image_555x343) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) {
                     $data = array(
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
                         "url"           => seo($this->input->post("title")),
-                        "img_url"     => $file_name
+                        "img_url"     => $image["file_name"]
                     );
                 } else {
                     $alert = array(

@@ -25,7 +25,7 @@
 							<td><?= $item->title; ?></td>
 
 							<td class="text-center w100">
-								<img width="75" src="<?= get_picture($viewFolder, $item->img_url, "255x157"); ?>" alt="" class="img-fluid">
+								<img width="75" src="<?= get_picture($viewFolder, $item->img_url); ?>" alt="" class="img-fluid">
 							</td>
 							<td class="text-center w100">
 								<div class="custom-control custom-switch"><input data-id="<?= $item->id ?>" data-url="<?= base_url("advertisement/isActiveSetter/{$item->id}"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?= $item->id ?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input"> <label class="custom-control-label" for="customSwitch<?= $item->id ?>"></label></div>

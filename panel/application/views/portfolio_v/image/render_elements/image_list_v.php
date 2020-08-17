@@ -19,7 +19,7 @@
                     <td class="order"><i class="fa fa-reorder"></i></td>
                     <td class="w50 text-center">#<?= $image->id; ?></td>
                     <td class="w100 text-center">
-                        <img width="30" src="<?= get_picture($viewFolder, $image->img_url, "255x157"); ?>" alt="<?= $image->img_url; ?>" class="img-fluid">
+                        <img width="30" src="<?= get_picture($viewFolder, $image->img_url); ?>" alt="<?= $image->img_url; ?>" class="img-fluid">
                     </td>
                     <td><?= $image->img_url; ?></td>
                     <td class="w100 text-center">

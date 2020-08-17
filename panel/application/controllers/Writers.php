@@ -101,16 +101,15 @@ class Writers extends MY_Controller
         );
         $validate = $this->form_validation->run();
         if ($validate) {
-            $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $image_90x90 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 90, 90, $file_name);
-            if ($image_90x90) {
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
+            if ($image["success"]) {
                 $insert = $this->writers_model->add(
                     array(
                         "name"         => $this->input->post("name"),
                         "type"   => $this->input->post("type"),
                         "email"       => $this->input->post("email"),
                         "password"     => md5($this->input->post("password")),
-                        "img_url"       => $file_name,
+                        "img_url"       => $image["file_name"],
                         "isActive"      => 1
                     )
                 );
@@ -175,16 +174,15 @@ class Writers extends MY_Controller
         $validate = $this->form_validation->run();
         if ($validate) {
             if ($_FILES["img_url"]["name"] !== "") {
-                $file_name = seo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $image_90x90 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 90, 90, $file_name);
-                if ($image_90x90) {
+                $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image) {
                     if ($this->input->post("password") != "") {
                         $data = array(
                             "name"         => $this->input->post("name"),
                             "type"   => $this->input->post("type"),
                             "email"       => $this->input->post("email"),
                             "password"     => md5($this->input->post("password")),
-                            "img_url"       => $file_name,
+                            "img_url"       => $image["file_name"],
                             "isActive"      => 1
                         );
                     } else {
@@ -192,7 +190,7 @@ class Writers extends MY_Controller
                             "name"         => $this->input->post("name"),
                             "type"   => $this->input->post("type"),
                             "email"       => $this->input->post("email"),
-                            "img_url"       => $file_name,
+                            "img_url"       => $image["file_name"],
                             "isActive"      => 1
                         );
                     }

@@ -96,7 +96,7 @@
                                             <?php else : ?>
                                                 <div class="row">
                                                     <div class="col-md-1 ">
-                                                        <img src="<?= get_picture($viewFolder, $item->img_url, "370x297"); ?>" class="img-fluid">
+                                                        <img src="<?= get_picture($viewFolder, $item->img_url); ?>" class="img-fluid">
                                                     </div>
                                                     <div class="col-md-9 form-group ">
                                                         <label>Görsel Seçiniz</label>

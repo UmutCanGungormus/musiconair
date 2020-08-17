@@ -809,16 +809,16 @@ function send_email($toEmail = [], $subject = "", $message = "",$mail_settings="
         return false;
     }
 }
-function get_picture($path = "", $picture = "", $resolution = "50x50")
+function get_picture($path = "", $picture = "")
 {
     if ($picture != "") {
-        if (file_exists(FCPATH . "panel/uploads/$path/$resolution/$picture")) {
-            $picture = base_url("panel/uploads/$path/$resolution/$picture");
+        if (file_exists(FCPATH . "panel/uploads/$path/$picture")) {
+            $picture = base_url("panel/uploads/$path/$picture");
         } else {
-            $picture = base_url("assets/images/default_image_$resolution.png");
+            $picture = base_url("assets/images/default_image.png");
         }
     } else {
-        $picture = base_url("assets/images/default_image_$resolution.png");
+        $picture = base_url("assets/images/default_image.png");
     }
     return $picture;
 }

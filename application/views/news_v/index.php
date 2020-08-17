@@ -27,7 +27,7 @@
                     <div class="card rounded-0 mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                         <div class="row no-gutters">
                             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                <a href="<?= base_url("haber/{$value->seo_url}") ?>"><img src="<?= base_url("panel/uploads/news_v/370x297/" . $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
+                                <a href="<?= base_url("haber/{$value->seo_url}") ?>"><img src="<?=get_picture("news_v",$value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                 <div class="card-body position-relative mb-5">
@@ -67,7 +67,7 @@
                             <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?= base_url("panel/uploads/news_v/370x297/" . $item->img_url); ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?=get_picture("news_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">

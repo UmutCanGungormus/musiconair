@@ -347,13 +347,11 @@ class Product extends MY_Controller
     }
     public function image_upload($id)
     {
-        $file_name = seo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-        $image_348x215 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder", 348, 215, $file_name);
-        $image_1080x426 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder", 1080, 426, $file_name);
-        if ($image_348x215 && $image_1080x426) {
+        $image = upload_picture("file", "uploads/$this->viewFolder");
+        if ($image["success"]) {
             $this->product_image_model->add(
                 array(
-                    "img_url" => $file_name,
+                    "img_url" => $image["file_name"],
                     "rank" => 1,
                     "isActive" => 1,
                     "isCover" => 0,

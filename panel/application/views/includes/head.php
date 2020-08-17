@@ -7,7 +7,7 @@
 <?php if ($settings->logo == "default") : ?>
     <?php $favicon_image = base_url("assets/images/logo.png"); ?>
 <?php else : ?>
-    <?php $favicon_image = get_picture("settings_v", $settings->favicon, "32x32"); ?>
+    <?php $favicon_image = get_picture("settings_v", $settings->favicon); ?>
 <?php endif ?>
 <!-- Favicon -->
 <link rel="shortcut icon" href="<?= $favicon_image ?>">

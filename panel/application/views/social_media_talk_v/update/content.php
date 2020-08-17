@@ -57,7 +57,7 @@
                         <?php else : ?>
                             <div class="row">
                                 <div class="col-md-1 image_upload_container" style="display: <?= ($item->social_media_talk_type == "video") ? "none" : "block"; ?>">
-                                    <img src="<?= get_picture($viewFolder, $item->img_url, "370x297"); ?>" class="img-fluid">
+                                    <img src="<?= get_picture($viewFolder, $item->img_url); ?>" class="img-fluid">
                                 </div>
                                 <div class="col-md-9 form-group image_upload_container" style="display: <?= ($item->social_media_talk_type == "image") ? "block" : "none"; ?>">
                                     <label>Görsel Seçiniz</label>

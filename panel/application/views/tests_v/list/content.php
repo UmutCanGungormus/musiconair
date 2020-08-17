@@ -22,7 +22,7 @@
                             <td class="order"><i class="fa fa-reorder"></i></td>
                             <td class="w50 text-center">#<?= $item->id; ?></td>
                             <td><?= $item->title; ?></td>
-                            <td class="text-center w100"><img width="75" src="<?= get_picture($viewFolder, $item->img_url, "800x625"); ?>" alt="" class="img-rounded"></td>
+                            <td class="text-center w100"><img width="75" src="<?= get_picture($viewFolder, $item->img_url); ?>" alt="" class="img-rounded"></td>
                             <td class="text-center w100">
                                 <div class="custom-control custom-switch"><input data-id="<?= $item->id ?>" data-url="<?= base_url("test/isActiveSetter/{$item->id}"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?= $item->id ?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input"> <label class="custom-control-label" for="customSwitch<?= $item->id ?>"></label></div>
                             </td>
