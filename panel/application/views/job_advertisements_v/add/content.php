@@ -43,7 +43,7 @@
 
     <div class="form-group">
         <label>Açıklama</label>
-        <textarea name="content" class="m-0 tinymce" data-plugin="summernote" data-options="{height: 250}"></textarea>
+        <textarea name="content" class="m-0 tinymce"></textarea>
     </div>
 
     <div class="form-group">
