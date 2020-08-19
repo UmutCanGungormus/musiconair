@@ -79,7 +79,7 @@
 
                     <div class="form-group image_upload_container col-md-8">
                         <label>Görsel Seçiniz</label>
-                        <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+                        <input type="file" name="img_url" class="form-control rounded-0">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>

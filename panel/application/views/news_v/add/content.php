@@ -74,7 +74,7 @@
                         <?php if (isset($form_error)) : ?>
                             <div class="form-group ">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+                                <input type="file" name="img_url" class="form-control rounded-0">
                             </div>
                             <div class="form-group ">
                                 <label>Video Url</label>
@@ -86,7 +86,7 @@
                         <?php else : ?>
                             <div class="form-group ">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+                                <input type="file" name="img_url" class="form-control rounded-0">
                             </div>
                             <div class="form-group ">
                                 <label>Video Url</label>

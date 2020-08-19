@@ -9,7 +9,7 @@
     </div>
     <div class="form-group">
         <label>Hikaye Kapak Görseli</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Hikaye Kapak Görseli" name="file" type="file">
+        <input class="form-control rounded-0" placeholder="Hikaye Kapak Görseli" name="file" type="file">
     </div>
     <button data-url="<?= base_url("stories/update/$item->id/$item->folder_name"); ?>" type="button" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#storyModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>

@@ -26,7 +26,7 @@
                     <th class="w50">#id</th>
                     <th>Widget Başlık</th>
                     <th>Widget Olan Haber</th>
-                    <th>Widget Ekelenen Haber</th>
+                    <th>Widget Eklenen Haber</th>
                     <th>Durumu</th>
                     <th>İşlem</th>
                 </thead>

@@ -14,16 +14,16 @@
             </select>
         </div>
     </div>
-    <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
+    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
         <div class="input-group-prepend">
             <span class="input-group-text">Galeri Kapak Görseli</span>
         </div>
-        <div class="form-control form-control-sm rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
         <span class="input-group-append">
-            <span class=" btn btn-sm btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+            <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
                 <input type="hidden"><input type="file" name="img_url">
             </span>
-            <a href="#" class="btn btn-sm btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+            <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
         </span>
     </div>
     <!-- .form-group -->

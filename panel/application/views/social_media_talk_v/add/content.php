@@ -38,7 +38,7 @@
                         <?php if (isset($form_error)) : ?>
                             <div class="form-group image_upload_container" style="display: <?= ($social_media_talk_type == "image") ? "block" : "none"; ?>">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+                                <input type="file" name="img_url" class="form-control rounded-0">
                             </div>
                             <div class="form-group video_url_container" style="display: <?= ($social_media_talk_type == "video") ? "block" : "none"; ?>">
                                 <label>Video Url</label>
@@ -50,7 +50,7 @@
                         <?php else : ?>
                             <div class="form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+                                <input type="file" name="img_url" class="form-control rounded-0">
                             </div>
                             <div class="form-group video_url_container">
                                 <label>Video Url</label>

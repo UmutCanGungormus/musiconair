@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-md-9 form-group image_upload_container">
                                 <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+                                <input type="file" name="img_url" class="form-control rounded-0">
                             </div>
                         </div>
                         <div class="form-group">

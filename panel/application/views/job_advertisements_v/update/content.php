@@ -50,7 +50,7 @@
         </div>
         <div class="col-11 form-group image_upload_container">
             <label>Görsel Seçiniz</label>
-            <input type="file" name="img_url" class="form-control form-control-sm rounded-0">
+            <input type="file" name="img_url" class="form-control rounded-0">
         </div>
     </div>
     <button role="button" data-url="<?= base_url("job_advertisement/update/$item->id")?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>

@@ -4,16 +4,16 @@
             <img src="<?= get_picture($viewFolder, $item->logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
         <div class="form-group col-md-6">
-            <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
+            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Masaüstü Logo Seçimi</span>
                 </div>
-                <div class="form-control form-control-sm rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                 <span class="input-group-append">
-                    <span class=" btn btn-sm btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
+                    <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
                         <input type="hidden"><input type="file" name="logo">
                     </span>
-                    <a href="#" class="btn btn-sm btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>
@@ -23,16 +23,16 @@
             <img src="<?= get_picture($viewFolder, $item->mobile_logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
         <div class="form-group col-md-6">
-            <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
+            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Mobil Logo Seçimi</span>
                 </div>
-                <div class="form-control form-control-sm rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                 <span class="input-group-append">
-                    <span class=" btn btn-sm btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
+                    <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
                         <input type="hidden"><input type="file" name="mobile_logo">
                     </span>
-                    <a href="#" class="btn btn-sm btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>
@@ -42,16 +42,16 @@
             <img src="<?= get_picture($viewFolder, $item->favicon); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
         <div class="form-group col-md-6">
-            <div class="fileinput fileinput-new input-group input-group-sm" data-provides="fileinput">
+            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Favicon Seçimi</span>
                 </div>
-                <div class="form-control form-control-sm rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
                 <span class="input-group-append">
-                    <span class=" btn btn-sm btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
+                    <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
                         <input type="hidden"><input type="file" name="favicon">
                     </span>
-                    <a href="#" class="btn btn-sm btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>
