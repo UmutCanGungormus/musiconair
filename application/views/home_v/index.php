@@ -86,7 +86,7 @@
                     <div class="owl-carousel owl-trends owl-theme mt-3">
                         <?php foreach ($muzik_haberleri as $haber) : ?>
                             <a href="<?= base_url("haber/{$haber->seo_url}"); ?>">
-                                <div class="card item mb-3 dark">
+                                <div class="card item mb-3 dark shadow-none">
                                     <div class="card-body p-0 m-0">
                                         <div class="position-relative">
                                             <img src="<?=get_picture("news_v",$haber->img_url) ?>" class="img-fluid">
@@ -94,13 +94,18 @@
                                         </div>
                                         <div>
                                             <div class="d-inline-block mr-1 py-2 px-2">
-                                                <i class="fa fa-user"></i> <?= $yazar->ad; ?>
+                                                <i class="fa fa-user"></i>
+                                                <?php foreach ($writers as $writer_key => $writer_value) : ?>
+                                                    <?php if ($haber->writer_id == $writer_value->id) : ?>
+                                                        <?= $writer_value->full_name ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
                                             </div>
                                             <div class="d-inline-block">
                                                 <i class="fa fa-clock-o mr-1"></i><?= turkishDate("d F Y, l H:i", $haber->createdAt);  ?>
                                             </div>
                                         </div>
-                                        <h6 class="px-1 py-3"><b><?= $haber->news_title; ?></b></h6>
+                                        <h6 class="px-1 py-3"><b><?= $haber->title; ?></b></h6>
                                     </div>
                                 </div>
                             </a>

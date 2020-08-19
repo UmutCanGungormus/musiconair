@@ -12,9 +12,9 @@
                 <div class="breadcrumb pl-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
                     <a href="<?= base_url("haberler"); ?>">Haberler</a>
-                    <?php if (!empty($this->uri->segment(2))) : ?>
+                    <?php if (!empty($news_category)) : ?>
                         <span>></span>
-                        <a href="<?= base_url("haberler/muzik-haberleri"); ?>">Müzik Haberleri</a>
+                        <a href="<?= base_url("haberler/{$news_category->seo_url}"); ?>"><?=$news_category->title?></a>
                     <?php endif; ?>
                 </div>
             </div>

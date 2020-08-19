@@ -42,7 +42,8 @@ class Home extends CI_Controller
         $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1, "role_id!=" => 2]);
         $this->viewData->keyifler = [];
-        $this->viewData->muzik_haberleri = [];
+        $this->viewData->news_categories = $this->general_model->get("news_categories",null,["isActive" => 1,"seo_url" => "muzik-haberleri"]);
+        $this->viewData->muzik_haberleri = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1,"category_id" => $this->viewData->news_categories->id]);
         $this->viewFolder = "home_v/index";
         $this->viewData->tvler = [];
         $this->render();
@@ -94,6 +95,7 @@ class Home extends CI_Controller
     {
         $seo_url = $this->uri->segment(2);
         $category_id = null;
+        $category= null;
         if (!empty($seo_url) && !is_numeric($seo_url)) :
             $category = $this->general_model->get("news_categories", null, ["seo_url" => $seo_url, "isActive" => 1]);
             if (!empty($category)) :
@@ -139,6 +141,7 @@ class Home extends CI_Controller
 
         $offset = ($uri_segment - 1) * $config['per_page'];
         $this->viewData->news = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news", null, null, ['category_id' => $category_id, "isActive" => 1], [], [], [$config["per_page"], $offset]) : $this->general_model->get_all("news", null, null, ["isActive" => 1], [], [], [$config["per_page"], $offset]));
+        $this->viewData->news_category = $category;
         $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1, "role_id!=" => 2]);
         $this->viewData->links = $this->pagination->create_links();
         $this->viewData->most_read = (!empty($seo_url) && !is_numeric($seo_url) ? $this->general_model->get_all("news", null, "hit DESC", ['category_id' => $category_id, "isActive" => 1], [], [], [5]) : $this->general_model->get_all("news", null, "hit DESC", ["isActive" => 1], [], [], [5]));

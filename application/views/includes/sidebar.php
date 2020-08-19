@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("radyo"); ?>" class="d-flex px-3">
+					<a href="<?= base_url("haberler/radyo-haberleri"); ?>" class="d-flex px-3">
 						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="fa fa-microphone-alt"></i></div>
 						<div class="name flex-grow-1"><span>RADYO</span></div>
 					</a>
@@ -62,7 +62,7 @@
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("keyif"); ?>" class="d-flex px-3">
+					<a href="<?= base_url("haberler/keyif-haberleri"); ?>" class="d-flex px-3">
 						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="far fa-thumbs-up"></i></div>
 						<div class="name flex-grow-1"><span>KEYİF</span></div>
 					</a>
