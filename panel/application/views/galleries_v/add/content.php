@@ -18,7 +18,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">Galeri Kapak Görseli</span>
         </div>
-        <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+        <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
         <span class="input-group-append">
             <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
                 <input type="hidden"><input type="file" name="img_url">

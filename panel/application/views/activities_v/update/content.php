@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label for="datetimepicker1">Etkinlik Tarihi</label>
-        <input type="text" name="event_date" class="form-control form-control-sm datetimepicker" value="<?= $item->event_date; ?>" id="datetimepicker1" placeholder="Etkinlik Tarihi"/>
+        <input type="text" name="event_date" class="form-control form-control-sm datetimepicker" value="<?= $item->event_date; ?>" id="datetimepicker1" placeholder="Etkinlik Tarihi" />
     </div>
     <div class="form-group">
         <label>Etkinlik Mekan</label>
@@ -46,9 +46,17 @@
         <div class="col-1 image_upload_container">
             <img src="<?= get_picture($viewFolder, $item->img_url); ?>" class="img-fluid">
         </div>
-        <div class="col-11 form-group image_upload_container">
-            <label>Görsel Seçiniz</label>
-            <input type="file" name="img_url" class="form-control rounded-0">
+        <div class="fileinput fileinput-new input-group col-11" data-provides="fileinput">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Görsel Seçiniz</span>
+            </div>
+            <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+            <span class="input-group-append">
+                <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+                    <input type="hidden"><input type="file" name="img_url">
+                </span>
+                <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+            </span>
         </div>
     </div>
     <button role="button" data-url="<?= base_url("activities/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>

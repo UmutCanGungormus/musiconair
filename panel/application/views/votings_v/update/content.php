@@ -18,12 +18,20 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-1 image_upload_container">
+                            <div class="col-1 image_upload_container">
                                 <img src="<?= get_picture($viewFolder, $item->img_url); ?>" alt="" class="img-fluid">
                             </div>
-                            <div class="col-md-9 form-group image_upload_container">
-                                <label>Görsel Seçiniz</label>
-                                <input type="file" name="img_url" class="form-control rounded-0">
+                            <div class="fileinput fileinput-new input-group col-11" data-provides="fileinput">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Görsel Seçiniz</span>
+                                </div>
+                                <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                <span class="input-group-append">
+                                    <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+                                        <input type="hidden"><input type="file" name="img_url">
+                                    </span>
+                                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                                </span>
                             </div>
                         </div>
 

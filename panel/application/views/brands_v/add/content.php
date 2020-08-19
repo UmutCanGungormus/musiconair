@@ -15,9 +15,17 @@
                         <small class="input-form-error float-right"><?= form_error("title"); ?></small>
                     <?php endif ?>
                 </div>
-                <div class="form-group image_upload_container">
-                    <label>Görsel Seçiniz</label>
-                    <input type="file" name="img_url" class="form-control rounded-0">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Görsel Seçiniz</span>
+                    </div>
+                    <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                    <span class="input-group-append">
+                        <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+                            <input type="hidden"><input type="file" name="img_url">
+                        </span>
+                        <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    </span>
                 </div>
                 <button type="submit" class="btn btn-sm btn-outline-primary rounded-0">Kaydet</button>
                 <a href="<?= base_url("brands"); ?>" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
