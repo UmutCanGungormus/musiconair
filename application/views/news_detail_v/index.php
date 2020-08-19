@@ -31,10 +31,10 @@
                 <div class="border mt-4 p-2 clearfix">
                     <img class="float-left mr-2" src="<?=get_picture("users_v",$writer->img_url)?>" width="40">
                     <b class="d-block"><?= $writer->full_name ?> <?= (!empty($writer->username) ? "(" . $writer->username . ")" : null); ?></b>
-                    <span class="grey-text"><?= $writer->role_id; ?></span>
+                    <span class="grey-text"><?= $writer_role; ?></span>
                 </div>
                 <?php if ($news->img_url) : ?>
-                    <img src="<?=get_picture("news_v",$item->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">
+                    <img src="<?=get_picture("news_v",$news->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">
                 <?php endif; ?>
                 <div class="d-flex justify-content-between">
 
@@ -177,7 +177,7 @@
                                     <form action="#" method="post">
                                         <input type="hidden" name="haberid" value="<?= $news->id; ?>">
                                         <input type="hidden" name="userid" value="<?php if (isset($_SESSION['user'])) {
-                                                                                        echo $_SESSION['user'];
+                                                                                        echo $_SESSION['user']->id;
                                                                                     } else {
                                                                                         echo 0;
                                                                                     } ?>">

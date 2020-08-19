@@ -296,12 +296,8 @@ class Stories extends MY_Controller
 
     public function file_upload($story_id, $folderName)
     {
-        $config["allowed_types"] = "mpeg|mpg|mpe|qt|mov|avi|movie|3g2|3gp|mp4|f4v|flv|webm|wmv|ogg";
-        $config["upload_path"]   = "uploads/$this->viewFolder/$folderName/";
-        $config["encrypt_name"]     = TRUE;
-        $this->load->library("upload", $config);
-        $upload = $this->upload->do_upload("file");
-        if ($upload) :
+        $image = upload_picture("file", "uploads/$this->viewFolder/$folderName/","mpeg|mpg|mpe|qt|mov|avi|movie|3g2|3gp|mp4|f4v|flv|webm|wmv|ogg");
+        if ($image["success"]) :
             $uploaded_file = $this->upload->data("file_name");
             $getRank = $this->story_item_model->rowCount();
             $this->story_item_model->add(
@@ -325,7 +321,7 @@ class Stories extends MY_Controller
                     )
                 );
             else :
-
+                echo $image["error"];
             endif;
         endif;
     }

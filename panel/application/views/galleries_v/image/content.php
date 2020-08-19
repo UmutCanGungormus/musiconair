@@ -2,12 +2,24 @@
     <?php if($item->gallery_type != "video_url"):?>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <?php if($item->gallery_type != "video_urls"):?>
             <form data-table="detailTable" action="<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>" id="dropzone" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>'}">
                 <div class="dz-message">
                     <h3 class="m-h-lg">Yüklemek istediğiniz dosyaları buraya sürükleyiniz</h3>
                     <p class="mb-3 text-muted">(Yüklemek için dosyalarınızı sürükleyiniz yada buraya tıklayınız)</p>
                 </div>
             </form>
+            <?php else:?>
+                <form id="createGalleryItem" onsubmit="return false" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Video URL (Youtube)</label>
+                    <input type="text" name="url" class="form-control form-control-sm rounded-0">
+                </div>
+                <div class="form-group">
+                    <button data-url="<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Videoyu Kaydet</button>
+                </div>
+            </form>
+            <?php endif;?>
         </div><!-- END column -->
     </div>
     <?php endif;?>
@@ -46,7 +58,7 @@
                     <th>Güncelleme Tarihi</th>
                     <th class="nosort">İşlem</th>
                 </thead>
-                <tbody >
+                <tbody>
                     
                 </tbody>
             </table>
@@ -59,8 +71,7 @@
 					return d;
 				}
 				$(document).ready(function() {
-					TableInitializerV2("detailTable", obj, {}, "<?= base_url("galleries/detailDatatable/{$item->gallery_type}/{$item->folder_name}") ?>", "<?= base_url("galleries/fileRankSetter/{$item->gallery_type}") ?>", true);
-
+					TableInitializerV2("detailTable", obj, {}, "<?= base_url("galleries/detailDatatable/{$item->gallery_type}/{$item->id}/{$item->folder_name}") ?>", "<?= base_url("galleries/fileRankSetter/{$item->gallery_type}") ?>", true);
 				});
 			</script>
         </div><!-- END column -->
@@ -71,12 +82,12 @@
 
 <script>
     $(document).ready(function(){
-        $(document).on("click",".createGalleryBtn",function(e){
+        $(document).on("click",".createGalleryItemBtn",function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
             $('#fileModal').iziModal('destroy');
-            createModal("#fileModal","Yeni Galeri Ekle","Yeni Galeri Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+            createModal("#fileModal","Yeni Galeri İçeriği Ekle","Yeni Galeri İçeriği Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
                 $.post(url,{},function(response){
                     $("#fileModal .iziModal-content").html(response);
                 });
@@ -87,10 +98,10 @@
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            let formData = new FormData(document.getElementById("createGallery"));
+            let formData = new FormData(document.getElementById("createGalleryItem"));
             createAjax(url,formData,function(){
                 closeModal("#fileModal");
-                reloadTable("galleryTable");
+                reloadTable("detailTable");
             });
         });
         $(document).on("click",".updateGalleryBtn",function(e){
@@ -98,7 +109,7 @@
             e.stopImmediatePropagation();
             $('#fileModal').iziModal('destroy');
             let url = $(this).data("url");
-            createModal("#fileModal","Galeri Düzenle","Galeri Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+            createModal("#fileModal","Galeri İçeriği Düzenle","Galeri İçeriği Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
                 $.post(url,{},function(response){
                     $("#fileModal .iziModal-content").html(response);
                     TinyMCEInit();
@@ -110,10 +121,10 @@
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            let formData = new FormData(document.getElementById("updateGallery"));
+            let formData = new FormData(document.getElementById("updateGalleryItem"));
             createAjax(url,formData,function(){
                 closeModal("#fileModal");
-                reloadTable("galleryTable");
+                reloadTable("detailTable");
             });
         });
     });

@@ -64,23 +64,23 @@
                         </ul>
                     </div>
                     <div class="justify-content-end flex-grow-1 pl-4">
-                        <?php ($gallery->gallery_type == "file" ? $folderName = "files" : ($gallery->gallery_type == "image" ? $folderName = "images" : ($gallery->gallery_type == "video" ? $folderName = "videos" : $folderName = null))) ?>
                         <?php foreach ($gallery_items as $key => $value) : ?>
                             <div class="mb-4">
                                 <h2 class="mt-1"><?= $value->title; ?></h2>
-                                <?php if (!empty($folderName) && ($gallery->gallery_type == "file")) : ?>
-                                    DOSYAYI İNDİRİN : <a href="<?=get_picture("$viewFolder/$folderName/{$gallery->url}",$value->url) ?>" download><i class="fa fa-download fa-2x"></i></a>
-                                <?php elseif(!empty($folderName) && ($gallery->gallery_type == "video")):?>
-                                    <video id="my-video<?=$key?>" class="video-js" controls preload="auto" width="300" height="150" data-setup="<?=($gallery_type == "video_url" ? '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "' . $value->url . '"}] }' : '{}')?>">
-                                        <?php if ($gallery_type == "video") : ?>
-                                            <source src="<?=get_picture("$viewFolder/$folderName/{$gallery->url}",$value->url) ?>"/>
-                                        <?php endif; ?>
-                                        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                                <?php if ($gallery->gallery_type == "files") : ?>
+                                    DOSYAYI İNDİRİN : <a href="<?= get_picture("galleries_v/$gallery->gallery_type/{$gallery->url}", $value->url) ?>" download><i class="fa fa-download fa-2x"></i></a>
+                                <?php elseif ($gallery->gallery_type == "videos") : ?>
+                                    <video id="my-video<?= $key ?>" class="video-js" controls preload="auto" width="100%">
+                                        <source src="<?= get_picture("galleries_v/$gallery->gallery_type/{$gallery->url}", $value->url) ?>" />
                                     </video>
-                                <?php else: ?>
-                                    <img src="<?=get_picture("$viewFolder/$folderName/{$gallery->url}",$value->url) ?>" class="img-fluid w-100 my-3" alt="<?= $value->title ?>">
+                                <?php elseif ($gallery->gallery_type == "video_urls") : ?>
+                                    <div class="plyr__video-embed videojs">
+                                        <iframe src="<?=$value->url?>" allowfullscreen allowtransparency></iframe>
+                                    </div>
+                                <?php else : ?>
+                                    <img src="<?= get_picture("galleries_v/$gallery->gallery_type/{$gallery->url}", $value->url) ?>" class="img-fluid w-100 my-3" alt="<?= $value->title ?>">
                                 <?php endif; ?>
-                                <?= $value->content; ?>
+                                <?= $value->description; ?>
                             </div>
                         <?php endforeach ?>
                     </div>
@@ -105,7 +105,7 @@
                             <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?=get_picture("news_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= get_picture("news_v", $item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">

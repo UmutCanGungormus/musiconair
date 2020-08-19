@@ -44,6 +44,8 @@ endif;
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 	<!-- iziToast -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+	<!-- Plyr -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.css">
 	<!-- iziModal -->
 	<link rel="stylesheet" href="<?= base_url("public/css/iziModal.min.css") ?>" />
 	<link rel="stylesheet" href="<?= base_url("public/css/zuck.min.css?v=" . sha1(md5(rand()))); ?>">

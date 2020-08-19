@@ -34,7 +34,6 @@
                 <?php endforeach?>
             </div>
 
-
 		</div>
 	</div>
 </section>

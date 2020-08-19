@@ -93,7 +93,7 @@ class Galleries extends MY_Controller
                 echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Kaydı Yapılırken Hata Oluştu. Kapak Görseli Seçtiğinizden Emin Olup Tekrar Deneyin."]);
                 die();
             endif;
-            
+
             $getRank = $this->gallery_model->rowCount();
             $gallery_type = $this->input->post("gallery_type");
             $image = upload_picture("img_url", "uploads/$this->viewFolder/$gallery_type");
@@ -143,26 +143,33 @@ class Galleries extends MY_Controller
             $key = checkEmpty($data)["key"];
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellemesi Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
-            $path         = FCPATH . "uploads/$this->viewFolder/";
-            $folder_name = seo($data["title"]);
-            $path = "$path/$gallery_type";
-            
-            if (!rename("$path/$oldFolderName", "$path/$folder_name")) :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellemesi Yapılırken Hata Oluştu. Klasör Erişim Yetkinizin Olduğundan Emin Olup Tekrar Deneyin."]);
-                die();
-            endif;
-            $data = ["title" => $data["title"], "folder_name" => $folder_name, "url" => seo($data["title"]),];
-            if ($_FILES["img_url"]["name"] !== "") :
-                $image = upload_picture("img_url", "uploads/$this->viewFolder/$gallery_type");
-                if($image["success"]):
-                    $data["img_url"] = $image["file_name"];
+            $gallery = $this->gallery_model->get(["id" => $id]);
+            if (!empty($gallery)) :
+                if (!$gallery->isCover) :
+                    $path         = FCPATH . "uploads/$this->viewFolder/";
+                    $folder_name = seo($data["title"]);
+                    $path = "$path/$gallery_type";
+
+                    if (!rename("$path/$oldFolderName", "$path/$folder_name")) :
+                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellemesi Yapılırken Hata Oluştu. Klasör Erişim Yetkinizin Olduğundan Emin Olup Tekrar Deneyin."]);
+                        die();
+                    endif;
+                    $data = ["title" => $data["title"], "folder_name" => $folder_name, "url" => seo($data["title"]),];
+                    if ($_FILES["img_url"]["name"] !== "") :
+                        $image = upload_picture("img_url", "uploads/$this->viewFolder/$gallery_type");
+                        if ($image["success"]) :
+                            $data["img_url"] = $image["file_name"];
+                        endif;
+                    endif;
+                    $update = $this->gallery_model->update(["id" => $id], $data);
+                    if ($update) :
+                        echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Güncellendi."]);
+                    else :
+                        echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                    endif;
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncelleştirilirken Hata Oluştu. Sabit Galeriyi Güncelleştiremezsiniz, Lütfen Tekrar Deneyin."]);
                 endif;
-            endif;
-            $update = $this->gallery_model->update(["id" => $id], $data);
-            if ($update) :
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Güncellendi."]);
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Güncellenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
             endif;
         endif;
     }
@@ -171,25 +178,29 @@ class Galleries extends MY_Controller
     {
         $gallery = $this->gallery_model->get(["id" => $id]);
         if (!empty($gallery)) :
-            if ($gallery->gallery_type != "video_urls") :
-                if ($gallery->gallery_type == "images") :
-                    $model = "image_model";
-                elseif ($gallery->gallery_type == "videos") :
-                    $model = "video_model";
+            if (!$gallery->isCover) :
+                if ($gallery->gallery_type != "video_urls") :
+                    if ($gallery->gallery_type == "images") :
+                        $model = "image_model";
+                    elseif ($gallery->gallery_type == "videos") :
+                        $model = "video_model";
+                    else :
+                        $model = "file_model";
+                    endif;
+                    $path = FCPATH . "uploads/$this->viewFolder/$gallery->gallery_type/$gallery->folder_name";
+                    rrmdir($path);
                 else :
-                    $model = "file_model";
+                    $model = "video_url_model";
                 endif;
-                $path = FCPATH . "uploads/$this->viewFolder/$gallery->gallery_type/$gallery->folder_name";
-                rrmdir($path);
+                $this->$model->delete(["gallery_id" => $id]);
+                $delete = $this->gallery_model->delete(["id" => $id]);
+                if ($delete) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Silindi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
             else :
-                $model = "video_url_model";
-            endif;
-            $this->$model->delete(["gallery_id" => $id]);
-            $delete = $this->gallery_model->delete(["id" => $id]);
-            if ($delete) :
-                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri Başarıyla Silindi."]);
-            else :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri Silinirken Hata Oluştu. Sabit Galeriyi Silemezsiniz, Lütfen Tekrar Deneyin."]);
             endif;
         endif;
     }
@@ -220,7 +231,7 @@ class Galleries extends MY_Controller
         }
     }
 
-    public function detailDatatable($gallery_type, $folder_name = null)
+    public function detailDatatable($gallery_type, $gallery_id, $folder_name = null)
     {
         $modelName = ($gallery_type == "images" ? "image_model" : ($gallery_type == "files" ? "file_model" : ($gallery_type == "videos" ? "video_model" : "video_url_model")));
         $items = $this->$modelName->getRows(
@@ -240,7 +251,7 @@ class Galleries extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                <a href="javascript:void(0)" data-url="' . base_url("galleries/fileUpdate/{$item->id}") . '" class="dropdown-item updateGalleryBtn"><i class="fa fa-pen"></i> Açıklama Ekle</a>
+                <a href="javascript:void(0)" data-url="' . base_url("galleries/fileUpdate/{$item->id}/{$gallery_id}") . '" class="dropdown-item updateGalleryBtn"><i class="fa fa-pen"></i> Açıklama Ekle</a>
                     <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="detailTable" data-url="' . base_url("galleries/fileDelete/{$item->id}/{$item->gallery_id}/{$gallery_type}") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
@@ -254,15 +265,21 @@ class Galleries extends MY_Controller
                 $image = '<img src="' . base_url("uploads/galleries_v/{$gallery_type}/{$folder_name}/{$item->url}") . '" width="75">';
             elseif ($gallery_type == "files") :
                 $image = '<a href="' . base_url("uploads/galleries_v/{$gallery_type}/{$folder_name}/{$item->url}") . '" download><i class="fa fa-download fa-2x"></i></a>';
-            elseif ($gallery_type == "videos" || $gallery_type == "video_url") :
-                $image = '<video id="my-video' . $i . '" class="video-js" controls preload="auto" width="300" height="150" data-setup="' . ($gallery_type == "video_urls" ? '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "' . $item->url . '"}] }' : '{}') . '">';
+            elseif ($gallery_type == "videos") :
+                $image = '<video class="videojs" id="my-video' . $i . '" playsinline controls preload="auto" width="300" height="150" data-poster="'.get_picture("galleries_v/{$gallery_type}/{$folder_name}",$item->img_url).'">';
                 if ($gallery_type == "videos") :
                     $image .= '<source src="' . base_url("uploads/galleries_v/{$gallery_type}/{$folder_name}/{$item->url}") . '"/>';
                 endif;
-                $image .= '<p class="vjs-no-js">
-                        To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                    </p>
-                </video>';
+                $image .= '</video>';
+            else:
+                $image = '<div class="plyr__video-embed videojs" id="player">
+                <iframe
+                  src="'.$item->url.'"
+                  allowfullscreen
+                  allowtransparency
+                  class="position-relative"
+                ></iframe>
+              </div>';
             endif;
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image, $item->url, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing);
 
@@ -304,26 +321,47 @@ class Galleries extends MY_Controller
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
 
-    public function fileUpdate($id)
+    public function fileUpdate($id, $gallery_id)
     {
         $viewData = new stdClass();
-        $viewData->category = $this->uri->segment(4);
-        $viewData->gallery = $this->gallery_model->get(['id' => $viewData->category]);
-
-        $item = $this->image_model->get(
-            array(
-                "id"    => $id,
-            )
-        );
+        $viewData->gallery = $this->gallery_model->get(['id' => $gallery_id]);
+        if ($viewData->gallery->gallery_type == "images") :
+            $viewData->item = $this->image_model->get(["id" => $id, "gallery_id" => $viewData->gallery->id]);
+        elseif ($viewData->gallery->gallery_type == "files") :
+            $viewData->item = $this->file_model->get(["id" => $id, "gallery_id" => $viewData->gallery->id]);
+        elseif ($viewData->gallery->gallery_type == "videos") :
+            $viewData->item = $this->video_model->get(["id" => $id, "gallery_id" => $viewData->gallery->id]);
+        else :
+            $viewData->item = $this->video_url_model->get(["id" => $id, "gallery_id" => $viewData->gallery->id]);
+        endif;
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "file_update";
-        $viewData->item = $item;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
 
-    public function file_update($id)
+    public function file_update($id, $gallery_id)
     {
-        $update = $this->image_model->update(["id" => $id], ["title" => $this->input->post("title"), "description" => $this->input->post("description")]);
+        $data = $this->input->post();
+        $gallery = $this->gallery_model->get(['id' => $gallery_id]);
+        if ($gallery->gallery_type == "images") :
+            $model = "image_model";
+        elseif ($gallery->gallery_type == "files") :
+            $model = "file_model";
+        elseif ($gallery->gallery_type == "videos") :
+            $model = "video_model";
+        else :
+            $model = "video_url_model";
+        endif;
+        if ($_FILES["img_url"]["name"] !== "") :
+            $image = upload_picture("img_url", "uploads/$this->viewFolder/$gallery->gallery_type");
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri İçeriği Güncelleştirilirken Hata Oluştu. İçerik Kapak Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                die();
+            endif;
+        endif;
+        $update = $this->$model->update(["id" => $id], $data);
         if ($update) :
             echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri İçeriği Başarıyla Güncelleştirildi."]);
         else :
@@ -336,13 +374,14 @@ class Galleries extends MY_Controller
         if ($gallery_type != "video_urls") :
             if ($gallery_type == "images") :
                 $image = upload_picture("file", "uploads/$this->viewFolder/images/$folderName/");
-                if ($image) :
+                if ($image["success"]) :
                     $getRank = $this->image_model->rowCount();
                     $this->image_model->add(
                         array(
                             "url"           => $image["file_name"],
                             "rank"          => $getRank + 1,
-                            "gallery_id"    => $gallery_id
+                            "gallery_id"    => $gallery_id,
+                            "isActive"      => 1
                         )
                     );
                 else :
@@ -361,7 +400,8 @@ class Galleries extends MY_Controller
                         array(
                             "url"           => $uploaded_file,
                             "rank"          => $getRank + 1,
-                            "gallery_id"    => $gallery_id
+                            "gallery_id"    => $gallery_id,
+                            "isActive"      => 1
                         )
                     );
                 else :
@@ -380,7 +420,8 @@ class Galleries extends MY_Controller
                         array(
                             "url"           => $uploaded_file,
                             "rank"          => $getRank + 1,
-                            "gallery_id"    => $gallery_id
+                            "gallery_id"    => $gallery_id,
+                            "isActive"      => 1
                         )
                     );
                 else :
@@ -388,7 +429,21 @@ class Galleries extends MY_Controller
                 endif;
             endif;
         else :
-
+            $data = rClean($this->input->post());
+            if (checkEmpty($data)["error"]) :
+                $key = checkEmpty($data)["key"];
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri İçeriği Kayıt Edilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+            else :
+                $getRank = $this->video_url_model->rowCount();
+                $data["rank"] = $getRank+1;
+                $data["isActive"] = 1;
+                $data["gallery_id"] = $gallery_id;
+                if ($this->video_url_model->add($data)) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Galeri İçeriği Başarıyla Kayıt Edildi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Galeri İçeriği Kayıt Edilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            endif;
         endif;
     }
 
@@ -414,7 +469,7 @@ class Galleries extends MY_Controller
                 if (!is_dir($url2) && file_exists($url2)) :
                     unlink($url2);
                 endif;
-            else :
+            elseif($gallery_type == "files") :
                 $url = FCPATH . "uploads/galleries_v/files/{$gallery->url}/{$fileName->url}";
                 if (!is_dir($url) && file_exists($url)) :
                     unlink($url);

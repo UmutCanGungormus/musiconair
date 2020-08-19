@@ -51,7 +51,7 @@
                             <select class="form-control form-control-sm rounded-0" name="writer_id">
 
                                 <?php foreach ($writers as $category) : ?>
-                                    <option value="<?= $category->id; ?>"><?= $category->name; ?></option>
+                                    <option value="<?= $category->id; ?>"><?= $category->full_name; ?></option>
                                 <?php endforeach ?>
                             </select>
                             <?php if (isset($form_error)) : ?>

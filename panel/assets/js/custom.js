@@ -8,7 +8,9 @@ $(document).ready(function () {
 	});
 
 	flatPickrInit();
-	
+	$(".videojs").each(function(){
+		new Plyr($(this));
+	});
 
 	/** WORST CODES */
 

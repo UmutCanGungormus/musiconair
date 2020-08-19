@@ -6,58 +6,65 @@
 
 			<div class="sidebar-category">
 				<div class="category-item">
-					<a href="<?= base_url('onair'); ?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>ONAIR</span></div>
+					<a href="<?= base_url('onair'); ?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="fa fa-mixcloud mr-1"></i></div>
+						<div class="name flex-grow-1"><span>ONAIR</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("haberler/muzik-haberleri"); ?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>MÜZİK</span></div>
+					<a href="<?= base_url("haberler/muzik-haberleri"); ?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="fa fa-music"></i></div>
+						<div class="name flex-grow-1"><span>MÜZİK</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("etkinlikler")?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>ETKİNLİK</span></div>
+					<a href="<?= base_url("etkinlikler")?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="far fa-calendar-alt"></i></div>
+						<div class="name flex-grow-1"><span>ETKİNLİK</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?=base_url("ilanlar")?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>İLANLAR</span></div>
+					<a href="<?=base_url("is-ilanlari")?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="fa fa-briefcase"></i></div>
+						<div class="name flex-grow-1"><span>İŞ İLANLARI</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("radyo"); ?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>RADYO</span></div>
+					<a href="<?=base_url("emlak-ilanlari")?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="far fa-building"></i></div>
+						<div class="name flex-grow-1"><span>EMLAK İLANLARI</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("videolar"); ?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>VİDEO</span></div>
+					<a href="<?= base_url("radyo"); ?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="fa fa-microphone-alt"></i></div>
+						<div class="name flex-grow-1"><span>RADYO</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("test"); ?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>TEST</span></div>
+					<a href="<?= base_url("galeri/videolar"); ?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="fab fa-youtube"></i></div>
+						<div class="name flex-grow-1"><span>VİDEO</span></div>
 					</a>
 				</div>
 
 				<div class="category-item">
-					<a href="<?= base_url("keyif"); ?>">
-						<div><i class="mr-1"></i></div>
-						<div class="name"><span>KEYİF</span></div>
+					<a href="<?= base_url("test"); ?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="far fa-edit"></i></div>
+						<div class="name flex-grow-1"><span>TEST</span></div>
+					</a>
+				</div>
+
+				<div class="category-item">
+					<a href="<?= base_url("keyif"); ?>" class="d-flex px-3">
+						<div class="flex-shrink-1 text-center px-auto mx-auto"><i class="far fa-thumbs-up"></i></div>
+						<div class="name flex-grow-1"><span>KEYİF</span></div>
 					</a>
 				</div>
 			</div>

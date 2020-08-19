@@ -815,10 +815,10 @@ function get_picture($path = "", $picture = "")
         if (file_exists(FCPATH . "panel/uploads/$path/$picture")) {
             $picture = base_url("panel/uploads/$path/$picture");
         } else {
-            $picture = base_url("assets/images/default_image.png");
+            $picture = base_url("public/images/default_image.png");
         }
     } else {
-        $picture = base_url("assets/images/default_image.png");
+        $picture = base_url("public/images/default_image.png");
     }
     return $picture;
 }

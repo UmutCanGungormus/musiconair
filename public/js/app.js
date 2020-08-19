@@ -1,5 +1,8 @@
 new ClipboardJS('.btnCopyLink');
 $(document).ready(function () {
+	$(".videojs").each(function(){
+		new Plyr($(this));
+	});
 	// Get the header
 if ($("#storiesSticky").length > 0) {
 	// When the user scrolls the page, execute myFunction
@@ -89,7 +92,7 @@ if ($("#storiesSticky").length > 0) {
 			if ($(window).width() <= 991) {
 				$('div.sidebar-menu').addClass('d-none');
 			} else {
-				$('div.sidebar-menu').addClass('d-block');
+				$('div.sidebar-menu').addClass('d-flex');
 			}
 			$('div.sidebar-menu').removeClass('d-none');
 			$('div.sidebar-menu').css('width', '265px');

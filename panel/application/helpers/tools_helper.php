@@ -979,17 +979,18 @@ function get_product_cover_photo($id)
 //$_FILES["img_url"]["tmp_name"]
 //100,200
 //uploads/$t->viewFolder/deneme.png
-function upload_picture($file, $uploadPath)
+function upload_picture($file, $uploadPath,$allowedTypes="bmp|gif|jpeg|jpg|jpe|jp2|j2k|jpf|jpg2|jpx|jpm|mj2|mjp2|tiff|tif|svg|ico")
 {
     $t = &get_instance();
     if (!is_dir("{$uploadPath}")) {
         mkdir("{$uploadPath}", 0755, true);
     }
+    $config=[];
     $config["upload_path"] = FCPATH."{$uploadPath}";
-    $config["allowed_types"] = "bmp|gif|jpeg|jpg|jpe|jp2|j2k|jpf|jpg2|jpx|jpm|mj2|mjp2|tiff|tif|svg|ico";
+    $config["allowed_types"] = $allowedTypes;
     $config["encrypt_name"] = TRUE;
     $t->load->library("upload", $config);
-
+    $t->upload->initialize($config);
     if (!$t->upload->do_upload($file)) {
         return ["success" => false,"error" => $t->upload->display_errors()];
     } else {

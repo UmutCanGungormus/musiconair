@@ -77,6 +77,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <!-- Clipboard -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+<!-- Plyr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.polyfilled.min.js"></script>
 <!-- iziModal -->
 <script src="<?= base_url("public/js/iziModal.min.js") ?>"></script>
 <!-- App -->
@@ -105,15 +107,15 @@
 							<?php if($story_value->isActive):?>
 								Zuck.buildTimelineItem(
 									"<?= $story_value->title ?>",
-									"<?= base_url("panel/uploads/stories_v/{$story_value->folder_name}/covers/1920x1080/{$story_value->img_url}") ?>",
+									"<?= get_picture("stories_v/{$story_value->folder_name}/covers/",$story_value->img_url) ?>",
 									"<?= $story_value->title ?>",
-									"<?= $story_value->url ?>",
-									<?= strtotime($story_value->updatedAt) ?>,
+									"<?= (empty($story_value->url) ? "javascript:void(0)" : $story_value->url) ?>",
+									<?= (empty($story_value->url) ? strtotime($story_value->createdAt) : strtotime($story_value->updatedAt)) ?>,
 									[
 										<?php if (!empty($story_items)) : ?>
 											<?php foreach ($story_items as $story_item_key => $story_item_value) : ?>
 												<?php if($story_item_value->isActive && $story_item_value->story_id == $story_value->id):?>
-													["<?= $story_item_value->id ?>", "<?= $story_item_value->type ?>", <?= $story_item_value->length ?>, "<?= ($story_item_value->type == "photo" ? base_url("panel/uploads/stories_v/{$story_value->folder_name}/1920x1080/{$story_item_value->src}") : base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}"))  ?>", "<?= ($story_item_value->type == "photo" ? base_url("panel/uploads/stories_v/{$story_value->folder_name}/1920x1080/{$story_item_value->src}") : base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}"))  ?>", '<?= $story_item_value->url_text ?>', '<?= $story_item_value->url ?>', false, timestamp()],
+													["<?= $story_item_value->id ?>", "<?= $story_item_value->type ?>", <?= $story_item_value->length ?>, "<?= ($story_item_value->type == "photo" ? base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}") : base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}"))  ?>", "<?= ($story_item_value->type == "photo" ? base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}") : base_url("panel/uploads/stories_v/{$story_value->folder_name}/{$story_item_value->src}"))  ?>", '<?= $story_item_value->url_text ?>', '<?= $story_item_value->url ?>', false, timestamp()],
 												<?php endif;?>
 											<?php endforeach; ?>
 										<?php endif; ?>

@@ -134,6 +134,7 @@ class Estate_advertisement extends MY_Controller
                     $data["img_url"] = $image["file_name"];
                 else :
                     echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Emlak İlanı Güncelleştirilirken Hata Oluştu. Emlak İlanı Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                    die();
                 endif;
             endif;
             $data["seo_url"] = seo($data["title"]);

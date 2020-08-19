@@ -134,6 +134,7 @@ class Job_advertisement extends MY_Controller
                     $data["img_url"] = $image["file_name"];
                 else :
                     echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "İş İlanı Güncelleştirilirken Hata Oluştu. İş İlanı Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                    die();
                 endif;
             endif;
             $data["seo_url"] = seo($data["title"]);

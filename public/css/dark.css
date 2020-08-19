@@ -27,20 +27,11 @@ html.dark .fancybox-content {background-color: #222222;color:white;}
 }
 html.dark div.sidebar-content {width: 70px;}
 html.dark div.sidebar-menu {min-height: 100vh; background-color: #272727; position: fixed; z-index: 1040;}
-html.dark div.sidebar-menu div.sidebar-category {height: 360px; margin-top: -20px !important; margin-bottom: 20px; padding-bottom: 30px !important;}
+html.dark div.sidebar-menu div.sidebar-category {overflow-y:hidden;margin-top: -20px !important; margin-bottom: 20px; padding-bottom: 30px !important;}
 html.dark div.sidebar-menu div.category-item {width: 100%; display: inline-block;}
 html.dark div.sidebar-menu div.category-item div {color: #FFFFFF !important; font-size: 21px; font-weight: 500;}
-html.dark div.sidebar-menu div.category-item div:nth-child(1) {float: left; margin: 5px 3px 5px 18px;}
-html.dark div.sidebar-menu div.category-item div:nth-child(2) {float: left; margin: 5px 3px;}
-html.dark div.sidebar-menu div.category-item i {background-position: center; background-repeat: no-repeat; width: 32px; height: 32px; display: block;}
-html.dark div.sidebar-menu div.category-item:nth-child(1) i {background-image: url(../../panel/assets/img/icons/left-menu/onair-white.png); background-size: 29px}
-html.dark div.sidebar-menu div.category-item:nth-child(2) i {background-image: url(../../panel/assets/img/icons/left-menu/muzik-white.png); background-size: 25px}
-html.dark div.sidebar-menu div.category-item:nth-child(3) i {background-image: url(../../panel/assets/img/icons/left-menu/etkinlik-white.png); background-size: 26px}
-html.dark div.sidebar-menu div.category-item:nth-child(4) i {background-image: url(../../panel/assets/img/icons/left-menu/ilanlar-white.png); background-size: 28px}
-html.dark div.sidebar-menu div.category-item:nth-child(5) i {background-image: url(../../panel/assets/img/icons/left-menu/radyo-white.png); background-size: 27px}
-html.dark div.sidebar-menu div.category-item:nth-child(6) i {background-image: url(../../panel/assets/img/icons/left-menu/videolar-white.png); background-size: 34px}
-html.dark div.sidebar-menu div.category-item:nth-child(7) i {background-image: url(../../panel/assets/img/icons/left-menu/test-white.png); background-size: 26px}
-html.dark div.sidebar-menu div.category-item:nth-child(8) i {background-image: url(../../panel/assets/img/icons/left-menu/keyif-white.png); background-size: 26px}
+html.dark div.sidebar-menu div.category-item div {margin: 5px 3px 5px 15px;}
+html.dark div.sidebar-menu div.category-item i {background-position: center; background-repeat: no-repeat; width: 32px; height: 32px; display: block;font-size: 32px;}
 html.dark div.sidebar-menu li a {display: block;}
 html.dark div.sidebar-menu div.name {display: none;}
 
