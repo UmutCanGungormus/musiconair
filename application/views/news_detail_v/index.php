@@ -41,7 +41,7 @@
                     <div class="justify-content-start flex-shrink-1">
                         <ul class="list-group px-auto mx-auto justify-content-center text-center w-100 d-flex">
                             <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 cok-iyi bg-transparent border-0 mb-1"></li>
-                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
+                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1" data-toggle="tooltip" data-title="Görüntülenme" data-placement="top">
                                 <a class="mx-auto px-auto justify-content-center text-center w-100 text-white" href="javascript:void(0)"><?= clean($news->hit); ?></a>
                             </li>
                             <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-facebook">
@@ -62,11 +62,6 @@
                             <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
                                 <a href="javascript:void(0)" class="btnCopyLink mx-auto px-auto justify-content-center text-center w-100 text-white" data-clipboard-text="<?= base_url($news->seo_url) ?>">
                                     <i class="fa fa-link mx-auto px-auto justify-content-center text-center"></i>
-                                </a>
-                            </li>
-                            <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
-                                <a href="" class="mx-auto px-auto justify-content-center text-center w-100 text-white">
-                                    <i class="fa fa-comment mx-auto px-auto justify-content-center text-center"></i>
                                 </a>
                             </li>
                             <li class="list-group-item p-3 mx-auto justify-content-center text-center w-100 radius-secondary mb-1">
@@ -159,12 +154,29 @@
                         endforeach; ?>
                     </ul>
                 </div>
-                <form id="createComment" onsubmit="return false" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <textarea name="content" class="form-control" cols="30" rows="10" placeholder="Yorumunuzu Buraya Yazın..."></textarea>
+                <form class="createComment" onsubmit="return false" method="POST" enctype="multipart/formdata">
+                    <div class="row mx-0">
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
+                            <a href="<?= base_url(" profil/" . get_active_user()->user_name) ?>" class="d-block align-items-center text-center justify-content-center bg-transparent">
+                                <img class="rounded-circle img-fluid text-center justify-content-center bg-white border border-success shadow-lg" width="75" src="<?= get_picture("users_v", get_active_user()->img_url) ?>" alt="<?= get_active_user()->full_name ?>">
+                                <h6 class="text-center justify-content-center"><small class="text-center justify-content-center dark bg-transparent"><?= get_active_user()->user_name ?></small></h6>
+                            </a>
+                        </div>
+                        <div class="col-9 col-sm-9 col-md-9 col-lg-11 col-xl-11">
+                            <div class="form-group mb-1">
+                                <textarea name="content" class="form-control" placeholder="Yorumunuzu Buraya Yazın..." cols="30" rows="5"></textarea>
+                                <input type="hidden" name="news_id" value="<?= $news->id ?>">
+                            </div>
+                            <div class="form-group text-right">
+                                <button data-url="<?= base_url("yorum-yap") ?>" class="btn btn-primary btnComment mx-0">Yorum Yap</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
-                <?=$comments?>
+                <div class="loadComments mt-3">
+                    <?= $comments ?>
+                </div>
+
 
             </div>
 
@@ -267,6 +279,28 @@
 
 <script>
     $(document).ready(function() {
+        $(document).on("click",".btnReply",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData($(this).parent().find("form.replyForm"));
+            createAjax(url,formData,function(){
+                $(".loadComments").html().load(base_url+"/loadComments");
+            });
+        });
+
+        $(document).on("click",".btnReply",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData($(this).parent().find("form.replyForm"));
+            createAjax(url,formData,function(){
+                $(".loadComments").html().load(base_url+"/loadComments");
+            });
+        });
+
+
+
         $(document).on("click", ".cok-iyi-btn", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -274,7 +308,7 @@
             formData.append("ad", "cok_iyi");
             formData.append("id", <?= $news->id ?>);
             createAjax("<?= base_url("urlEmotion") ?>", formData, function(response) {
-                $height = parseInt($('#cok-iyi').css("height"));
+                $height = parseInt($(' #cok-iyi').css("height"));
                 $('#cok-iyi span').html(response.response_data);
                 $('#cok-iyi').css("background-color", "#9ceafd");
                 $('#cok-iyi').css("height", $height + 5);

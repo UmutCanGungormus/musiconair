@@ -1,36 +1,41 @@
 new ClipboardJS('.btnCopyLink');
 $(document).ready(function () {
-	$(".videojs").each(function(){
+	$(".videojs").each(function () {
 		new Plyr($(this));
 	});
-	// Get the header
-if ($("#storiesSticky").length > 0) {
-	// When the user scrolls the page, execute myFunction
-	let header = $("#storiesSticky");
-
-	// Get the offset position of the navbar
-	let sticky = header.scrollTop();
-	$(parent.window.document).scroll(function() {
-		// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-		if ($(window).scrollTop() > sticky && $(window).scrollTop() > sticky) {
-			header.css("top", "74px");
-			if($(window).width() <= 991){
-				header.css("left", "0")
-			}else{
-				header.css("left", "72px")
-			}
-			;
-			header.addClass("fixed-top");
-			header.addClass("px-0");
-		} else {
-			header.removeClass("fixed-top");
-			header.removeClass("px-0");
-			header.css("top", "0");
-			header.css("left", "0");
-		}
+	$(document).on("click", ".toggleReply", function (e) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		$(this).parent().find('.replyForm').slideToggle('fast');
 	});
-	
-}
+	// Get the header
+	if ($("#storiesSticky").length > 0) {
+		// When the user scrolls the page, execute myFunction
+		let header = $("#storiesSticky");
+
+		// Get the offset position of the navbar
+		let sticky = header.scrollTop();
+		$(parent.window.document).scroll(function () {
+			// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+			if ($(window).scrollTop() > sticky && $(window).scrollTop() > sticky) {
+				header.css("top", "74px");
+				if ($(window).width() <= 991) {
+					header.css("left", "0")
+				} else {
+					header.css("left", "72px")
+				}
+				;
+				header.addClass("fixed-top");
+				header.addClass("px-0");
+			} else {
+				header.removeClass("fixed-top");
+				header.removeClass("px-0");
+				header.css("top", "0");
+				header.css("left", "0");
+			}
+		});
+
+	}
 	/* Login & Register Modal */
 	/*$("#modal-custom").iziModal({
 		overlayClose: false,
@@ -68,7 +73,9 @@ if ($("#storiesSticky").length > 0) {
 		}
 	});
 
-	$("#modal-custom").on('click', '.giris-yap,.kayit-ol', function () {
+	$("#modal-custom").on('click', '.giris-yap', function (e) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
 		let fx = "wobble",  //wobble shake
 			$modal = $(this).closest('.iziModal');
 
@@ -78,6 +85,29 @@ if ($("#storiesSticky").length > 0) {
 				$modal.removeClass(fx);
 			}, 1500);
 		}
+		let url = $(this).data("url");
+		let formData = new FormData(document.getElementById("giris-yap"));
+		createAjax(url, formData, function() {
+			closeModal("#modal-custom");
+		});
+	});
+	$("#modal-custom").on('click', '.kayit-ol', function (e) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		let fx = "wobble",  //wobble shake
+			$modal = $(this).closest('.iziModal');
+
+		if (!$modal.hasClass(fx)) {
+			$modal.addClass(fx);
+			setTimeout(function () {
+				$modal.removeClass(fx);
+			}, 1500);
+		}
+		let url = $(this).data("url");
+		let formData = new FormData(document.getElementById("kayit-ol"));
+		createAjax(url, formData, function() {
+			$("#modal-custom header a")[0].click();
+		});
 	});
 	/* Login & Register Modal */
 
@@ -240,13 +270,13 @@ $(window).on("resize", function () {
 		$('div.menu-shadow').remove();
 		$("section.wrapper > div.wrapper2").css("margin-left", "0");
 		$("section.wrapper > div.wrapper2").css("margin-right", "0");
-		$("#storiesSticky").css("left","0");
+		$("#storiesSticky").css("left", "0");
 	} else {
 		$('div.sidebar-menu').removeClass('d-none');
 		$('div.sidebar-menu').addClass('d-block');
 		$("section.wrapper > div.wrapper2").css("margin-left", "140px");
 		$("section.wrapper > div.wrapper2").css("margin-right", "70px");
-		$("#storiesSticky").css("left","74px");
+		$("#storiesSticky").css("left", "74px");
 	}
 });
 /* Set Theme Cookie */

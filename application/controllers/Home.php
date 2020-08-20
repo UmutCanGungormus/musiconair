@@ -171,7 +171,7 @@ class Home extends CI_Controller
         $this->render();
     }
 
-    function show_tree($ne_id)
+    public function show_tree($ne_id)
     {
         // create array to store all comments ids
         $store_all_id = array();
@@ -191,7 +191,7 @@ class Home extends CI_Controller
     /* recursive function to loop
        through all comments and retrieve it
     */
-    function in_parent($in_parent, $ne_id, $store_all_id)
+    public function in_parent($in_parent, $ne_id, $store_all_id)
     {
         // this variable to save all concatenated html
         $html = "";
@@ -213,21 +213,47 @@ class Home extends CI_Controller
                             <div class="timeline-comment-wrapper">
                                 <div class="card dark">
                                     <div class="card-header d-flex align-items-center">
-                                        <div class="ribbon"><span>'.$user_role.'</span></div>
-                                        <a href="'.base_url("profil/{$user->user_name}").'" class="d-flex align-items-center bg-transparent">
-                                            <img class="rounded-circle" src="'.get_picture("users_v",$user->img_url).'" alt="'.$user->full_name.'" />
-                                            <h5>'.$user->user_name.'</h5>
+                                        <div class="ribbon"><span>' . $user_role . '</span></div>
+                                        <a href="' . base_url("profil/{$user->user_name}") . '" class="d-flex align-items-center bg-transparent">
+                                            <img class="rounded-circle" src="' . get_picture("users_v", $user->img_url) . '" alt="' . $user->full_name . '" />
+                                            <h5>' . $user->user_name . '</h5>
                                         </a>
-                                        <div class="comment-date" data-toggle="tooltip" title="Feb 5, 2018 8:21 pm" data-placement="top" data-original-title="Feb 5, 2018 8:21 pm">
-                                            '.turkishDate("d F Y, l H:i:s",$value->createdAt).'
+                                        <div class="comment-date">
+                                            ' . turkishDate("d F Y, l H:i:s", $value->createdAt) . '
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text">'.clean($value->content).'</p>
+                                        <p class="card-text">' . clean($value->content) . '</p>
                                     </div>
-                                    <div class="card-footer p-2">
-                                        <button type="button" class="btn btn-secondary btn-sm">Yanıtla</button>
-                                        <small class="text-muted ml-2">'.(!empty($value->updatedAt) ? time_ago($value->updatedAt) : time_ago($value->createdAt)).' Güncellendi.</small>
+                                    <div class="card-footer p-2">';
+                if (get_active_user()) :
+                    $html .= '              <button type="button" class="btn btn-secondary btn-sm toggleReply">Yanıtla</button>';
+                endif;
+                $html .= '              <small class="text-muted ml-2">' . (!empty($value->updatedAt) ? time_ago($value->updatedAt) : time_ago($value->createdAt)) . ' Güncellendi.</small>';
+                if (get_active_user()) :
+                    $html .= '
+                                        <form class="replyForm mt-3" style="display:none" onsubmit="return false" method="POST" enctype="multipart/formdata">
+                                            <div class="row mx-0">
+                                                <div class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
+                                                    <a href="' . base_url("profil/".get_active_user()->user_name) . '" class="d-block align-items-center text-center justify-content-center bg-transparent">
+                                                        <img class="rounded-circle img-fluid text-center justify-content-center bg-white border border-success shadow-lg" width="75" src="' . get_picture("users_v", get_active_user()->img_url) . '" alt="' . get_active_user()->full_name . '" />
+                                                        <h6 class="text-center justify-content-center"><small class="text-center justify-content-center">' . get_active_user()->user_name . '</small></h6>
+                                                    </a>
+                                                </div>
+                                                <div class="col-9 col-sm-9 col-md-9 col-lg-11 col-xl-11">
+                                                    <div class="form-group mb-1">
+                                                        <textarea name="content" class="form-control" placeholder="Yanıtınızı Buraya Yazın..." cols="30" rows="5"></textarea>
+                                                        <input type="hidden" name="news_id" value="' . $value->news_id . '">
+                                                        <input type="hidden" name="answer_id" value="' . $value->id . '">
+                                                    </div>
+                                                    <div class="form-group text-right">
+                                                        <button data-url="' . base_url("yanitla") . '" class="btn btn-primary btnReply mx-0">Yanıtı Gönder</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>';
+                endif;
+                $html .= '
                                     </div>
                                 </div>
                             </div>';
@@ -238,6 +264,26 @@ class Home extends CI_Controller
         endif;
 
         return $html;
+    }
+
+    public function reply_comment()
+    {
+        if (get_active_user()) :
+            $data = rClean($this->input->post());
+            if (checkEmpty($data)["error"]) :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Yorum Yanıtlanırken Hata Oluştu. Mesaj Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+            else :
+                $data["user_id"] = get_active_user()->id;
+                $insert = $this->general_model->add("comments", $data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Yorumu Başarıyla Yanıtladınız."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Yorum Yanıtlanırken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            endif;
+        else :
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Yorum Yanıtlanırken Hata Oluştu Oturum Açtığınızdan Emin Olup, Lütfen Tekrar Deneyin."]);
+        endif;
     }
 
     public function onair()

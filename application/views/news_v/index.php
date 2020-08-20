@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                 <div class="card-body position-relative mb-5">
-                                    <h5 class="card-title"><a href="<?= base_url("haber/{$value->seo_url}") ?>"><?= $value->title ?></a></h5>
+                                    <h3 class="card-title font-weight-bold"><a href="<?= base_url("haber/{$value->seo_url}") ?>"><?= $value->title ?></a></h3>
 
                                     <p class="card-text">
                                         <?php if ($value->updatedAt) : ?>
@@ -39,11 +39,6 @@
                                         <?php else : ?>
                                             <small class="text-muted"><i class="fa fa-clock-o mr-1 my-auto"></i> Yayın Tarihi : <?= turkishDate("d F Y, l H:i", $value->createdAt) ?></small>
                                         <?php endif; ?>
-                                    </p>
-                                    <p class="card-text">
-                                        <?php foreach ($tags as $tag) : ?>
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm m-1 p-1"><b>#<?= $tag; ?></b></a>
-                                        <?php endforeach; ?>
                                     </p>
                                     <p class="card-text"><?= mb_word_wrap($value->content, 300, "...") ?></p>
                                 </div>

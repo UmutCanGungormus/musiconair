@@ -946,8 +946,10 @@ function checkEmpty($data)
     $error = false;
     foreach ($data as $key => $value) :
         $value = trim($value);
-        if (empty($value))
+        if (empty($value)) :
             $error = true;
+            return ["error" => $error, "key" => (!empty($key) ? $key : null)];
+        endif;
     endforeach;
     return ["error" => $error, "key" => (!empty($key) ? $key : null)];
 }
