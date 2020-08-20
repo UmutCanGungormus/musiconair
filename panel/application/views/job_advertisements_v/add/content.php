@@ -55,7 +55,7 @@
             <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
                 <input type="hidden"><input type="file" name="img_url">
             </span>
-            <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+            <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
         </span>
     </div>
     <button role="button" data-url="<?= base_url("job_advertisement/save/"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>

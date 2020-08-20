@@ -42,8 +42,8 @@ class Home extends CI_Controller
         $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1, "role_id!=" => 2]);
         $this->viewData->keyifler = [];
-        $this->viewData->news_categories = $this->general_model->get("news_categories",null,["isActive" => 1,"seo_url" => "muzik-haberleri"]);
-        $this->viewData->muzik_haberleri = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1,"category_id" => $this->viewData->news_categories->id]);
+        $this->viewData->news_categories = $this->general_model->get("news_categories", null, ["isActive" => 1, "seo_url" => "muzik-haberleri"]);
+        $this->viewData->muzik_haberleri = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1, "category_id" => $this->viewData->news_categories->id]);
         $this->viewFolder = "home_v/index";
         $this->viewData->tvler = [];
         $this->render();
@@ -95,7 +95,7 @@ class Home extends CI_Controller
     {
         $seo_url = $this->uri->segment(2);
         $category_id = null;
-        $category= null;
+        $category = null;
         if (!empty($seo_url) && !is_numeric($seo_url)) :
             $category = $this->general_model->get("news_categories", null, ["seo_url" => $seo_url, "isActive" => 1]);
             if (!empty($category)) :
@@ -162,12 +162,82 @@ class Home extends CI_Controller
         $this->viewData->similar = $this->general_model->get_all("news", null, "hit DESC", ['category_id' => $this->viewData->news->category_id, "isActive" => 1]);
         $this->viewData->most_read = $this->general_model->get_all("news", null, "hit DESC", ['category_id' => $this->viewData->news->category_id, "isActive" => 1], [], [], [3, 0]);
         $this->general_model->update("news", ['seo_url' => $seo_url, "isActive" => 1], ['hit' => $this->viewData->news->hit + 1]);
+        $this->viewData->comments = $this->show_tree($this->viewData->news->id);
         if (empty($this->viewData->news)) :
             $this->viewFolder = "404_v/index";
         else :
             $this->viewFolder = "news_detail_v/index";
         endif;
         $this->render();
+    }
+
+    function show_tree($ne_id)
+    {
+        // create array to store all comments ids
+        $store_all_id = array();
+        // get all parent comments ids by using news id
+        $id_result = $this->general_model->get_all("comments", null, "id DESC", ["news_id" => $ne_id]);
+        // loop through all comments to save parent ids $store_all_id array
+        foreach ($id_result as $comment_id) {
+            array_push($store_all_id, $comment_id->answer_id);
+        }
+        // return all hierarchical tree data from in_parent by sending
+        //  initiate parameters 0 is the main parent,news id, all parent ids
+
+        return  $this->in_parent(0, $ne_id, $store_all_id);
+    }
+
+
+    /* recursive function to loop
+       through all comments and retrieve it
+    */
+    function in_parent($in_parent, $ne_id, $store_all_id)
+    {
+        // this variable to save all concatenated html
+        $html = "";
+        // build hierarchy  html structure based on ul li (parent-child) nodes
+        if (in_array($in_parent, $store_all_id)) :
+            $result = $this->general_model->get_all("comments", null, "id DESC", ["news_id" => $ne_id, "answer_id" => $in_parent]);
+            $users = $this->general_model->get_all("users", null, "id ASC", ["isActive" => 1]);
+            $html .=  '<ul class="timeline-comments">';
+            foreach ($result as $key => $value) :
+                $user = null;
+                foreach ($users as $k => $v) :
+                    if ($value->user_id == $v->id) :
+                        $user = $v;
+                        break;
+                    endif;
+                endforeach;
+                $user_role = $this->general_model->get("user_role", null, ["id" => $user->role_id, "isActive" => 1])->title;
+                $html .= '<li class="timeline-comment">
+                            <div class="timeline-comment-wrapper">
+                                <div class="card dark">
+                                    <div class="card-header d-flex align-items-center">
+                                        <div class="ribbon"><span>'.$user_role.'</span></div>
+                                        <a href="'.base_url("profil/{$user->user_name}").'" class="d-flex align-items-center bg-transparent">
+                                            <img class="rounded-circle" src="'.get_picture("users_v",$user->img_url).'" alt="'.$user->full_name.'" />
+                                            <h5>'.$user->user_name.'</h5>
+                                        </a>
+                                        <div class="comment-date" data-toggle="tooltip" title="Feb 5, 2018 8:21 pm" data-placement="top" data-original-title="Feb 5, 2018 8:21 pm">
+                                            '.turkishDate("d F Y, l H:i:s",$value->createdAt).'
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">'.clean($value->content).'</p>
+                                    </div>
+                                    <div class="card-footer p-2">
+                                        <button type="button" class="btn btn-secondary btn-sm">Yanıtla</button>
+                                        <small class="text-muted ml-2">'.(!empty($value->updatedAt) ? time_ago($value->updatedAt) : time_ago($value->createdAt)).' Güncellendi.</small>
+                                    </div>
+                                </div>
+                            </div>';
+                $html .= $this->in_parent($value->id, $ne_id, $store_all_id);
+                $html .= "</li>";
+            endforeach;
+            $html .=  "</ul>";
+        endif;
+
+        return $html;
     }
 
     public function onair()
@@ -502,7 +572,7 @@ class Home extends CI_Controller
     {
         $seo_url == "videolar" ? $seo_url = "video-url-galerisi" : $seo_url;
         $this->viewData->gallery = $this->general_model->get("galleries", null, ['url' => $seo_url, "isActive" => 1]);
-        
+
         $this->viewData->gallery_items = $this->general_model->get_all("{$this->viewData->gallery->gallery_type}", null, "rank ASC", ["gallery_id" => $this->viewData->gallery->id, "isActive" => 1]);
         if (empty($this->viewData->gallery_items)) :
             $this->viewFolder = "404_v/index";

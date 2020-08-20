@@ -3,7 +3,7 @@
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="text-center bg-dark border p-3">
+                <div class="text-center dark border p-3">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>
@@ -11,7 +11,7 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                 <div class="breadcrumb pl-0">
                     <a href="<?= base_url(); ?>">Anasayfa</a> <span>></span>
-                    <a href="<?= base_url("haberler/{$category->seo_url}"); ?>"><?=$category->title?></a> <span>></span>
+                    <a href="<?= base_url("haberler/{$category->seo_url}"); ?>"><?= $category->title ?></a> <span>></span>
                     <a href="javascript:void(0)"><?= $news->title; ?></a>
                 </div>
             </div>
@@ -29,12 +29,12 @@
                 <?php endif; ?>
 
                 <div class="border mt-4 p-2 clearfix">
-                    <img class="float-left mr-2" src="<?=get_picture("users_v",$writer->img_url)?>" width="40">
+                    <img class="float-left mr-2" src="<?= get_picture("users_v", $writer->img_url) ?>" width="40">
                     <b class="d-block"><?= $writer->full_name ?> <?= (!empty($writer->username) ? "(" . $writer->username . ")" : null); ?></b>
                     <span class="grey-text"><?= $writer_role; ?></span>
                 </div>
                 <?php if ($news->img_url) : ?>
-                    <img src="<?=get_picture("news_v",$news->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">
+                    <img src="<?= get_picture("news_v", $news->img_url) ?>" class="img-fluid w-100 my-3" alt="<?= $news->title ?>">
                 <?php endif; ?>
                 <div class="d-flex justify-content-between">
 
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="text-center bg-dark border p-3 mt-3">
+                <div class="text-center dark border p-3 mt-3">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
 
@@ -93,10 +93,7 @@
                     <?php endforeach; ?>
                 </div>
 
-                <div class="alert alert-warning mt-3" role="alert">
-                    Bu İçerik üyemiz tarafından eklenmiştir. Ekibimiz tarafından müdahalede bulunulmamıştır.
-                </div>
-                <div class="mt-4 post-emoji clearfix">
+                <div class="my-4 post-emoji clearfix">
                     <b>Emoji Bırak</b>
                     <?php $emotions = (array) json_decode($news->reaction); ?>
                     <?php arsort($emotions); ?>
@@ -162,64 +159,17 @@
                         endforeach; ?>
                     </ul>
                 </div>
-
-
-
-                <div id="comments" class="mt-4 clearfix">
-                    <b>Yorumlar</b>
-                    <?php if (isset($_SESSION['user']) || true) { ?>
-                        <div class="bg-light py-3">
-                            <div class="row m-0 mb-3 justify-content-center">
-                                <div class="col-md-2 p-0 text-center">
-                                    <img src="https://placehold.it/60x60&text=60x60" class="img-fluid">
-                                </div>
-                                <div class="col-md-10">
-                                    <form action="#" method="post">
-                                        <input type="hidden" name="haberid" value="<?= $news->id; ?>">
-                                        <input type="hidden" name="userid" value="<?php if (isset($_SESSION['user'])) {
-                                                                                        echo $_SESSION['user']->id;
-                                                                                    } else {
-                                                                                        echo 0;
-                                                                                    } ?>">
-                                        <label for="makeComment"></label>
-                                        <textarea name="makeComment" id="makeComment" class="form-control"></textarea>
-                                        <button type="submit" class="btn btn-danger btn-sm float-right">Gönder
-                                        </button>
-                                    </form>
-
-                                </div>
-                            </div>
-
-                            <!--  <ul class="list-group list-group-flush">
-                                        <?php
-                                        foreach ($comments as $comment) {
-                                            $cUser = $this->db->query("select * from site_users WHERE id=$comment->yorum_yapan_id")->row();
-                                        ?>
-                                            <li class="list-group-item bg-transparent">
-                                                <b><?= $cUser->nick; ?>: </b><?= $comment->text; ?>
-                                            </li>
-                                        <?php } ?>
-                                        <!--                                        --><?php //for ($i = 1; $i <= 7; $i++): 
-                                                                                        ?>
-                            <!--                                            <li class="list-group-item bg-transparent">-->
-                            <!--                                                <b>Ahmet: </b>Lorem ipsum dolor sit amet, consectetur adipisicing-->
-                            <!--                                                elit. Hic, consequatur, iusto. Quisquam facere, in at. Similique-->
-                            <!--                                                odio natus possimus quasi, blanditiis, quos, cum tenetur pariatur-->
-                            <!--                                                harum nemo architecto illo quisquam.-->
-                            <!--                                            </li>-->
-                            <!--                                        --><?php //endfor; 
-                                                                            ?>
-                            </ul>
-
-                        </div>
-                    <?php } ?>
-                </div>
-
+                <form id="createComment" onsubmit="return false" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <textarea name="content" class="form-control" cols="30" rows="10" placeholder="Yorumunuzu Buraya Yazın..."></textarea>
+                    </div>
+                </form>
+                <?=$comments?>
 
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                <div class="container text-center bg-dark border p-5">
+                <div class="container text-center dark border p-5">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
 
@@ -228,10 +178,10 @@
                 <?php if (!empty($similar)) : ?>
                     <?php foreach ($similar as $item) : ?>
                         <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
-                            <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?=get_picture("news_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= get_picture("news_v", $item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
@@ -249,10 +199,10 @@
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
                         <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
-                            <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?=get_picture("news_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= get_picture("news_v", $item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
@@ -306,7 +256,7 @@
 
                 </div>
 
-                <div class="container text-center bg-dark border mt-3 p-5">
+                <div class="container text-center dark border mt-3 p-5">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>

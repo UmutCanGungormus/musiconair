@@ -52,7 +52,7 @@
                                     <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
                                         <input type="hidden"><input type="file" name="img_url">
                                     </span>
-                                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                                    <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                                 </span>
                             </div>
                             <div class="form-group video_url_container" style="display: <?= ($social_media_talk_type == "video") ? "block" : "none"; ?>">
@@ -64,20 +64,22 @@
                             </div>
                         <?php else : ?>
                             <div class="row">
-                                <div class="col-1 image_upload_container" style="display: <?= ($item->social_media_talk_type == "video") ? "none" : "block"; ?>">
+                                <div class="col-3 image_upload_container" style="display: <?= ($item->social_media_talk_type == "video") ? "none" : "block"; ?>">
                                     <img src="<?= get_picture($viewFolder, $item->img_url); ?>" class="img-fluid">
                                 </div>
-                                <div class="fileinput fileinput-new input-group col-11" data-provides="fileinput" style="display: <?= ($item->social_media_talk_type == "image" ? "block" : "none")?>;">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Görsel Seçiniz</span>
-                                    </div>
-                                    <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                                    <span class="input-group-append">
-                                        <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
-                                            <input type="hidden"><input type="file" name="img_url">
+                                <div class="col-9">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Görsel Seçiniz</span>
+                                        </div>
+                                        <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                        <span class="input-group-append">
+                                            <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+                                                <input type="hidden"><input type="file" name="img_url">
+                                            </span>
+                                            <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                                         </span>
-                                        <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
-                                    </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group video_url_container" style="display: <?= ($item->social_media_talk_type == "video") ? "block" : "none"; ?>">

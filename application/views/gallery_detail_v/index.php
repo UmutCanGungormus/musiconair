@@ -3,7 +3,7 @@
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="text-center bg-dark border p-3">
+                <div class="text-center dark border p-3">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="text-center bg-dark border p-3 mt-3">
+                <div class="text-center dark border p-3 mt-3">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
 
@@ -94,7 +94,7 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                <div class="container text-center bg-dark border p-5">
+                <div class="container text-center dark border p-5">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
 
@@ -102,7 +102,7 @@
                 <?php if (!empty($most_read)) : ?>
                     <?php foreach ($most_read as $item) : ?>
                         <a href="<?= base_url("haber/" . $item->seo_url); ?>" class="text-color">
-                            <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : null) ?>">
+                            <div class="card rounded-0 border border mb-3 <?= (get_cookie("theme", true) == "dark" ? "dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
                                         <img src="<?= get_picture("news_v", $item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
@@ -159,7 +159,7 @@
 
                 </div>
 
-                <div class="container text-center bg-dark border mt-3 p-5">
+                <div class="container text-center dark border mt-3 p-5">
                     <h3 class="text-white">Reklam Alanı</h3>
                 </div>
             </div>

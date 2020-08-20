@@ -1,9 +1,9 @@
 <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-3">
             <img src="<?= get_picture($viewFolder, $item->logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-9">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Masaüstü Logo Seçimi</span>
@@ -13,16 +13,16 @@
                     <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
                         <input type="hidden"><input type="file" name="logo">
                     </span>
-                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-3">
             <img src="<?= get_picture($viewFolder, $item->mobile_logo); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-9">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Mobil Logo Seçimi</span>
@@ -32,16 +32,16 @@
                     <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
                         <input type="hidden"><input type="file" name="mobile_logo">
                     </span>
-                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-3">
             <img src="<?= get_picture($viewFolder, $item->favicon); ?>" alt="<?= $item->company_name; ?>" class="img-fluid" style="margin: 0px auto">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-9">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Favicon Seçimi</span>
@@ -51,7 +51,7 @@
                     <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Change</span>
                         <input type="hidden"><input type="file" name="favicon">
                     </span>
-                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>

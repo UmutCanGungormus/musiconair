@@ -5,12 +5,28 @@
     </div>
     <div class="form-group">
         <label>Hikaye URL</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Hikaye URL" name="url" value="<?=$item->url?>">
+        <input class="form-control form-control-sm rounded-0" placeholder="Hikaye URL" name="url" value="<?= $item->url ?>">
     </div>
-    <div class="form-group">
-        <label>Hikaye Kapak Görseli</label>
-        <input class="form-control rounded-0" placeholder="Hikaye Kapak Görseli" name="file" type="file">
+    <div class="row">
+        <div class="col-3">
+            <img class="img-fluid" src="<?=get_picture("stories_v/{$item->folder_name}/covers",$item->img_url)?>" alt="<?=$item->title?>">
+        </div>
+        <div class="col-9">
+            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Hikaye Kapak Görseli</span>
+                </div>
+                <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <span class="input-group-append">
+                    <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
+                        <input type="hidden"><input type="file" name="file">
+                    </span>
+                    <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                </span>
+            </div>
+        </div>
     </div>
+
     <button data-url="<?= base_url("stories/update/$item->id/$item->folder_name"); ?>" type="button" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#storyModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

@@ -7,10 +7,10 @@
 		
 		<div class="container mt-2">
 			<div class="row mt-4 text-center px-4">
-                <div class="col-md-6 bg-dark border" style="height: 90px;">
+                <div class="col-md-6 dark border" style="height: 90px;">
                     <h3 class="text-white" style="line-height: 90px;">REKLAM ALANI</h3>
                 </div>
-                <div class="col-md-6 bg-dark border" style="height: 90px;">
+                <div class="col-md-6 dark border" style="height: 90px;">
                     <h3 class="text-white" style="line-height: 90px;">REKLAM ALANI</h3>
                 </div>
             </div>

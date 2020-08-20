@@ -3,10 +3,10 @@
 
     <div class="container mt-2">
         <div class="row mt-4 text-center px-3">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 bg-dark border p-4">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 dark border p-4">
                 <h4 class="text-white my-auto">REKLAM ALANI</h4>
             </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 bg-dark border p-4">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 dark border p-4">
                 <h4 class="text-white my-auto">REKLAM ALANI</h4>
             </div>
         </div>

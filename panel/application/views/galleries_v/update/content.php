@@ -4,10 +4,10 @@
         <input class="form-control form-control-sm rounded-0" placeholder="Galeri Adı" name="title" value="<?= $item->title; ?>" required>
     </div>
     <div class="form-group row">
-        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <div class="col-3">
             <img src="<?=get_picture("$viewFolder/{$item->gallery_type}",$item->img_url) ?>" class="img-fluid" alt="<?=$item->title?>">
         </div>
-        <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+        <div class="col-9">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Galeri Kapak Görseli</span>
@@ -17,7 +17,7 @@
                     <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
                         <input type="hidden"><input type="file" name="img_url">
                     </span>
-                    <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Kaldır</a>
+                    <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
                 </span>
             </div>
         </div>

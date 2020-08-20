@@ -4,7 +4,7 @@
         <div class="row">
             <div id="storiesSticky" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 storiesSticky">
                 <?php if (!empty($stories)) : ?>
-                    <div id="stories" class="stories carousel snapgram pt-1 px-3 <?= (get_cookie("theme", true) == "dark" ? "bg-dark" : "bg-white") ?> border">
+                    <div id="stories" class="stories carousel snapgram pt-1 px-3 <?= (get_cookie("theme", true) == "dark" ? "dark" : "bg-white") ?> border">
                     </div>
                 <?php endif; ?>
             </div>
@@ -37,10 +37,10 @@
         </div>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-3">
-                <h4 class="text-white my-auto bg-dark border p-4 text-center">REKLAM ALANI</h4>
+                <h4 class="text-white my-auto dark border p-4 text-center">REKLAM ALANI</h4>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-3">
-                <h4 class="text-white my-auto bg-dark border p-4 text-center">REKLAM ALANI</h4>
+                <h4 class="text-white my-auto dark border p-4 text-center">REKLAM ALANI</h4>
             </div>
         </div>
         <div class="row">

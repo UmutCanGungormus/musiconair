@@ -145,14 +145,14 @@ if ($("#storiesSticky").length > 0) {
 
 		if (htmlClass === 'dark') {
 			$('html').attr('class', 'light');
-			if ($(".card").hasClass("bg-dark")) {
-				$(".card").removeClass("bg-dark");
+			if ($(".card").hasClass("dark")) {
+				$(".card").removeClass("dark");
 			}
-			if ($(".jumbotron").hasClass("bg-dark")) {
-				$(".jumbotron").removeClass("bg-dark");
+			if ($(".jumbotron").hasClass("dark")) {
+				$(".jumbotron").removeClass("dark");
 			}
-			if ($("#stories").hasClass("bg-dark")) {
-				$("#stories").removeClass("bg-dark");
+			if ($("#stories").hasClass("dark")) {
+				$("#stories").removeClass("dark");
 			}
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-light-theme.png');
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-light-theme.png');
@@ -161,14 +161,14 @@ if ($("#storiesSticky").length > 0) {
 
 		} else {
 			$('html').attr('class', 'dark');
-			if (!$(".card").hasClass("bg-dark")) {
-				$(".card").addClass("bg-dark");
+			if (!$(".card").hasClass("dark")) {
+				$(".card").addClass("dark");
 			}
-			if (!$("#stories").hasClass("bg-dark")) {
-				$("#stories").addClass("bg-dark");
+			if (!$("#stories").hasClass("dark")) {
+				$("#stories").addClass("dark");
 			}
-			if (!$(".jumbotron").hasClass("bg-dark")) {
-				$(".jumbotron").addClass("bg-dark");
+			if (!$(".jumbotron").hasClass("dark")) {
+				$(".jumbotron").addClass("dark");
 			}
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-black-theme.png');
 			$('.navbar-brand img').attr('src', base_url + '/panel/assets/img/logo-black-theme.png');
