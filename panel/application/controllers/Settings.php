@@ -138,11 +138,10 @@ class Settings extends MY_Controller
     }
 
     public function uploadImage(){
-        $temp = current($_FILES);
-        $image = upload_picture($temp["tmp_name"], "uploads/tinyMCE");
+        $image = upload_picture("file", "uploads/tinyMCE");
         if ($image["success"]) {
             $filename = $image["file_name"];
-            echo json_encode(['location' => base_url("uploads/tinyMCE/1920x1080/{$filename}")]);
+            echo json_encode(['location' => base_url("uploads/tinyMCE/{$filename}")]);
         }else{
             // Notify editor that the upload failed
         header("HTTP/1.1 500 Server Error");

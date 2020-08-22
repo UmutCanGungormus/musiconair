@@ -807,11 +807,11 @@ function send_email($toEmail = [], $subject = "", $message = "", $mail_settings 
     // Create the Mailer using your created Transport
     $mailer = new Swift_Mailer($transport);
     if (empty($toEmail)) :
-        $toEmail = [$email_settings->user_name];
+        $toEmail = [$email_settings->user];
     endif;
     // Create a message
     $msg = (new Swift_Message($subject))
-        ->setFrom([$email_settings->from => $email_settings->user_name])
+        ->setFrom([$email_settings->from => $email_settings->user])
         ->setTo($toEmail)
         ->setCharset('utf-8');
 
