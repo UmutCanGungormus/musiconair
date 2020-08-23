@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <?php $user = get_active_user(); ?>
 <!-- Vertical Nav -->
 <nav class="hk-nav hk-nav-dark">

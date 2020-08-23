@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="updateGallery" onsubmit="return false" method="post">
     <div class="form-group">
         <label>Galeri Adı</label>
@@ -5,7 +6,7 @@
     </div>
     <div class="form-group row">
         <div class="col-3">
-            <img src="<?=get_picture("$viewFolder/{$item->gallery_type}",$item->img_url) ?>" class="img-fluid" alt="<?=$item->title?>">
+            <img src="<?= get_picture("$viewFolder/{$item->gallery_type}", $item->img_url) ?>" class="img-fluid" alt="<?= $item->title ?>">
         </div>
         <div class="col-9">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">

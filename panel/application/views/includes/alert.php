@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <?php $alert = $this->session->userdata("alert"); ?>
 <?php if ($alert) : ?>
 	<?php if ($alert["type"] === "success") : ?>

@@ -1,11 +1,12 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <form id="updateHomeBanner" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Başlık</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title" value="<?= $item->title; ?>">
+        <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title" value="<?= $item->title; ?>" required>
     </div>
     <div class="form-group">
         <label>Link</label>
-        <input class="form-control form-control-sm rounded-0" placeholder="Link" name="url" value="<?= $item->url; ?>">
+        <input class="form-control form-control-sm rounded-0" placeholder="Link" name="url" value="<?= $item->url; ?>" required>
     </div>
     <div class="row">
         <div class="col-3">

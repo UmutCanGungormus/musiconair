@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="updateGallery" onsubmit="return false" method="post">
     <div class="form-group">
         <label>Başlık</label>
@@ -24,7 +25,7 @@
         <div class="form-control rounded-0 text-truncate" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
         <span class="input-group-append">
             <span class=" btn btn-outline-primary rounded-0 btn-file"><span class="fileinput-new">Dosya Seç</span><span class="fileinput-exists">Değiştir</span>
-                <input type="hidden"><input type="file" name="img_url">
+                <input type="hidden"><input type="file" name="img_url" required>
             </span>
             <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
         </span>

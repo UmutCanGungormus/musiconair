@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <form id="createEmail" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Protokol</label>
@@ -32,5 +33,5 @@
         <input type="email" class="form-control form-control-sm rounded-0" placeholder="Kime Gidecek (To)" name="to" required>
     </div>
     <button data-url="<?= base_url("emailsettings/save"); ?>" type="button" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
-    <a onclick="closeModal('#emailModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
+    <a href="javascript:void(0)" onclick="closeModal('#emailModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

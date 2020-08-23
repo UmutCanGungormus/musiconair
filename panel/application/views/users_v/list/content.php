@@ -3,7 +3,7 @@
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<h4 class="mb-3">
 				Kullanıcı Listesi
-				<a href="<?= base_url("users/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
+				<a href="javascript:void(0)" data-url="<?= base_url("users/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm createUserBtn"><i class="fa fa-plus"></i>Yeni Ekle</a>
 			</h4>
 		</div><!-- END column -->
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -35,19 +35,73 @@
 				</tbody>
 
 			</table>
+			<script>
+				function obj(d) {
+					let appendeddata = {};
+					$.each($("#filter_form").serializeArray(), function() {
+						d[this.name] = this.value;
+					});
+					return d;
+				}
+				$(document).ready(function() {
+					TableInitializerV2("userTable", obj, {}, "<?= base_url("users/datatable") ?>", "<?= base_url("users/rankSetter") ?>", true);
+
+				});
+			</script>
 		</div><!-- .widget -->
 	</div><!-- END column -->
 </div>
-<script>
-	function obj(d) {
-		let appendeddata = {};
-		$.each($("#filter_form").serializeArray(), function() {
-			d[this.name] = this.value;
-		});
-		return d;
-	}
-	$(document).ready(function() {
-		TableInitializerV2("userTable", obj, {}, "<?= base_url("users/datatable") ?>", "<?= base_url("users/rankSetter") ?>", true);
+<div id="userModal"></div>
 
-	});
+<script>
+    $(document).ready(function(){
+        $(document).on("click",".createUserBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#userModal').iziModal('destroy');
+            createModal("#userModal","Yeni Kullanıcı Ekle","Yeni Kullanıcı Ekle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#userModal .iziModal-content").html(response);
+                });
+            });
+			openModal("#userModal");
+			$("#userModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click",".btnSave",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createUser"));
+            createAjax(url,formData,function(){
+				closeModal("#userModal");
+				$("#userModal").iziModal("setFullscreen",false);
+                reloadTable("userTable");
+            });
+        });
+        $(document).on("click",".updateUserBtn",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#userModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#userModal","Kullanıcı Düzenle","Kullanıcı Düzenle",600,true,"20px",0,"#e20e17","#fff",1040,function(){
+                $.post(url,{},function(response){
+                    $("#userModal .iziModal-content").html(response);
+                });
+            });
+			openModal("#userModal");
+			$("#userModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click",".btnUpdate",function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateUser"));
+            createAjax(url,formData,function(){
+				closeModal("#userModal");
+				$("#userModal").iziModal("setFullscreen",false);
+                reloadTable("userTable");
+            });
+        });
+    });
 </script>

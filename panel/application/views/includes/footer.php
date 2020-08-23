@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <!-- Footer -->
 <div class="hk-footer-wrap container">
     <footer class="footer">

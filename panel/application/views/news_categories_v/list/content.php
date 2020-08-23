@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -32,20 +33,20 @@
 
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("newsCategoryTable", obj, {}, "<?= base_url("news_categories/datatable") ?>", "<?= base_url("news_categories/rankSetter") ?>", true);
+
+                });
+            </script>
         </div>
     </div>
 </div>
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("newsCategoryTable", obj, {}, "<?= base_url("news_categories/datatable") ?>", "<?= base_url("news_categories/rankSetter") ?>", true);
-
-    });
-</script>

@@ -154,6 +154,8 @@
                         endforeach; ?>
                     </ul>
                 </div>
+                <h3>YORUMLAR ()</h3>
+                <?php if(get_active_user()):?>
                 <form class="createComment" onsubmit="return false" method="POST" enctype="multipart/formdata">
                     <div class="row mx-0">
                         <div class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
@@ -173,6 +175,7 @@
                         </div>
                     </div>
                 </form>
+                <?php endif;?>
                 <div class="loadComments mt-3">
                     <?= $comments ?>
                 </div>

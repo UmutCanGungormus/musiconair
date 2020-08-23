@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -66,6 +67,7 @@
                 });
             });
             openModal("#activityCategoryModal");
+            $("#activityModal").iziModal("setFullscreen",false);
         });
         $(document).on("click",".btnSave",function(e){
             e.preventDefault();
@@ -74,6 +76,7 @@
             let formData = new FormData(document.getElementById("createActivityCategory"));
             createAjax(url,formData,function(){
                 closeModal("#activityCategoryModal");
+                $("#activityModal").iziModal("setFullscreen",false);
                 reloadTable("activityCategoriesTable");
             });
         });
@@ -88,6 +91,7 @@
                 });
             });
             openModal("#activityCategoryModal");
+            $("#activityModal").iziModal("setFullscreen",false);
         });
         $(document).on("click",".btnUpdate",function(e){
             e.preventDefault();
@@ -96,6 +100,7 @@
             let formData = new FormData(document.getElementById("updateActivityCategory"));
             createAjax(url,formData,function(){
                 closeModal("#activityCategoryModal");
+                $("#activityModal").iziModal("setFullscreen",false);
                 reloadTable("activityCategoriesTable");
             });
         });

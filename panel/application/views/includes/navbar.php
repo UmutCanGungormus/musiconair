@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <?php $settings = get_settings(); ?>
 <?php $user = get_active_user(); ?>
 <!-- Top Navbar -->

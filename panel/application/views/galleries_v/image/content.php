@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <?php if($item->gallery_type != "video_url"):?>
     <div class="row">
@@ -13,7 +14,7 @@
                 <form id="createGalleryItem" onsubmit="return false" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Video URL (Youtube)</label>
-                    <input type="text" name="url" class="form-control form-control-sm rounded-0">
+                    <input type="text" name="url" class="form-control form-control-sm rounded-0" required>
                 </div>
                 <div class="form-group">
                     <button data-url="<?= base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Videoyu Kaydet</button>

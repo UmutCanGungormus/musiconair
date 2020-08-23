@@ -1,36 +1,37 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <form id="updateEstateAdvertisement" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>İlan Başlığı</label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->title ?>" placeholder="İlan Başlığı" name="title">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->title ?>" placeholder="İlan Başlığı" name="title" required>
     </div>
     <div class="form-group">
         <label>Şehir </label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->city ?>" placeholder="Şehir" name="city">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->city ?>" placeholder="Şehir" name="city" required>
     </div>
     <div class="form-group">
         <label>İlan Şekli</label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->estate_type ?>" placeholder="İlan Şekli" name="estate_type">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->estate_type ?>" placeholder="İlan Şekli" name="estate_type" required>
     </div>
     <div class="form-group">
         <label>Ücret</label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->payment ?>" placeholder="Ücret" name="payment">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->payment ?>" placeholder="Ücret" name="payment" required>
     </div>
     <div class="form-group">
         <label>İlana Dahil Olanlar</label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->advertisement_in ?>" placeholder="İlana Dahil Olanlar" name="advertisement_in">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->advertisement_in ?>" placeholder="İlana Dahil Olanlar" name="advertisement_in" required>
     </div>
     <div class="form-group">
         <label>İlana Sahibi</label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->advertisement_owner ?>" placeholder="İlana Sahibi" name="advertisement_owner">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->advertisement_owner ?>" placeholder="İlana Sahibi" name="advertisement_owner" required>
     </div>
     <div class="form-group">
         <label>İlan Linki</label>
-        <input class="form-control form-control-sm rounded-0" value="<?= $item->url ?>" placeholder="İlan Linki" name="url">
+        <input class="form-control form-control-sm rounded-0" value="<?= $item->url ?>" placeholder="İlan Linki" name="url" required>
     </div>
 
     <div class="form-group">
         <label>Açıklama</label>
-        <textarea name="content" class="m-0 tinymce"> <?= $item->content ?></textarea>
+        <textarea name="content" class="m-0 tinymce" required> <?= $item->content ?></textarea>
     </div>
     <div class="row">
         <div class="col-3 image_upload_container">
