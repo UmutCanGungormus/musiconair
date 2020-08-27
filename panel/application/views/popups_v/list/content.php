@@ -1,9 +1,10 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Popup Listesi
-                <a href="<?= base_url("popups/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("popups/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 float-right createPopup"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div><!-- END column -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -33,20 +34,20 @@
 
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("popupTable", obj, {}, "<?= base_url("popups/datatable") ?>", "<?= base_url("popups/rankSetter") ?>", true);
+
+                });
+            </script>
         </div>
     </div>
 </div>
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("popupTable", obj, {}, "<?= base_url("popups/datatable") ?>", "<?= base_url("popups/rankSetter") ?>", true);
-
-    });
-</script>

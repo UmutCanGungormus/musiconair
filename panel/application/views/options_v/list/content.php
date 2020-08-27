@@ -4,7 +4,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Test Soruları Şıkları Listesi
-                <a href="javascript:void(0)" data-ur1="<?= base_url("options/new_form"); ?>" class="btn btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("options/new_form"); ?>" class="btn btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
