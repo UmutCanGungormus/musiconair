@@ -1,10 +1,10 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Haber İçi Widget Listesi
-                <a href="<?= base_url("news_box/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("news_box/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createWidgetBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -35,20 +35,79 @@
 
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("widgetTable", obj, {}, "<?= base_url("news_box/datatable") ?>", "<?= base_url("news_box/rankSetter") ?>", true);
+
+                });
+            </script>
         </div>
     </div>
 </div>
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("widgetTable", obj, {}, "<?= base_url("news_box/datatable") ?>", "<?= base_url("news_box/rankSetter") ?>", true);
 
+<div id="newsBoxModal"></div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".createWidgetBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#newsBoxModal').iziModal('destroy');
+            createModal("#newsBoxModal", "Yeni Haber İçi Widget Ekle", "Yeni Haber İçi Widget Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#newsBoxModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                });
+            });
+            openModal("#newsBoxModal");
+            $("#newsBoxModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click", ".btnSave", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createNewsBox"));
+            createAjax(url, formData, function() {
+                closeModal("#newsBoxModal");
+                $("#newsBoxModal").iziModal("setFullscreen",false);
+                reloadTable("widgetTable");
+            });
+        });
+        $(document).on("click", ".updateWidgetBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#newsBoxModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#newsBoxModal", "Haber İçi Widget Düzenle", "Haber İçi Widget Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#newsBoxModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                });
+            });
+            openModal("#newsBoxModal");
+            $("#newsBoxModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click", ".btnUpdate", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateNewsBox"));
+            createAjax(url, formData, function() {
+                closeModal("#newsBoxModal");
+                $("#newsBoxModal").iziModal("setFullscreen",false);
+                reloadTable("widgetTable");
+            });
+        });
     });
 </script>

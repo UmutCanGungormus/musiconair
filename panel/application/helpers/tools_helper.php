@@ -979,7 +979,7 @@ function get_product_cover_photo($id)
 //$_FILES["img_url"]["tmp_name"]
 //100,200
 //uploads/$t->viewFolder/deneme.png
-function upload_picture($file, $uploadPath,$allowedTypes="bmp|gif|jpeg|jpg|jpe|jp2|j2k|jpf|jpg2|jpx|jpm|mj2|mjp2|tiff|tif|svg|ico")
+function upload_picture($file, $uploadPath,$allowedTypes="bmp|gif|jpeg|jpg|jpe|jp2|j2k|jpf|jpg2|jpx|jpm|mj2|mjp2|tiff|tif|svg|ico|png")
 {
     $t = &get_instance();
     if (!is_dir("{$uploadPath}")) {

@@ -86,7 +86,7 @@ class Estate_advertisement extends MY_Controller
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Emlak İlanı Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
         else :
             if ($_FILES["img_url"]["name"] == "") :
-                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Emlak İlanı Eklenirken Hata Oluştu. Etkinlik Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Emlak İlanı Eklenirken Hata Oluştu. Emlak İlanı Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                 die();
             endif;
             $image = upload_picture("img_url", "uploads/$this->viewFolder");

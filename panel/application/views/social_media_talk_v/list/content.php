@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Sosyal Medya Widget Listesi
-                <a href="<?= base_url("social_media_talk/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("social_media_talk/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm createSocialMediaTalkBtn"><i class="fa fa-plus"></i>Yeni Ekle</a>
             </h4>
         </div><!-- END column -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -27,28 +27,86 @@
                     <th class="w50">#id</th>
                     <th>Widget Adı</th>
                     <th>Haber Adı</th>
-                    <th>Görsel</th>
+                    <th>Görsel/Video</th>
                     <th>Durumu</th>
                     <th>İşlem</th>
                 </thead>
-                <tbody class="sortable" data-url="<?= base_url("social_media_talk/rankSetter"); ?>">
+                <tbody>
 
                 </tbody>
 
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("socialMediaTalk", obj, {}, "<?= base_url("social_media_talk/datatable") ?>", "<?= base_url("social_media_talk/rankSetter") ?>", true);
+
+                });
+            </script>
         </div><!-- .widget -->
     </div><!-- END column -->
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("socialMediaTalk", obj, {}, "<?= base_url("social_media_talk/datatable") ?>", "<?= base_url("social_media_talk/rankSetter") ?>", true);
+<div id="socialMediaTalkModal"></div>
 
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".createSocialMediaTalkBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#socialMediaTalkModal').iziModal('destroy');
+            createModal("#socialMediaTalkModal", "Yeni Sosyal Medya Widget Ekle", "Yeni Sosyal Medya Widget Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#socialMediaTalkModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                });
+            });
+            openModal("#socialMediaTalkModal");
+            $("#socialMediaTalkModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click", ".btnSave", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createSocialMediaTalk"));
+            createAjax(url, formData, function() {
+                closeModal("#socialMediaTalkModal");
+                $("#socialMediaTalkModal").iziModal("setFullscreen",false);
+                reloadTable("socialMediaTalk");
+            });
+        });
+        $(document).on("click", ".updateSocialMediaTalkBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#socialMediaTalkModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#socialMediaTalkModal", "Sosyal Medya Widget Düzenle", "Sosyal Medya Widget Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#socialMediaTalkModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                });
+            });
+            openModal("#socialMediaTalkModal");
+            $("#socialMediaTalkModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click", ".btnUpdate", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateSocialMediaTalk"));
+            createAjax(url, formData, function() {
+                closeModal("#socialMediaTalkModal");
+                $("#socialMediaTalkModal").iziModal("setFullscreen",false);
+                reloadTable("socialMediaTalk");
+            });
+        });
     });
 </script>
