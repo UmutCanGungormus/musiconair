@@ -131,11 +131,11 @@
                         <ul id="news_nav" class="nav flex-column collapse  <?= ($this->uri->segment(1)=="news")||($this->uri->segment(1)=="news_categories")?"show":""?> collapse-level-1">
                             <li class="nav-item">
                                 <ul class="nav flex-column">
+                                <li class="nav-item  <?= ($this->uri->segment(1)=="news_categories")? "active":"" ?>">
+                                        <a class="nav-link" href="<?= base_url("news_categories"); ?>">Haber Kategorileri</a>
+                                    </li>
                                     <li class="nav-item  <?= ($this->uri->segment(1)=="news")? "active":"" ?>">
                                         <a class="nav-link" href="<?= base_url("news"); ?>">Haberler</a>
-                                    </li>
-                                    <li class="nav-item  <?= ($this->uri->segment(1)=="news_categories")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("news_categories"); ?>">Haber Kategorileri</a>
                                     </li>
                                 </ul>
                             </li>

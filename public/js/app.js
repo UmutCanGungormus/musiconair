@@ -1,8 +1,5 @@
 new ClipboardJS('.btnCopyLink');
 $(document).ready(function () {
-	$(".videojs").each(function () {
-		new Plyr($(this));
-	});
 	$(document).on("click", ".toggleReply", function (e) {
 		e.preventDefault();
 		e.stopImmediatePropagation();

@@ -1,52 +1,124 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Film Listesi
-                <a href="<?= base_url("cinema/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("cinema/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 createCinemaBtn"><i class="fa fa-plus"></i>Yeni Ekle</a>
             </h4>
             <hr>
         </div><!-- END column -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <table class="table table-hover table-striped table-bordered content-container">
+            <form id="filter_form" onsubmit="return false">
+                <div class="d-flex flex-wrap">
+                    <label for="search" class="flex-fill mx-1">
+                        <input class="form-control form-control-sm rounded-0" placeholder="Arama Yapmak İçin Metin Girin." type="text" onkeypress="return runScript(event,'cinemaTable')" name="search">
+                    </label>
+                    <label for="clear_button" class="mx-1">
+                        <button class="btn btn-sm btn-outline-danger rounded-0 " onclick="clearFilter('filter_form','cinemaTable')" id="clear_button" data-toggle="tooltip" data-placement="top" data-title="Filtreyi Temizle" data-original-title="" title=""><i class="fa fa-eraser"></i></button>
+                    </label>
+                    <label for="search_button" class="mx-1">
+                        <button class="btn btn-sm btn-outline-success rounded-0 " onclick="reloadTable('cinemaTable')" id="search_button" data-toggle="tooltip" data-placement="top" data-title="Sinema Ara"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+            <table class="table table-hover table-striped table-bordered content-container cinemaTable">
                 <thead>
+                    <th class="order"><i class="fa fa-reorder"></i></th>
                     <th class="order"><i class="fa fa-reorder"></i></th>
                     <th class="w50">#id</th>
                     <th>Başlık</th>
-                    <th>Kategori</th>
+                    <th class="nosort">Kategori</th>
                     <th>Görsel</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
-                <tbody class="sortable" data-url="<?= base_url("cinema/rankSetter"); ?>">
-                    <?php foreach ($items as $item) : ?>
-                        <tr id="ord-<?= $item->id; ?>">
-                            <td class="order"><i class="fa fa-reorder"></i></td>
-                            <td class="w50 text-center">#<?= $item->id; ?></td>
-                            <td><?= $item->title; ?></td>
-                            <td class="w200 text-center">
-                                <?php $cat = json_decode($item->category_id);
-
-                                foreach ($cat as $category) :
-                                    echo " " . get_cinema_category_title($category);
-                                endforeach
-                                ?>
-                            </td>
-                            <td class="text-center w100">
-                                <img width="75" src="<?= get_picture($viewFolder, $item->img_url); ?>" alt="" class="img-fluid">
-                            </td>
-                            <td class="text-center w100">
-                                <div class="custom-control custom-switch"><input data-id="<?= $item->id ?>" data-url="<?= base_url("cinema/isActiveSetter/{$item->id}"); ?>" data-status="<?= ($item->isActive) ? "checked" : ""; ?>" id="customSwitch<?= $item->id ?>" type="checkbox" <?= ($item->isActive) ? "checked" : ""; ?> class="my-check custom-control-input"> <label class="custom-control-label" for="customSwitch<?= $item->id ?>"></label></div>
-                            </td>
-                            <td class="text-center w200">
-                                <button data-url="<?= base_url("cinema/delete/$item->id"); ?>" class="btn btn-sm btn-sm btn-outline-danger rounded-0 remove-btn"><i class="fa fa-trash"></i> Sil</button>
-                                <a href="<?= base_url("cinema/update_form/$item->id"); ?>" class="btn btn-sm btn-sm btn-outline-info rounded-0"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
+                <tbody>
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("cinemaTable", obj, {}, "<?= base_url("cinema/datatable") ?>", "<?= base_url("cinema/rankSetter") ?>", true);
+
+                });
+            </script>
         </div><!-- END column -->
     </div>
 </div>
+
+<div id="cinemaModal"></div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".createCinemaBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#cinemaModal').iziModal('destroy');
+            createModal("#cinemaModal", "Yeni Sinema Ekle", "Yeni Sinema Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#cinemaModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                    $(".tagsInput").select2({
+                        width: 'resolve',
+                        theme: "classic",
+                        tags: true,
+                        tokenSeparators: [',', ' ']
+                    });
+                });
+            });
+            openModal("#cinemaModal");
+            $("#cinemaModal").iziModal("setFullscreen", false);
+        });
+        $(document).on("click", ".btnSave", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createCinema"));
+            createAjax(url, formData, function() {
+                closeModal("#cinemaModal");
+                $("#cinemaModal").iziModal("setFullscreen", false);
+                reloadTable("cinemaTable");
+            });
+        });
+        $(document).on("click", ".updateCinemaBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#cinemaModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#cinemaModal", "Sinema Düzenle", "Sinema Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#cinemaModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                    $(".tagsInput").select2({
+                        width: 'resolve',
+                        theme: "classic",
+                        tags: true,
+                        tokenSeparators: [',', ' ']
+                    });
+                });
+            });
+            openModal("#cinemaModal");
+            $("#cinemaModal").iziModal("setFullscreen", false);
+        });
+        $(document).on("click", ".btnUpdate", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateCinema"));
+            createAjax(url, formData, function() {
+                closeModal("#cinemaModal");
+                $("#cinemaModal").iziModal("setFullscreen", false);
+                reloadTable("cinemaTable");
+            });
+        });
+    });
+</script>

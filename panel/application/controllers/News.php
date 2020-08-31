@@ -45,8 +45,8 @@ class News extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("news/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("news/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updateNewsBtn" href="javascript:void(0)" data-url="' . base_url("news/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="newsTable" data-url="' . base_url("news/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -80,92 +80,47 @@ class News extends MY_Controller
         $viewData->categories = $this->news_category_model->get_all();
         $viewData->writers = $this->user_model->get_all(["role_id!=" => 2]);
         $viewData->subViewFolder = "add";
-        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $this->load->library("form_validation");
-        $news_type = $this->input->post("news_type");
-        $reaction = [
-            'cok_iyi' => 0,
-            'helal_olsun' => 0,
-            'kizgin' => 0,
-            'uzucu' => 0,
-            'yerim' => 0,
-            'yok_artik' => 0,
-            'hos_degil' => 0
-
-        ];
-
-        if ($_FILES["img_url"]["name"] == "") {
-            $alert = array(
-                "title" => "İşlem Başarısız!",
-                "text" => "Lütfen bir görsel seçiniz..",
-                "type" => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("news/new_form"));
-        }
-
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] !== "video_url") :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] == "") :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Eklenirken Hata Oluştu. Haber Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                die();
+            endif;
             $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->news_model->rowCount();
-            if ($image["success"]) {
-                $data = array(
-                    "title"         => $this->input->post("title"),
-                    "content"   => $this->input->post("content"),
-                    "seo_url"           => seo($this->input->post("title")),
-                    "tags"      => implode(",", $this->input->post("tags")),
-                    "img_url"     => $image["file_name"],
-                    'reaction' => json_encode($reaction),
-                    "video_url"     => $this->input->post("video_url"),
-                    "emoji"      => $this->input->post("emoji"),
-                    "writer_id"      => $this->input->post("writer_id"),
-                    "category_id"      => $this->input->post("category_id"),
-                    "rank"          => $getRank + 1,
-                    "isActive"      => 1
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Görsel yüklenirken bir problem oluştu!",
-                    "type" => "error"
-                );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("news/new_form"));
-            }
-
-            $insert = $this->news_model->add($data);
-            if ($insert) {
-                $alert = array(
-                    "title" => "İşlem Başarıyla Gerçekleşti.",
-                    "text" => "Kayıt başarılı bir şekilde eklendi",
-                    "type" => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Kayıt ekleme sırasında bir problem oluştu!",
-                    "type" => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("news"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $viewData->news_type = $news_type;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $data["seo_url"] = seo($data["title"]);
+                $data["content"] = $this->input->post("content");
+                $data["tags"] = implode(",", $data["tags"]);
+                $data["reaction"] = json_encode([
+                    'cok_iyi' => 0,
+                    'helal_olsun' => 0,
+                    'kizgin' => 0,
+                    'uzucu' => 0,
+                    'yerim' => 0,
+                    'yok_artik' => 0,
+                    'hos_degil' => 0
+                ]);
+                $insert = $this->news_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Haber Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Eklenirken Hata Oluştu. Haber Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -178,120 +133,49 @@ class News extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->categories = $this->news_category_model->get_all();
-        $viewData->writers = $this->writers_model->get_all(["role_id!=" => 2]);
+        $viewData->writers = $this->user_model->get_all(["role_id!=" => 2]);
         $viewData->item = $item;
-        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $this->load->library("form_validation");
-
-        //$this->form_validation->set_rules("video_url", "Video URL", "required|trim");
-
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $news_type = $this->input->post("newst_type", true);
-        $validate = $this->form_validation->run();
-        if ($validate) {
-
-            if ($_FILES["img_url"]["name"] !== "") {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"] && checkEmpty($data)["key"] !== "video_url") :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if (!empty($_FILES["img_url"]["name"])) :
                 $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Güncelleştirilirken Hata Oluştu. Haber Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                    die();
+                endif;
+            endif;
+            $data["seo_url"] = seo($data["title"]);
+            $data["content"] = $this->input->post("content");
+            $data["tags"] = implode(",", $data["tags"]);
+            $update = $this->news_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Haber Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
 
-                if ($image["success"]) {
-                    $data = array(
-                        "title"         => $this->input->post("title"),
-                        "content"   => $this->input->post("content"),
-                        "seo_url"           => seo($this->input->post("title")),
-
-                        "img_url"     => $image["file_name"],
-                        "video_url"     => $this->input->post("video_url"),
-                        "emoji"      => $this->input->post("emoji"),
-                        "writer_id"      => $this->input->post("writer_id"),
-                        "tags"      => implode(",", $this->input->post("tags")),
-                        "category_id"      => $this->input->post("category_id"),
-                        "isActive"      => 1
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız Oldu!",
-                        "text" => "Görsel yüklenirken bir problem oluştu!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("news/update_form/$id"));
-                }
-            } else {
-                $data = array(
-                    "title"         => $this->input->post("title"),
-                    "content"   => $this->input->post("content"),
-                    "seo_url"           => seo($this->input->post("title")),
-                    "video_url"     => $this->input->post("video_url"),
-                    "emoji"      => $this->input->post("emoji"),
-                    "writer_id"      => $this->input->post("writer_id"),
-                    "tags"      => implode(",", $this->input->post("tags")),
-                    "category_id"      => $this->input->post("category_id"),
-                    "isActive"      => 1
-                );
-            }
-
-
-            $update = $this->news_model->update(array("id" => $id), $data);
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarıyla Gerçekleşti.",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi.",
-                    "type" => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Kayıt güncelleme sırasında bir problem oluştu!",
-                    "type" => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("news"));
-        } else {
-            $viewData = new stdClass();
-            $item = $this->news_model->get(
-                array(
-                    "id" => $id
-                )
-            );
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->news_type = $news_type;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+        endif;
     }
     public function delete($id)
     {
-        $delete = $this->news_model->delete(
-            array(
-                "id" => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarıyla Gerçekleşti.",
-                "text" => "Kayıt silme işlemi başarılı bir şekilde silindi.",
-                "type" => "success"
-            );
-        } else {
-            $alert = array(
-                "title" => "İşlem Başarıyla Gerçekleşti.",
-                "text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
-                "type" => "error"
-            );
-        }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("news"));
+        $news = $this->news_model->get(["id" => $id]);
+        if (!empty($news)) :
+            $delete = $this->news_model->delete(["id"    => $id]);
+            if ($delete) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Haber Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Haber Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
 
     public function rankSetter()

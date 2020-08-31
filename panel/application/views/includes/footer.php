@@ -10,3 +10,5 @@
     </footer>
 </div>
 <!-- /Footer -->
+
+<div id="navUserModal"></div>

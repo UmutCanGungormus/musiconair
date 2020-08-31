@@ -28,7 +28,7 @@
 					<th>Ad Soyad</th>
 					<th>E-Posta</th>
 					<th>Durum</th>
-					<th>İşlem</th>
+					<th class="nosort">İşlem</th>
 				</thead>
 				<tbody>
 

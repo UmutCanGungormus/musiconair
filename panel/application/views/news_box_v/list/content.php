@@ -29,7 +29,7 @@
                     <th>Widget Olan Haber</th>
                     <th>Widget Eklenen Haber</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>
 

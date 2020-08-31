@@ -45,8 +45,8 @@ class Portfolio extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("portfolio/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("portfolio/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updatePortfolioBtn" href="javascript:void(0)" data-url="' . base_url("portfolio/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="portfolioModal" data-url="' . base_url("portfolio/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -72,21 +72,6 @@ class Portfolio extends MY_Controller
         echo json_encode($output);
     }
 
-
-
-public function rankSetter()
-    {
-        $rows = $this->input->post("rows");
-
-        foreach ($rows as $row) {
-            $this->portfolio_model->update(
-                array(
-                    "id" => $row["id"]
-                ),
-                array("rank" => $row["position"])
-            );
-        }
-    }
     public function new_form()
     {
         $viewData = new stdClass();
@@ -97,60 +82,26 @@ public function rankSetter()
         );
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_rules("category_id", "Kategori", "required|trim");
-        $this->form_validation->set_rules("client", "Müşteri", "required|trim");
-        $this->form_validation->set_rules("finishedAt", "Bitiş Tarihi", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Portfolyo Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
             $getRank = $this->portfolio_model->rowCount();
-            $insert = $this->portfolio_model->add(
-                array(
-                    "title"         => $this->input->post("title"),
-                    "description"   => $this->input->post("description"),
-                    "url"           => seo($this->input->post("title")),
-                    "client" => $this->input->post("client"),
-                    "finishedAt" => $this->input->post("finishedAt"),
-                    "category_id" => $this->input->post("category_id"),
-                    "place" => $this->input->post("place"),
-                    "portfolio_url" => $this->input->post("portfolio_url"),
-                    "rank"          => $getRank+1,
-                    "isActive"      => 1,
-                    "createdAt"     => date("Y-m-d H:i:s")
-                )
-            );
-            if ($insert) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde eklendi",
-                    "type"  => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("portfolio"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+                $data["content"] = $this->input->post("content");
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $insert = $this->portfolio_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Portfolyo Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Portfolyo Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -168,111 +119,48 @@ public function rankSetter()
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_rules("category_id", "Kategori", "required|trim");
-        $this->form_validation->set_rules("client", "Müşteri", "required|trim");
-        $this->form_validation->set_rules("finishedAt", "Bitiş Tarihi", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            $update = $this->portfolio_model->update(
-                array(
-                    "id"    => $id
-                ),
-                array(
-                    "title"         => $this->input->post("title"),
-                    "description"   => $this->input->post("description"),
-                    "url"           => seo($this->input->post("title")),
-                    "client" => $this->input->post("client"),
-                    "finishedAt" => $this->input->post("finishedAt"),
-                    "category_id" => $this->input->post("category_id"),
-                    "place" => $this->input->post("place"),
-                    "portfolio_url" => $this->input->post("portfolio_url")
-                )
-            );
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Güncelleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("portfolio"));
-        } else {
-            $viewData = new stdClass();
-            $item = $this->portfolio_model->get(
-                array(
-                    "id"    => $id,
-                )
-            );
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $viewData->categories = $this->portfolio_category_model->get_all(
-                array(
-                    "isActive" => 1
-                )
-            );
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Portfolyo Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            $data["content"] = $this->input->post("content");
+            $update = $this->portfolio_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Portfolyo Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Portfolyo Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function delete($id)
     {
-        $delete = $this->portfolio_model->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt başarılı bir şekilde silindi",
-                "type"  => "success"
-            );
-        } else {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Kayıt silme sırasında bir problem oluştu",
-                "type"  => "error"
-            );
-        }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("portfolio"));
+        $portfolio = $this->portfolio_model->get(["id" => $id]);
+        if (!empty($portfolio)) :
+            $delete = $this->portfolio_model->delete(["id"    => $id]);
+            if ($delete) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Portfolyo Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Portfolyo Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
-    public function imageDelete($id, $parent_id)
+    
+    public function rankSetter()
     {
-        $fileName = $this->portfolio_image_model->get(
-            array(
-                "id"    => $id
-            )
-        );
-        $delete = $this->portfolio_image_model->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
-            unlink("uploads/{$this->viewFolder}/$fileName->img_url");
-            redirect(base_url("portfolio/image_form/$parent_id"));
-        } else {
-            redirect(base_url("portfolio/image_form/$parent_id"));
+        $rows = $this->input->post("rows");
+
+        foreach ($rows as $row) {
+            $this->portfolio_model->update(
+                array(
+                    "id" => $row["id"]
+                ),
+                array("rank" => $row["position"])
+            );
         }
     }
     public function isActiveSetter($id)
@@ -333,7 +221,25 @@ public function rankSetter()
             echo $render_html;
         }
     }
-    
+    public function imageDelete($id, $parent_id)
+    {
+        $fileName = $this->portfolio_image_model->get(
+            array(
+                "id"    => $id
+            )
+        );
+        $delete = $this->portfolio_image_model->delete(
+            array(
+                "id"    => $id
+            )
+        );
+        if ($delete) {
+            unlink("uploads/{$this->viewFolder}/$fileName->img_url");
+            redirect(base_url("portfolio/image_form/$parent_id"));
+        } else {
+            redirect(base_url("portfolio/image_form/$parent_id"));
+        }
+    }
     public function imageRankSetter()
     {
         $data = $this->input->post("data");

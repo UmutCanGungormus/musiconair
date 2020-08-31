@@ -4,7 +4,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Haber Kategorileri
-                <a href="<?= base_url("news_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("news_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right createNewsCategoryBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -27,7 +27,7 @@
                     <th class="w50">#id</th>
                     <th>Başlık</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>
 
@@ -50,3 +50,62 @@
     </div>
 </div>
 </div>
+
+<div id="newsCategoryModal"></div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".createNewsCategoryBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            $('#newsCategoryModal').iziModal('destroy');
+            createModal("#newsCategoryModal", "Yeni Haber Kategorisi Ekle", "Yeni Haber Kategorisi Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#newsCategoryModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                });
+            });
+            openModal("#newsCategoryModal");
+            $("#newsCategoryModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click", ".btnSave", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("createNewsCategory"));
+            createAjax(url, formData, function() {
+                closeModal("#newsCategoryModal");
+                $("#newsCategoryModal").iziModal("setFullscreen",false);
+                reloadTable("newsCategoryTable");
+            });
+        });
+        $(document).on("click", ".updateNewsCategoryBtn", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#newsCategoryModal').iziModal('destroy');
+            let url = $(this).data("url");
+            createModal("#newsCategoryModal", "Haber Kategorisi Düzenle", "Haber Kategorisi Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+                $.post(url, {}, function(response) {
+                    $("#newsCategoryModal .iziModal-content").html(response);
+                    TinyMCEInit();
+                    flatPickrInit();
+                });
+            });
+            openModal("#newsCategoryModal");
+            $("#newsCategoryModal").iziModal("setFullscreen",false);
+        });
+        $(document).on("click", ".btnUpdate", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            let url = $(this).data("url");
+            let formData = new FormData(document.getElementById("updateNewsCategory"));
+            createAjax(url, formData, function() {
+                closeModal("#newsCategoryModal");
+                $("#newsCategoryModal").iziModal("setFullscreen",false);
+                reloadTable("newsCategoryTable");
+            });
+        });
+    });
+</script>

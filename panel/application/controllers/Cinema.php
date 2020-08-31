@@ -27,6 +27,56 @@ class Cinema extends MY_Controller
         $viewData->items = $items;
         $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
+
+    public function datatable()
+    {
+        $items = $this->cinema_model->getRows(
+            [],
+            $_POST
+        );
+        $data = $row = array();
+        $i = (!empty($_POST['start']) ? $_POST['start'] : 0);
+
+        foreach ($items as $item) {
+            $i++;
+
+            $proccessing = '
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-primary rounded-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    İşlemler
+                </button>
+                <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item updateCinemaBtn" href="javascript:void(0)" data-url="' . base_url("cinema/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="cinemaTable" data-url="' . base_url("cinema/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    </div>
+            </div>';
+
+
+
+            //array_push($renkler,$renk->negotiation_stage_color);
+            $cat = json_decode($item->category_id);
+            $category_title = null;
+            foreach ($cat as $category) :
+                $category_title.= " " . @get_cinema_category_title($category);
+            endforeach;
+            $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url) . "' width='60px' height='60px' >";
+            $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("cinema/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
+            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $category_title,  $item->img_url, $checkbox, $proccessing);
+        }
+
+
+
+        $output = array(
+            "draw" => (!empty($_POST['draw']) ? $_POST['draw'] : 0),
+            "recordsTotal" => $this->cinema_model->rowCount(),
+            "recordsFiltered" => $this->cinema_model->countFiltered([], (!empty($_POST) ? $_POST : [])),
+            "data" => $data,
+        );
+
+        // Output to JSON format
+        echo json_encode($output);
+    }
+
     public function new_form()
     {
         $viewData = new stdClass();
@@ -37,82 +87,37 @@ class Cinema extends MY_Controller
             )
         );
         $viewData->subViewFolder = "add";
-        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $cat = json_encode($this->input->post("category_id"));
-
-
-        $this->load->library("form_validation");
-        if ($_FILES["img_url"]["name"] == "") {
-            $alert = array(
-                "title" => "İşlem Başarısız!",
-                "text" => "Lütfen bir görsel seçiniz..",
-                "type" => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("cinema/new_form"));
-        }
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] == "") :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Eklenirken Hata Oluştu. Sinema Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                die();
+            endif;
             $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->cinema_model->rowCount();
-            if ($image["success"]) {
-                $insert = $this->cinema_model->add(
-                    array(
-                        "title"         => $this->input->post("title"),
-                        "category_id"         => $cat,
-                        "content"   => $this->input->post("content"),
-                        "director"   => $this->input->post("director"),
-                        "language"   => $this->input->post("language"),
-                        "production"   => $this->input->post("production"),
-                        "players"   => $this->input->post("players"),
-                        "scriptwriter"           => $this->input->post("scriptwriter"),
-                        "url"       => $this->input->post('url'),
-                        "img_url"     => $image["file_name"],
-                        "rank"          => $getRank + 1,
-                        "isActive"      => 1
-                    )
-                );
-                if ($insert) {
-                    $alert = array(
-                        "title" => "İşlem Başarıyla Gerçekleşti.",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type" => "success"
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız Oldu!",
-                        "text" => "Kayıt ekleme sırasında bir problem oluştu!",
-                        "type" => "error"
-                    );
-                }
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Görsel yüklenirken bir problem oluştu!",
-                    "type" => "error"
-                );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("cinema/new_form"));
-            }
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("cinema"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
+                $data["content"] = $this->input->post("content");
+                $data["category_id"] = json_encode($this->input->post("category_id"));
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $insert = $this->cinema_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Sinema Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Eklenirken Hata Oluştu. Sinema Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -126,113 +131,47 @@ class Cinema extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $cat = json_encode($this->input->post("category_id"));
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            if ($_FILES["img_url"]["name"] !== "") {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if (!empty($_FILES["img_url"]["name"])) :
                 $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Güncelleştirilirken Hata Oluştu. Sinema Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                    die();
+                endif;
+            endif;
+            $data["content"] = $this->input->post("content");
+            $data["category_id"] = json_encode($this->input->post("category_id"));
+            $update = $this->cinema_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Sinema Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
 
-                if ($image["success"]) {
-                    $data = array(
-                        "title"         => $this->input->post("title"),
-                        "category_id"         => $cat,
-                        "content"   => $this->input->post("content"),
-                        "director"   => $this->input->post("director"),
-                        "language"   => $this->input->post("language"),
-                        "production"   => $this->input->post("production"),
-                        "players"   => $this->input->post("players"),
-                        "scriptwriter"           => $this->input->post("scriptwriter"),
-                        "url"       => $this->input->post('url'),
-                        "img_url"     => $image["file_name"],
-                        "isActive"      => 1
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız Oldu!",
-                        "text" => "Görsel yüklenirken bir problem oluştu!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("cinema/update_form/$id"));
-                }
-            } else {
-                $data = array(
-                    "title"         => $this->input->post("title"),
-                    "category_id"         => $cat,
-                    "content"   => $this->input->post("content"),
-                    "director"   => $this->input->post("director"),
-                    "language"   => $this->input->post("language"),
-                    "production"   => $this->input->post("production"),
-                    "players"   => $this->input->post("players"),
-                    "scriptwriter"           => $this->input->post("scriptwriter"),
-                    "url"       => $this->input->post('url'),
-                    "isActive"      => 1
-                );
-            }
-            $update = $this->cinema_model->update(array("id" => $id), $data);
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarıyla Gerçekleşti.",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi.",
-                    "type" => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Kayıt güncelleme sırasında bir problem oluştu!",
-                    "type" => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("cinema"));
-        } else {
-            $viewData = new stdClass();
-            $item = $this->cinema_model->get(
-                array(
-                    "id" => $id
-                )
-            );
-            $viewData->categories = $this->cinema_category_model->get_all();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+        endif;
     }
+
     public function delete($id)
     {
-        $delete = $this->cinema_model->delete(
-            array(
-                "id" => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarıyla Gerçekleşti.",
-                "text" => "Kayıt silme işlemi başarılı bir şekilde silindi.",
-                "type" => "success"
-            );
-        } else {
-            $alert = array(
-                "title" => "İşlem Başarıyla Gerçekleşti.",
-                "text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
-                "type" => "error"
-            );
-        }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("cinema"));
+        $cinema = $this->cinema_model->get(["id" => $id]);
+        if (!empty($cinema)) :
+            $delete = $this->cinema_model->delete(["id"    => $id]);
+            if ($delete) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Sinema Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Sinema Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function isActiveSetter($id)
     {

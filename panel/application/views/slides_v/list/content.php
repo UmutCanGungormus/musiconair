@@ -28,7 +28,7 @@
                     <th>Açıklama</th>
                     <th>Görsel</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>
 

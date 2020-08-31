@@ -4,7 +4,7 @@
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<h4 class="mb-3">
 				Marka Listesi
-				<a href="<?= base_url("brands/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 btn-sm"><i class="fa fa-plus"></i>Yeni Ekle</a>
+				<a href="javascript:void(0)" data-url="<?= base_url("brands/new_form"); ?>" class="float-right btn btn-sm btn-outline-primary rounded-0 createBrandBtn"><i class="fa fa-plus"></i>Yeni Ekle</a>
 			</h4>
 			<hr>
 		</div><!-- END column -->
@@ -29,9 +29,9 @@
 					<th>Başlık</th>
 					<th>Görsel</th>
 					<th>Durumu</th>
-					<th>İşlem</th>
+					<th class="nosort">İşlem</th>
 				</thead>
-				<tbody class="sortable" data-url="<?= base_url("brands/rankSetter"); ?>"></tbody>
+				<tbody></tbody>
 			</table>
 			<script>
 				function obj(d) {
@@ -49,3 +49,74 @@
 		</div><!-- END column -->
 	</div>
 </div>
+
+<div id="brandModal"></div>
+
+<script>
+	$(document).ready(function() {
+		$(document).on("click", ".createBrandBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			$('#brandModal').iziModal('destroy');
+			createModal("#brandModal", "Yeni Marka Ekle", "Yeni Marka Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#brandModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#brandModal");
+			$("#brandModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnSave", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("createBrand"));
+			createAjax(url, formData, function() {
+				closeModal("#brandModal");
+				$("#brandModal").iziModal("setFullscreen", false);
+				reloadTable("brandsTable");
+			});
+		});
+		$(document).on("click", ".updateBrandBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			$('#brandModal').iziModal('destroy');
+			let url = $(this).data("url");
+			createModal("#brandModal", "Marka Düzenle", "Marka Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#brandModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#brandModal");
+			$("#brandModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnUpdate", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("updateBrand"));
+			createAjax(url, formData, function() {
+				closeModal("#brandModal");
+				$("#brandModal").iziModal("setFullscreen", false);
+				reloadTable("brandsTable");
+			});
+		});
+	});
+</script>

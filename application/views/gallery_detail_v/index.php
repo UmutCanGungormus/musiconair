@@ -74,9 +74,7 @@
                                         <source src="<?= get_picture("galleries_v/$gallery->gallery_type/{$gallery->url}", $value->url) ?>" />
                                     </video>
                                 <?php elseif ($gallery->gallery_type == "video_urls") : ?>
-                                    <div class="plyr__video-embed videojs">
-                                        <iframe src="<?=$value->url?>" allowfullscreen allowtransparency></iframe>
-                                    </div>
+                                    <iframe src="<?= $value->url ?>" allowfullscreen allowtransparency></iframe>
                                 <?php else : ?>
                                     <img src="<?= get_picture("galleries_v/$gallery->gallery_type/{$gallery->url}", $value->url) ?>" class="img-fluid w-100 my-3" alt="<?= $value->title ?>">
                                 <?php endif; ?>

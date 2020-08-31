@@ -77,8 +77,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <!-- Clipboard -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
-<!-- Plyr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.polyfilled.min.js"></script>
 <!-- iziModal -->
 <script src="<?= base_url("public/js/iziModal.min.js") ?>"></script>
 <!-- App -->

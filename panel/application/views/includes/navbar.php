@@ -72,7 +72,7 @@
         <li class="nav-item dropdown dropdown-authentication">
             <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span class="badge-wrap"><span class="badge badge-success badge-indicator badge-indicator-sm badge-pill pulse ml-1 mr-1"></span></span><small><?= $user->full_name; ?> <i class="ml-1 fa fa-chevron-down"></i></small></a>
             <div class="dropdown-menu rounded-0 dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
-                <a class="dropdown-item" href="<?= base_url("users/update_form/$user->id"); ?>"><i class="dropdown-icon fa fa-user"></i><span>Profilim</span></a>
+                <a class="dropdown-item updateUserBtnNav" href="javascript:void(0)" data-url="<?= base_url("users/update_form/$user->id"); ?>"><i class="dropdown-icon fa fa-user"></i><span>Profilim</span></a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?= base_url("logout"); ?>"><i class="dropdown-icon fa fa-power-off"></i><span>Çıkış Yap</span></a>
             </div>

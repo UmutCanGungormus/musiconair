@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Portfolyo Kategori Listesi
-                <a href="<?php echo base_url("portfolio_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?=base_url("portfolio_categories/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 float-right createPortfolioCategoryBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -26,26 +26,98 @@
                     <th class="w50">#id</th>
                     <th>Başlık</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>
 
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("portfolioCategoryTable", obj, {}, "<?= base_url("portfolio_categories/datatable") ?>", "<?= base_url("portfolio_categories/rankSetter") ?>", true);
+
+                });
+            </script>
         </div>
     </div>
 </div>
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("portfolioCategoryTable", obj, {}, "<?= base_url("portfolio_categories/datatable") ?>", "<?= base_url("portfolio_categories/rankSetter") ?>", true);
 
-    });
+
+<div id="portfolioCategoryModal"></div>
+
+<script>
+	$(document).ready(function() {
+		$(document).on("click", ".createPortfolioCategoryBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			$('#portfolioCategoryModal').iziModal('destroy');
+			createModal("#portfolioCategoryModal", "Yeni Portfolyo Kategorisi Ekle", "Yeni Portfolyo Kategorisi Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#portfolioCategoryModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#portfolioCategoryModal");
+			$("#portfolioCategoryModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnSave", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("createPortfolioCategory"));
+			createAjax(url, formData, function() {
+				closeModal("#portfolioCategoryModal");
+				$("#portfolioCategoryModal").iziModal("setFullscreen", false);
+				reloadTable("portfolioCategoryTable");
+			});
+		});
+		$(document).on("click", ".updatePortfolioCategoryBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			$('#portfolioCategoryModal').iziModal('destroy');
+			let url = $(this).data("url");
+			createModal("#portfolioCategoryModal", "Portfolyo Kategorisi Düzenle", "Portfolyo Kategorisi Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#portfolioCategoryModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#portfolioCategoryModal");
+			$("#portfolioCategoryModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnUpdate", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("updatePortfolioCategory"));
+			createAjax(url, formData, function() {
+				closeModal("#portfolioCategoryModal");
+				$("#portfolioCategoryModal").iziModal("setFullscreen", false);
+				reloadTable("portfolioCategoryTable");
+			});
+		});
+	});
 </script>

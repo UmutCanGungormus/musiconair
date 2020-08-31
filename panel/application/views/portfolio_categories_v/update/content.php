@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<form id="updatePortfolio" onsubmit="return false" method="post" enctype="multipart/form-data">
+<form id="updatePortfolioCategory" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Başlık</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title" value="<?= $item->title; ?>">

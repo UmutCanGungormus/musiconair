@@ -243,10 +243,7 @@ class Stories extends MY_Controller
             else :
                 $image = '<video id="my-video' . $i . '" class="video-js" controls preload="auto" width="300" height="150">';
                 $image .= '<source src="' . base_url("uploads/stories_v/{$folder_name}/{$item->src}") . '"/>';
-                $image .= '<p class="vjs-no-js">
-                        To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                    </p>
-                </video>';
+                $image .= '</video>';
             endif;
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image, $item->src, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing);
 

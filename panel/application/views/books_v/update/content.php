@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<form action="<?= base_url("book/update/$item->id"); ?>" method="post" enctype="multipart/form-data">
+<form id="updateBook" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Kitap Adı</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Kitap Adı" name="title" value="<?= $item->title; ?>" required>

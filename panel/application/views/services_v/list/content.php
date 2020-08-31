@@ -1,9 +1,10 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="container-fluid mt-xl-50 mt-lg-30 mt-15 bg-white p-3">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Hizmet Listesi
-                <a href="<?= base_url("services/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btn-sm float-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("services/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 float-right createServiceBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -22,30 +23,101 @@
             <table class="table table-hover table-striped table-bordered content-container serviceTable">
                 <thead>
                     <th class="order"><i class="fa fa-reorder"></i></th>
+                    <th class="order"><i class="fa fa-reorder"></i></th>
                     <th class="w50">#id</th>
                     <th>Başlık</th>
-                    <th>url</th>
                     <th>Görsel</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
-                <tbody class="sortable" data-url="<?= base_url("services/rankSetter"); ?>">
+                <tbody>
 
                 </tbody>
             </table>
+            <script>
+                function obj(d) {
+                    let appendeddata = {};
+                    $.each($("#filter_form").serializeArray(), function() {
+                        d[this.name] = this.value;
+                    });
+                    return d;
+                }
+                $(document).ready(function() {
+                    TableInitializerV2("serviceTable", obj, {}, "<?= base_url("services/datatable") ?>", "<?= base_url("services/rankSetter") ?>", true);
+
+                });
+            </script>
         </div>
     </div>
 </div>
-<script>
-    function obj(d) {
-        let appendeddata = {};
-        $.each($("#filter_form").serializeArray(), function() {
-            d[this.name] = this.value;
-        });
-        return d;
-    }
-    $(document).ready(function() {
-        TableInitializerV2("serviceTable", obj, {}, "<?= base_url("services/datatable") ?>", "<?= base_url("services/rankSetter") ?>", true);
 
-    });
+<div id="serviceModal"></div>
+
+<script>
+	$(document).ready(function() {
+		$(document).on("click", ".createServiceBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			$('#serviceModal').iziModal('destroy');
+			createModal("#serviceModal", "Yeni Hizmet Ekle", "Yeni Hizmet Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#serviceModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#serviceModal");
+			$("#serviceModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnSave", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("createService"));
+			createAjax(url, formData, function() {
+				closeModal("#serviceModal");
+				$("#serviceModal").iziModal("setFullscreen", false);
+				reloadTable("serviceTable");
+			});
+		});
+		$(document).on("click", ".updateServiceBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			$('#serviceModal').iziModal('destroy');
+			let url = $(this).data("url");
+			createModal("#serviceModal", "Hizmet Düzenle", "Hizmet Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#serviceModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#serviceModal");
+			$("#serviceModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnUpdate", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("updateService"));
+			createAjax(url, formData, function() {
+				closeModal("#serviceModal");
+				$("#serviceModal").iziModal("setFullscreen", false);
+				reloadTable("serviceTable");
+			});
+		});
+	});
 </script>

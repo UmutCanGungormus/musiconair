@@ -29,7 +29,7 @@
                     <th>Haber Adı</th>
                     <th>Görsel/Video</th>
                     <th>Durumu</th>
-                    <th>İşlem</th>
+                    <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>
 

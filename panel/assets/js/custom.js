@@ -8,9 +8,6 @@ $(document).ready(function () {
 	});
 
 	flatPickrInit();
-	$(".videojs").each(function(){
-		new Plyr($(this));
-	});
 
 	/** WORST CODES */
 
@@ -99,7 +96,7 @@ $(document).ready(function () {
 			if (result.value) {
 				let formData = new FormData();
 				createAjax(url,formData,function(){
-					reloadTable(dataTable);
+					reloadTable("."+dataTable);
 				});
 			}
 		})

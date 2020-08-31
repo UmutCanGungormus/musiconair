@@ -266,20 +266,19 @@ class Galleries extends MY_Controller
             elseif ($gallery_type == "files") :
                 $image = '<a href="' . base_url("uploads/galleries_v/{$gallery_type}/{$folder_name}/{$item->url}") . '" download><i class="fa fa-download fa-2x"></i></a>';
             elseif ($gallery_type == "videos") :
-                $image = '<video class="videojs" id="my-video' . $i . '" playsinline controls preload="auto" width="300" height="150" data-poster="'.get_picture("galleries_v/{$gallery_type}/{$folder_name}",$item->img_url).'">';
+                $image = '<video id="my-video' . $i . '" playsinline controls preload="auto" width="300" height="150" data-poster="'.get_picture("galleries_v/{$gallery_type}/{$folder_name}",$item->img_url).'">';
                 if ($gallery_type == "videos") :
                     $image .= '<source src="' . base_url("uploads/galleries_v/{$gallery_type}/{$folder_name}/{$item->url}") . '"/>';
                 endif;
                 $image .= '</video>';
             else:
-                $image = '<div class="plyr__video-embed videojs" id="player">
+                $image = '
                 <iframe
                   src="'.$item->url.'"
                   allowfullscreen
                   allowtransparency
                   class="position-relative"
-                ></iframe>
-              </div>';
+                ></iframe>';
             endif;
             $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $image, $item->url, $checkbox, turkishDate("d F Y, l H:i:s", $item->createdAt), turkishDate("d F Y, l H:i:s", $item->updatedAt), $proccessing);
 

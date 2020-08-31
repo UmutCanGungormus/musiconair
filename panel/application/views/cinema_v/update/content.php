@@ -7,11 +7,10 @@
 
     <div class="form-group">
         <label>Film Türü</label>
-        <select class="form-control form-control-sm rounded-0 selectpicker" size="4" multiple name="category_id[]" required>
+        <select class="form-control form-control-sm rounded-0 tagsInput" size="4" multiple name="category_id[]" required>
+            <?php $catArr = json_decode($item->category_id) ?>
             <?php foreach ($categories as $category) : ?>
-                <?php foreach (json_decode($item->category_id) as $cat) : ?>
-                    <option <?= ($category->id == $cat ? "selected" : null) ?> value="<?= $category->id ?>"><?= $category->title ?> </option>
-                <?php endforeach ?>
+                <option <?= (in_array($category->id, $catArr) ? "selected" : null) ?> value="<?= $category->id ?>"><?= $category->title ?> </option>
             <?php endforeach ?>
         </select>
     </div>

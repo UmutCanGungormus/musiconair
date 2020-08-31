@@ -29,7 +29,7 @@
         <label>Yazar / Editör</label>
         <select class="form-control form-control-sm rounded-0" name="writer_id" required>
             <?php foreach ($writers as $category) : ?>
-                <option <?= ($category->id == $item->writer_id ? "selected" : null) ?> value="<?= $category->id; ?>"><?= $category->name; ?></option>
+                <option <?= ($category->id == $item->writer_id ? "selected" : null) ?> value="<?= $category->id; ?>"><?= $category->full_name; ?></option>
             <?php endforeach ?>
         </select>
     </div>

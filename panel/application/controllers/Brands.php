@@ -43,8 +43,8 @@ class Brands extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("brands/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("brands/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updateBrandBtn" href="javascript:void(0)" data-url="' . base_url("brands/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="brandsTable" data-url="' . base_url("brands/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
@@ -72,90 +72,41 @@ class Brands extends MY_Controller
 
 
 
-    public function rankSetter()
-    {
-        $rows = $this->input->post("rows");
-
-        foreach ($rows as $row) {
-            $this->brand_model->update(
-                array(
-                    "id" => $row["id"]
-                ),
-                array("rank" => $row["position"])
-            );
-        }
-    }
+    
     public function new_form()
     {
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
-        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $this->load->library("form_validation");
-        if ($_FILES["img_url"]["name"] == "") {
-            $alert = array(
-                "title" => "İşlem Başarısız!",
-                "text" => "Lütfen bir görsel seçiniz..",
-                "type" => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("brands/new_form"));
-        }
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] == "") :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Eklenirken Hata Oluştu. Marka Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                die();
+            endif;
             $image = upload_picture("img_url", "uploads/$this->viewFolder");
             $getRank = $this->brand_model->rowCount();
-            if ($image["success"]) {
-                $insert = $this->brand_model->add(
-                    array(
-                        "title"         => $this->input->post("title"),
-                        "img_url"     => $image["file_name"],
-                        "rank"          => $getRank + 1,
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s")
-                    )
-                );
-                if ($insert) {
-                    $alert = array(
-                        "title" => "İşlem Başarıyla Gerçekleşti.",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type" => "success"
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız Oldu!",
-                        "text" => "Kayıt ekleme sırasında bir problem oluştu!",
-                        "type" => "error"
-                    );
-                }
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Görsel yüklenirken bir problem oluştu!",
-                    "type" => "error"
-                );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("brands/new_form"));
-            }
-
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("brands"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+            if ($image["success"]) :
+                $data["img_url"] = $image["file_name"];
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $insert = $this->brand_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Marka Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Eklenirken Hata Oluştu. Marka Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -168,93 +119,57 @@ class Brands extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$this->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            if ($_FILES["img_url"]["name"] !== "") {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if (!empty($_FILES["img_url"]["name"])) :
                 $image = upload_picture("img_url", "uploads/$this->viewFolder");
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Güncelleştirilirken Hata Oluştu. Marka Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+                    die();
+                endif;
+            endif;
+            $update = $this->brand_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Marka Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
 
-                if ($image["success"]) {
-                    $data = array(
-                        "title"         => $this->input->post("title"),
-                        "img_url"     => $image["file_name"]
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız Oldu!",
-                        "text" => "Görsel yüklenirken bir problem oluştu!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("brands/update_form/$id"));
-                }
-            } else {
-                $data = array(
-                    "title" => $this->input->post("title")
-                );
-            }
-            $update = $this->brand_model->update(array("id" => $id), $data);
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarıyla Gerçekleşti.",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi.",
-                    "type" => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız Oldu!",
-                    "text" => "Kayıt güncelleme sırasında bir problem oluştu!",
-                    "type" => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("brands"));
-        } else {
-            $viewData = new stdClass();
-            $item = $this->brand_model->get(
-                array(
-                    "id" => $id
-                )
-            );
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+        endif;
     }
     public function delete($id)
     {
-        $delete = $this->brand_model->delete(
-            array(
-                "id" => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarıyla Gerçekleşti.",
-                "text" => "Kayıt silme işlemi başarılı bir şekilde silindi.",
-                "type" => "success"
-            );
-        } else {
-            $alert = array(
-                "title" => "İşlem Başarıyla Gerçekleşti.",
-                "text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
-                "type" => "error"
+        $brand = $this->brand_model->get(["id" => $id]);
+        if (!empty($brand)) :
+            $delete = $this->brand_model->delete(["id"    => $id]);
+            if ($delete) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Marka Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Marka Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
+    }
+    public function rankSetter()
+    {
+        $rows = $this->input->post("rows");
+
+        foreach ($rows as $row) {
+            $this->brand_model->update(
+                array(
+                    "id" => $row["id"]
+                ),
+                array("rank" => $row["position"])
             );
         }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("brands"));
     }
     public function isActiveSetter($id)
     {
