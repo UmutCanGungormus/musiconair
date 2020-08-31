@@ -4,7 +4,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <h4 class="mb-3">
                 Popup Listesi
-                <a href="javascript:void(0)" data-url="<?= base_url("popups/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 float-right createPopup"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+                <a href="javascript:void(0)" data-url="<?= base_url("popups/new_form"); ?>" class="btn btn-sm btn-outline-primary rounded-0 float-right createPopupBtn"> <i class="fa fa-plus"></i> Yeni Ekle</a>
             </h4>
         </div><!-- END column -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -51,3 +51,74 @@
     </div>
 </div>
 </div>
+
+<div id="popupModal"></div>
+
+<script>
+	$(document).ready(function() {
+		$(document).on("click", ".createPopupBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			$('#popupModal').iziModal('destroy');
+			createModal("#popupModal", "Yeni Popup Ekle", "Yeni Popup Ekle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#popupModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#popupModal");
+			$("#popupModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnSave", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("createPopup"));
+			createAjax(url, formData, function() {
+				closeModal("#popupModal");
+				$("#popupModal").iziModal("setFullscreen", false);
+				reloadTable("popupTable");
+			});
+		});
+		$(document).on("click", ".updatePopupBtn", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			$('#popupModal').iziModal('destroy');
+			let url = $(this).data("url");
+			createModal("#popupModal", "Popup Düzenle", "Popup Düzenle", 600, true, "20px", 0, "#e20e17", "#fff", 1040, function() {
+				$.post(url, {}, function(response) {
+					$("#popupModal .iziModal-content").html(response);
+					TinyMCEInit();
+					flatPickrInit();
+					$(".tagsInput").select2({
+						width: 'resolve',
+						theme: "classic",
+						tags: true,
+						tokenSeparators: [',', ' ']
+					});
+				});
+			});
+			openModal("#popupModal");
+			$("#popupModal").iziModal("setFullscreen", false);
+		});
+		$(document).on("click", ".btnUpdate", function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			let url = $(this).data("url");
+			let formData = new FormData(document.getElementById("updatePopup"));
+			createAjax(url, formData, function() {
+				closeModal("#popupModal");
+				$("#popupModal").iziModal("setFullscreen", false);
+				reloadTable("popupTable");
+			});
+		});
+	});
+</script>

@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label>Açıklama</label>
-        <textarea name="description" class="m-0 tinymce" required></textarea>
+        <textarea name="content" class="m-0 tinymce" required></textarea>
     </div>
     <button role="button" data-url="<?=base_url("popups/save")?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
     <a href="javascript:void(0)" onclick="closeModal('#popupModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>

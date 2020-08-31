@@ -44,18 +44,18 @@ class Testimonials extends MY_Controller
                     İşlemler
                 </button>
                 <div class="dropdown-menu rounded-0 dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="' . base_url("testimonials/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
-                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-url="' . base_url("testimonials/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
+                    <a class="dropdown-item updateTestimonialBtn" href="javascript:void(0)" data-url="' . base_url("testimonials/update_form/$item->id") . '"><i class="fa fa-pen mr-2"></i>Kaydı Düzenle</a>
+                    <a class="dropdown-item remove-btn" href="javascript:void(0)" data-table="testimonialTable" data-url="' . base_url("testimonials/delete/$item->id") . '"><i class="fa fa-trash mr-2"></i>Kaydı Sil</a>
                     </div>
             </div>';
 
 
 
             //array_push($renkler,$renk->negotiation_stage_color);
-            $item->description = mb_word_wrap($item->description, 30, "...");
+            $item->content = mb_word_wrap($item->content, 30, "...");
             $item->img_url = "<img src='" . get_picture($this->viewFolder, $item->img_url) . "' width='60px' height='60px' >";
             $checkbox = '<div class="custom-control custom-switch"><input data-id="' . $item->id . '" data-url="' . base_url("testimonials/isActiveSetter/{$item->id}") . '" data-status="' . ($item->isActive == 1 ? "checked" : null) . '" id="customSwitch' . $i . '" type="checkbox" ' . ($item->isActive == 1 ? "checked" : null) . ' class="my-check custom-control-input" >  <label class="custom-control-label" for="customSwitch' . $i . '"></label></div>';
-            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->full_name, $item->description,    $item->img_url, $checkbox, $proccessing);
+            $data[] = array($item->rank, '<i class="fa fa-arrows" data-id="' . $item->id . '"></i>', $item->id, $item->title, $item->full_name, $item->content,    $item->img_url, $checkbox, $proccessing);
         }
 
 
@@ -71,97 +71,41 @@ class Testimonials extends MY_Controller
         echo json_encode($output);
     }
 
-
-
-    public function rankSetter()
-    {
-        $rows = $this->input->post("rows");
-
-        foreach ($rows as $row) {
-            $this->testimonial_model->update(
-                array(
-                    "id" => $row["id"]
-                ),
-                array("rank" => $row["position"])
-            );
-        }
-    }
     public function new_form()
     {
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function save()
     {
-        $this->load->library("form_validation");
-        if ($_FILES["img_url"]["name"] == "") {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel seçiniz",
-                "type"  => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("testimonials/new_form"));
-            die();
-        }
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_rules("description", "Mesaj", "required|trim");
-        $this->form_validation->set_rules("company", "Şirket Adı", "required|trim");
-        $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            $image = upload_picture("img_url", "uploads/$this->viewFolder");
-            if ($image["success"]) {
-                $insert = $this->testimonial_model->add(
-                    array(
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "company"       => $this->input->post("company"),
-                        "full_name"     => $this->input->post("full_name"),
-                        "img_url"       => $image["file_name"],
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s")
-                    )
-                );
-                if ($insert) {
-                    $alert = array(
-                        "title" => "İşlem Başarılı",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type"  => "success"
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                        "type"  => "error"
-                    );
-                }
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Görsel yüklenirken bir problem oluştu",
-                    "type"  => "error"
-                );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("testimonials/new_form"));
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Kaydı Yapılırken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if ($_FILES["img_url"]["name"] == "") :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Eklenirken Hata Oluştu. Ziyaretçi Notu Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                 die();
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("testimonials"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
-            $viewData->form_error = true;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+            endif;
+            $image = upload_picture("img_url", "uploads/$this->viewFolder");
+            $getRank = $this->testimonial_model->rowCount();
+            if ($image["success"]) :
+                $data["content"] = $this->input->post("content");
+                $data["img_url"] = $image["file_name"];
+                $data["isActive"] = 1;
+                $data["rank"] = $getRank + 1;
+                $insert = $this->testimonial_model->add($data);
+                if ($insert) :
+                    echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ziyaretçi Notu Başarıyla Eklendi."]);
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Eklenirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+                endif;
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Eklenirken Hata Oluştu. Ziyaretçi Notu Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
     }
     public function update_form($id)
     {
@@ -174,101 +118,58 @@ class Testimonials extends MY_Controller
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/content", $viewData);
     }
     public function update($id)
     {
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_rules("description", "Mesaj", "required|trim");
-        $this->form_validation->set_rules("company", "Şirket Adı", "required|trim");
-        $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
-        $this->form_validation->set_message(
-            array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
-            )
-        );
-        $validate = $this->form_validation->run();
-        if ($validate) {
-            if ($_FILES["img_url"]["name"] !== "") {
+        $data = rClean($this->input->post());
+        if (checkEmpty($data)["error"]) :
+            $key = checkEmpty($data)["key"];
+            echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Güncelleştirilirken Hata Oluştu. \"{$key}\" Bilgisini Doldurduğunuzdan Emin Olup Tekrar Deneyin."]);
+        else :
+            if (!empty($_FILES["img_url"]["name"])) :
                 $image = upload_picture("img_url", "uploads/$this->viewFolder");
-                if ($image["success"]) {
-                    $data = array(
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "company"       => $this->input->post("company"),
-                        "full_name"     => $this->input->post("full_name"),
-                        "img_url"       => $image["file_name"],
-                    );
-                } else {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel yüklenirken bir problem oluştu",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("testimonials/update_form/$id"));
+                if ($image["success"]) :
+                    $data["img_url"] = $image["file_name"];
+                else :
+                    echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Güncelleştirilirken Hata Oluştu. Ziyaretçi Notu Görseli Seçtiğinizden Emin Olup, Lütfen Tekrar Deneyin."]);
                     die();
-                }
-            } else {
-                $data = array(
-                    "title"         => $this->input->post("title"),
-                    "description"   => $this->input->post("description"),
-                    "company"       => $this->input->post("company"),
-                    "full_name"     => $this->input->post("full_name"),
-                );
-            }
-            $update = $this->testimonial_model->update(array("id" => $id), $data);
-            if ($update) {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            } else {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Güncelleme sırasında bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("testimonials"));
-        } else {
-            $viewData = new stdClass();
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-            $viewData->item = $this->testimonial_model->get(
-                array(
-                    "id"    => $id,
-                )
-            );
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
+                endif;
+            endif;
+            $data["content"] = $this->input->post("content");
+            $update = $this->testimonial_model->update(["id" => $id], $data);
+            if ($update) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ziyaretçi Notu Başarıyla Güncelleştirildi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Güncelleştirilirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+
+        endif;
     }
     public function delete($id)
     {
-        $delete = $this->testimonial_model->delete(
-            array(
-                "id"    => $id
-            )
-        );
-        if ($delete) {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt başarılı bir şekilde silindi",
-                "type"  => "success"
-            );
-        } else {
-            $alert = array(
-                "title" => "İşlem Başarılı",
-                "text" => "Kayıt silme sırasında bir problem oluştu",
-                "type"  => "error"
+        $testimonial_model = $this->testimonial_model->get(["id" => $id]);
+        if (!empty($brand)) :
+            $testimonial_model = $this->testimonial_model->delete(["id"    => $id]);
+            if ($testimonial_model) :
+                echo json_encode(["success" => true, "title" => "Başarılı!", "message" => "Ziyaretçi Notu Başarıyla Silindi."]);
+            else :
+                echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Ziyaretçi Notu Silinirken Hata Oluştu, Lütfen Tekrar Deneyin."]);
+            endif;
+        endif;
+    }
+    public function rankSetter()
+    {
+        $rows = $this->input->post("rows");
+
+        foreach ($rows as $row) {
+            $this->testimonial_model->update(
+                array(
+                    "id" => $row["id"]
+                ),
+                array("rank" => $row["position"])
             );
         }
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("testimonials"));
     }
     public function isActiveSetter($id)
     {

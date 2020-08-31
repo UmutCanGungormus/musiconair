@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label>Açıklama</label>
-        <textarea name="description" class="m-0 tinymce"><?= $item->description; ?></textarea>
+        <textarea name="content" class="m-0 tinymce"><?= $item->content; ?></textarea>
     </div>
     <button role="button" data-url="<?= base_url("popups/update/{$item->id}"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#popupModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
