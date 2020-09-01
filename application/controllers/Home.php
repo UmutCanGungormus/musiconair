@@ -41,11 +41,8 @@ class Home extends CI_Controller
         $this->viewData->slides = $this->general_model->get_all("slides", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1, "role_id!=" => 2]);
-        $this->viewData->keyifler = [];
-        $this->viewData->news_categories = $this->general_model->get("news_categories", null, ["isActive" => 1, "seo_url" => "muzik-haberleri"]);
-        $this->viewData->muzik_haberleri = (!empty($this->viewData->news_categories->id) ? $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1, "category_id" => $this->viewData->news_categories->id]) : []);
+        $this->viewData->news_categories = $this->general_model->get_all("news_categories", null,"rank ASC", ["isActive" => 1]);
         $this->viewFolder = "home_v/index";
-        $this->viewData->tvler = [];
         $this->render();
     }
 
