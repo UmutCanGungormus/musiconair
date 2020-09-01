@@ -30,6 +30,9 @@
                     <th>Link</th>
                     <th>Görsel</th>
                     <th>Durumu</th>
+                    <th>Oluşturulma Tarihi</th>
+                    <th>Güncelleme Tarihi</th>
+                    <th>Paylaşım Tarihi</th>
                     <th class="nosort">İşlem</th>
                 </thead>
                 <tbody class="sortable" data-url="<?= base_url("home_banner/rankSetter"); ?>">

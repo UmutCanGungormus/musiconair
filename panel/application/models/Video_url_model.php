@@ -8,9 +8,9 @@ class Video_url_model extends CI_Model
 		parent::__construct();
         // Set orderable column fields
             
-        $this->column_order = array('video_urls.rank', 'video_urls.id', 'video_urls.id', 'video_urls.img_url', 'video_urls.url','video_urls.isActive', 'video_urls.producer','video_urls.release_year', 'video_urls.createdAt','video_urls.updatedAt');
+        $this->column_order = array('video_urls.rank', 'video_urls.id', 'video_urls.id', 'video_urls.img_url', 'video_urls.url','video_urls.isActive', 'video_urls.producer','video_urls.release_year', 'video_urls.createdAt','video_urls.updatedAt','video_urls.updatedAt');
         // Set searchable column fields
-        $this->column_search = array('video_urls.rank', 'video_urls.id', 'video_urls.id', 'video_urls.img_url', 'video_urls.url','video_urls.isActive', 'video_urls.producer','video_urls.release_year', 'video_urls.createdAt','video_urls.updatedAt');
+        $this->column_search = array('video_urls.rank', 'video_urls.id', 'video_urls.id', 'video_urls.img_url', 'video_urls.url','video_urls.isActive', 'video_urls.producer','video_urls.release_year', 'video_urls.createdAt','video_urls.updatedAt','video_urls.updatedAt');
         // Set default order
         $this->order = array('video_urls.rank' => 'ASC');
 	}
@@ -55,7 +55,8 @@ class Video_url_model extends CI_Model
             video_urls.url,
             video_urls.isActive,
             video_urls.createdAt,
-            video_urls.updatedAt',    false);
+            video_urls.updatedAt,
+            video_urls.sharedAt',    false);
 
 
         $query = $this->db->where($where)->get();
@@ -83,7 +84,8 @@ class Video_url_model extends CI_Model
 		video_urls.url,
 		video_urls.isActive,
 		video_urls.createdAt,
-		video_urls.updatedAt',    false);
+        video_urls.updatedAt,
+        video_urls.sharedAt',    false);
         return $this->db->get()->result();
         
     }

@@ -8,9 +8,9 @@ class Job_Advertisement_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('rank', 'id', 'id', 'title','img_url','isActive','createdAt','updatedAt');
+        $this->column_order = array('rank', 'id', 'id', 'title','img_url','isActive','createdAt','updatedAt','sharedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'id', 'title','img_url','isActive','createdAt','updatedAt');
+        $this->column_search = array('rank', 'id', 'id', 'title','img_url','isActive','createdAt','updatedAt','sharedAt');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}
@@ -50,6 +50,7 @@ class Job_Advertisement_model extends CI_Model
             isActive,
             createdAt,
             updatedAt,
+            sharedAt
             ',    false);
 
 
@@ -73,7 +74,8 @@ class Job_Advertisement_model extends CI_Model
         img_url,
         isActive,
         createdAt,
-        updatedAt
+        updatedAt,
+        sharedAt
         ',    false);
         return $this->db->get()->result();
         

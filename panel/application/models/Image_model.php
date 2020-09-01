@@ -8,9 +8,9 @@ class Image_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('images.rank', 'images.id', 'images.id', 'images.url', 'images.url','images.isActive', 'images.createdAt','images.updatedAt');
+        $this->column_order = array('images.rank', 'images.id', 'images.id', 'images.url', 'images.url','images.isActive', 'images.createdAt','images.updatedAt','images.sharedAt');
         // Set searchable column fields
-        $this->column_search = array('images.rank', 'images.id', 'images.id', 'images.url', 'images.url','images.isActive', 'images.createdAt','images.updatedAt');
+        $this->column_search = array('images.rank', 'images.id', 'images.id', 'images.url', 'images.url','images.isActive', 'images.createdAt','images.updatedAt','images.sharedAt');
         // Set default order
         $this->order = array('images.rank' => 'ASC');
 	}
@@ -53,7 +53,8 @@ class Image_model extends CI_Model
             images.url,
             images.isActive,
             images.createdAt,
-            images.updatedAt',    false);
+            images.updatedAt,
+            images.sharedAt',    false);
 
 
         $query = $this->db->where($where)->get();
@@ -79,7 +80,8 @@ class Image_model extends CI_Model
 		images.url,
 		images.isActive,
 		images.createdAt,
-		images.updatedAt',    false);
+        images.updatedAt,
+        images.sharedAt',    false);
         return $this->db->get()->result();
         
     }

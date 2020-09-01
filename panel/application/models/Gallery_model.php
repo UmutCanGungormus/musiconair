@@ -8,9 +8,9 @@ class Gallery_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('galleries.rank', 'galleries.id', 'galleries.id', 'galleries.title', 'galleries.gallery_type', 'galleries.folder_name', 'galleries.url', 'galleries.isActive','galleries.createdAt','galleries.updatedAt');
+        $this->column_order = array('galleries.rank', 'galleries.id', 'galleries.id', 'galleries.title', 'galleries.gallery_type', 'galleries.folder_name', 'galleries.url', 'galleries.isActive','galleries.createdAt','galleries.updatedAt','galleries.sharedAt');
         // Set searchable column fields
-        $this->column_search = array('galleries.rank', 'galleries.id', 'galleries.id', 'galleries.title', 'galleries.gallery_type', 'galleries.folder_name', 'galleries.url', 'galleries.isActive','galleries.createdAt','galleries.updatedAt');
+        $this->column_search = array('galleries.rank', 'galleries.id', 'galleries.id', 'galleries.title', 'galleries.gallery_type', 'galleries.folder_name', 'galleries.url', 'galleries.isActive','galleries.createdAt','galleries.updatedAt','galleries.sharedAt');
         // Set default order
         $this->order = array('galleries.rank' => 'ASC');
 	}
@@ -53,7 +53,8 @@ class Gallery_model extends CI_Model
             galleries.url,
             galleries.isActive,
             galleries.createdAt,
-            galleries.updatedAt',    false);
+            galleries.updatedAt,
+            galleries.sharedAt',    false);
 
 
         $query = $this->db->where($where)->get();
@@ -79,7 +80,8 @@ class Gallery_model extends CI_Model
             galleries.url,
             galleries.isActive,
             galleries.createdAt,
-            galleries.updatedAt',    false);
+            galleries.updatedAt,
+            galleries.sharedAt',    false);
         return $this->db->get()->result();
         
     }

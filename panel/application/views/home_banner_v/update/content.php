@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="updateHomeBanner" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Başlık</label>
@@ -27,7 +27,10 @@
             </div>
         </div>
     </div>
-
+    <div class="form-group">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" value="<?= $item->sharedAt ?>" data-default-date="<?= $item->sharedAt ?>" data-date-format="Y-m-d H:i:S" required>
+    </div>
     <button role="button" data-url="<?= base_url("home_banner/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#homeBannerModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

@@ -29,6 +29,9 @@
                     <th>Widget Olan Haber</th>
                     <th>Widget Eklenen Haber</th>
                     <th>Durumu</th>
+                    <th>Oluşturulma Tarihi</th>
+                    <th>Güncelleme Tarihi</th>
+                    <th>Paylaşım Tarihi</th>
                     <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>

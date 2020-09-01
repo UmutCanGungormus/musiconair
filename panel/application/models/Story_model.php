@@ -8,9 +8,9 @@ class Story_model extends CI_Model
         parent::__construct();
         // Set orderable column fields
 
-        $this->column_order = array('stories.rank', 'stories.id', 'stories.id', 'stories.title', 'stories.folder_name', 'stories.url', 'stories.isActive', 'stories.createdAt', 'stories.updatedAt');
+        $this->column_order = array('stories.rank', 'stories.id', 'stories.id', 'stories.title', 'stories.folder_name', 'stories.url', 'stories.isActive', 'stories.createdAt', 'stories.updatedAt','stories.sharedAt');
         // Set searchable column fields
-        $this->column_search = array('stories.rank', 'stories.id', 'stories.id', 'stories.title', 'stories.folder_name', 'stories.url', 'stories.isActive', 'stories.createdAt', 'stories.updatedAt');
+        $this->column_search = array('stories.rank', 'stories.id', 'stories.id', 'stories.title', 'stories.folder_name', 'stories.url', 'stories.isActive', 'stories.createdAt', 'stories.updatedAt','stories.sharedAt');
         // Set default order
         $this->order = array('stories.rank' => 'ASC');
     }
@@ -53,7 +53,8 @@ class Story_model extends CI_Model
         stories.img_url,
         stories.isActive,
         stories.createdAt,
-        stories.updatedAt',    false);
+        stories.updatedAt,
+        stories.sharedAt',    false);
 
 
         $query = $this->db->where($where)->get();
@@ -79,7 +80,8 @@ class Story_model extends CI_Model
         stories.img_url,
         stories.isActive,
         stories.createdAt,
-        stories.updatedAt',    false);
+        stories.updatedAt,
+        stories.sharedAt',    false);
         return $this->db->get()->result();
     }
 

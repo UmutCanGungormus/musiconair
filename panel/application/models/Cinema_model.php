@@ -8,9 +8,9 @@ class Cinema_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
 
-		$this->column_order = array('cinema.rank', 'cinema.id', 'cinema.id', 'cinema.title', 'cinema.category_id', 'cinema.img_url', 'cinema.isActive', 'cinema.createdAt', 'cinema.updatedAt');
+		$this->column_order = array('cinema.rank', 'cinema.id', 'cinema.id', 'cinema.title', 'cinema.category_id', 'cinema.img_url', 'cinema.isActive', 'cinema.createdAt', 'cinema.updatedAt','cinema.sharedAt');
 		// Set searchable column fields
-		$this->column_search = array('cinema.rank', 'cinema.id', 'cinema.id', 'cinema.title', 'cinema.category_id', 'cinema.img_url', 'cinema.isActive', 'cinema.createdAt', 'cinema.updatedAt');
+		$this->column_search = array('cinema.rank', 'cinema.id', 'cinema.id', 'cinema.title', 'cinema.category_id', 'cinema.img_url', 'cinema.isActive', 'cinema.createdAt', 'cinema.updatedAt','cinema.sharedAt');
 		// Set default order
 		$this->order = array('cinema.rank' => 'ASC');
 	}
@@ -52,6 +52,7 @@ class Cinema_model extends CI_Model
             cinema.isActive,
             cinema.createdAt,
             cinema.updatedAt,
+            cinema.sharedAt
             ',    false);
 
 
@@ -75,7 +76,8 @@ class Cinema_model extends CI_Model
 		cinema.img_url,
         cinema.isActive,
         cinema.createdAt,
-        cinema.updatedAt
+        cinema.updatedAt,
+        cinema.sharedAt
         ',    false);
 		return $this->db->get()->result();
 	}

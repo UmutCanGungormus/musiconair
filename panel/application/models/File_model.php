@@ -8,9 +8,9 @@ class File_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('files.rank', 'files.id', 'files.id', 'files.url', 'files.url','files.isActive', 'files.createdAt','files.updatedAt');
+        $this->column_order = array('files.rank', 'files.id', 'files.id', 'files.url', 'files.url','files.isActive', 'files.createdAt','files.updatedAt','files.sharedAt');
         // Set searchable column fields
-        $this->column_search = array('files.rank', 'files.id', 'files.id', 'files.url', 'files.url','files.isActive', 'files.createdAt','files.updatedAt');
+        $this->column_search = array('files.rank', 'files.id', 'files.id', 'files.url', 'files.url','files.isActive', 'files.createdAt','files.updatedAt','files.sharedAt');
         // Set default order
         $this->order = array('files.rank' => 'ASC');
 	}
@@ -51,7 +51,8 @@ class File_model extends CI_Model
             files.url,
             files.isActive,
             files.createdAt,
-            files.updatedAt',    false);
+            files.updatedAt,
+            files.sharedAt',    false);
 
 
         $query = $this->db->where($where)->get();
@@ -75,7 +76,8 @@ class File_model extends CI_Model
 		files.url,
 		files.isActive,
 		files.createdAt,
-		files.updatedAt',    false);
+        files.updatedAt,
+        files.sharedAt',    false);
         return $this->db->get()->result();
         
     }

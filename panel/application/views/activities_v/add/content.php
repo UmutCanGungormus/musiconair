@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <form id="createActivity" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Etkinlik Adı</label>
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label for="datetimepicker1">Etkinlik Tarihi</label>
-        <input type="text" placeholder="Etkinlik Tarihi Seçin..." name="event_date" class="form-control form-control-sm datetimepicker" required/>
+        <input type="text" placeholder="Etkinlik Tarihi Seçin..." name="event_date" class="form-control form-control-sm datetimepicker" required />
     </div>
     <div class="form-group">
         <label>Etkinlik Mekan</label>
@@ -24,7 +24,7 @@
         <label>Etkinlik Şehri</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Etkinlik Şehri" name="city" required>
     </div>
-    
+
     <div class="form-group">
         <label>Etkinlik Bilet Linki</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Etkinlik Bilet Linki" name="url" required>
@@ -53,6 +53,10 @@
             </span>
             <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
         </span>
+    </div>
+    <div class="form-group">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" value="<?= date("Y-m-d H:i:s")?>" data-default-date="<?= date("Y-m-d H:i:s") ?>" data-date-format="Y-m-d H:i:S" required>
     </div>
     <button role="button" data-url="<?= base_url("activities/save"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
     <a href="javascript:void(0)" onclick="closeModal('#activityModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>

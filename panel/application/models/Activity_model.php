@@ -8,9 +8,9 @@ class Activity_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
       
-        $this->column_order = array('rank', 'id', 'activities.id', 'activities.title','activities.isActive','activities.createdAt','activities.updatedAt');
+        $this->column_order = array('rank', 'id', 'activities.id', 'activities.title','activities.isActive','activities.createdAt','activities.updatedAt','activities.sharedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'activities.id', 'activities.title','activities.isActive','activities.createdAt','activities.updatedAt');
+        $this->column_search = array('rank', 'id', 'activities.id', 'activities.title','activities.isActive','activities.createdAt','activities.updatedAt','activities.sharedAt');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}
@@ -49,6 +49,7 @@ class Activity_model extends CI_Model
             activities.isActive,
             activities.createdAt,
             activities.updatedAt,
+            activities.sharedAt
             ',    false);
 
 
@@ -71,7 +72,8 @@ class Activity_model extends CI_Model
         activities.title,
         activities.isActive,
         activities.createdAt,
-        activities.updatedAt
+        activities.updatedAt,
+        activities.sharedAt
         ',    false);
         return $this->db->get()->result();
         

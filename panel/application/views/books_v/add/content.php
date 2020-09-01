@@ -1,11 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
 <form id="createBook" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Kitap Adı</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Kitap Adı" name="title" required>
     </div>
-
     <div class="form-group">
         <label>Kitap Kategori</label>
         <select class="form-control form-control-sm rounded-0" name="category_id" required>
@@ -38,7 +36,6 @@
         <label>Kitap Satın Alma Linki</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Kitap Satın Alma Linki" name="url" required>
     </div>
-
     <div class="form-group">
         <label>Açıklama</label>
         <textarea name="content" class="m-0 tinymce" required></textarea>
@@ -54,6 +51,10 @@
             </span>
             <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
         </span>
+    </div>
+    <div class="form-group">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" value="<?= date("Y-m-d H:i:s")?>" data-default-date="<?= date("Y-m-d H:i:s") ?>" data-date-format="Y-m-d H:i:S" required>
     </div>
     <button role="button" data-url="<?=base_url("book/save")?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
     <a href="javascript:void(0)" onclick="closeModal('#bookModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>

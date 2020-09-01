@@ -8,9 +8,9 @@ class Book_model extends CI_Model
 		parent::__construct();
 		// Set orderable column fields
 
-		$this->column_order = array('books.rank', 'books.id', 'books.id', 'books.title', 'category_title', 'books.img_url', 'books.isActive', 'books.createdAt', 'books.updatedAt');
+		$this->column_order = array('books.rank', 'books.id', 'books.id', 'books.title', 'category_title', 'books.img_url', 'books.isActive', 'books.createdAt', 'books.updatedAt','books.sharedAt');
 		// Set searchable column fields
-		$this->column_search = array('books.rank', 'books.id', 'books.id', 'books.title', 'category_title', 'books.img_url', 'books.isActive', 'books.createdAt', 'books.updatedAt');
+		$this->column_search = array('books.rank', 'books.id', 'books.id', 'books.title', 'category_title', 'books.img_url', 'books.isActive', 'books.createdAt', 'books.updatedAt','books.sharedAt');
 		// Set default order
 		$this->order = array('books.rank' => 'ASC');
 	}
@@ -52,6 +52,7 @@ class Book_model extends CI_Model
             books.isActive,
             books.createdAt,
             books.updatedAt,
+            books.sharedAt
             ',    false);
 		$this->db->join('book_category', 'books.category_id = book_category.id', 'left');
 
@@ -77,7 +78,8 @@ class Book_model extends CI_Model
 		books.img_url,
         books.isActive,
         books.createdAt,
-        books.updatedAt
+        books.updatedAt,
+        books.sharedAt,
         ',    false);
 		return $this->db->get()->result();
 	}

@@ -30,6 +30,10 @@
             <a href="#" class="btn btn-outline-danger rounded-0 fileinput-exists" data-dismiss="fileinput">Kaldır</a>
         </span>
     </div>
+    <div class="form-group">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" value="<?= (empty($item->sharedAt) ? date("Y-m-d H:i:s") : $item->sharedAt) ?>" data-default-date="<?= (empty($item->sharedAt) ? date("Y-m-d H:i:s") : $item->sharedAt) ?>" data-date-format="Y-m-d H:i:S" required>
+    </div>
     <button role="button" data-url="<?= base_url("galleries/file_update/{$item->id}/$gallery->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#fileModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

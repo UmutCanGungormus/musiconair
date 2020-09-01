@@ -17,7 +17,7 @@
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <label for="datetimepicker1">Bitirme Tarihi</label>
-            <input type="text" class="form-control form-control-sm rounded-0 datetimepicker" placeholder="Bitirme Tarihi" name="finishedAt" required/>
+            <input type="text" class="form-control form-control-sm rounded-0 datetimepicker" placeholder="Bitirme Tarihi" name="finishedAt" required />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="form-group">
@@ -43,6 +43,10 @@
                 <textarea name="content" class="m-0 tinymce" required></textarea>
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" value="<?= date("Y-m-d H:i:s")?>" data-default-date="<?= date("Y-m-d H:i:s") ?>" data-date-format="Y-m-d H:i:S" required>
     </div>
     <button role="button" data-url="<?= base_url("portfolio/save"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnSave">Kaydet</button>
     <a href="javascript:void(0)" onclick="closeModal('#portfolioModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>

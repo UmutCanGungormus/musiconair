@@ -6,9 +6,9 @@ class Voting_options_model extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->column_order = array('voting_options.rank', 'voting_options.id', 'voting_options.id', 'voting_options.title', 'votings.title', 'voting_options.img_url', 'voting_options.isActive');
+		$this->column_order = array('voting_options.rank', 'voting_options.id', 'voting_options.id', 'voting_options.title', 'votings.title', 'voting_options.img_url', 'voting_options.isActive','voting_options.createdAt','voting_options.updatedAt','voting_options.sharedAt');
 		// Set searchable column fields
-		$this->column_search = array('voting_options.rank', 'voting_options.id', 'voting_options.id', 'voting_options.title', 'votings.title', 'voting_options.img_url', 'voting_options.isActive');
+		$this->column_search = array('voting_options.rank', 'voting_options.id', 'voting_options.id', 'voting_options.title', 'votings.title', 'voting_options.img_url', 'voting_options.isActive','voting_options.createdAt','voting_options.updatedAt','voting_options.sharedAt');
 		// Set default order
 		$this->order = array('voting_options.rank' => 'ASC');
 	}
@@ -48,7 +48,10 @@ class Voting_options_model extends CI_Model
             voting_options.img_url,
             voting_options.title voting_options_title,
 			votings.title votings_title,
-            voting_options.isActive',    false);
+			voting_options.isActive,
+			voting_options.createdAt,
+			voting_options.updatedAt,
+			voting_options.sharedAt',    false);
 
 		return $this->db->get()->result();
 	}
@@ -123,7 +126,10 @@ class Voting_options_model extends CI_Model
             voting_options.img_url,
             voting_options.title voting_options_title,
 			votings.title votings_title,
-            voting_options.isActive',    false);
+			voting_options.isActive,
+			voting_options.createdAt,
+			voting_options.updatedAt,
+			voting_options.sharedAt',    false);
 			$this->db->join('votings', 'voting_options.voting_id = votings.id', 'left');
 
 		$query = $this->db->where($where)->get();

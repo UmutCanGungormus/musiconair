@@ -57,6 +57,7 @@
                     <th>Durumu</th>
                     <th>Oluşturulma Tarihi</th>
                     <th>Güncelleme Tarihi</th>
+                    <th>Paylaşım Tarihi</th>
                     <th class="nosort">İşlem</th>
                 </thead>
                 <tbody>

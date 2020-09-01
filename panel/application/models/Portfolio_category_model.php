@@ -6,9 +6,9 @@ class Portfolio_category_model extends CI_Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->column_order = array('rank', 'id', 'id', 'title','isActive');
+		$this->column_order = array('rank', 'id', 'id', 'title','isActive','createdAt','updatedAt','sharedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'id', 'title', 'isActive');
+        $this->column_search = array('rank', 'id', 'id', 'title', 'isActive','createdAt','updatedAt','sharedAt');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}

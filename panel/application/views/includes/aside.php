@@ -64,18 +64,18 @@
                 <?php } ?>
                 <?php if (isAllowedViewModule("job_advertisement") || isAllowedViewModule("estate_advertisement")) { ?>
                     <li class="nav-item <?= ($this->uri->segment(1)=="job_advertisement" || $this->uri->segment(1) == "estate_advertisement")? "active":"" ?> ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#advertisement_nav">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="job_advertisement" || $this->uri->segment(1) == "estate_advertisement")? "active":"" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#advertisement_nav">
                             <i class="fa fa-newspaper"></i>
                             <span class="nav-link-text">İlan İşlemleri</span>
                         </a>
-                        <ul id="advertisement_nav" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
+                        <ul id="advertisement_nav" class="nav flex-column collapse collapse-level-1 <?= ($this->uri->segment(1)=="job_advertisement" || $this->uri->segment(1) == "estate_advertisement")? "collapse show":"" ?>">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="job_advertisement" || $this->uri->segment(1) == "estate_advertisement")? "active":"" ?>">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("job_advertisement"); ?>">İş İlanları</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1)=="job_advertisement" ? "active" : null)?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="job_advertisement" ? "active" : null)?>" href="<?= base_url("job_advertisement"); ?>">İş İlanları</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("estate_advertisement"); ?>">Emlak İlanları</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1)=="estate_advertisement" ? "active" : null)?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="estate_advertisement" ? "active" : null)?>" href="<?= base_url("estate_advertisement"); ?>">Emlak İlanları</a>
                                     </li>
                                 </ul>
                             </li>
@@ -83,19 +83,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("social_media_talk")) { ?>
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#social_media_talk_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="social_media_talk")||($this->uri->segment(1)=="news_box") ? "active":""?> ">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="social_media_talk")||($this->uri->segment(1)=="news_box") ? "active":""?>" href="javascript:void(0);" data-toggle="collapse" data-target="#social_media_talk_nav">
                             <i class="fa fa-icons"></i>
                             <span class="nav-link-text">Widget İşlemleri</span>
                         </a>
-                        <ul id="social_media_talk_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="social_media_talk")||($this->uri->segment(1)=="news_box")?"show":""?> collapse-level-1">
-                            <li class="nav-item">
+                        <ul id="social_media_talk_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="social_media_talk")||($this->uri->segment(1)=="news_box") ? "show":""?> collapse-level-1">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="social_media_talk") || ($this->uri->segment(1)=="news_box") ? "active":""?>">
                                 <ul class="nav flex-column ">
                                     <li class="nav-item <?= ($this->uri->segment(1)=="social_media_talk")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("social_media_talk"); ?>">Sosyal Medya Bunu Konuşuyor</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="social_media_talk")? "active":"" ?>" href="<?= base_url("social_media_talk"); ?>">Sosyal Medya Bunu Konuşuyor</a>
                                     </li>
                                     <li class="nav-item <?= ($this->uri->segment(1)=="news_box")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("news_box"); ?>">Haber Kutusu</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="news_box")? "active":"" ?>" href="<?= base_url("news_box"); ?>">Haber Kutusu</a>
                                     </li>
                                 </ul>
                             </li>
@@ -103,19 +103,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("votings")) { ?>
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#votings_nav">
+                    <li class="nav-item  <?= ($this->uri->segment(1)=="votings")||($this->uri->segment(1)=="voting_options")?"active":""?>">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="votings")||($this->uri->segment(1)=="voting_options")?"active":""?>" href="javascript:void(0);" data-toggle="collapse" data-target="#votings_nav">
                             <i class="fa fa-vote-yea"></i>
                             <span class="nav-link-text">Oylama İşlemleri</span>
                         </a>
                         <ul id="votings_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="votings")||($this->uri->segment(1)=="voting_options")?"show":""?> collapse-level-1">
-                            <li class="nav-item">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="votings")||($this->uri->segment(1)=="voting_options")?"active":""?>">
                                 <ul class="nav flex-column">
                                     <li class="nav-item <?= ($this->uri->segment(1)=="votings")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("votings"); ?>">Oylama Konusu</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="votings")? "active":"" ?>" href="<?= base_url("votings"); ?>">Oylama Konusu</a>
                                     </li>
                                     <li class="nav-item <?= ($this->uri->segment(1)=="voting_options")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("voting_options"); ?>">Oylama Şıkları</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="voting_options")? "active":"" ?>" href="<?= base_url("voting_options"); ?>">Oylama Şıkları</a>
                                     </li>
                                 </ul>
                             </li>
@@ -123,19 +123,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("news")) { ?>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#news_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="news")||($this->uri->segment(1)=="news_categories")?"active":""?>">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="news")||($this->uri->segment(1)=="news_categories")?"active":""?>" href="javascript:void(0);" data-toggle="collapse" data-target="#news_nav">
                             <i class="fa fa-newspaper"></i>
                             <span class="nav-link-text">Haber İşlemleri</span>
                         </a>
                         <ul id="news_nav" class="nav flex-column collapse  <?= ($this->uri->segment(1)=="news")||($this->uri->segment(1)=="news_categories")?"show":""?> collapse-level-1">
-                            <li class="nav-item">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="news")||($this->uri->segment(1)=="news_categories")?"active":""?>">
                                 <ul class="nav flex-column">
                                 <li class="nav-item  <?= ($this->uri->segment(1)=="news_categories")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("news_categories"); ?>">Haber Kategorileri</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="news_categories")? "active":"" ?>" href="<?= base_url("news_categories"); ?>">Haber Kategorileri</a>
                                     </li>
                                     <li class="nav-item  <?= ($this->uri->segment(1)=="news")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("news"); ?>">Haberler</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="news")? "active":"" ?>" href="<?= base_url("news"); ?>">Haberler</a>
                                     </li>
                                 </ul>
                             </li>
@@ -143,19 +143,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("test")) { ?>
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#test_nav">
+                    <li class="nav-item  <?= ($this->uri->segment(1)=="test")||($this->uri->segment(1)=="options")?"active":""?>">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="test")||($this->uri->segment(1)=="options")?"active":""?>" href="javascript:void(0);" data-toggle="collapse" data-target="#test_nav">
                             <i class="fa fa-file-signature"></i>
                             <span class="nav-link-text">Test İşlemleri</span>
                         </a>
                         <ul id="test_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="test")||($this->uri->segment(1)=="options")?"show":""?> collapse-level-1">
-                            <li class="nav-item">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="test")||($this->uri->segment(1)=="options")?"show":""?>">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item <?= ($this->uri->segment(1)=="test")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("test"); ?>">Testler</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1)=="test") ? "active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="test") ? "active":"" ?>" href="<?= base_url("test"); ?>">Testler</a>
                                     </li>
                                     <li class="nav-item <?= ($this->uri->segment(1)=="options")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("options"); ?>">Test Şıkları</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="options")? "active":"" ?>" href="<?= base_url("options"); ?>">Test Şıkları</a>
                                     </li>
                                 </ul>
                             </li>
@@ -163,19 +163,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("book")) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#book_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="book_category")||($this->uri->segment(1)=="book")?"active":""?>">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="book_category")||($this->uri->segment(1)=="book")?"active":""?>" href="javascript:void(0);" data-toggle="collapse" data-target="#book_nav">
                             <i class="fa fa-book"></i>
                             <span class="nav-link-text">Kitaplar</span>
                         </a>
                         <ul id="book_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="book_category")||($this->uri->segment(1)=="book")?"show":""?>  collapse-level-1">
-                            <li class="nav-item">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="book_category")||($this->uri->segment(1)=="book")?"active":""?>">
                                 <ul class="nav flex-column">
                                     <li class="nav-item  <?= ($this->uri->segment(1)=="book_category")? "active":"" ?> ">
-                                        <a class="nav-link " href="<?= base_url("book_category"); ?>">Kitap Türleri</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="book_category")? "active":"" ?>" href="<?= base_url("book_category"); ?>">Kitap Türleri</a>
                                     </li>
                                     <li class="nav-item  <?= ($this->uri->segment(1)=="book")? "active":"" ?> ">
-                                        <a class="nav-link" href="<?= base_url("book"); ?>">Kitaplar</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="book")? "active":"" ?>" href="<?= base_url("book"); ?>">Kitaplar</a>
                                     </li>
                                 </ul>
                             </li>
@@ -183,19 +183,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("cinema")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1)=="cinema")? "active":"" ?> ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#cinema_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="cinema" || $this->uri->segment(1) == "cinema_category")?"active":"" ?> ">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="cinema" || $this->uri->segment(1) == "cinema_category")?"active":"" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#cinema_nav">
                             <i class="fa fa-film"></i>
                             <span class="nav-link-text">Sinema</span>
                         </a>
-                        <ul id="cinema_nav" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
+                        <ul id="cinema_nav" class="nav flex-column collapse collapse-level-1 <?= ($this->uri->segment(1)=="cinema" || $this->uri->segment(1) == "cinema_category")?"show":"" ?>">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="cinema" || $this->uri->segment(1) == "cinema_category")?"active":"" ?>">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("cinema_category"); ?>">Film Türleri</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1) == "cinema_category")?"active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "cinema_category")?"active":"" ?>" href="<?= base_url("cinema_category"); ?>">Film Türleri</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("cinema"); ?>">Filmler</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1)=="cinema")?"active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="cinema")?"active":"" ?>" href="<?= base_url("cinema"); ?>">Filmler</a>
                                     </li>
                                 </ul>
                             </li>
@@ -203,19 +203,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("activities")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1)=="activity")? "active":"" ?> ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#activity_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="activities" || $this->uri->segment(1) == "activity_categories") ? "active":"" ?> ">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="activities" || $this->uri->segment(1) == "activity_categories") ? "active":"" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#activity_nav">
                             <i class="fa fa-snowboarding"></i>
                             <span class="nav-link-text">Etkinlik İşlemleri</span>
                         </a>
-                        <ul id="activity_nav" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
+                        <ul id="activity_nav" class="nav flex-column collapse collapse-level-1 <?= ($this->uri->segment(1)=="activities" || $this->uri->segment(1) == "activity_categories") ? "show":"" ?>">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="activities" || $this->uri->segment(1) == "activity_categories") ? "active":"" ?>">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("activity_categories"); ?>">Etkinlik Kategorileri</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1) == "activity_categories") ? "active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "activity_categories") ? "active":"" ?>" href="<?= base_url("activity_categories"); ?>">Etkinlik Kategorileri</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("activities"); ?>">Etkinlikler</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1)=="activities") ? "active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="activities") ? "active":"" ?>" href="<?= base_url("activities"); ?>">Etkinlikler</a>
                                     </li>
                                 </ul>
                             </li>
@@ -223,21 +223,21 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("users")) { ?>
-                    <li class="nav-item  ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#users_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="users" || $this->uri->segment(1) == "user_role") ? "active":"" ?> ">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="users" || $this->uri->segment(1) == "user_role") ? "active":"" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#users_nav">
                             <i class="fa fa-users"></i>
                             <span class="nav-link-text">Kullanıcı İşlemleri</span>
                         </a>
                         <ul id="users_nav" class="nav flex-column collapse <?= ($this->uri->segment(1)=="user_role")||($this->uri->segment(1)=="users")?"show":""?>  collapse-level-1">
-                            <li class="nav-item">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="users" || $this->uri->segment(1) == "user_role") ? "active":"" ?>">
                                 <ul class="nav flex-column">
                                     <?php if (isAllowedViewModule("user_role")) { ?>
                                     <li class="nav-item <?= ($this->uri->segment(1)=="user_role")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("user_role"); ?>">Kullanıcı Yetkileri</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "user_role") ? "active":"" ?>" href="<?= base_url("user_role"); ?>">Kullanıcı Yetkileri</a>
                                     </li>
                                     <?php } ?>
                                     <li class="nav-item <?= ($this->uri->segment(1)=="users")? "active":"" ?>">
-                                        <a class="nav-link" href="<?= base_url("users"); ?>">Kullanıcılar</a>
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="users") ? "active":"" ?>" href="<?= base_url("users"); ?>">Kullanıcılar</a>
                                     </li>
                                 </ul>
                             </li>
@@ -262,19 +262,19 @@
                     </li>
                 <?php } ?>
                 <?php if (isAllowedViewModule("portfolio")) { ?>
-                    <li class="nav-item <?= ($this->uri->segment(1)=="portfolio")? "active":"" ?> ">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#portfolio_nav">
+                    <li class="nav-item <?= ($this->uri->segment(1)=="portfolio" || $this->uri->segment(1) == "portfolio_categories")? "active":"" ?> ">
+                        <a class="nav-link <?= ($this->uri->segment(1)=="portfolio" || $this->uri->segment(1) == "portfolio_categories")? "active":"" ?>" href="javascript:void(0);" data-toggle="collapse" data-target="#portfolio_nav">
                             <i class="fa fa-id-card"></i>
                             <span class="nav-link-text">Portfolyo İşlemleri</span>
                         </a>
-                        <ul id="portfolio_nav" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
+                        <ul id="portfolio_nav" class="nav flex-column collapse collapse-level-1 <?= ($this->uri->segment(1)=="portfolio" || $this->uri->segment(1) == "portfolio_categories")? "show":"" ?>">
+                            <li class="nav-item <?= ($this->uri->segment(1)=="portfolio" || $this->uri->segment(1) == "portfolio_categories")? "active":"" ?>">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("portfolio_categories"); ?>">Portfolyo Kategorileri</a>
+                                    <li class="nav-item <?= ( $this->uri->segment(1) == "portfolio_categories")? "active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1) == "portfolio_categories")? "active":"" ?>" href="<?= base_url("portfolio_categories"); ?>">Portfolyo Kategorileri</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?= base_url("portfolio"); ?>">Portfolyo</a>
+                                    <li class="nav-item <?= ($this->uri->segment(1)=="portfolio")? "active":"" ?>">
+                                        <a class="nav-link <?= ($this->uri->segment(1)=="portfolio")? "active":"" ?>" href="<?= base_url("portfolio"); ?>">Portfolyo</a>
                                     </li>
                                 </ul>
                             </li>

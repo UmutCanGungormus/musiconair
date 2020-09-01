@@ -7,9 +7,9 @@ class Social_media_talk_model extends CI_Model
 	{
 		parent::__construct();
 		
-        $this->column_order = array('rank', 'id', 'id', 'title', 'news_id','id', 'isActive');
+        $this->column_order = array('rank', 'id', 'id', 'title', 'news_id','id', 'isActive','createdAt','updatedAt','sharedAt');
         // Set searchable column fields
-        $this->column_search = array('rank', 'id', 'id', 'title', 'news_id','id', 'isActive');
+        $this->column_search = array('rank', 'id', 'id', 'title', 'news_id','id', 'isActive','createdAt','updatedAt','sharedAt');
         // Set default order
         $this->order = array('rank' => 'ASC');
 	}

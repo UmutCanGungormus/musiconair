@@ -4,7 +4,6 @@
         <label>Başlık</label>
         <input class="form-control form-control-sm rounded-0" placeholder="Başlık" name="title" value="<?= $item->title; ?>" required>
     </div>
-
     <div class="row">
         <div class="col-3 image_upload_container">
             <img src="<?= get_picture($viewFolder, $item->img_url); ?>" alt="" class="img-fluid">
@@ -24,7 +23,10 @@
             </div>
         </div>
     </div>
-
+    <div class="form-group">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" value="<?= $item->sharedAt ?>" data-default-date="<?= $item->sharedAt ?>" data-date-format="Y-m-d H:i:S" required>
+    </div>
     <button role="button" data-url="<?= base_url("test/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#testModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
 </form>

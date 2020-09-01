@@ -42,8 +42,8 @@
         </div>
     </div>
     <div class="form-group">
-        <label>Gönderi Paylaşım Tarihi</label>
-        <input type="text" name="sharedAt" placeholder="Gönderi Paylaşım Tarihi" value="<?= $item->sharedAt ?>" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" data-default-date="<?= $item->sharedAt ?>" data-date-format="Y-m-d H:i:S">
+        <label>Paylaşım Tarihi</label>
+        <input type="text" name="sharedAt" placeholder="Paylaşım Tarihi" value="<?= $item->sharedAt ?>" class="form-control form-control-sm datetimepicker" data-flatpickr data-alt-input="true" data-enable-time="true" data-enable-seconds="true" data-default-date="<?= $item->sharedAt ?>" data-date-format="Y-m-d H:i:S">
     </div>
     <button role="button" data-url="<?= base_url("slides/update/$item->id"); ?>" class="btn btn-sm btn-outline-primary rounded-0 btnUpdate">Güncelle</button>
     <a href="javascript:void(0)" onclick="closeModal('#slideModal')" class="btn btn-sm btn-outline-danger rounded-0">İptal</a>
