@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class Portfolio_category_model extends CI_Model
 {
 	public $tableName = "Portfolio_categories";

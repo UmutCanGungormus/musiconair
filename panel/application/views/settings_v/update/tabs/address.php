@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <div class="tab-pane fade" id="address-informations" role="tabpanel" aria-labelledby="address-informations-tab">
 	<div class="row">
 		<div class="form-group col-md-12">

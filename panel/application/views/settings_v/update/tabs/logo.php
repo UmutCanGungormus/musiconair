@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
     <div class="row">
         <div class="col-3">

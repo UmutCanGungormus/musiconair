@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class Social_media_talk_model extends CI_Model
 {
 	public $tableName = "social_media_talk";

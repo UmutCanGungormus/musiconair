@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class Story_item_model extends CI_Model
 {
 	public $tableName = "story_items";

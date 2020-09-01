@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <form id="createStory" onsubmit="return false" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label>Hikaye Adı</label>

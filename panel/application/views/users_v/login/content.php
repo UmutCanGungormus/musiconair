@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <header class="d-flex justify-content-between align-items-center">
     <a class="d-flex auth-brand" href="<?= base_url() ?>">
         <img class="brand-img img-fluid" src="https://mutfakyapim.com/images/mutfak/logo.png?v=1" alt="Mutfak Yapım" />

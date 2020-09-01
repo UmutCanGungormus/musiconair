@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <form id="updateSlide" onsubmit="return false" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Başlık</label>

@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class Options_model extends CI_Model
 {
 	public $tableName = "options";

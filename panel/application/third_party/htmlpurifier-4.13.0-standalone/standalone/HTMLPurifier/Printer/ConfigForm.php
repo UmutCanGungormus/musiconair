@@ -201,6 +201,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $ret .= $this->end('tbody');
         return $ret;
     }
+
 }
 
 /**
@@ -359,13 +360,11 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
                 $ret .= $this->element('option', $val, $attr);
             }
             $ret .= $this->end('select');
-        } elseif (
-            $type === HTMLPurifier_VarParser::TEXT ||
-            $type === HTMLPurifier_VarParser::ITEXT ||
-            $type === HTMLPurifier_VarParser::ALIST ||
-            $type === HTMLPurifier_VarParser::HASH ||
-            $type === HTMLPurifier_VarParser::LOOKUP
-        ) {
+        } elseif ($type === HTMLPurifier_VarParser::TEXT ||
+                $type === HTMLPurifier_VarParser::ITEXT ||
+                $type === HTMLPurifier_VarParser::ALIST ||
+                $type === HTMLPurifier_VarParser::HASH ||
+                $type === HTMLPurifier_VarParser::LOOKUP) {
             $attr['cols'] = $this->cols;
             $attr['rows'] = $this->rows;
             $ret .= $this->start('textarea', $attr);

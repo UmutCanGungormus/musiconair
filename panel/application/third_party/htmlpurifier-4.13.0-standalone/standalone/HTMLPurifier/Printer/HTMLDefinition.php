@@ -15,7 +15,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
     public function render($config)
     {
         $ret = '';
-        $this->config = &$config;
+        $this->config =& $config;
 
         $this->def = $config->getHTMLDefinition();
 
@@ -43,8 +43,8 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
         $ret .= $this->element('caption', 'Doctype');
         $ret .= $this->row('Name', $doctype->name);
         $ret .= $this->row('XML', $doctype->xml ? 'Yes' : 'No');
-        $ret .= $this->row('Default Modules', implode($doctype->modules, ', '));
-        $ret .= $this->row('Default Tidy Modules', implode($doctype->tidyModules, ', '));
+        $ret .= $this->row('Default Modules', implode(', ', $doctype->modules));
+        $ret .= $this->row('Default Tidy Modules', implode(', ', $doctype->tidyModules));
         $ret .= $this->end('table');
         return $ret;
     }
@@ -218,7 +218,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
             $ret .= $this->element(
                 'td',
                 '<em>Block</em>: ' .
-                    $this->escape($this->listifyTagLookup($def->block->elements)),
+                $this->escape($this->listifyTagLookup($def->block->elements)),
                 null,
                 0
             );
@@ -227,22 +227,24 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
             $ret .= $this->element(
                 'td',
                 '<em>Inline</em>: ' .
-                    $this->escape($this->listifyTagLookup($def->inline->elements)),
+                $this->escape($this->listifyTagLookup($def->inline->elements)),
                 null,
                 0
             );
+
         } elseif ($def->type == 'custom') {
 
             $ret .= $this->element(
                 'td',
                 '<em>' . ucfirst($def->type) . '</em>: ' .
-                    $def->dtd_regex
+                $def->dtd_regex
             );
+
         } else {
             $ret .= $this->element(
                 'td',
                 '<em>' . ucfirst($def->type) . '</em>: ' .
-                    $this->escape($this->listifyTagLookup($elements)),
+                $this->escape($this->listifyTagLookup($elements)),
                 null,
                 0
             );

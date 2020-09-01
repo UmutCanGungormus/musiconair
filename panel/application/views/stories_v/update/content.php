@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 <form id="updateStory" onsubmit="return false" method="post">
     <div class="form-group">
         <label>Hikaye Adı</label>

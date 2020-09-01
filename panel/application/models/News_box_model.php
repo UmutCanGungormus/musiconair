@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class News_box_model extends CI_Model
 {
 	public $tableName = "news_box";

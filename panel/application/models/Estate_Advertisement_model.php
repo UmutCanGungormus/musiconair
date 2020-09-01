@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class Estate_Advertisement_model extends CI_Model
 {
 	public $tableName = "estate_advertisements";
