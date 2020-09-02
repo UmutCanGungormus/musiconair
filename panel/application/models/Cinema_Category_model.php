@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class Cinema_Category_model extends CI_Model
+class Cinema_category_model extends CI_Model
 {
 	public $tableName = "cinema_category";
 	public function __construct()

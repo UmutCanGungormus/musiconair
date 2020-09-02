@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class Job_Advertisement_model extends CI_Model
+class Job_advertisement_model extends CI_Model
 {
 	public $tableName = "job_advertisements";
 	public function __construct()
