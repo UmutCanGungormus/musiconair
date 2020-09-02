@@ -154,32 +154,31 @@
                         endforeach; ?>
                     </ul>
                 </div>
-                <h3>YORUMLAR ()</h3>
-                <?php if(get_active_user()):?>
-                <form class="createComment" onsubmit="return false" method="POST" enctype="multipart/formdata">
-                    <div class="row mx-0">
-                        <div class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
-                            <a href="<?= base_url(" profil/" . get_active_user()->user_name) ?>" class="d-block align-items-center text-center justify-content-center bg-transparent">
-                                <img class="rounded-circle img-fluid text-center justify-content-center bg-white border border-success shadow-lg" width="75" src="<?= get_picture("users_v", get_active_user()->img_url) ?>" alt="<?= get_active_user()->full_name ?>">
-                                <h6 class="text-center justify-content-center"><small class="text-center justify-content-center dark bg-transparent"><?= get_active_user()->user_name ?></small></h6>
-                            </a>
-                        </div>
-                        <div class="col-9 col-sm-9 col-md-9 col-lg-11 col-xl-11">
-                            <div class="form-group mb-1">
-                                <textarea name="content" class="form-control" placeholder="Yorumunuzu Buraya Yazın..." cols="30" rows="5"></textarea>
-                                <input type="hidden" name="news_id" value="<?= $news->id ?>">
+                <h3>YORUMLAR (<span class="commentCount">0</span>)</h3>
+                <?php if (get_active_user()) : ?>
+                    <form id="createComment" onsubmit="return false" method="POST" enctype="multipart/formdata">
+                        <div class="row mx-0">
+                            <div class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
+                                <a href="<?= base_url("profil/" . get_active_user()->user_name) ?>" class="d-block align-items-center text-center justify-content-center bg-transparent">
+                                    <img class="rounded-circle img-fluid text-center justify-content-center bg-white border border-success shadow-lg" width="75" src="<?= get_picture("users_v", get_active_user()->img_url) ?>" alt="<?= get_active_user()->full_name ?>">
+                                    <h6 class="text-center justify-content-center"><small class="text-center justify-content-center dark bg-transparent"><?= get_active_user()->user_name ?></small></h6>
+                                </a>
                             </div>
-                            <div class="form-group text-right">
-                                <button data-url="<?= base_url("yorum-yap") ?>" class="btn btn-primary btnComment mx-0">Yorum Yap</button>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-11 col-xl-11">
+                                <div class="form-group mb-1">
+                                    <textarea name="content" class="form-control" placeholder="Yorumunuzu Buraya Yazın..." cols="30" rows="5"></textarea>
+                                    <input type="hidden" name="news_id" value="<?= $news->id ?>">
+                                </div>
+                                <div class="form-group text-right">
+                                    <button data-url="<?= base_url("yorum-yap") ?>" class="btn btn-primary btnComment mx-0">Yorum Yap</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <?php endif;?>
+                    </form>
+                <?php endif; ?>
                 <div class="loadComments mt-3">
-                    <?= $comments ?>
                 </div>
-
+                <div id="loadingBar" class="justify-content-center text-center"></div>
 
             </div>
 
@@ -282,23 +281,49 @@
 
 <script>
     $(document).ready(function() {
-        $(document).on("click",".btnReply",function(e){
+        $("#loadingBar").html("<i class='fa fa-circle-notch fa-spin fa-2x'></i><br><cite class='font-weight-bold'>Yükleniyor Lütfen Bekleyin...</cite>");
+        $.post(base_url + "yorumlari-getir/<?= $news->id ?>", {}, function(response) {
+            setTimeout(function() {
+                $(".loadComments").html(response.comments);
+                $(".commentCount").html(response.commentCount);
+                $("#loadingBar").html("");
+                loading = false;
+            }, 2000);
+        }, 'JSON');
+
+        $(document).on("click", ".btnComment", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            let formData = new FormData($(this).parent().find("form.replyForm"));
-            createAjax(url,formData,function(){
-                $(".loadComments").html().load(base_url+"/loadComments");
+            let formData = new FormData(document.getElementById("createComment"));
+            createAjax(url, formData, function() {
+                $("#loadingBar").html("<i class='fa fa-circle-notch fa-spin fa-2x'></i><br><cite class='font-weight-bold'>Yükleniyor Lütfen Bekleyin...</cite>");
+                $.post(base_url + "yorumlari-getir/<?= $news->id ?>", {}, function(response) {
+                    setTimeout(function() {
+                        $(".loadComments").html(response.comments);
+                        $(".commentCount").html(response.commentCount);
+                        $("#loadingBar").html("");
+                        loading = false;
+                    }, 2000);
+                }, 'JSON');
             });
         });
-
-        $(document).on("click",".btnReply",function(e){
+        $(document).on("click", ".btnReply", function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             let url = $(this).data("url");
-            let formData = new FormData($(this).parent().find("form.replyForm"));
-            createAjax(url,formData,function(){
-                $(".loadComments").html().load(base_url+"/loadComments");
+            let formEl = $(this).closest('form.replyForm')[0];
+            let formData = new FormData(formEl);
+            createAjax(url, formData, function() {
+                $("#loadingBar").html("<i class='fa fa-circle-notch fa-spin fa-2x'></i><br><cite class='font-weight-bold'>Yükleniyor Lütfen Bekleyin...</cite>");
+                $.post(base_url + "yorumlari-getir/<?= $news->id ?>", {}, function(response) {
+                    setTimeout(function() {
+                        $(".loadComments").html(response.comments);
+                        $(".commentCount").html(response.commentCount);
+                        $("#loadingBar").html("");
+                        loading = false;
+                    }, 2000);
+                }, 'JSON');
             });
         });
 

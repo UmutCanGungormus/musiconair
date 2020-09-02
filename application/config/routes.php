@@ -87,7 +87,8 @@ $route["sifremi-unuttum/(:any)"] = "userop/reset_password_v/$1";
 $route["sifremi-unuttum/(:any)/(:any)"] = "userop/reset_password_v/$1/$2";
 $route["sifremi-sifirla"] = "userop/reset_password_end";
 $route["cikis"] = "userop/logout";
-
+$route["yorum-yap"] = "home/reply_comment";
+$route["yorumlari-getir/(:num)"] = "home/loadComments/$1";
 
 $route['urunler']='home/product_list';
 $route['kategori/(.*)']='home/category';

@@ -3,9 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home extends CI_Controller
 {
+    /**
+     * Variables
+     */
     public $viewFolder = "";
     public $viewData = "";
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -19,7 +24,9 @@ class Home extends CI_Controller
         $this->viewData->stories = $this->general_model->get_all("stories", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->story_items = $this->general_model->get_all("story_items", null, "rank ASC", ["isActive" => 1]);
     }
-
+    /**
+     * Render
+     */
     public function render()
     {
         $this->load->view("includes/head", (array)$this->viewData);
@@ -28,30 +35,38 @@ class Home extends CI_Controller
         $this->load->view($this->viewFolder);
         $this->load->view("includes/footer");
     }
-
+    /**
+     * Error 
+     */
     public function error()
     {
         $this->viewFolder = "404_v/index";
         $this->render();
     }
-
+    /**
+     * Index
+     */
     public function index()
     {
         $this->viewData->news = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1]);
         $this->viewData->slides = $this->general_model->get_all("slides", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->banners = $this->general_model->get_all("homepage_banner", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->writers = $this->general_model->get_all("users", null, "rank ASC", ["isActive" => 1, "role_id!=" => 2]);
-        $this->viewData->news_categories = $this->general_model->get_all("news_categories", null,"rank ASC", ["isActive" => 1]);
+        $this->viewData->news_categories = $this->general_model->get_all("news_categories", null, "rank ASC", ["isActive" => 1]);
         $this->viewFolder = "home_v/index";
         $this->render();
     }
-
+    /**
+     * About Us
+     */
     public function about_us()
     {
         $this->viewFolder = "about_v/index";
         $this->render();
     }
-
+    /**
+     * Services
+     */
     public function service()
     {
         $seo_url = $this->uri->segment(2);
@@ -63,7 +78,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Tests
+     */
     public function test()
     {
         $this->viewData->test = $this->general_model->get_all("tests", null, "rank ASC", ["isActive" => 1]);
@@ -74,7 +91,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Test Detail
+     */
     public function test_detail()
     {
         $seo_url = $this->uri->segment(2);
@@ -87,7 +106,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * News
+     */
     public function news()
     {
         $seo_url = $this->uri->segment(2);
@@ -149,7 +170,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * News Detail
+     */
     public function news_detail($seo_url)
     {
         $this->viewData->news = $this->general_model->get("news", null, ['seo_url' => $seo_url, "isActive" => 1]);
@@ -159,7 +182,6 @@ class Home extends CI_Controller
         $this->viewData->similar = $this->general_model->get_all("news", null, "hit DESC", ['category_id' => $this->viewData->news->category_id, "isActive" => 1]);
         $this->viewData->most_read = $this->general_model->get_all("news", null, "hit DESC", ['category_id' => $this->viewData->news->category_id, "isActive" => 1], [], [], [3, 0]);
         $this->general_model->update("news", ['seo_url' => $seo_url, "isActive" => 1], ['hit' => $this->viewData->news->hit + 1]);
-        $this->viewData->comments = $this->show_tree($this->viewData->news->id);
         if (empty($this->viewData->news)) :
             $this->viewFolder = "404_v/index";
         else :
@@ -167,7 +189,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Show Tree
+     */
     public function show_tree($ne_id)
     {
         // create array to store all comments ids
@@ -183,11 +207,10 @@ class Home extends CI_Controller
 
         return  $this->in_parent(0, $ne_id, $store_all_id);
     }
-
-
-    /* recursive function to loop
-       through all comments and retrieve it
-    */
+    /**
+     * recursive function to loop
+     * through all comments and retrieve it
+     */
     public function in_parent($in_parent, $ne_id, $store_all_id)
     {
         // this variable to save all concatenated html
@@ -232,7 +255,7 @@ class Home extends CI_Controller
                                         <form class="replyForm mt-3" style="display:none" onsubmit="return false" method="POST" enctype="multipart/formdata">
                                             <div class="row mx-0">
                                                 <div class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1">
-                                                    <a href="' . base_url("profil/".get_active_user()->user_name) . '" class="d-block align-items-center text-center justify-content-center bg-transparent">
+                                                    <a href="' . base_url("profil/" . get_active_user()->user_name) . '" class="d-block align-items-center text-center justify-content-center bg-transparent">
                                                         <img class="rounded-circle img-fluid text-center justify-content-center bg-white border border-success shadow-lg" width="75" src="' . get_picture("users_v", get_active_user()->img_url) . '" alt="' . get_active_user()->full_name . '" />
                                                         <h6 class="text-center justify-content-center"><small class="text-center justify-content-center">' . get_active_user()->user_name . '</small></h6>
                                                     </a>
@@ -244,7 +267,7 @@ class Home extends CI_Controller
                                                         <input type="hidden" name="answer_id" value="' . $value->id . '">
                                                     </div>
                                                     <div class="form-group text-right">
-                                                        <button data-url="' . base_url("yanitla") . '" class="btn btn-primary btnReply mx-0">Yanıtı Gönder</button>
+                                                        <button data-url="' . base_url("yorum-yap") . '" class="btn btn-primary btnReply mx-0">Yanıtı Gönder</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -262,7 +285,17 @@ class Home extends CI_Controller
 
         return $html;
     }
-
+    /**
+     * Load Comments
+     */
+    public function loadComments($ne_id){
+        if (!empty(clean($ne_id))) :
+            echo json_encode(["comments" => $this->show_tree($ne_id),"commentCount" =>$this->general_model->rowCount("comments",["news_id" => $ne_id])]);
+        endif;
+    }
+    /**
+     * Reply Comment
+     */
     public function reply_comment()
     {
         if (get_active_user()) :
@@ -282,7 +315,9 @@ class Home extends CI_Controller
             echo json_encode(["success" => false, "title" => "Başarısız!", "message" => "Yorum Yanıtlanırken Hata Oluştu Oturum Açtığınızdan Emin Olup, Lütfen Tekrar Deneyin."]);
         endif;
     }
-
+    /**
+     * OnAir
+     */
     public function onair()
     {
         $config = [];
@@ -332,7 +367,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Activities
+     */
     public function activities()
     {
         $seo_url = $this->uri->segment(2);
@@ -391,7 +428,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Activity Detail
+     */
     public function activity_detail($seo_url)
     {
         $this->viewData->activities = $this->general_model->get("activities", null, ['seo_url' => $seo_url, "isActive" => 1]);
@@ -405,7 +444,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Job Advertisements
+     */
     public function job_advertisements()
     {
         $seo_url = $this->uri->segment(2);
@@ -466,7 +507,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Job Advertisement Detail
+     */
     public function job_advertisement_detail($seo_url)
     {
         $this->viewData->job_advertisement = $this->general_model->get("job_advertisements", null, ['seo_url' => $seo_url, "isActive" => 1]);
@@ -480,7 +523,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Estate Advertisements
+     */
     public function estate_advertisements()
     {
         $seo_url = $this->uri->segment(2);
@@ -541,7 +586,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Estate Advertisement Detail
+     */
     public function estate_advertisement_detail($seo_url)
     {
         $this->viewData->estate_advertisement = $this->general_model->get("estate_advertisements", null, ['seo_url' => $seo_url, "isActive" => 1]);
@@ -555,7 +602,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Galleries
+     */
     public function galleries()
     {
         $seo_url = $this->uri->segment(2);
@@ -610,7 +659,9 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * Gallery Detail
+     */
     public function gallery_detail($seo_url)
     {
         $seo_url == "videolar" ? $seo_url = "video-url-galerisi" : $seo_url;
@@ -624,20 +675,26 @@ class Home extends CI_Controller
         endif;
         $this->render();
     }
-
+    /**
+     * References
+     */
     public function references()
     {
         $this->viewData->references = $this->general_model->get_all("references", null, null, ["isActive" => 1]);
         $this->viewFolder = "references_v/index";
         $this->render();
     }
-
+    /**
+     * Contact
+     */
     public function contact()
     {
         $this->viewFolder = "contact_v/index";
         $this->render();
     }
-
+    /**
+     * URL Emotion
+     */
     public function urlEmotion()
     {
         $data = rClean($this->input->post());
@@ -669,7 +726,9 @@ class Home extends CI_Controller
             endif;
         endif;
     }
-
+    /**
+     * Test Check
+     */
     public function test_check()
     {
         $id = $this->input->post('id');
@@ -724,8 +783,10 @@ class Home extends CI_Controller
             }
         }
     }
-
-    public function teklif()
+    /**
+     * Contact Form
+     */
+    public function contact_form()
     {
         $this->load->library("form_validation");
         $this->form_validation->set_rules("name", "Ad", "trim|required");
