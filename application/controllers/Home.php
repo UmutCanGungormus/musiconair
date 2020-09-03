@@ -16,10 +16,10 @@ class Home extends CI_Controller
         parent::__construct();
         $this->viewFolder = "home_v";
         $this->viewData = new stdClass();
-        $ip_adresi = getUserIP();
+        $ip_adress = getUserIP();
 
-        if (!$this->session->userdata("users")) :
-            $this->session->set_userdata("users", $ip_adresi);
+        if (!$this->session->userdata("user_ip")) :
+            $this->session->set_userdata("user_ip", $ip_adress);
         endif;
         $this->viewData->stories = $this->general_model->get_all("stories", null, "rank ASC", ["isActive" => 1]);
         $this->viewData->story_items = $this->general_model->get_all("story_items", null, "rank ASC", ["isActive" => 1]);
