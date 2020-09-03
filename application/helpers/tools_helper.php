@@ -750,11 +750,7 @@ function get_settings($language = "tr")
     $settings = $t->session->userdata("settings");
     if (empty($settings)) {
         $settings = $t->general_model->get(
-            "settings",
-            null,
-            array(
-                "language" => $language
-            )
+            "settings"
         );
         $t->session->set_userdata("settings", $settings);
     }
