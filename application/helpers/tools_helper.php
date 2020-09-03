@@ -744,17 +744,13 @@ function get_portfolio_cover_image($id)
     return !empty($cover_image) ? $cover_image->img_url : "";
 }
 
-function get_settings($language = "tr")
+function get_settings()
 {
     $t = &get_instance();
     $settings = $t->session->userdata("settings");
     if (empty($settings)) {
         $settings = $t->general_model->get(
-            "settings",
-            null,
-            array(
-                "language" => $language
-            )
+            "settings"
         );
         $t->session->set_userdata("settings", $settings);
     }
