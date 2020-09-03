@@ -27,6 +27,7 @@
 					<th class="w50">#id</th>
 					<th>Başlık</th>
 					<th>Test Sorusu</th>
+					<th>Durum</th>
 					<th>Oluşturulma Tarihi</th>
 					<th>Güncelleme Tarihi</th>
 					<th>Paylaşım Tarihi</th>
