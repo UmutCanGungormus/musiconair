@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 // Seo
 function seo($str, $options = array())
 {
@@ -744,7 +744,7 @@ function get_portfolio_cover_image($id)
     return !empty($cover_image) ? $cover_image->img_url : "";
 }
 
-function get_settings($language = "tr")
+function get_settings()
 {
     $t = &get_instance();
     $settings = $t->session->userdata("settings");
@@ -948,4 +948,75 @@ function checkEmpty($data)
         endif;
     endforeach;
     return ["error" => $error, "key" => (!empty($key) ? $key : null)];
+}
+
+// GET CITIES OR CITY
+function get_cities($city_id = null)
+{
+    $cities = null;
+    $t = &get_instance();
+    if (!empty($city_id)) :
+        $cities = $t->general_model->get("cities", [
+            "city_id" => $city_id
+        ]);
+    else :
+        $cities = $t->general_model->get_all("cities");
+    endif;
+    return $cities;
+}
+
+// GET DISTRICTS OR DISTRICT
+function get_districts($city_id, $district_id = null)
+{
+    $districts = null;
+    if (!empty($city_id)) :
+        $t = &get_instance();
+        if (!empty($district_id)) :
+            $districts = $t->general_model->get("districts", [
+                "cities_id" => $city_id,
+                "district_id" => $district_id
+            ]);
+        else :
+            $districts = $t->general_model->get_all("districts", ["cities_id" => $city_id]);
+        endif;
+    endif;
+    return $districts;
+}
+
+// GET NEIGHBORHOODS OR NEIGHBORHOOD
+function get_neighborhoods($district_id, $neighborhood_id = null)
+{
+    $neighborhoods = null;
+    if (!empty($district_id)) :
+        $t = &get_instance();
+
+        if (!empty($neighborhood_id)) :
+            $neighborhoods = $t->general_model->get("neighborhoods", [
+                "districts_id" => $district_id,
+                "neighborhood_id" => $neighborhood_id
+            ]);
+        else :
+            $neighborhoods = $t->general_model->get_all("neighborhoods", ["districts_id" => $district_id]);
+        endif;
+    endif;
+    return $neighborhoods;
+}
+
+// GET QUARTERS OR QUARTER WITH POSTAL CODE
+function get_quarters($neighborhood_id, $quarter_id = null)
+{
+    $quarters = null;
+    if (!empty($neighborhood_id)) :
+        $t = &get_instance();
+
+        if (!empty($quarter_id)) :
+            $quarters = $t->general_model->get("quarters", [
+                "neighborhoods_id" => $neighborhood_id,
+                "quarter_id" => $quarter_id
+            ]);
+        else :
+            $quarters = $t->general_model->get_all("quarters", ["neighborhoods_id" => $neighborhood_id]);
+        endif;
+    endif;
+    return $quarters;
 }
