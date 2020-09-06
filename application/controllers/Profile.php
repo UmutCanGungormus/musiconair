@@ -17,7 +17,7 @@ class Profile extends CI_Controller
         $this->viewFolder = "home_v";
         $this->viewData = new stdClass();
         $ip_adress = getUserIP();
-        
+
         if (!$this->session->userdata("user_ip")) :
             $this->session->set_userdata("user_ip", $ip_adress);
         endif;
@@ -48,10 +48,16 @@ class Profile extends CI_Controller
      * Index
      */
     public function index()
-    {   
-        $this->viewData->userData = $this->general_model->get("users",null,["isActive" => 1, "id" =>get_active_user()->id]);
-        $this->viewData->userRole = $this->general_model->get("user_role", null, ["id" => $this->viewData->userData->role_id, "isActive" => 1])->title;
-        $this->viewFolder = "profile_v/index";
-        $this->render();
+    {
+        if (!get_active_user()) :
+            $this->viewFolder = "404_v/index";
+            $this->render();
+        else:
+            $this->viewData->userData = $this->general_model->get("users", null, ["isActive" => 1, "id" => get_active_user()->id]);
+            $this->viewData->userRole = $this->general_model->get("user_role", null, ["id" => $this->viewData->userData->role_id, "isActive" => 1])->title;
+            $this->viewData->news = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1,"writer_id" => get_active_user()->id]);
+            $this->viewFolder = "profile_v/index";
+            $this->render();
+        endif;
     }
 }

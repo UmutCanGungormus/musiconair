@@ -950,13 +950,28 @@ function checkEmpty($data)
     return ["error" => $error, "key" => (!empty($key) ? $key : null)];
 }
 
+// GET COUNTRIES OR COUNTRY
+function get_countries($country_id = null)
+{
+    $countries = null;
+    $t = &get_instance();
+    if (!empty($country_id)) :
+        $countries = $t->general_model->get("countries",null, [
+            "country_id" => $country_id
+        ]);
+    else :
+        $countries = $t->general_model->get_all("countries");
+    endif;
+    return $countries;
+}
+
 // GET CITIES OR CITY
 function get_cities($city_id = null)
 {
     $cities = null;
     $t = &get_instance();
     if (!empty($city_id)) :
-        $cities = $t->general_model->get("cities", [
+        $cities = $t->general_model->get("cities",null, [
             "city_id" => $city_id
         ]);
     else :
@@ -972,7 +987,7 @@ function get_districts($city_id, $district_id = null)
     if (!empty($city_id)) :
         $t = &get_instance();
         if (!empty($district_id)) :
-            $districts = $t->general_model->get("districts", [
+            $districts = $t->general_model->get("districts",null, [
                 "cities_id" => $city_id,
                 "district_id" => $district_id
             ]);
@@ -991,7 +1006,7 @@ function get_neighborhoods($district_id, $neighborhood_id = null)
         $t = &get_instance();
 
         if (!empty($neighborhood_id)) :
-            $neighborhoods = $t->general_model->get("neighborhoods", [
+            $neighborhoods = $t->general_model->get("neighborhoods",null, [
                 "districts_id" => $district_id,
                 "neighborhood_id" => $neighborhood_id
             ]);
@@ -1010,7 +1025,7 @@ function get_quarters($neighborhood_id, $quarter_id = null)
         $t = &get_instance();
 
         if (!empty($quarter_id)) :
-            $quarters = $t->general_model->get("quarters", [
+            $quarters = $t->general_model->get("quarters",null, [
                 "neighborhoods_id" => $neighborhood_id,
                 "quarter_id" => $quarter_id
             ]);
