@@ -2,10 +2,13 @@
 <div class="wrapper2 w-100">
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="text-center dark border p-3">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -22,7 +25,7 @@
                     <div class="card rounded-0 mb-3 <?= (get_cookie("theme", true) == "dark" ? "dark" : null) ?>">
                         <div class="row no-gutters">
                             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                <a href="<?= base_url("etkinlik/{$value->seo_url}") ?>"><img src="<?=get_picture("activities_v",$value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
+                                <a href="<?= base_url("etkinlik/{$value->seo_url}") ?>"><img src="<?= get_picture("activities_v", $value->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $value->title ?>"></a>
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                 <div class="card-body position-relative mb-5">
@@ -46,9 +49,8 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                <div class="text-center dark border">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height: 150px;"></a>
 
                 <h3 class="title">Çok Okunanlar</h3>
                 <?php if (!empty($most_read)) : ?>
@@ -57,7 +59,7 @@
                             <div class="card rounded-0 border mb-3 <?= (get_cookie("theme", true) == "dark" ? "dark" : null) ?>">
                                 <div class="row no-gutters">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-                                        <img src="<?=get_picture("activities_v",$item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
+                                        <img src="<?= get_picture("activities_v", $item->img_url) ?>" class="card-img img-fluid d-flex h-100 rounded-0" alt="<?= $item->title; ?>">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-8">
                                         <div class="card-body">
@@ -111,9 +113,8 @@
 
                 </div>
 
-                <div class="text-center dark border mt-3">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height: 150px;"></a>
             </div>
         </div>
     </div>

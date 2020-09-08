@@ -4,10 +4,12 @@
     <div class="container mt-2">
         <div class="row mt-4 text-center px-3">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 dark border p-4">
-                <h4 class="text-white my-auto">REKLAM ALANI</h4>
+            <?php $ad = get_random_ads()?>
+                <a href="<?=$ad->url?>" target="_blank" class="bg-transparent"><img src="<?=get_picture("home_banner_v",$ad->img_url)?>" class="img-fluid w-100" style="max-height:250px"></a>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 dark border p-4">
-                <h4 class="text-white my-auto">REKLAM ALANI</h4>
+            <?php $ad = get_random_ads()?>
+                <a href="<?=$ad->url?>" target="_blank" class="bg-transparent"><img src="<?=get_picture("home_banner_v",$ad->img_url)?>" class="img-fluid w-100" style="max-height:250px"></a>
             </div>
         </div>
         <div class="row mt-1">

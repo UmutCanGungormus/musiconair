@@ -956,7 +956,7 @@ function get_countries($country_id = null)
     $countries = null;
     $t = &get_instance();
     if (!empty($country_id)) :
-        $countries = $t->general_model->get("countries",null, [
+        $countries = $t->general_model->get("countries", null, [
             "country_id" => $country_id
         ]);
     else :
@@ -971,7 +971,7 @@ function get_cities($city_id = null)
     $cities = null;
     $t = &get_instance();
     if (!empty($city_id)) :
-        $cities = $t->general_model->get("cities",null, [
+        $cities = $t->general_model->get("cities", null, [
             "city_id" => $city_id
         ]);
     else :
@@ -987,7 +987,7 @@ function get_districts($city_id, $district_id = null)
     if (!empty($city_id)) :
         $t = &get_instance();
         if (!empty($district_id)) :
-            $districts = $t->general_model->get("districts",null, [
+            $districts = $t->general_model->get("districts", null, [
                 "cities_id" => $city_id,
                 "district_id" => $district_id
             ]);
@@ -1006,7 +1006,7 @@ function get_neighborhoods($district_id, $neighborhood_id = null)
         $t = &get_instance();
 
         if (!empty($neighborhood_id)) :
-            $neighborhoods = $t->general_model->get("neighborhoods",null, [
+            $neighborhoods = $t->general_model->get("neighborhoods", null, [
                 "districts_id" => $district_id,
                 "neighborhood_id" => $neighborhood_id
             ]);
@@ -1025,8 +1025,8 @@ function get_quarters($neighborhood_id, $quarter_id = null)
         $t = &get_instance();
 
         if (!empty($quarter_id)) :
-            $quarters = $t->general_model->get("quarters",null, [
-                "neighborhoods_id" => $neighborhood_id,
+            $quarters = $t->general_model->get("quarters", null, [
+                "id" => $neighborhood_id,
                 "quarter_id" => $quarter_id
             ]);
         else :
@@ -1034,4 +1034,24 @@ function get_quarters($neighborhood_id, $quarter_id = null)
         endif;
     endif;
     return $quarters;
+}
+
+function get_random_ads()
+{
+    $t = &get_instance();
+    $count = $t->general_model->rowCount("homepage_banner", ["isActive" => 1]);
+    if ($count > 0) :
+        $random_id = rand(1, $count);
+        $ad = $t->general_model->get("homepage_banner", null, [
+            "id" => $random_id,
+            "isActive" => 1
+        ]);
+        return $ad;
+    else :
+        if(get_cookie("theme") == "dark"):
+            return json_encode(["url" => base_url(),"img_url" => get_picture("settings_v","logo-black-theme.png")]);
+        else:
+            return json_encode(["url" => base_url(),"img_url" => get_picture("settings_v","logo-light-theme.png")]);
+        endif;
+    endif;
 }

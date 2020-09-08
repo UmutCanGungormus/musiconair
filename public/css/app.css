@@ -557,7 +557,8 @@ ul.timeline-comments li > ul > li:first-child > .timeline-comment-wrapper > .car
   background-color: #fff;
 }
 .inbox-widget .inbox-item img {
-  width: 40px;
+  width: 60px;
+  height:60px;
 }
 
 .inbox-widget .inbox-item {
@@ -571,13 +572,9 @@ ul.timeline-comments li > ul > li:first-child > .timeline-comment-wrapper > .car
   display: block;
   float: left;
   margin-right: 15px;
-  width: 40px
+  width: 60px;
+  height:60px;
 }
-
-.inbox-widget .inbox-item img {
-  width: 40px
-}
-
 .inbox-widget .inbox-item .inbox-item-author {
   display: block;
   margin: 0
@@ -593,9 +590,6 @@ ul.timeline-comments li > ul > li:first-child > .timeline-comment-wrapper > .car
 .inbox-widget .inbox-item .inbox-item-date {
   color: #98a6ad;
   font-size: 11px;
-  position: absolute;
-  right: 7px;
-  top: 12px
 }
 
 .comment-list .comment-box-item {

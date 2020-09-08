@@ -2,10 +2,13 @@
 <div class="wrapper2 w-100">
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="text-center dark border p-3">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
@@ -76,9 +79,8 @@
                     </div>
                 </div>
 
-                <div class="text-center dark border p-3 mt-3">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
 
                 <div class="mt-4">
                     <b>Etiketler</b>
@@ -183,9 +185,8 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                <div class="container text-center dark border p-5">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
 
 
                 <h3 class="title">Benzer Haberler</h3>
@@ -270,9 +271,8 @@
 
                 </div>
 
-                <div class="container text-center dark border mt-3 p-5">
-                    <h3 class="text-white">Reklam Alanı</h3>
-                </div>
+                <?php $ad = get_random_ads() ?>
+                <a href="<?= $ad->url ?>" target="_blank" class="bg-transparent"><img src="<?= get_picture("home_banner_v", $ad->img_url) ?>" class="img-fluid w-100" style="max-height:250px"></a>
             </div>
         </div>
     </div>

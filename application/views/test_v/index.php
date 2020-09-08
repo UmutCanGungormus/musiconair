@@ -7,11 +7,13 @@
 		
 		<div class="container mt-2">
 			<div class="row mt-4 text-center px-4">
-                <div class="col-md-6 dark border" style="height: 90px;">
-                    <h3 class="text-white" style="line-height: 90px;">REKLAM ALANI</h3>
+                <div class="col-md-6 dark border">
+                <?php $ad = get_random_ads()?>
+                <a href="<?=$ad->url?>" target="_blank" class="bg-transparent"><img src="<?=get_picture("home_banner_v",$ad->img_url)?>" class="img-fluid w-100" style="max-height:250px"></a>
                 </div>
-                <div class="col-md-6 dark border" style="height: 90px;">
-                    <h3 class="text-white" style="line-height: 90px;">REKLAM ALANI</h3>
+                <div class="col-md-6 dark border">
+                <?php $ad = get_random_ads()?>
+                <a href="<?=$ad->url?>" target="_blank" class="bg-transparent"><img src="<?=get_picture("home_banner_v",$ad->img_url)?>" class="img-fluid w-100" style="max-height:250px"></a>
                 </div>
             </div>
 
