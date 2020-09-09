@@ -55,7 +55,11 @@ class Profile extends CI_Controller
         else:
             $this->viewData->userData = $this->general_model->get("users", null, ["isActive" => 1, "id" => get_active_user()->id]);
             $this->viewData->userRole = $this->general_model->get("user_role", null, ["id" => $this->viewData->userData->role_id, "isActive" => 1])->title;
+            $this->viewData->news_limit = $this->general_model->get_all("news", null, "RAND()", ['isActive' => 1,"writer_id" => get_active_user()->id],[],[],[6]);
             $this->viewData->news = $this->general_model->get_all("news", null, "rank ASC", ['isActive' => 1,"writer_id" => get_active_user()->id]);
+            $this->viewData->writer = $this->general_model->get("users", null, ['id' => get_active_user()->id, "isActive" => 1, "role_id!=" => 2]);
+            $this->viewData->writer_role = $this->general_model->get("user_role", null, ["id" => $this->viewData->writer->role_id, "isActive" => 1])->title;
+            $this->viewData->comments = $this->general_model->get("comments",null,""["user_id" => get_active_user()->id]);
             $this->viewFolder = "profile_v/index";
             $this->render();
         endif;

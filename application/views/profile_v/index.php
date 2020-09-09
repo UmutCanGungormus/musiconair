@@ -40,45 +40,45 @@ endif;
                         <hr>
                         <div class="text-left">
                             <p class="text-muted font-13"><strong>Ad Soyad : </strong><span class="m-l-15"><?= $userData->full_name ?></span></p>
-                            <p class="text-muted font-13"><strong>Telefon : </strong><span class="m-l-15"><a href="tel:<?= $userData->phone ?>"><?= $userData->phone ?></a></span></p>
+                            <p class="text-muted font-13"><strong>Telefon : </strong><span class="m-l-15"><a class="bg-transparent" href="tel:<?= $userData->phone ?>"><?= $userData->phone ?></a></span></p>
                             <p class="text-muted font-13"><strong>Email : </strong><span class="m-l-15"><a class="bg-transparent" href="mailto:<?= $userData->email ?>"><?= $userData->email ?></a></span></p>
                             <p class="text-muted font-13"><strong>Website : </strong><span class="m-l-15"><a class="bg-transparent" target="_blank" href="<?= $userData->website ?>"><?= $userData->website ?></a></span></p>
-                            <p class="text-muted font-13"><strong>Konum : </strong><span class="m-l-15"><?= get_countries($userData->country)->country ?></span></p>
+                            <p class="text-muted font-13"><strong>Konum : </strong><span class="m-l-15"><?= get_countries($userData->country)->country ?>, <?= get_cities($userData->city)->city ?></span></p>
                         </div>
                         <?php if (!empty($userData->facebook) || !empty($userData->twitter) || !empty($userData->instagram) || !empty($userData->youtube) || !empty($userData->linkedin) || !empty($userData->twitch) || !empty($userData->medium)) : ?>
                             <ul class="social-links list-inline mt-4 mb-0">
                                 <?php if (!empty($userData->facebook)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->facebook?>" title="Facebook" data-title="Facebook" data-original-title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->facebook ?>" title="Facebook" data-title="Facebook" data-original-title="Facebook"><i class="fa fa-facebook"></i></a></li>
                                 <?php endif; ?>
                                 <?php if (!empty($userData->twitter)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->twitter?>" title="Twitter" data-title="Twitter" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->twitter ?>" title="Twitter" data-title="Twitter" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
                                 <?php endif; ?>
                                 <?php if (!empty($userData->instagram)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->instagram?>" title="Instagram" data-title="Instagram" data-original-title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->instagram ?>" title="Instagram" data-title="Instagram" data-original-title="Instagram"><i class="fa fa-instagram"></i></a></li>
                                 <?php endif; ?>
                                 <?php if (!empty($userData->youtube)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->youtube?>" title="Youtube" data-title="Youtube" data-original-title="Youtube"><i class="fa fa-youtube"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->youtube ?>" title="Youtube" data-title="Youtube" data-original-title="Youtube"><i class="fa fa-youtube"></i></a></li>
                                 <?php endif; ?>
                                 <?php if (!empty($userData->twitch)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->twitch?>" title="Twitch" data-title="Twitch" data-original-title="Twitch"><i class="fa fa-twitch"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->twitch ?>" title="Twitch" data-title="Twitch" data-original-title="Twitch"><i class="fa fa-twitch"></i></a></li>
                                 <?php endif; ?>
                                 <?php if (!empty($userData->linkedin)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->linkedin?>" title="Linkedin" data-title="Linkedin" data-original-title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->linkedin ?>" title="Linkedin" data-title="Linkedin" data-original-title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
                                 <?php endif; ?>
                                 <?php if (!empty($userData->medium)) : ?>
-                                    <li class="list-inline-item"><a data-placement="top" data-toggle="tooltip" class="tooltips" href="<?=$userData->medium?>" title="Medium" data-title="Medium" data-original-title="Medium"><i class="fa fa-medium"></i></a></li>
+                                    <li class="list-inline-item"><a class="bg-transparent" data-placement="top" data-toggle="tooltip" class="tooltips" href="<?= $userData->medium ?>" title="Medium" data-title="Medium" data-original-title="Medium"><i class="fa fa-medium"></i></a></li>
                                 <?php endif; ?>
                             </ul>
                         <?php endif ?>
                     </div>
                 </div>
                 <!-- Personal-Information -->
-                <?php if (!empty($news)) : ?>
+                <?php if (!empty($news_limit)) : ?>
                     <div class="card-box ribbon-box dark">
                         <div class="ribbon ribbon-primary">Haberlerim</div>
                         <div class="clearfix"></div>
                         <div class="inbox-widget">
-                            <?php foreach ($news as $key => $value) : ?>
+                            <?php foreach ($news_limit as $key => $value) : ?>
                                 <div class="inbox-item">
                                     <div class="inbox-item-img"><img src="<?= get_picture("news_v", $value->img_url) ?>" width="75" class="rounded-circle" alt="<?= $value->title ?>"></div>
                                     <div class="inbox-item-author dark"><?= $value->title ?></div>
@@ -93,23 +93,82 @@ endif;
                 <?php endif ?>
             </div>
             <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                <div class="card-box">
-                    <h4 class="header-title mt-0 mb-3">Experience</h4>
-                    <div class="">
-                        <div class="">
-                            <h5 class="text-custom">Lead designer / Developer</h5>
-                            <p class="mb-0">websitename.com</p>
-                            <p><b>2010-2015</b></p>
-                            <p class="text-muted font-13 mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <div class="card-box p-0 dark">
+                    <ul class="nav nav-tabs flex-column flex-sm-row p-0" id="myTab" role="tablist">
+                        <li class="nav-item rounded-0 flex-sm-fill p-0 m-0 text-center active" role="presentation">
+                            <a class="nav-link rounded-0 m-0 p-3 text-center text-info bg-transparent active" id="contents-tab" data-toggle="tab" href="#contents" role="tab" aria-controls="contents" aria-selected="true">İçerikler</a>
+                        </li>
+                        <li class="nav-item rounded-0 flex-sm-fill p-0 m-0 text-center" role="presentation">
+                            <a class="nav-link rounded-0 m-0 p-3 text-center text-info bg-transparent" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false">Favoriler</a>
+                        </li>
+                        <li class="nav-item rounded-0 flex-sm-fill p-0 m-0 text-center" role="presentation">
+                            <a class="nav-link rounded-0 m-0 p-3 text-center text-info bg-transparent" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Yorumlar</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="contents" role="tabpanel" aria-labelledby="contents-tab">
+                            <div class="card-body">
+                                <h4 class="header-title mt-0 mb-3">İçerikler</h4>
+                                <hr>
+                                <?php if (!empty($news)) : ?>
+                                    <?php foreach ($news as $key => $value) : ?>
+                                        <a href="<?= base_url("haber/{$value->seo_url}") ?>">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-1">
+                                                    <img src="<?= get_picture("news_v", $value->img_url) ?>" alt="<?= $value->title ?>" class="mr-3" width="150" height="150">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h5 class="text-custom"><?= $value->title ?></h5>
+                                                    <p class="mb-0"><?= $writer->full_name ?> <?= (!empty($writer->username) ? "(" . $writer->username . ")" : null); ?></p>
+                                                    <p>
+                                                        Oluşturulma Tarihi : <b><?= turkishDate("d F Y, l H:i:s", $value->createdAt) ?></b>
+                                                        <?php if ($value->updatedAt) : ?>
+                                                            Güncelleme Tarihi : <b><?= turkishDate("d F Y, l H:i:s", $value->updatedAt) ?></b>
+                                                        <?php endif ?>
+                                                    </p>
+                                                    <p class="text-muted font-13 mb-0"><?= mb_word_wrap($value->content, 150, "...") ?></p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </a>
+                                    <?php endforeach ?>
+                                <?php endif ?>
+                            </div>
                         </div>
-                        <hr>
-                        <div class="">
-                            <h5 class="text-custom">Senior Graphic Designer</h5>
-                            <p class="mb-0">coderthemes.com</p>
-                            <p><b>2007-2009</b></p>
-                            <p class="text-muted font-13 mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        <div class="tab-pane fade" id="favourites" role="tabpanel" aria-labelledby="favourites-tab">
+
+                        </div>
+                        <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                            <div class="card-body">
+                                <h4 class="header-title mt-0 mb-3">Yorumlar</h4>
+                                <hr>
+                                <?php if (!empty($news)) : ?>
+                                    <?php foreach ($news as $key => $value) : ?>
+                                        <a href="<?= base_url("haber/{$value->seo_url}") ?>">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-1">
+                                                    <img src="<?= get_picture("news_v", $value->img_url) ?>" alt="<?= $value->title ?>" class="mr-3" width="150" height="150">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h5 class="text-custom"><?= $value->title ?></h5>
+                                                    <p class="mb-0"><?= $writer->full_name ?> <?= (!empty($writer->username) ? "(" . $writer->username . ")" : null); ?></p>
+                                                    <p>
+                                                        Oluşturulma Tarihi : <b><?= turkishDate("d F Y, l H:i:s", $value->createdAt) ?></b>
+                                                        <?php if ($value->updatedAt) : ?>
+                                                            Güncelleme Tarihi : <b><?= turkishDate("d F Y, l H:i:s", $value->updatedAt) ?></b>
+                                                        <?php endif ?>
+                                                    </p>
+                                                    <p class="text-muted font-13 mb-0"><?= mb_word_wrap($value->content, 150, "...") ?></p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </a>
+                                    <?php endforeach ?>
+                                <?php endif ?>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
