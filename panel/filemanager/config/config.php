@@ -59,6 +59,7 @@ define('DEBUG_ERROR_MESSAGE', false); // TRUE or FALSE
 $base_url 				 	 = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 $base_url 					.= "://". @$_SERVER['HTTP_HOST'];
 $base_url 					.=     str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+$rootPath = str_replace("filemanager\config","",__DIR__);
 $config = array(
 
     /*
@@ -87,7 +88,7 @@ $config = array(
     | with final /
     |
     */
-    'current_path' => '../uploads/tinymce/',
+    'current_path' => $rootPath.'uploads/tinymce/',
 
     /*
     |--------------------------------------------------------------------------
@@ -98,7 +99,7 @@ $config = array(
     | DO NOT put inside upload folder
     |
     */
-    'thumbs_base_path' => '../thumbs/',
+    'thumbs_base_path' => $rootPath.'thumbs/',
 
     /*
     |--------------------------------------------------------------------------
