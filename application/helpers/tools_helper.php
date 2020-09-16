@@ -786,7 +786,7 @@ function get_settings()
     return $t->email->send();
 }
 */
-function send_email($toEmail = [], $subject = "", $message = "", $mail_settings = "")
+function send_email($toEmail = [], $subject = "", $message = "", $mail_settings = "",$attachments = [])
 {
     $t = &get_instance();
     $email_settings = $t->general_model->get(
@@ -812,7 +812,11 @@ function send_email($toEmail = [], $subject = "", $message = "", $mail_settings 
         ->setCharset('utf-8');
 
     $msg->setBody($message, 'text/html', 'utf-8');
-
+    if (!empty($attachments)) :
+        foreach ($attachments as $key => $value) :
+            $msg->attach(Swift_Attachment::fromPath($value));
+        endforeach;
+    endif;
     // Send the message
     $result = $mailer->send($msg);
 
